@@ -16,6 +16,7 @@ Params:
     "background-size": "auto|length|cover|contain|initial|inherit",
     "background-clip": "border-box|padding-box|content-box|initial|inherit"
   },
+  ///or
   "image":{ 
     "background-image": "url",
     "background-position": "top|left|right|bottom|x% y%|xpos ypos| or compared",
@@ -26,18 +27,8 @@ Params:
   }
 }
 ```
-```
-URL: GET /builder/background/color_list
-```
-Params:
-- token: String,
-```json
-[{
-	"color": "000fff"
-}
-///...
-]
-```
+
+
 ###Logo image
 
 ```
@@ -47,10 +38,15 @@ Params:
 - Token: String
 
 ```json
-[{
-"url":"link",
-"current_position": "left/right/center"
-}]
+{
+  "url":"link",
+  "parameters": {
+    "width":"px or %",
+    "height":"px or %",
+    "fit": "fill|contain|cover|none|scale-down",
+    "position": "left|center|right|in px or %"
+  }
+}
 ```
 ###Container
 
@@ -62,8 +58,8 @@ Params:
 - Token: String
 
 ```json
-[{
-    "type": "solid/dashed/dotted/none",
+{
+    "type": "solid|dashed|dotted|none",
     "color": [
             {"red": "0-255"},
             {"green": "0-255"},
@@ -78,7 +74,7 @@ Params:
                     {"persentage": "integer"}
                 ]
         }
-}]
+}
 ```
 
 ```
@@ -89,14 +85,14 @@ Params:
 - Token: String
 
 ```json
-[{
+{
     "color": [
                 {"red": "0-255"},
                 {"green": "0-255"},
                 {"blue": "0-255"},
                 {"alpha": ".0-1"}
             ]
-}]
+}
 ```
 
 ```
