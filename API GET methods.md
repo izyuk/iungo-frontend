@@ -32,7 +32,7 @@ Params:
 ###Logo image
 
 ```
-URL: GET /logo_imgae/image
+URL: GET /logo_image/image
 ```
 Params:
 - Token: String
