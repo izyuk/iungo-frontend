@@ -8,6 +8,7 @@ URL: GET /builder/background/type
 ```
 Params:
 - token: String;
+- id: Integer
 ```json
 {
   "option": "color/image",
@@ -23,6 +24,7 @@ Params:
     "background-repeat": "repeat|repeat-x|repeat-y|no-repeat|initial|inherit",
     "background-origin": "padding-box|border-box|content-box|initial|inherit",
     "background-clip": "border-box|padding-box|content-box|initial|inherit",
+    "background-size": "auto|length|cover|contain|initial|inherit",
     "background-attachment": "scroll|fixed|local|initial|inherit"
   }
 }
@@ -35,7 +37,8 @@ Params:
 URL: GET /logo_image/image
 ```
 Params:
-- Token: String
+- Token: String;
+- id: Integer
 
 ```json
 {
@@ -55,7 +58,8 @@ URL: GET /container/border
 ```
 
 Params:
-- Token: String
+- Token: String;
+- id: Integer
 
 ```json
 {
@@ -82,7 +86,8 @@ URL: GET /container/background
 ```
 
 Params:
-- Token: String
+- Token: String;
+- id: Integer
 
 ```json
 {
@@ -100,7 +105,8 @@ URL: GET /container/size
 ```
 
 Params:
-- Token: String
+- Token: String;
+- id: Integer
 
 ```json
 [
@@ -116,4 +122,5 @@ URL: GET /css/stylesheet.css
 ```
 
 Params:
-- Token: String
+- Token: String;
+- id: Integer
