@@ -4,24 +4,36 @@
 
 ###Background
 ```
-URL: GET /builder/background/image
+URL: GET /builder/background/type
 ```
 Params:
 - token: String;
-```
-[{
-    'url':'link',
-    'parameters'
-}]
+```json
+{
+  "option": "color/image",
+  "color":{
+    "background-color": "color|transparent|initial|inherit",
+    "background-size": "auto|length|cover|contain|initial|inherit",
+    "background-clip": "border-box|padding-box|content-box|initial|inherit"
+  },
+  "image":{ 
+    "background-image": "url",
+    "background-position": "top|left|right|bottom|x% y%|xpos ypos| or compared",
+    "background-repeat": "repeat|repeat-x|repeat-y|no-repeat|initial|inherit",
+    "background-origin": "padding-box|border-box|content-box|initial|inherit",
+    "background-clip": "border-box|padding-box|content-box|initial|inherit",
+    "background-attachment": "scroll|fixed|local|initial|inherit"
+  }
+}
 ```
 ```
 URL: GET /builder/background/color_list
 ```
 Params:
 - token: String,
-```
+```json
 [{
-	'color': '000fff'
+	"color": "000fff"
 },
 ...
 ]
@@ -34,10 +46,10 @@ URL: GET /logo_imgae/image
 Params:
 - Token: String
 
-```
+```json
 [{
-'url':'link',
-'current_position': 'left/right/center'
+"url":"link",
+"current_position": "left/right/center"
 }]
 ```
 ###Container
@@ -49,21 +61,21 @@ URL: GET /container/border
 Params:
 - Token: String
 
-```
+```json
 [{
-    'type': 'solid/dashed/dotted/none',
-    'color': [
-            {'red': '0-255'},
-            {'green': '0-255'},
-            {'blue': '0-255'},
-            {'alpha': '.0-1'}
+    "type": "solid/dashed/dotted/none",
+    "color": [
+            {"red": "0-255"},
+            {"green": "0-255"},
+            {"blue": "0-255"},
+            {"alpha": ".0-1"}
         ],
-    'thickness': integer,
-    'border-radius': {
-            'dimentions': [
-                    {'pixels': integer}
+    "thickness": integer,
+    "border-radius": {
+            "dimentions": [
+                    {"pixels": integer}
                 or
-                    {'persentage': integer}
+                    {"persentage": integer}
                 ]
         }
 }]
@@ -76,13 +88,13 @@ URL: GET /container/background
 Params:
 - Token: String
 
-```
+```json
 [{
-    'color': [
-                {'red': '0-255'},
-                {'green': '0-255'},
-                {'blue': '0-255'},
-                {'alpha': '.0-1'}
+    "color": [
+                {"red": "0-255"},
+                {"green": "0-255"},
+                {"blue": "0-255"},
+                {"alpha": ".0-1"}
             ]
 }]
 ```
@@ -94,11 +106,11 @@ URL: GET /container/size
 Params:
 - Token: String
 
-```
+```json
 [
-    {'width': integer},
-    {'height': integer},
-    {'padding': integer}
+    {"width": "integer"},
+    {"height": "integer"},
+    {"padding": "integer"}
 ]
 ```
 ###CSS
