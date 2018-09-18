@@ -2,7 +2,7 @@
 
 ##Builder
 
-**Background**
+> ###Background
 ```
 URL: GET /builder/background/image
 ```
@@ -26,7 +26,7 @@ Params:
 ...
 ]
 ```
-###Logo image
+> ###Logo image
 
 ```
 URL: GET /logo_imgae/image
@@ -40,7 +40,7 @@ Params:
 'current_position': 'left/right/center'
 }]
 ```
-###Container
+> ###Container
 
 ```
 URL: GET /container/border
@@ -101,7 +101,7 @@ Params:
     {'padding': integer}
 ]
 ```
-###CSS
+> ###CSS
 
 ```
 URL: GET /css/stylesheet.css
