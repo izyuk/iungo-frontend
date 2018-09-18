@@ -19,4 +19,4 @@ $ cat .gitignore
 .env.production.local
 
 # IDEA's folders
-.idea
+.idea/
