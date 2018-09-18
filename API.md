@@ -34,8 +34,8 @@ Params:
 ```json
 [{
 	"color": "000fff"
-},
-...
+}
+///...
 ]
 ```
 ###Logo image
@@ -70,12 +70,12 @@ Params:
             {"blue": "0-255"},
             {"alpha": ".0-1"}
         ],
-    "thickness": integer,
+    "thickness": "integer",
     "border-radius": {
             "dimentions": [
-                    {"pixels": integer}
-                or
-                    {"persentage": integer}
+                    {"pixels": "integer"},
+                ///or
+                    {"persentage": "integer"}
                 ]
         }
 }]
