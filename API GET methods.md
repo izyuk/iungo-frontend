@@ -1,4 +1,4 @@
-#API methods
+#API GET methods
 
 ##Builder
 
