@@ -1,4 +1,4 @@
-# iungo-merketing
+# iungo-marketing
 
 One Paragraph of project description goes here
 
