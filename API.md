@@ -2,7 +2,7 @@
 
 ##Builder
 
-###Background
+**Background**
 ```
 URL: GET /builder/background/image
 ```
@@ -10,7 +10,8 @@ Params:
 - token: String;
 ```
 [{
- 'url':'link'
+    'url':'link',
+    'parameters'
 }]
 ```
 ```
