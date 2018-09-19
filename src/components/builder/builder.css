@@ -1,0 +1,119 @@
+.builder {
+  display: flex;
+  align-items: stretch;
+  height: 100vh;
+}
+.builder > div p {
+  margin: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.builder > div p:before {
+  content: '';
+  position: relative;
+  width: 15px;
+  height: 1px;
+  background: #000;
+}
+.builder > div p:after {
+  content: '';
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background: #000;
+}
+.options {
+  flex: 1;
+  border-right: 1px solid;
+}
+.options .wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.options .wrap .buttonsWrap {
+  display: flex;
+}
+.options .wrap .buttonsWrap li {
+  flex: 1;
+  display: flex;
+  border: 1px solid;
+  border-bottom: transparent;
+  border-radius: 5px 5px 0 0;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 0;
+  cursor: pointer;
+}
+.options .wrap .buttonsWrap li.active,
+.options .wrap .buttonsWrap li:hover {
+  background: #eee;
+}
+.options .wrap .dropdown {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+.options .wrap .dropdown .head {
+  width: 100%;
+  background: #fff;
+  border: 1px solid;
+  cursor: pointer;
+  padding: 5px;
+}
+.options .wrap .dropdown .head.active,
+.options .wrap .dropdown .head:hover {
+  background: #eee;
+}
+.options .wrap .dropdown .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+.options .wrap .dropdown .container .imagePreview {
+  width: 100%;
+  min-height: 300px;
+  border: 1px solid;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eee;
+}
+.options .wrap .dropdown .container .imagePreview img {
+  width: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+.options .wrap .dropdown .container .row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.options .wrap .dropdown .hr {
+  margin: 20px 0;
+  width: 100%;
+}
+.options .wrap .dropdown .hr:before {
+  content: '';
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background: #000;
+}
+.preview {
+  flex: 2;
+}
+.preview .wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/*# sourceMappingURL=builder.css.map */
