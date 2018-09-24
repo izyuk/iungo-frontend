@@ -69,12 +69,22 @@
           background: #eee;
         }
       }
-      .container {
+      .tabList{
         display: flex;
+        a{
+          text-decoration: none;
+          color: #000000;
+        }
+      }
+      .container {
+        display: none;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         padding: 10px;
+        &.active{
+          display: flex;
+        }
         .imagePreview {
           width: 100%;
           min-height: 300px;

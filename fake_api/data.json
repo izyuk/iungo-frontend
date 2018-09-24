@@ -1,0 +1,19 @@
+{
+  "img": {
+    "option": "color/image",
+    "color":{
+      "background-color": "color|transparent|initial|inherit",
+      "background-size": "auto|length|cover|contain|initial|inherit",
+      "background-clip": "border-box|padding-box|content-box|initial|inherit"
+    },
+    "image":{
+      "background-image": "url",
+      "background-position": "top|left|right|bottom|x% y%|xpos ypos| or compared",
+      "background-repeat": "repeat|repeat-x|repeat-y|no-repeat|initial|inherit",
+      "background-origin": "padding-box|border-box|content-box|initial|inherit",
+      "background-clip": "border-box|padding-box|content-box|initial|inherit",
+      "background-size": "auto|length|cover|contain|initial|inherit",
+      "background-attachment": "scroll|fixed|local|initial|inherit"
+    }
+  }
+}

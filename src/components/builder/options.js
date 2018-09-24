@@ -1,19 +1,28 @@
 import React, {Component} from 'react';
-
-
+import Background from './background';
+import LogoImage from './logo-image';
 import style from './builder.less';
 
 class Options extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.selectColor = this.selectColor.bind(this);
-        this.inputRef = React.createRef();
+        this.state = {
+            selectedFile: null,
+            visible: 'Background'
+        };
+        this.Background = React.createRef();
+        this.LogoImage = React.createRef();
+        this.tabHandler = this.tabHandler.bind(this);
     }
 
-    selectColor(e){
-        console.log(e.target.value);
-        this.inputRef.current.style.backgroundColor = e.target.value;
+    tabHandler(e) {
+        console.log(document.getElementsByClassName(`${style.container}`).length);
+        for(let i = 0; i < document.getElementsByClassName(`${style.container}`).length; i++){
+            document.getElementsByClassName(`${style.container}`)[i].classList.remove(style.active);
+        }
+        e.target.closest(`.${style.head}`).nextSibling.classList.add(style.active)
     }
+
 
     render() {
         return (
@@ -26,30 +35,24 @@ class Options extends Component {
                         <li>Settings</li>
                     </ul>
                     <div className={style.dropdown}>
-                        <div className={style.head}>
-                            <span>Background</span>
+                        <div className="wrap">
+                            <div className={style.head} onClick={this.tabHandler}>
+                                <span>Background</span>
+                            </div>
+                            <Background style={style} ref={this.Background}/>
                         </div>
-                        <div className={style.container}>
-                            <div className={style.imagePreview}>
-                                <span ref={this.inputRef}>Item</span>
+                        <div className="wrap">
+                            <div className={style.head} onClick={this.tabHandler}>
+                                <span>Logo Image</span>
                             </div>
-                            <div className={style.row}>
-                                <span className={style.descr}>
-                                    upload backgr img
-                                </span>
-                                <input type="file"/>
-                            </div>
-                            <p className={style.hr}>or</p>
-                            <div className={style.row}>
-                                <label htmlFor="sbc">Set backgr color</label>
-                                <input type="text" onBlur={(e)=>this.selectColor(e)} placeholder="Color code"/>
-                            </div>
+                            <LogoImage style={style} ref={this.LogoImage}/>
                         </div>
                     </div>
                 </div>
             </div>
         )
     }
+
     // componentDidMount() {
     //     this.inputRef.current.focus();
     // }
