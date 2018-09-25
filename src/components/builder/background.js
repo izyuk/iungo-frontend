@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import axios from "axios";
+
 import style from "./builder.less";
+
 
 class Background extends Component {
     constructor(props) {
@@ -9,7 +11,7 @@ class Background extends Component {
         this.inputRef = React.createRef();
         this.state = {
             selectedFile: null,
-            background: '',
+            image: '',
             dataType: ''
         }
     }
@@ -30,14 +32,14 @@ class Background extends Component {
         const fd = new FormData();
         fd.append('image', this.state.selectedFile, this.state.selectedFile.name);
         let path = '';
-        let query = await axios.post('http://localhost:4000/upload', fd)
+        let query = await axios.post('http://localhost:4000/api/upload/background', fd)
             .then(res => {
                 return res.data;
             })
             .then(val => {
                 console.log(val);
 
-                path = '/../../static/uploads/'+val;
+                path = '/../../static/uploads/background/'+val;
                 return path;
             });
 
@@ -46,20 +48,15 @@ class Background extends Component {
             el.remove();
         }
         this.setState({
-            background: query,
+            image: query,
             dataType: 'image'
         });
-
     };
-    // shouldComponentUpdate(nextProps, nextState){
-    //     return (this.state.background !== nextState.background);
-    // }
-
     render() {
         return (
             <div className={[this.props.style.container, this.props.style.active].join(' ')}>
                 <div className={this.props.style.imagePreview} ref={this.inputRef}>
-                    {this.state.dataType === 'image'? <img src={require(this.state.background)}/> : ''}
+                    {this.state.dataType === 'image'? <img src={require(this.state.image)}/> : ''}
                 </div>
                 <div className={this.props.style.row}>
                     <span className={this.props.style.descr}>

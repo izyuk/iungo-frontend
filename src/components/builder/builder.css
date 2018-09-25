@@ -48,7 +48,6 @@
   padding: 5px 0;
   cursor: pointer;
 }
-.options .wrap .buttonsWrap li.active,
 .options .wrap .buttonsWrap li:hover {
   background: #eee;
 }
