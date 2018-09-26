@@ -88,26 +88,23 @@ class LogoImage extends Component {
     //     };
     // }
 
-    shouldComponentUpdate(nextProps) {
-        return (this.props.logo_upload.logo_upload !== nextProps.logo_upload.logo_upload);
-    }
+    // shouldComponentUpdate(nextProps) {
+    //     return (this.props.logo_upload.logo_upload !== nextProps.logo_upload.logo_upload);
+    // }
 
     check() {
-        // console.log(this);
-        console.log(this.props.logo_upload.logo_upload);
+        if(this.props.logo_upload.logo_upload){
+            console.log(this.props.logo_upload.logo_upload);
+            console.log(this.props.logo_upload.logo_file_path);
+            return (<img src={require('../../static/uploads/logo/'+this.props.logo_upload.logo_upload)} />)
+        }
     };
-
-    componentDidMount() {
-        console.log(this.props.logo_upload);
-    }
 
     render() {
         return (
             <div className={this.props.style.container}>
                 <div className={this.props.style.imagePreview} ref={this.inputRef}>
-                    {/*{(this.props.logo_upload.logo_upload !== null || this.props.logo_upload.logo_upload !== undefined || this.props.logo_upload.logo_upload !== '') ?
-                        <img
-                            src={require(`../../../src/static/uploads/logo/${this.props.logo_upload.logo_upload}`)}/> : ''}*/}
+                    {this.props.logo_upload.logo_upload ? this.check() : ''}
                 </div>
                 <div className={this.props.style.row}>
                                 <span className={this.props.style.descr}>
