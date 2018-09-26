@@ -4,6 +4,7 @@ import {upload_logo} from '../../reducers/logo_upload';
 import axios from "axios";
 
 import style from "./builder.less";
+import ImagePlace from './imagePlace';
 
 class LogoImage extends Component {
     constructor(props) {
@@ -14,7 +15,7 @@ class LogoImage extends Component {
             image: '',
             dataType: ''
         };
-        this.check = this.check.bind(this);
+        // this.check = this.check.bind(this);
     }
 
     fileSelectedHandler = event => {
@@ -24,8 +25,15 @@ class LogoImage extends Component {
     };
 
     fileUploadHandler = async () => {
-        console.log(this.state.selectedFile);
         this.props.uploadLogo('image', this.state.selectedFile, this.state.selectedFile.name);
+
+        let func = function() {
+            console.log(this);
+            this.inputRef.current.innerHTML(<img
+                src={require('../../static/uploads/logo/' + this.props.logo_upload.logo_upload)}/>);
+            return false;
+        };
+        await func();
 
         // const fd = new FormData();
         // fd.append('image', this.state.selectedFile, this.state.selectedFile.name);
@@ -92,27 +100,32 @@ class LogoImage extends Component {
     //     return (this.props.logo_upload.logo_upload !== nextProps.logo_upload.logo_upload);
     // }
 
-    check() {
-        if(this.props.logo_upload.logo_upload){
-            console.log(this.props.logo_upload.logo_upload);
-            console.log(this.props.logo_upload.logo_file_path);
-            return (<img src={require('../../static/uploads/logo/'+this.props.logo_upload.logo_upload)} />)
-        }
-    };
+    // check() {
+    //     if(this.props.logo_upload.logo_upload){
+    //         console.log(this.props.logo_upload.logo_upload);
+    //         console.log(this.props.logo_upload.logo_file_path);
+    //         return (<img src={require('../../static/uploads/logo/'+this.props.logo_upload.logo_upload)} />)
+    //     }
+    // };
+
+    componentDidMount(){
+        console.log(this.props.logo_upload.logo_upload);
+    }
 
     render() {
         return (
             <div className={this.props.style.container}>
                 <div className={this.props.style.imagePreview} ref={this.inputRef}>
-                    {this.props.logo_upload.logo_upload ? this.check() : ''}
+                    {/*{this.props.logo_upload.logo_upload ? <img src={require('../../static/uploads/logo/'+this.props.logo_upload.logo_upload)} /> : ''}*/}
+
                 </div>
+                <ImagePlace image_path={this.props.logo_upload.logo_upload}/>
                 <div className={this.props.style.row}>
                                 <span className={this.props.style.descr}>
                                     upload logo image
                                 </span>
                     <input type="file" onChange={this.fileSelectedHandler}/>
                     <button onClick={this.fileUploadHandler}>Upload</button>
-                    <button onClick={this.check}>Check <b>uploaded_logo</b> state</button>
                 </div>
             </div>
         )

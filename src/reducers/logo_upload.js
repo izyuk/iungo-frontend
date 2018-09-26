@@ -32,7 +32,6 @@ export default function (state = [], action) {
         case UPLOAD_LOGO:
             return Object.assign({}, {
                 logo_upload: action.payload,
-                logo_file_path: '../static/uploads/logo/' + action.payload
             });
         default:
             return state
