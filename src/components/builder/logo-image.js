@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {upload_logo} from '../../reducers/logo_upload';
+import { logo } from '../../static/uploads/logo/preview.png';
 import axios from "axios";
 
 import style from "./builder.less";
@@ -116,7 +117,7 @@ class LogoImage extends Component {
         return (
             <div className={this.props.style.container}>
                 <div className={this.props.style.imagePreview} ref={this.inputRef}>
-                    {/*{this.props.logo_upload.logo_upload ? <img src={require('../../static/uploads/logo/'+this.props.logo_upload.logo_upload)} /> : ''}*/}
+                    {this.props.logo_upload.logo_upload ? <img src={require('../../static/uploads/logo/'+this.props.logo_upload.logo_upload)} /> : <img src={ logo } />}
 
                 </div>
                 <ImagePlace image_path={this.props.logo_upload.logo_upload}/>
