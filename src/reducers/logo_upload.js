@@ -18,6 +18,7 @@ export async function upload_logo(type, selectedFile, selectedFileName) {
                     if (result.error) {
                         throw new Error("Error in uploading object");
                     }
+                    console.log(result);
                     return result.data;
                 })
                 .catch(error => {
@@ -28,6 +29,7 @@ export async function upload_logo(type, selectedFile, selectedFileName) {
 
 export default function (state = [], action) {
     // debugger;
+    console.log(action);
     switch (action.type) {
         case UPLOAD_LOGO:
             return Object.assign({}, {

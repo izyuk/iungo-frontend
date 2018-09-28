@@ -1,35 +1,24 @@
 {
   "name": "iungo",
-  "version": "1.0.0",
-  "description": "QuickStart",
+  "version": "0.1.0",
   "private": true,
-  "main": "index.js",
-  "author": "ImpressionBit",
-  "license": "ISC",
   "dependencies": {
-    "axios": "^0.18.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-es2016": "^6.24.1",
-    "express-generator": "^4.16.0",
-    "history": "^4.7.2",
-    "open-browser-webpack-plugin": "0.0.5",
-    "react": "^16.5.2",
-    "react-dom": "^16.4.0",
-    "react-intl": "^2.4.0",
-    "react-redux": "^5.0.7",
-    "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2",
-    "react-router-redux": "^5.0.0-alpha.9",
-    "redux": "^3.7.2",
-    "redux-logger": "^3.0.6",
-    "redux-promise": "^0.6.0",
-    "redux-thunk": "^2.3.0"
+    "preact-svg": "^1.5.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --mode development --open ---hot",
+    "build": "webpack --mode production"
   },
   "devDependencies": {
+    "axios": "^0.18.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-es2016": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^1.0.0",
     "file-loader": "^1.1.11",
@@ -37,7 +26,6 @@
     "gh-pages": "^1.2.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
-    "image-webpack-loader": "^4.3.1",
     "less": "^3.5.3",
     "less-loader": "^4.1.0",
     "open-browser-webpack-plugin": "0.0.5",
@@ -47,14 +35,11 @@
     "react-router-dom": "^4.3.1",
     "react-svg-loader": "^2.1.0",
     "redux": "^4.0.0",
+    "redux-promise": "^0.6.0",
     "style-loader": "^0.21.0",
-    "url-loader": "^1.1.1",
+    "url-loader": "^1.0.1",
     "webpack": "^4.15.1",
     "webpack-cli": "^3.0.8",
     "webpack-dev-server": "^3.1.5"
-  },
-  "scripts": {
-    "build": "webpack --mode production",
-    "start": "webpack-dev-server --mode development"
   }
 }

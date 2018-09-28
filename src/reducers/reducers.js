@@ -3,17 +3,10 @@ import { combineReducers } from 'redux';
 // import logger from 'redux-logger';
 // import thunk from 'redux-thunk';
 
-import logo_upload from './logo_upload';
+import logoUpload from './logo_upload';
 
-// export default createStore(
-//     combineReducers({
-//         logo_upload
-//     }),
-//     {},
-//     applyMiddleware(thunk)
-// );
 const allReducers = combineReducers({
-  logo_upload
+  logo_upload: logoUpload
 });
 
 export default allReducers;
