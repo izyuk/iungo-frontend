@@ -104,6 +104,32 @@
           width: 100%;
           display: flex;
           justify-content: space-between;
+          .left{
+            flex: 1;
+            &>span{
+              font-weight: bold;
+            }
+          }
+          .right{
+            flex: 5;
+            .innerRow{
+              width: 100%;
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+              margin: 20px;
+              &:first-child{
+                margin-top: 0;
+              }
+              &>span{
+                width: 100px;
+
+              }
+              &>input{
+
+              }
+            }
+          }
         }
       }
       .hr{
@@ -120,6 +146,7 @@
 
     }
   }
+
 }
 
 .preview {
@@ -132,3 +159,4 @@
     align-items: center;
   }
 }
+

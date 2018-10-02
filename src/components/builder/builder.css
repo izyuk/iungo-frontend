@@ -103,6 +103,28 @@
   display: flex;
   justify-content: space-between;
 }
+.options .wrap .dropdown .container .row .left {
+  flex: 1;
+}
+.options .wrap .dropdown .container .row .left > span {
+  font-weight: bold;
+}
+.options .wrap .dropdown .container .row .right {
+  flex: 5;
+}
+.options .wrap .dropdown .container .row .right .innerRow {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 20px;
+}
+.options .wrap .dropdown .container .row .right .innerRow:first-child {
+  margin-top: 0;
+}
+.options .wrap .dropdown .container .row .right .innerRow > span {
+  width: 100px;
+}
 .options .wrap .dropdown .hr {
   margin: 20px 0;
   width: 100%;

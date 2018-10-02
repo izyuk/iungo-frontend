@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Background from './background';
 import LogoImage from './logo-image';
+import Container from './container';
 import style from './builder.less';
 import {upload_file} from "../../reducers/file_upload";
 
@@ -51,13 +52,31 @@ class Options extends Component {
                                  onClick={this.tabHandler}>
                                 <span>Background</span>
                             </div>
-                            {this.state.visible == 'Background' ? <Background check={() => {this.activeChecker(this)}} type="background" style={style} ref={this.Background}/> : false}
+                            {this.state.visible === 'Background' ?
+                                <Background check={() => {this.activeChecker(this)}}
+                                            type="background"
+                                            style={style}/> :
+                                false}
                         </div>
                         <div className="wrap">
-                            <div className={style.head} onClick={this.tabHandler}>
+                            <div className={style.head}
+                                 onClick={this.tabHandler}>
                                 <span>Logo Image</span>
                             </div>
-                            {this.state.visible == 'Logo Image' ? <LogoImage type="logo" style={style} ref={this.LogoImage}/> : false}
+                            {this.state.visible === 'Logo Image' ?
+                                <LogoImage type="logo"
+                                           style={style}/>:
+                                false}
+                        </div>
+                        <div className="wrap">
+                            <div
+                                className={style.head}
+                                onClick={this.tabHandler}>
+                                <span>Container</span>
+                            </div>
+                            {this.state.visible === 'Container' ?
+                                <Container style={style}/> :
+                                false}
                         </div>
                     </div>
                 </div>
