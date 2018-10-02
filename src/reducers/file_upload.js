@@ -1,11 +1,10 @@
 import axios from "axios";
-import {dataTrasporter} from '../core/data-transporter';
 
 const UPLOAD_LOGO = "UPLOAD_LOGO";
 
 const fd = new FormData();
 
-export async function upload_logo(type, selectedFile, selectedFileName) {
+export async function upload_file(type, selectedFile, selectedFileName) {
     fd.append(type, selectedFile, selectedFileName);
     let query = axios.create({
         baseURL: 'http://localhost:4000'
@@ -13,12 +12,11 @@ export async function upload_logo(type, selectedFile, selectedFileName) {
     return {
         type: UPLOAD_LOGO,
         payload:
-            await query.post('/upload/logo', fd)
+            await query.post(`/upload/${type}`, fd)
                 .then(result => {
                     if (result.error) {
                         throw new Error("Error in uploading object");
                     }
-                    console.log(result);
                     return result.data;
                 })
                 .catch(error => {
@@ -28,12 +26,10 @@ export async function upload_logo(type, selectedFile, selectedFileName) {
 }
 
 export default function (state = [], action) {
-    // debugger;
-    console.log(action);
     switch (action.type) {
         case UPLOAD_LOGO:
             return Object.assign({}, {
-                logo_upload: action.payload,
+                file_upload: action.payload,
             });
         default:
             return state

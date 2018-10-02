@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { download_users } from '../reducers/logo_upload';
+import { download_users } from '../reducers/file_upload';
 import { Link } from 'react-router-dom';
 
 // import { loader } from './loader';

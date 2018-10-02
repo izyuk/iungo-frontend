@@ -2,13 +2,15 @@ import React, {Component} from 'react';
 import Background from './background';
 import LogoImage from './logo-image';
 import style from './builder.less';
+import {upload_file} from "../../reducers/file_upload";
 
 class Options extends Component {
     constructor(props) {
         super(props);
         this.state = {
             selectedFile: null,
-            visible: 'Background'
+            visible: 'Background',
+            event: ''
         };
         this.Background = React.createRef();
         this.LogoImage = React.createRef();
@@ -16,13 +18,21 @@ class Options extends Component {
     }
 
     tabHandler(e) {
-        console.log(document.getElementsByClassName(`${style.container}`).length);
-        for(let i = 0; i < document.getElementsByClassName(`${style.container}`).length; i++){
+        this.setState({
+            event: e.target
+        });
+        for (let i = 0; i < document.getElementsByClassName(`${style.container}`).length; i++) {
             document.getElementsByClassName(`${style.container}`)[i].classList.remove(style.active);
         }
-        e.target.closest(`.${style.head}`).nextSibling.classList.add(style.active)
+        this.setState({
+            visible: e.target.childNodes[0].innerHTML.trim()
+        });
+
     }
 
+    componentDidUpdate(){
+        this.state.event.closest(`.${style.head}`).nextSibling.classList.add(style.active);
+    }
 
     render() {
         return (
@@ -36,26 +46,24 @@ class Options extends Component {
                     </ul>
                     <div className={style.dropdown}>
                         <div className="wrap">
-                            <div className={style.head} onClick={this.tabHandler}>
+                            <div
+                                className={style.head}
+                                 onClick={this.tabHandler}>
                                 <span>Background</span>
                             </div>
-                            <Background style={style} ref={this.Background}/>
+                            {this.state.visible == 'Background' ? <Background check={() => {this.activeChecker(this)}} type="background" style={style} ref={this.Background}/> : false}
                         </div>
                         <div className="wrap">
                             <div className={style.head} onClick={this.tabHandler}>
                                 <span>Logo Image</span>
                             </div>
-                            <LogoImage style={style} ref={this.LogoImage}/>
+                            {this.state.visible == 'Logo Image' ? <LogoImage type="logo" style={style} ref={this.LogoImage}/> : false}
                         </div>
                     </div>
                 </div>
             </div>
         )
     }
-
-    // componentDidMount() {
-    //     this.inputRef.current.focus();
-    // }
 }
 
 export default Options;

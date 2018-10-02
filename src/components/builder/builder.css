@@ -95,7 +95,6 @@
   background: #eee;
 }
 .options .wrap .dropdown .container .imagePreview img {
-  width: 100%;
   max-width: 100%;
   object-fit: contain;
 }
