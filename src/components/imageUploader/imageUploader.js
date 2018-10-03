@@ -9,6 +9,7 @@ class ImageUploader extends Component {
             uploadedFile: '',
             selectedFile: null,
             displayColorPicker: false,
+            alignment: false,
             color: {
                 r: '241',
                 g: '112',
@@ -22,6 +23,8 @@ class ImageUploader extends Component {
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.previewRef = React.createRef();
+        this.logoRef = React.createRef();
+        this.alignment = this.alignment.bind(this);
     }
 
     fileSelectedHandler = event => {
@@ -29,6 +32,7 @@ class ImageUploader extends Component {
             selectedFile: event.target.files[0]
         });
         this.state.backgroundColor = false;
+        this.state.alignment = true;
         this.previewRef.current.style.backgroundColor = '';
     };
 
@@ -56,6 +60,15 @@ class ImageUploader extends Component {
         this.setState({displayColorPicker: false});
 
     };
+
+    alignment(e){
+        if(e.target.getAttribute('id') === 'left')
+            this.previewRef.current.style.justifyContent = 'flex-start';
+        if(e.target.getAttribute('id') === 'center')
+            this.previewRef.current.style.justifyContent = 'center';
+        if(e.target.getAttribute('id') === 'right')
+            this.previewRef.current.style.justifyContent = 'flex-end';
+    }
 
     handleChange = (color) => {
         this.setState({color: color.rgb});
@@ -131,11 +144,33 @@ class ImageUploader extends Component {
                                         <SketchPicker color={this.state.color}
                                                       onChange={this.handleChange}/>
                                     </div> :
-                                 null}
+                                    null}
                             </div>
                         </div>
                     </div>
                     :
+                    false}
+                {this.props.type == "logo" ?
+                    <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+                        {this.state.alignment ?
+                            <div className={this.props.style.row}>
+                                <span className={this.props.style.descr}>
+                                    Choose alignment
+                                </span>
+                                <div className={this.props.style.row} >
+                                    <label htmlFor="left">Left
+                                        <input onChange={this.alignment} id='left' type="radio" name='alignment'/>
+                                    </label>
+                                    <label htmlFor="center">Center
+                                        <input onChange={this.alignment} id='center' type="radio" name='alignment'/>
+                                    </label>
+                                    <label htmlFor="right">Right
+                                        <input onChange={this.alignment} id='right' type="radio" name='alignment'/>
+                                    </label>
+                                </div>
+                            </div> :
+                            false }
+                    </div> :
                     false}
             </div>
         )
