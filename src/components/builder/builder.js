@@ -9,7 +9,6 @@ class Builder extends Component {
         return(
             <div className={style.builder}>
                 <Options/>
-                {/*<Preview/>*/}
             </div>
         )
     }

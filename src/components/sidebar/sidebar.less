@@ -1,0 +1,62 @@
+@import "../../static/exp";
+
+.sidebar{
+  width: 72px;
+  min-width: 72px;
+  height: calc(100vh - 65px);
+  display: flex;
+  flex-direction: column;
+  background: @w;
+  box-shadow: 1px 0 2px 0 rgba(191, 197, 210, 0.15);
+  border-right: 1px solid @pale-grey-seven;
+  overflow: hidden;
+  transition: all .3s linear;
+  a{
+    .font(@avenir-medium, 14);
+    color: @steel;
+    font-weight: 500;
+    line-height: 1.71;
+    display: flex;
+    align-items: center;
+    margin-top: 32px;
+    padding-left: 24px;
+    border-left: 2px solid @trans;
+    height: 24px;
+    flex-wrap: nowrap;
+    svg{
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+    span{
+      padding-left: 24px;
+      width: 125px;
+      height: 24px;
+      flex-shrink: 0;
+      transition: all .3s linear;
+      opacity: 0;
+    }
+    &:hover,
+    &.active{
+      border-left: 2px solid @soft-blue;
+      color: @soft-blue;
+      path{
+        fill: @soft-blue;
+      }
+      g{
+        fill: @soft-blue;
+      }
+    }
+  }
+  &.opened{
+    transition: all .3s linear;
+    width: 200px;
+    min-width: 200px;
+    a{
+      span{
+        padding-left: 16px;
+        opacity: 1;
+      }
+    }
+  }
+}

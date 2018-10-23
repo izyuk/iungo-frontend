@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Index from './components';
-import Builder from './components/builder/builder';
+import Tool from './components/tool/tool';
+import Dashdoard from './components/dashboard/dashboard';
 
 class MainRouter extends Component{
   render(){
     return(
       <Switch>
         <Route exact path="/" component={Index}/>
-        <Route exact path="/builder" component={Builder}/>
+        <Route component={Tool}/>
       </Switch>
     )
   }

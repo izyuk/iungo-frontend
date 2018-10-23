@@ -35,10 +35,15 @@ class Options extends Component {
         this.state.event.closest(`.${style.head}`).nextSibling.classList.add(style.active);
     }
 
+    componentDidMount(){
+        this.setState({
+            event: this.Background.current
+        });
+    }
+
     render() {
         return (
             <div className={style.options}>
-                <p className="name">Builder</p>
                 <div className={style.wrap}>
                     <ul className={style.buttonsWrap}>
                         <li className={style.active}>Style</li>
@@ -49,7 +54,8 @@ class Options extends Component {
                         <div className="wrap">
                             <div
                                 className={style.head}
-                                 onClick={this.tabHandler}>
+                                onClick={this.tabHandler}
+                                ref={this.Background}>
                                 <span>Background</span>
                             </div>
                             {this.state.visible === 'Background' ?

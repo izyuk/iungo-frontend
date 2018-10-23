@@ -1,14 +1,211 @@
+.container {
+  width: 100%;
+  max-width: calc(100% - 48px);
+  margin: auto;
+}
+.wrap {
+  display: flex;
+  align-items: center;
+}
+.content {
+  display: flex;
+}
+@font-face {
+  font-family: 'Avenir LT Std 55 Roman';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 55 Roman'), url('./static/fonts/AvenirLTStd-Roman.woff') format('woff');
+}
+@font-face {
+  font-family: 'Avenir LT Std 55 Oblique';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 55 Oblique'), url('./static/fonts/AvenirLTStd-Oblique.woff') format('woff');
+}
+@font-face {
+  font-family: 'Avenir LT Std 35 Light';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 35 Light'), url('./static/fonts/AvenirLTStd-Light.woff') format('woff');
+}
+@font-face {
+  font-family: 'Avenir LT Std 35 Light Oblique';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 35 Light Oblique'), url('./static/fonts/AvenirLTStd-LightOblique.woff') format('woff');
+}
+@font-face {
+  font-family: 'Avenir LT Std 45 Book';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 45 Book'), url('./static/fonts/AvenirLTStd-Book.woff') format('woff');
+}
+@font-face {
+  font-family: 'Avenir LT Std 45 Book Oblique';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 45 Book Oblique'), url('./static/fonts/AvenirLTStd-BookOblique.woff') format('woff');
+}
+@font-face {
+  font-family: 'Avenir LT Std 65 Medium';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 65 Medium'), url('./static/fonts/AvenirLTStd-Medium.woff') format('woff');
+}
+@font-face {
+  font-family: 'Avenir LT Std 65 Medium Oblique';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 65 Medium Oblique'), url('./static/fonts/AvenirLTStd-MediumOblique.woff') format('woff');
+}
+@font-face {
+  font-family: 'Avenir LT Std 85 Heavy';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 85 Heavy'), url('./static/fonts/AvenirLTStd-Heavy.woff') format('woff');
+}
+@font-face {
+  font-family: 'Avenir LT Std 85 Heavy Oblique';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 85 Heavy Oblique'), url('./static/fonts/AvenirLTStd-HeavyOblique.woff') format('woff');
+}
+@font-face {
+  font-family: 'Avenir LT Std 95 Black';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 95 Black'), url('./static/fonts/AvenirLTStd-Black.woff') format('woff');
+}
+@font-face {
+  font-family: 'Avenir LT Std 95 Black Oblique';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 95 Black Oblique'), url('./static/fonts/AvenirLTStd-BlackOblique.woff') format('woff');
+}
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+button,
+fieldset,
+form,
+input,
+label,
+legend,
+textarea,
+select,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+a,
+b,
+i,
+u,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  font-size: 100%;
+  font-style: normal;
+  font-weight: normal;
+  line-height: inherit;
+  vertical-align: baseline;
+  background: none;
+  white-space: normal;
+  list-style: none;
+}
+form {
+  height: inherit;
+}
+iframe {
+  width: 100%;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 * {
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+A:link,
+A:active,
+A:hover,
+A:visited {
+  text-decoration: none;
+  color: inherit;
 }
 ul {
-  padding: 0;
   margin: 0;
+  padding: 0;
   list-style: none;
+}
+button,
+input,
+select {
+  outline: none;
+  cursor: pointer;
 }
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 16px;
+  font-size: 1rem;
 }
 /*# sourceMappingURL=index.css.map */

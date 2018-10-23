@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { download_users } from '../reducers/file_upload';
-import { Link } from 'react-router-dom';
 
-// import { loader } from './loader';
-import Builder from './dashboard/builder';
+import Login from './login/login';
+
 import style from './index.less';
 
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    // this.loadData = this.loadData.bind(this);
+    // this.loadData = this.loadData.bind(this);s
   }
 
   // componentDidMount() {
@@ -52,13 +51,17 @@ class Index extends Component {
 
   render() {
     return (
-      <div>
-        <Button onClick={this.loadData}/>
-          <Link to='/builder'>Builder</Link>
+      <div className={style.loginPage}>
 
         {/*<div className={style.list}>*/}
           {/*{(!this.state.data && !this.state.status && this.state.click) ? <Loader/> : this.state.data}*/}
         {/*</div>*/}
+        <div className={style.loginWrap}>
+            <div className={style.logo}>
+                <img src={require('../static/images/logo.png')} alt=""/>
+            </div>
+            <Login/>
+        </div>
       </div>
     );
   }

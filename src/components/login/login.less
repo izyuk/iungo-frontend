@@ -1,0 +1,120 @@
+@import '../../static/exp';
+
+.formWrap {
+  width: 100%;
+  background: @w;
+  border-radius: 4px;
+  box-shadow: 0 1px 9px 0 rgba(191, 197, 210, 0.25);
+  border: solid 1px @pale-grey-three;
+  padding: 24px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p{
+    margin: 0;
+    .font(@avenir-medium, 16);
+    color: @dark-indigo;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 2;
+    letter-spacing: normal;
+    text-align: center;
+  }
+  .login{
+    .font(@avenir-heavy, 12);
+    color: @w;
+    font-weight: bold;
+    line-height: 2;
+    padding: 4px 40px;
+    border-radius: 16px;
+    border: 1px solid @cornflower-blue;
+    background: @soft-blue;
+    &:hover{
+      background: @cornflower-blue;
+    }
+  }
+}
+
+.inputsWrap {
+  width: 100%;
+  margin: 24px 0;
+  .email{
+    margin-bottom: 16px;
+  }
+  &>div{
+    width: 100%;
+    height: 40px;
+    border-radius: 2px;
+    border: solid 1px @light-blue-grey;
+    background-color: @pale-grey-five;
+    position: relative;
+    display: flex;
+    span{
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      opacity: .5;
+      border-radius: 2px;
+      background: @pale-grey-six;
+    }
+    &.email{
+      &:after{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        background: url("../../static/images/email.svg") no-repeat;
+        background-size: 16px 14px;
+        z-index: 1;
+      }
+    }
+    input{
+      width: calc(100% - 40px);
+      border: 1px solid transparent;
+      background: transparent;
+      .font(@avenir-heavy, 12);
+      font-weight: bold;
+      line-height: 2;
+      text-align: center;
+      color: @steel-three;
+      &::-webkit-input-placeholder {
+        color: @steel-three;
+        text-align: center;
+        .font(@avenir-heavy, 12);
+        font-weight: bold;
+        line-height: 2;
+        text-align: center;
+      }
+      &::-moz-placeholder {
+        color: @steel-three;
+        text-align: center;
+        .font(@avenir-heavy, 12);
+        font-weight: bold;
+        line-height: 2;
+        text-align: center;
+      }
+      &:-ms-input-placeholder {
+        color: @steel-three;
+        text-align: center;
+        .font(@avenir-heavy, 12);
+        font-weight: bold;
+        line-height: 2;
+        text-align: center;
+      }
+      &:-moz-placeholder {
+        color: @steel-three;
+        text-align: center;
+        .font(@avenir-heavy, 12);
+        font-weight: bold;
+        line-height: 2;
+        text-align: center;
+      }
+    }
+  }
+}

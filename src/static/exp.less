@@ -1,0 +1,77 @@
+@dark-indigo: #071031;
+@trans: transparent;
+@soft-blue: #5585ed;
+@cornflower-blue: #4372d6;
+@w: #fff;
+@steel: #768198;
+@steel-two: #7b869c;
+@steel-three: #7a859b;
+@lgray: #eee;
+@pale-grey: #e9ebf0;
+@pale-grey-two: #f9f9fc;
+@pale-grey-three: #e5e9f2;
+@pale-grey-four: #f3f4f8;
+@pale-grey-five: #f1f3f8;
+@pale-grey-six: #dde1ec;
+@pale-grey-seven: #e7e9ef;
+@marine: #0a2463;
+@cloudy-blue: #a6b4d6;
+@light-blue-grey: #dee5f3;
+@dark-blue-grey: #161f3e;
+@dark-blue-grey-two: #131c3b;
+@dark-blue-grey-three: #101939;
+@shamrock-green: #00d463;
+
+@avenir-black: 'AvenirLTStd-Black';
+@avenir-blackOblique: 'AvenirLTStd-BlackOblique';
+@avenir-book: 'AvenirLTStd-Book';
+@avenir-bookOblique: 'AvenirLTStd-BookOblique';
+@avenir-heavy: 'AvenirLTStd-Heavy';
+@avenir-heavyOblique: 'AvenirLTStd-HeavyOblique';
+@avenir-light: 'AvenirLTStd-Light';
+@avenir-lightOblique: 'AvenirLTStd-LightOblique';
+@avenir-medium: 'AvenirLTStd-Medium';
+@avenir-mediumOblique: 'AvenirLTStd-MediumOblique';
+@avenir-oblique: 'AvenirLTStd-Oblique';
+@avenir-roman: 'AvenirLTStd-Roman';
+
+@font: './static/fonts';
+
+@gray_menu_hover: #5d5d5d;
+@l_gray: #f1f1f1;
+@adm_gray: #c7c7c7;
+@btn_register: #0B65B1;
+@btn_login: #E2F0FC;
+@btn_border: #063A66;
+@btn_color: #063A66;
+@trans: transparent;
+@input_color: #95989A;
+@hr: #909090;
+@randText: #212121;
+@reviewPlans: rgba(0, 0, 0, 0.6);
+@borderRegister: rgba(0, 0, 0, 0.2);
+
+@img: './static/images';
+.font(@font,
+@sizeValue) {
+  font-family: @font, sans-serif;
+  @remValue: (@sizeValue / 16);
+  @pxValue: @sizeValue;
+  font-size:~"@{pxValue}px";
+  font-size:~"@{remValue}rem";
+}
+
+.container{
+  width: 100%;
+  max-width: calc(100% - 48px);
+  margin: auto;
+}
+
+.wrap{
+  display: flex;
+  align-items: center;
+}
+
+.content{
+  display: flex;
+}

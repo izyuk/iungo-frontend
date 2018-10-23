@@ -23,7 +23,6 @@ class ImageUploader extends Component {
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.previewRef = React.createRef();
-        this.logoRef = React.createRef();
         this.alignment = this.alignment.bind(this);
     }
 

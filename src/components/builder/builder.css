@@ -1,32 +1,20 @@
-.builder {
-  display: flex;
-  align-items: stretch;
-  height: 100vh;
+.container {
+  width: 100%;
+  max-width: calc(100% - 48px);
+  margin: auto;
 }
-.builder > div p {
-  margin: 0;
-  position: relative;
+.wrap {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
-.builder > div p:before {
-  content: '';
-  position: relative;
-  width: 15px;
-  height: 1px;
-  background: #000;
-}
-.builder > div p:after {
-  content: '';
-  position: relative;
-  width: 100%;
-  height: 1px;
-  background: #000;
+.content {
+  display: flex;
 }
 .options {
-  flex: 1;
-  border-right: 1px solid;
+  width: 320px;
+  min-width: 320px;
+  border-left: 1px solid #e7e9ef;
+  box-shadow: -1px 0 2px 0 rgba(191, 197, 210, 0.15);
 }
 .options .wrap {
   width: 100%;
@@ -36,20 +24,26 @@
 }
 .options .wrap .buttonsWrap {
   display: flex;
+  justify-content: space-around;
+  width: 100%;
 }
 .options .wrap .buttonsWrap li {
-  flex: 1;
   display: flex;
-  border: 1px solid;
-  border-bottom: transparent;
-  border-radius: 5px 5px 0 0;
+  border-bottom: 2px solid transparent;
   justify-content: center;
   align-items: center;
-  padding: 5px 0;
+  padding: 16px 0;
   cursor: pointer;
+  line-height: 1.71;
+  color: #768198;
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 14px;
+  font-size: 0.875rem;
 }
+.options .wrap .buttonsWrap li.active,
 .options .wrap .buttonsWrap li:hover {
-  background: #eee;
+  border-bottom: 2px solid #5585ed;
+  color: #5585ed;
 }
 .options .wrap .dropdown {
   display: flex;
@@ -59,13 +53,14 @@
 .options .wrap .dropdown .head {
   width: 100%;
   background: #fff;
-  border: 1px solid;
   cursor: pointer;
-  padding: 5px;
-}
-.options .wrap .dropdown .head.active,
-.options .wrap .dropdown .head:hover {
-  background: #eee;
+  padding: 16px 0 16px 24px;
+  border-bottom: 1px solid #e7e9ef;
+  line-height: 2;
+  color: #768198;
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
 }
 .options .wrap .dropdown .tabList {
   display: flex;
@@ -80,6 +75,7 @@
   align-items: center;
   justify-content: center;
   padding: 10px;
+  border-bottom: 1px solid #e7e9ef;
 }
 .options .wrap .dropdown .container.active {
   display: flex;
@@ -100,7 +96,6 @@
 }
 .options .wrap .dropdown .container .row {
   width: 100%;
-  display: flex;
   justify-content: space-between;
 }
 .options .wrap .dropdown .container .row .left {
@@ -124,6 +119,9 @@
 }
 .options .wrap .dropdown .container .row .right .innerRow > span {
   width: 100px;
+}
+.options .wrap .dropdown .container .row .right .innerRow > input {
+  width: 100%;
 }
 .options .wrap .dropdown .hr {
   margin: 20px 0;

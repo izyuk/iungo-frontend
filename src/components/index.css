@@ -1,3 +1,15 @@
+.container {
+  width: 100%;
+  max-width: calc(100% - 48px);
+  margin: auto;
+}
+.wrap {
+  display: flex;
+  align-items: center;
+}
+.content {
+  display: flex;
+}
 .list {
   display: flex;
   flex-wrap: wrap;
@@ -16,7 +28,7 @@
   height: 50px;
   border-radius: 50px;
   border: 1px solid transparent;
-  border-top-color: #0B65B1;
+  border-top-color: #5585ed;
   animation: loader 1s linear infinite;
   position: absolute;
   display: inline-flex;
@@ -28,5 +40,25 @@
   100% {
     transform: rotate(360deg);
   }
+}
+.loginWrap {
+  width: 320px;
+  height: auto;
+}
+.logo {
+  width: 100%;
+  margin-bottom: 29px;
+}
+.logo img {
+  display: block;
+  margin: auto;
+}
+.loginPage {
+  background: #f9f9fc;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /*# sourceMappingURL=index.css.map */
