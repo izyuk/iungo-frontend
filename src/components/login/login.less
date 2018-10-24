@@ -33,9 +33,22 @@
       background: @cornflower-blue;
     }
   }
+  .question{
+    .font(@avenir-medium, 14);
+    color: @steel;
+    line-height: unset;
+    margin-top: 10px;
+    button{
+      border: none;
+      .font(@avenir-medium, 14);
+      color: @steel;
+      border-bottom: 1px solid @steel;
+    }
+  }
 }
 
-.inputsWrap {
+.inputsWrap,
+.socialsWrap{
   width: 100%;
   margin: 24px 0;
   .email{
@@ -43,7 +56,7 @@
   }
   &>div{
     width: 100%;
-    height: 40px;
+    height: 42px;
     border-radius: 2px;
     border: solid 1px @light-blue-grey;
     background-color: @pale-grey-five;
@@ -56,7 +69,6 @@
       align-items: center;
       width: 40px;
       height: 40px;
-      opacity: .5;
       border-radius: 2px;
       background: @pale-grey-six;
     }
@@ -114,6 +126,37 @@
         font-weight: bold;
         line-height: 2;
         text-align: center;
+      }
+    }
+  }
+}
+
+.socialsWrap{
+  div{
+    cursor: pointer;
+    border: 1px solid @trans;
+    border-radius: 2px;
+    input{
+      color: @w;
+      .font(@avenir-heavy, 12);
+      justify-content: center;
+      align-items: center;
+    }
+    span{
+    }
+    &:first-child{
+      margin-bottom: 16px;
+    }
+    &.fb{
+      background-color: @french-blue;
+      span{
+        background: @light-navy-blue;
+      }
+    }
+    &.google{
+      background-color: @dodger-blue;
+      span{
+        background: @dark-sky-blue;
       }
     }
   }

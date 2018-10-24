@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { download_users } from '../reducers/file_upload';
 
-import Login from './login/login';
+import Enter from './login/enter';
 
 import style from './index.less';
 
@@ -60,7 +60,7 @@ class Index extends Component {
             <div className={style.logo}>
                 <img src={require('../static/images/logo.png')} alt=""/>
             </div>
-            <Login/>
+            <Enter/>
         </div>
       </div>
     );

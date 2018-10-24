@@ -1,21 +1,11 @@
 import React, {Component} from 'react';
 import style from './login.less';
 
-import {Link} from 'react-router-dom';
-
-class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
-    render() {
-        return (
-            <div className={style.formWrap}>
-                <p>Welcome to IUNGO Network </p>
-
-                <div className={style.inputsWrap}>
-                    <div className={style.email}>
+class Login extends Component{
+    render(){
+        return(
+            <div className={style.inputsWrap}>
+                <div className={style.email}>
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14">
                                 <g fill="#8D98B0" fillRule="nonzero">
@@ -24,14 +14,12 @@ class Login extends Component {
                                 </g>
                             </svg>
                         </span>
-                        <input type="email" placeholder="Your Email"/>
-                    </div>
-                    <div className={style.password}>
-                        <span></span>
-                        <input type="password" placeholder="Your Password"/>
-                    </div>
+                    <input type="email" placeholder="Your Email"/>
                 </div>
-                <Link className={style.login} to="/dashboard">Login</Link>
+                <div className={style.password}>
+                    <span></span>
+                    <input type="password" placeholder="Your Password"/>
+                </div>
             </div>
         )
     }
