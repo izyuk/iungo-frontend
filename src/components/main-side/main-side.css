@@ -1,0 +1,17 @@
+.container {
+  width: 100%;
+  max-width: calc(100% - 48px);
+  margin: auto;
+}
+.wrap {
+  display: flex;
+  align-items: center;
+}
+.content {
+  display: flex;
+}
+.mainSide {
+  width: 100%;
+  background: #f9f9fc;
+}
+/*# sourceMappingURL=main-side.css.map */

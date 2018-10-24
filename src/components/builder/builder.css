@@ -26,6 +26,8 @@
   display: flex;
   justify-content: space-around;
   width: 100%;
+  border-bottom: 1px solid #e7e9ef;
+  background: #fff;
 }
 .options .wrap .buttonsWrap li {
   display: flex;
@@ -54,13 +56,24 @@
   width: 100%;
   background: #fff;
   cursor: pointer;
-  padding: 16px 0 16px 24px;
+  padding: 16px 24px;
   border-bottom: 1px solid #e7e9ef;
-  line-height: 2;
-  color: #768198;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.options .wrap .dropdown .head span {
   font-family: 'AvenirLTStd-Medium', sans-serif;
   font-size: 12px;
   font-size: 0.75rem;
+  line-height: 2;
+  color: #768198;
+}
+.options .wrap .dropdown .head svg {
+  transform: rotate(0deg);
+}
+.options .wrap .dropdown .head.active svg {
+  transform: rotate(180deg);
 }
 .options .wrap .dropdown .tabList {
   display: flex;

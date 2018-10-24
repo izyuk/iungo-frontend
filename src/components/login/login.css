@@ -1,0 +1,191 @@
+.container {
+  width: 100%;
+  max-width: calc(100% - 48px);
+  margin: auto;
+}
+.wrap {
+  display: flex;
+  align-items: center;
+}
+.content {
+  display: flex;
+}
+.formWrap {
+  width: 100%;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 9px 0 rgba(191, 197, 210, 0.25);
+  border: solid 1px #e5e9f2;
+  padding: 24px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.formWrap p {
+  margin: 0;
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 16px;
+  font-size: 1rem;
+  color: #071031;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 2;
+  letter-spacing: normal;
+  text-align: center;
+}
+.formWrap .login {
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  color: #fff;
+  font-weight: bold;
+  line-height: 2;
+  padding: 4px 40px;
+  border-radius: 16px;
+  border: 1px solid #4372d6;
+  background: #5585ed;
+}
+.formWrap .login:hover {
+  background: #4372d6;
+}
+.formWrap .question {
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 14px;
+  font-size: 0.875rem;
+  color: #768198;
+  line-height: unset;
+  margin-top: 10px;
+}
+.formWrap .question button {
+  border: none;
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 14px;
+  font-size: 0.875rem;
+  color: #768198;
+  border-bottom: 1px solid #768198;
+}
+.inputsWrap,
+.socialsWrap {
+  width: 100%;
+  margin: 24px 0;
+}
+.inputsWrap .email,
+.socialsWrap .email {
+  margin-bottom: 16px;
+}
+.inputsWrap > div,
+.socialsWrap > div {
+  width: 100%;
+  height: 42px;
+  border-radius: 2px;
+  border: solid 1px #dee5f3;
+  background-color: #f1f3f8;
+  position: relative;
+  display: flex;
+}
+.inputsWrap > div span,
+.socialsWrap > div span {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 2px;
+  background: #dde1ec;
+}
+.inputsWrap > div.email:after,
+.socialsWrap > div.email:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  background: url("../../static/images/email.svg") no-repeat;
+  background-size: 16px 14px;
+  z-index: 1;
+}
+.inputsWrap > div input,
+.socialsWrap > div input {
+  width: calc(100% - 40px);
+  border: 1px solid transparent;
+  background: transparent;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+  color: #7a859b;
+}
+.inputsWrap > div input::-webkit-input-placeholder,
+.socialsWrap > div input::-webkit-input-placeholder {
+  color: #7a859b;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+}
+.inputsWrap > div input::-moz-placeholder,
+.socialsWrap > div input::-moz-placeholder {
+  color: #7a859b;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+}
+.inputsWrap > div input:-ms-input-placeholder,
+.socialsWrap > div input:-ms-input-placeholder {
+  color: #7a859b;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+}
+.inputsWrap > div input:-moz-placeholder,
+.socialsWrap > div input:-moz-placeholder {
+  color: #7a859b;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+}
+.socialsWrap div {
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
+.socialsWrap div input {
+  color: #fff;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  justify-content: center;
+  align-items: center;
+}
+.socialsWrap div:first-child {
+  margin-bottom: 16px;
+}
+.socialsWrap div.fb {
+  background-color: #4166b2;
+}
+.socialsWrap div.fb span {
+  background: #345497;
+}
+.socialsWrap div.google {
+  background-color: #4285f4;
+}
+.socialsWrap div.google span {
+  background: #3675de;
+}
+/*# sourceMappingURL=login.css.map */

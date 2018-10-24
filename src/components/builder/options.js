@@ -57,6 +57,9 @@ class Options extends Component {
                                 onClick={this.tabHandler}
                                 ref={this.Background}>
                                 <span>Background</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path fill="#BFC5D2" fillRule="nonzero" d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
+                                </svg>
                             </div>
                             {this.state.visible === 'Background' ?
                                 <Background check={() => {this.activeChecker(this)}}
@@ -68,6 +71,9 @@ class Options extends Component {
                             <div className={style.head}
                                  onClick={this.tabHandler}>
                                 <span>Logo Image</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path fill="#BFC5D2" fillRule="nonzero" d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
+                                </svg>
                             </div>
                             {this.state.visible === 'Logo Image' ?
                                 <LogoImage type="logo"
@@ -79,6 +85,9 @@ class Options extends Component {
                                 className={style.head}
                                 onClick={this.tabHandler}>
                                 <span>Container</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path fill="#BFC5D2" fillRule="nonzero" d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
+                                </svg>
                             </div>
                             {this.state.visible === 'Container' ?
                                 <Container style={style}/> :
