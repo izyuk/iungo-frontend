@@ -23,6 +23,7 @@
 }
 .wrapFix2 {
   align-items: flex-start;
+  flex-direction: column;
 }
 .containerFix {
   margin: unset;

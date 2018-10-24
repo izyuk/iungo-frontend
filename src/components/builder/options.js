@@ -14,7 +14,6 @@ class Options extends Component {
             event: ''
         };
         this.Background = React.createRef();
-        this.LogoImage = React.createRef();
         this.tabHandler = this.tabHandler.bind(this);
     }
 
