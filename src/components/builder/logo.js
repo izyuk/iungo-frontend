@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {upload_file} from '../../reducers/file_upload';
 import ImageUploader from '../imageUploader/imageUploader';
 
-class LogoImage extends Component {
+class Logo extends Component {
     constructor(props) {
         super(props);
         this.state = {};

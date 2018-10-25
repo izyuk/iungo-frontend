@@ -1,20 +1,166 @@
 @import "../../static/exp";
 
-.previewWrap{
+.header{
   width: 100%;
-  height: 100%;
-  background: @w;
-  border: 1px solid @pale-grey-three;
-  border-radius: 4px;
-  box-shadow: 0 1px 2px 0 rgba(191, 197, 210, 0.15);
-  padding: 32px;
-  display: flex;
 }
 
-.previewMain{
+.section{
   width: 100%;
-  height: 100%;
+  background: @w;
+  padding: 24px 32px 32px 32px;
   border: 1px solid @pale-grey-three;
-  border-radius: 4px;
-  background: @pale-grey-two;
+  box-shadow: 0 1px 9px 0 rgba(191, 197, 210, 0.25);
+}
+
+.footer{
+  width: 100%;
+}
+
+.previewContainer{
+  width: 90%;
+  min-width: 320px;
+  display: block;
+  margin: 0 auto;
+  transition: all 0.3s linear;
+  &.mobile{
+    width: 320px;
+    transition: all 0.3s linear;
+  }
+}
+
+.logoPlace{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  transition: all 0.3s linear;
+  img{
+    width: auto;
+    object-fit: contain;
+  }
+}
+
+.contentPlace{
+
+}
+
+
+.inputsWrap,
+.socialsWrap{
+  width: 100%;
+  margin: 16px 0;
+  .email{
+    margin-bottom: 16px;
+  }
+  &>div{
+    width: 100%;
+    height: 42px;
+    border-radius: 2px;
+    border: solid 1px @light-blue-grey;
+    background-color: @pale-grey-five;
+    position: relative;
+    display: flex;
+    span{
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 2px;
+      background: @pale-grey-six;
+    }
+    &.email{
+      &:after{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        background: url("../../static/images/email.svg") no-repeat;
+        background-size: 16px 14px;
+        z-index: 1;
+      }
+    }
+    input{
+      width: calc(100% - 40px);
+      border: 1px solid transparent;
+      background: transparent;
+      .font(@avenir-heavy, 12);
+      font-weight: bold;
+      line-height: 2;
+      text-align: center;
+      color: @steel-three;
+      &::-webkit-input-placeholder {
+        color: @steel-three;
+        text-align: center;
+        .font(@avenir-heavy, 12);
+        font-weight: bold;
+        line-height: 2;
+        text-align: center;
+      }
+      &::-moz-placeholder {
+        color: @steel-three;
+        text-align: center;
+        .font(@avenir-heavy, 12);
+        font-weight: bold;
+        line-height: 2;
+        text-align: center;
+      }
+      &:-ms-input-placeholder {
+        color: @steel-three;
+        text-align: center;
+        .font(@avenir-heavy, 12);
+        font-weight: bold;
+        line-height: 2;
+        text-align: center;
+      }
+      &:-moz-placeholder {
+        color: @steel-three;
+        text-align: center;
+        .font(@avenir-heavy, 12);
+        font-weight: bold;
+        line-height: 2;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.socialsWrap{
+  div{
+    cursor: pointer;
+    border: 1px solid @trans;
+    border-radius: 2px;
+    input{
+      color: @w;
+      .font(@avenir-heavy, 12);
+      justify-content: center;
+      align-items: center;
+    }
+    span{
+    }
+    &:not(:last-child){
+      margin-bottom: 16px;
+    }
+    &.fb{
+      background-color: @french-blue;
+      span{
+        background: @light-navy-blue;
+      }
+    }
+    &.google{
+      background-color: @dodger-blue;
+      span{
+        background: @dark-sky-blue;
+      }
+    }
+    &.tw{
+      background-color: @azure;
+      span{
+        background: @water-blue;
+      }
+    }
+  }
 }

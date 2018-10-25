@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Background from './background';
-import LogoImage from './logo-image';
+import Logo from './logo';
 import Container from './container';
 import style from './builder.less';
 import {upload_file} from "../../reducers/file_upload";
@@ -21,17 +21,18 @@ class Options extends Component {
         this.setState({
             event: e.target
         });
-        for (let i = 0; i < document.getElementsByClassName(`${style.container}`).length; i++) {
-            document.getElementsByClassName(`${style.container}`)[i].classList.remove(style.active);
+        for (let i = 0; i < document.querySelectorAll(`.${style.head}`).length; i++) {
+            document.querySelectorAll(`.${style.head}`)[i].classList.remove(style.active);
         }
         this.setState({
-            visible: e.target.childNodes[0].innerHTML.trim()
+            visible: e.target.childNodes[0].innerHTML
         });
 
     }
 
     componentDidUpdate(){
         this.state.event.closest(`.${style.head}`).nextSibling.classList.add(style.active);
+        this.state.event.closest(`.${style.head}`).classList.add(style.active);
     }
 
     componentDidMount(){
@@ -69,13 +70,13 @@ class Options extends Component {
                         <div className="wrap">
                             <div className={style.head}
                                  onClick={this.tabHandler}>
-                                <span>Logo Image</span>
+                                <span>Logo</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                     <path fill="#BFC5D2" fillRule="nonzero" d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
                                 </svg>
                             </div>
-                            {this.state.visible === 'Logo Image' ?
-                                <LogoImage type="logo"
+                            {this.state.visible === 'Logo' ?
+                                <Logo type="logo"
                                            style={style}/>:
                                 false}
                         </div>

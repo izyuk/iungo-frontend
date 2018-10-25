@@ -9,7 +9,37 @@ import Options from '../builder/options';
 class CaptivePortal extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            mobile: false
+        };
+        this.trigger = this.trigger.bind(this);
+    }
+
+    trigger(data){
+        document.querySelectorAll('[data-id]')[0].classList.remove(`${style.active}`);
+        document.querySelectorAll('[data-id]')[1].classList.remove(`${style.active}`);
+
+        if(data.target.nodeName === 'A') {
+            data.target.classList.add(`${style.active}`);
+            // this.setState({
+            //     mobile: !this.state.mobile
+            // });
+        }
+        else if (data.target.closest('a').getAttribute('data-id')) {
+            data.target.closest('a').classList.add(`${style.active}`);
+        }
+
+        if(data.target.getAttribute('data-id') === 'mobile' || data.target.closest('a').getAttribute('data-id') === 'mobile'){
+            this.setState({
+                mobile: true
+            });
+        } else {
+            this.setState({
+                mobile: false
+            });
+        }
+
+        console.log(this.state.mobile);
     }
 
     render() {
@@ -21,7 +51,8 @@ class CaptivePortal extends Component {
                             <div className={style.info}>
                                 <h3>Captive Portal Builder</h3>
                                 <div className={style.toggles}>
-                                    <a href="javascript:void(0)" className={style.active}>
+                                    <a href="javascript:void(0)" data-id="desktop"
+                                       className={style.active} onClick={(data) => this.trigger(data)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                              viewBox="0 0 24 24">
                                             <path fill="#BFC6D3" fillRule="nonzero"
@@ -29,7 +60,7 @@ class CaptivePortal extends Component {
                                         </svg>
                                         <span>Desktop</span>
                                     </a>
-                                    <a href="javascript:void(0)">
+                                    <a href="javascript:void(0)" data-id="mobile" onClick={(data) => this.trigger(data)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                              viewBox="0 0 24 24">
                                             <path fill="#AFB7C8" fillRule="nonzero"
@@ -40,7 +71,12 @@ class CaptivePortal extends Component {
                                     </a>
                                 </div>
                             </div>
-                            <Preview/>
+
+                            <div className={style.previewWrap}>
+                                <div className={style.previewMain}>
+                                    <Preview mobile={this.state.mobile}/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <Options/>

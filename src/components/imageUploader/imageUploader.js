@@ -60,12 +60,12 @@ class ImageUploader extends Component {
 
     };
 
-    alignment(e){
-        if(e.target.getAttribute('id') === 'left')
+    alignment(e) {
+        if (e.target.getAttribute('id') === 'left')
             this.previewRef.current.style.justifyContent = 'flex-start';
-        if(e.target.getAttribute('id') === 'center')
+        if (e.target.getAttribute('id') === 'center')
             this.previewRef.current.style.justifyContent = 'center';
-        if(e.target.getAttribute('id') === 'right')
+        if (e.target.getAttribute('id') === 'right')
             this.previewRef.current.style.justifyContent = 'flex-end';
     }
 
@@ -156,7 +156,7 @@ class ImageUploader extends Component {
                                 <span className={this.props.style.descr}>
                                     Choose alignment
                                 </span>
-                                <div className={this.props.style.row} >
+                                <div className={this.props.style.row}>
                                     <label htmlFor="left">Left
                                         <input onChange={this.alignment} id='left' type="radio" name='alignment'/>
                                     </label>
@@ -168,7 +168,7 @@ class ImageUploader extends Component {
                                     </label>
                                 </div>
                             </div> :
-                            false }
+                            false}
                     </div> :
                     false}
             </div>
