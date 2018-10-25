@@ -47,6 +47,7 @@ header{
     justify-content: space-between;
     display: flex;
     align-items: center;
+    position: relative;
     .avatar{
       display: flex;
       img{
@@ -60,6 +61,32 @@ header{
       text-indent: 16px;
       span{
         margin-right: 8px;
+      }
+    }
+    .popup{
+      display: none;
+      position: absolute;
+      z-index: 1;
+      top: 45px;
+      left: 0;
+      background: @w;
+      width: 100%;
+      box-shadow: 0 1px 9px 0 rgba(191, 197, 210, 0.25);
+      border: 1px solid @pale-grey-seven;
+      border-radius: 4px;
+      padding: 5px 0;
+      li{
+        display: flex;
+        a{
+          width: 100%;
+          padding: 0 10px;
+          &:hover{
+            background: @pale-grey-three;
+          }
+        }
+      }
+      &.active{
+        display: block;
       }
     }
   }

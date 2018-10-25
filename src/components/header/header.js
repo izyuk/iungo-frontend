@@ -3,16 +3,24 @@ import React, { Component } from 'react';
 import style from './header.less';
 import background from "../builder/background";
 
-
 class Header extends Component {
     constructor(props){
         super(props);
-        this.state={};
+        this.state = {
+            popup: false
+        };
         this.openClose = this.openClose.bind(this);
+        this.popup = this.popup.bind(this);
     }
 
     openClose(){
         this.props.sidebarStatus();
+    }
+
+    popup(){
+        this.setState({
+            popup: !this.state.popup
+        });
     }
 
     render(){
@@ -40,12 +48,21 @@ class Header extends Component {
                                 <div className={style.avatar}>
                                     <img src={require('../../static/images/oval.png')} alt=""/>
                                 </div>
-                                <a href="javascript:void(0)" className={style.caret}>
+                                <a href="javascript:void(0)"
+                                   className={style.caret}
+                                   onClick={this.popup}>
                                     <span>Steve Banks</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                         <path fill="#BFC5D2" fillRule="nonzero" d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
                                     </svg>
                                 </a>
+                                <div className={[style.popup, this.state.popup ? style.active : ''].join(' ')}>
+                                    <ul>
+                                        <li><a href="javascript:void(0)">Profile</a></li>
+                                        <li><a href="javascript:void(0)">Pricing</a></li>
+                                        <li><a href="javascript:void(0)">Log out</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

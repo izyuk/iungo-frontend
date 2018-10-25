@@ -10,7 +10,7 @@ class Preview extends Component {
 
     render() {
         return (
-            <div className={[style.previewContainer, this.props.mobile ? style.mobile : ''].join(' ')}>
+            <div className={style.previewContainer}>
                 <div className={style.header}>
                     <div className={style.logoPlace}>
                         <img src={require('../../static/images/logo.png')} alt=""/>

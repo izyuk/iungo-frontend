@@ -73,8 +73,8 @@ class CaptivePortal extends Component {
                             </div>
 
                             <div className={style.previewWrap}>
-                                <div className={style.previewMain}>
-                                    <Preview mobile={this.state.mobile}/>
+                                <div className={[style.previewMain, this.state.mobile ? style.mobile : ''].join(' ')}>
+                                    <Preview/>
                                 </div>
                             </div>
                         </div>

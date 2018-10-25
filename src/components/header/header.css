@@ -55,6 +55,7 @@ header {
   justify-content: space-between;
   display: flex;
   align-items: center;
+  position: relative;
 }
 .right .user .avatar {
   display: flex;
@@ -70,5 +71,31 @@ header {
 }
 .right .user .caret span {
   margin-right: 8px;
+}
+.right .user .popup {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  top: 45px;
+  left: 0;
+  background: #fff;
+  width: 100%;
+  box-shadow: 0 1px 9px 0 rgba(191, 197, 210, 0.25);
+  border: 1px solid #e7e9ef;
+  border-radius: 4px;
+  padding: 5px 0;
+}
+.right .user .popup li {
+  display: flex;
+}
+.right .user .popup li a {
+  width: 100%;
+  padding: 0 10px;
+}
+.right .user .popup li a:hover {
+  background: #e5e9f2;
+}
+.right .user .popup.active {
+  display: block;
 }
 /*# sourceMappingURL=header.css.map */
