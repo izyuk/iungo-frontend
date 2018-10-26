@@ -17,7 +17,7 @@ class ImageUploader extends Component {
                 a: '1',
             }
         };
-        this.fileUploadHandler = this.fileUploadHandler.bind(this);
+        // this.fileUploadHandler = this.fileUploadHandler.bind(this);
         this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -26,24 +26,32 @@ class ImageUploader extends Component {
         this.alignment = this.alignment.bind(this);
     }
 
-    fileSelectedHandler = event => {
-        this.setState({
-            selectedFile: event.target.files[0]
-        });
+    fileSelectedHandler = async (event)=> {
+        console.log(event.currentTarget.files);
+        let blob = event.currentTarget.files[0].slice(0, -1, 'image/png');
+        let newFile = new File([blob], `${this.props.type}.png`, {type: 'image/png'});
+
+        console.log(newFile);
+
         this.state.backgroundColor = false;
         this.state.alignment = true;
-        this.previewRef.current.style.backgroundColor = '';
+        await this.props.uploadFile(this.props.type, newFile, newFile.name);
+        newFile = null;
+        console.log(this.props[this.props.type]);
     };
 
-    fileUploadHandler = async () => {
-        await this.props.uploadFile(this.props.type, this.state.selectedFile, this.state.selectedFile.name);
-    };
+    // fileUploadHandler = async () => {
+    //     await this.props.uploadFile(this.props.type, this.state.selectedFile, this.state.selectedFile.name);
+    // };
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.file_upload !== this.props.file_upload) {
-            this.setState({
-                uploadedFile: this.props.file_upload.file_upload.file_upload
-            });
+            // this.setState({
+            //     uploadedFile: this.props.file_upload.file_upload.file_upload
+            // });
+            // console.log(this.state.uploadedFile);
+            console.log(this.props.file_upload.file_upload.file_upload);
+            console.log(this.props.file_upload);
         }
     }
 
@@ -108,45 +116,59 @@ class ImageUploader extends Component {
         return (
             <div
                 className={this.props.type == "background" ? [this.props.style.container, this.props.style.active].join(' ') : this.props.style.container}>
-                <div className={this.props.style.imagePreview}
-                     ref={this.previewRef}>
-                    {this.state.backgroundColor == false ? <img
-                        src={require(`../../static/uploads/${this.props.type}/${this.state.uploadedFile != '' ?
-                            this.state.uploadedFile :
-                            'preview.png'}`)}/> : false}
+                {/*<div className={this.props.style.imagePreview}*/}
+                {/*ref={this.previewRef}>*/}
+                {/*{this.state.backgroundColor == false ? <img*/}
+                {/*src={require(`../../static/uploads/${this.props.type}/${this.state.uploadedFile != '' ?*/}
+                {/*this.state.uploadedFile :*/}
+                {/*'preview.png'}`)}/> : false}*/}
 
-                </div>
+                {/*</div>*/}
                 <div className={this.props.style.row}>
-                    <span className={this.props.style.descr}>
-                        upload {this.props.type} image
-                    </span>
-                    <input type="file"
-                           onChange={this.fileSelectedHandler}/>
-                    <button onClick={this.fileUploadHandler}>Upload</button>
-                </div>
-                {this.props.type == "background" ?
-                    <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                        <p className={this.props.style.hr}>or</p>
-                        <div className={this.props.style.row}>
-                            <span className={this.props.style.descr}>
-                                choose color
-                            </span>
-                            <div>
-                                <div style={styles.swatch}
-                                     onClick={this.handleClick}>
-                                    <div style={styles.color}/>
-                                </div>
-                                {this.state.displayColorPicker ?
-                                    <div style={styles.popover}>
-                                        <div style={styles.cover}
-                                             onClick={this.handleClose}/>
-                                        <SketchPicker color={this.state.color}
-                                                      onChange={this.handleChange}/>
-                                    </div> :
-                                    null}
+                    <div className={this.props.style.left}>
+                        <span className={this.props.style.descr}>
+                            {/*upload {this.props.type}*/} Image
+                        </span>
+                    </div>
+                    <div className={this.props.style.right}>
+                        <div className={this.props.style.innerRow}>
+                            <div className={this.props.style.upload}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path fill="#FFF" fillRule="nonzero"
+                                          d="M17 11.1V11c0-2.8-2.2-5-5-5-2.5 0-4.6 1.8-4.9 4.3-1.8.6-3.1 2.2-3.1 4.2C4 17 6 19 8.5 19H16c2.2 0 4-1.8 4-4 0-1.9-1.3-3.4-3-3.9zM13 14v3h-2v-3H8l4-4 4 4h-3z"/>
+                                </svg>
+                                <span>Upload</span>
+                                <input type="file"
+                                       onChange={this.fileSelectedHandler}/>
                             </div>
                         </div>
                     </div>
+                    {/*<button onClick={this.fileUploadHandler}>Upload</button>*/}
+                </div>
+                {this.props.type == "background" ?
+                        <div className={this.props.style.row}>
+                            <div className={this.props.style.left}>
+                                <span className={this.props.style.descr}>
+                                    Color
+                                </span>
+                            </div>
+                            <div className={this.props.style.right}>
+                                <div className={this.props.style.innerRow}>
+                                    <div style={styles.swatch}
+                                         onClick={this.handleClick}>
+                                        <div style={styles.color}/>
+                                    </div>
+                                    {this.state.displayColorPicker ?
+                                        <div style={styles.popover}>
+                                            <div style={styles.cover}
+                                                 onClick={this.handleClose}/>
+                                            <SketchPicker color={this.state.color}
+                                                          onChange={this.handleChange}/>
+                                        </div> :
+                                        null}
+                                </div>
+                            </div>
+                        </div>
                     :
                     false}
                 {this.props.type == "logo" ?

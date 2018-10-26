@@ -19,20 +19,20 @@ class Options extends Component {
 
     tabHandler(e) {
         this.setState({
-            event: e.target
+            event: e.currentTarget
         });
         for (let i = 0; i < document.querySelectorAll(`.${style.head}`).length; i++) {
             document.querySelectorAll(`.${style.head}`)[i].classList.remove(style.active);
         }
         this.setState({
-            visible: e.target.childNodes[0].innerHTML
+            visible: e.currentTarget.childNodes[0].innerHTML
         });
 
     }
 
     componentDidUpdate(){
-        this.state.event.closest(`.${style.head}`).nextSibling.classList.add(style.active);
         this.state.event.closest(`.${style.head}`).classList.add(style.active);
+        this.state.event.closest(`.${style.head}`).nextSibling.classList.add(style.active);
     }
 
     componentDidMount(){

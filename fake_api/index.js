@@ -46,8 +46,6 @@ app.post('/upload/background', (req, res) => {
 });
 
 app.post('/upload/logo', (req, res) => {
-    console.log(req.method);
-    console.log(req.url);
     if (req.url === '/upload/logo' && req.method.toLowerCase() === 'post') {
         let form = new formidable.IncomingForm();
         res.writeHead(200, {'content-type': 'text/plain'});

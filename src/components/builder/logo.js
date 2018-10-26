@@ -18,7 +18,7 @@ class Logo extends Component {
 
 export default connect(
     state => ({
-        file_upload: state
+        logo: state
     }),
     dispatch => ({
         uploadFile: (typeString, selectedFile, selectedFileName) => {

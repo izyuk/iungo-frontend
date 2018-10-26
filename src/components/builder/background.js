@@ -21,7 +21,7 @@ class Background extends Component {
 
 export default connect(
     state => ({
-        file_upload: state
+        background: state
     }),
     dispatch => ({
         uploadFile: (typeString, selectedFile, selectedFileName) => {

@@ -51,6 +51,7 @@
   display: flex;
   flex-direction: column;
   font-size: 14px;
+  width: 100%;
 }
 .options .wrap .dropdown .head {
   width: 100%;
@@ -87,8 +88,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 24px;
   border-bottom: 1px solid #e7e9ef;
+  max-width: 100%;
 }
 .options .wrap .dropdown .container.active {
   display: flex;
@@ -109,13 +111,23 @@
 }
 .options .wrap .dropdown .container .row {
   width: 100%;
-  justify-content: space-between;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.options .wrap .dropdown .container .row:last-child {
+  margin-bottom: 0;
 }
 .options .wrap .dropdown .container .row .left {
   flex: 1;
 }
 .options .wrap .dropdown .container .row .left > span {
-  font-weight: bold;
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  line-height: 2.67;
+  color: #768198;
 }
 .options .wrap .dropdown .container .row .right {
   flex: 5;
@@ -125,10 +137,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 20px;
-}
-.options .wrap .dropdown .container .row .right .innerRow:first-child {
-  margin-top: 0;
+  margin-left: 24px;
 }
 .options .wrap .dropdown .container .row .right .innerRow > span {
   width: 100px;
@@ -146,6 +155,35 @@
   width: 100%;
   height: 1px;
   background: #000;
+}
+.options .wrap .dropdown .upload {
+  width: 100px;
+  padding: 2px 16px;
+  display: flex;
+  background: #5585ed;
+  border: 1px solid #4372d6;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.options .wrap .dropdown .upload span {
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  line-height: 2;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+.options .wrap .dropdown .upload input {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
 }
 .preview {
   flex: 2;
