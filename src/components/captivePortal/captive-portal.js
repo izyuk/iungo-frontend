@@ -13,7 +13,8 @@ class CaptivePortal extends Component {
         super(props);
         this.state = {
             mobile: false,
-            name: '',
+            backgrName: '',
+            logoName: '',
             type: '',
             backgroundType: 'color'
         };
@@ -23,8 +24,17 @@ class CaptivePortal extends Component {
     }
 
     eventHandler(name, type, backgroundType){
+        if(type === 'background'){
+            this.setState({
+                backgrName: name
+            })
+        }
+        if(type === 'logo'){
+            this.setState({
+                logoName: name
+            })
+        }
         this.setState({
-            name: name,
             type: type,
             backgroundType: backgroundType
         })
@@ -58,17 +68,23 @@ class CaptivePortal extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState){
-        if(this.state.name !== nextState.name){
-            console.log('name changed');
-            return (this.state.name !== nextState.name);
-        }
-        if(this.state.type !== nextState.type){
+        if(this.state.backgrName !== nextState.backgrName){
+            console.log('backgrName changed');
+            return (this.state.backgrName !== nextState.backgrName);
+        } else if(this.state.logoName !== nextState.logoName){
+            console.log('logoName changed');
+            return (this.state.logoName !== nextState.logoName);
+        } else if(this.state.type !== nextState.type){
             console.log('type changed');
             return (this.state.type !== nextState.type);
-        }
-        if(this.state.backgroundType !== nextState.backgroundType){
+        } else if(this.state.backgroundType !== nextState.backgroundType){
             console.log('backgroundType changed');
             return (this.state.backgroundType !== nextState.backgroundType);
+        } else if(this.state.mobile !== nextState.mobile){
+            console.log('mobile changed');
+            return (this.state.mobile !== nextState.mobile);
+        } else {
+            return false;
         }
     }
 
@@ -80,7 +96,7 @@ class CaptivePortal extends Component {
     }
 
     componentDidUpdate(){
-
+        console.log(this.state);
     }
 
     render() {
@@ -116,8 +132,8 @@ class CaptivePortal extends Component {
                             <div className={style.previewWrap}>
                                 <div className={[style.previewMain, this.state.mobile ? style.mobile : ''].join(' ')}
                                      ref={this.PreviewMain}
-                                     style={{background: this.state.type === 'background' ? (this.state.backgroundType === 'image' ? 'url(' + require('../../static/uploads/background/'+ this.state.name)+')' : this.state.name) : true}}>
-                                    <Preview/>
+                                     style={{background: this.state.backgroundType === 'image' ? 'url(' + require('../../static/uploads/background/'+ this.state.backgrName)+')' : this.state.backgrName}}>
+                                    <Preview logo={this.state}/>
                                 </div>
                             </div>
                         </div>

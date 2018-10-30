@@ -61,7 +61,6 @@ class ImageUploader extends Component {
 
     componentDidMount() {
         // console.log(this.props.type);
-        this.props.handler('#ffdfca', 'background', 'color');
     }
 
     // handleClick = () => {

@@ -7,19 +7,35 @@ class Preview extends Component {
         super(props);
         this.state = {
             changes: true,
-            backgrType: 'color'
+            backgrType: 'color',
+            logoName: this.props.logo.logoName === '' ? 'logo.png' : this.props.logo.logoName
         };
         // this.eventHandler = this.eventHandler.bind(this);
     }
 
+    componentDidUpdate(){
+        console.log(this.state.logoName);
+    }
 
+    componentDidMount(){
+        console.log(this.state.logoName);
+    }
+
+    shouldComponentUpdate(nextProps, nextState){
+        if(this.state.logoName !== nextState.logoName){
+            return (this.state.logoName !== nextState.logoName);
+        } else {
+            return false;
+        }
+    }
 
     render() {
         return (
             <div className={style.previewContainer}>
                 <div className={style.header}>
                     <div className={style.logoPlace}>
-                        <img src={require('../../static/images/logo.png')} alt=""/>
+                        <img src={require('../../static/images/'+this.state.logoName)} alt=""/>
+                        {/*<img src={require('../../static/images/'+ this.props.logo.logoName === '' ? 'logo.png' : this.props.logo.logoName)} alt=""/>*/}
                     </div>
                 </div>
                 <div className={style.section}>
