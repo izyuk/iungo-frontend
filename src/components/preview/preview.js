@@ -5,8 +5,14 @@ import style from './preview.less';
 class Preview extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            changes: true,
+            backgrType: 'color'
+        };
+        // this.eventHandler = this.eventHandler.bind(this);
     }
+
+
 
     render() {
         return (

@@ -64,7 +64,8 @@ class Options extends Component {
                             {this.state.visible === 'Background' ?
                                 <Background check={() => {this.activeChecker(this)}}
                                             type="background"
-                                            style={style}/> :
+                                            style={style}
+                                            handler={this.props.handler}/> :
                                 false}
                         </div>
                         <div className="wrap">
@@ -77,7 +78,8 @@ class Options extends Component {
                             </div>
                             {this.state.visible === 'Logo' ?
                                 <Logo type="logo"
-                                           style={style}/>:
+                                      style={style}
+                                      handler={this.props.handler}/>:
                                 false}
                         </div>
                         <div className="wrap">

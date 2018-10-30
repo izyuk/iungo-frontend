@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {SketchPicker} from "react-color";
+// import {SketchPicker} from "react-color";
 
 class Container extends Component {
     constructor(props) {
@@ -110,8 +110,8 @@ class Container extends Component {
                                     <div style={styles.popover}>
                                         <div style={styles.cover}
                                              onClick={this.handleClose}/>
-                                        <SketchPicker color={this.state.color}
-                                                      onChange={this.handleChange}/>
+                                        {/*<SketchPicker color={this.state.color}*/}
+                                                      {/*onChange={this.handleChange}/>*/}
                                     </div> :
                                     null}
                             </div>
@@ -142,8 +142,8 @@ class Container extends Component {
                                     <div style={styles.popover}>
                                         <div style={styles.cover}
                                              onClick={this.handleClose2}/>
-                                        <SketchPicker color={this.state.color2}
-                                                      onChange={this.handleChange2}/>
+                                        {/*<SketchPicker color={this.state.color2}*/}
+                                                      {/*onChange={this.handleChange2}/>*/}
                                     </div> :
                                     null}
                             </div>

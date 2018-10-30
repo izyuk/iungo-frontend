@@ -56,7 +56,6 @@ app.post('/upload/logo', (req, res) => {
             file.path = path.join(__dirname, '..', '/src/static/uploads/logo/', file.name);
         });
         form.on('file', function (name, file) {
-            console.log(file.name);
             res.end(file.name);
         });
     }

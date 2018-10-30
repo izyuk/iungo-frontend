@@ -1,18 +1,33 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 import style from './captive-portal.less';
 
 import Preview from '../preview/preview';
 import Options from '../builder/options';
+import {upload_file} from "../../reducers/file_upload";
 
 
 class CaptivePortal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mobile: false
+            mobile: false,
+            name: '',
+            type: '',
+            backgroundType: 'color'
         };
         this.trigger = this.trigger.bind(this);
+        this.eventHandler = this.eventHandler.bind(this);
+        this.PreviewMain = React.createRef();
+    }
+
+    eventHandler(name, type, backgroundType){
+        this.setState({
+            name: name,
+            type: type,
+            backgroundType: backgroundType
+        })
     }
 
     trigger(data){
@@ -40,6 +55,32 @@ class CaptivePortal extends Component {
         }
 
         console.log(this.state.mobile);
+    }
+
+    shouldComponentUpdate(nextProps, nextState){
+        if(this.state.name !== nextState.name){
+            console.log('name changed');
+            return (this.state.name !== nextState.name);
+        }
+        if(this.state.type !== nextState.type){
+            console.log('type changed');
+            return (this.state.type !== nextState.type);
+        }
+        if(this.state.backgroundType !== nextState.backgroundType){
+            console.log('backgroundType changed');
+            return (this.state.backgroundType !== nextState.backgroundType);
+        }
+    }
+
+    componentDidMount(){
+        console.log('mounted');
+        console.log(this.props.file_upload.backgroundType === 'image');
+        console.log(this.props.file_upload);
+        console.log(this.PreviewMain);
+    }
+
+    componentDidUpdate(){
+
     }
 
     render() {
@@ -73,17 +114,25 @@ class CaptivePortal extends Component {
                             </div>
 
                             <div className={style.previewWrap}>
-                                <div className={[style.previewMain, this.state.mobile ? style.mobile : ''].join(' ')}>
+                                <div className={[style.previewMain, this.state.mobile ? style.mobile : ''].join(' ')}
+                                     ref={this.PreviewMain}
+                                     style={{background: this.state.type === 'background' ? (this.state.backgroundType === 'image' ? 'url(' + require('../../static/uploads/background/'+ this.state.name)+')' : this.state.name) : true}}>
                                     <Preview/>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <Options/>
+                    <Options handler={this.eventHandler}/>
                 </div>
             </div>
         )
     }
 }
 
-export default CaptivePortal;
+export default connect(
+    state => ({
+        file_upload: state
+    }),
+    dispatch => ({})
+)(CaptivePortal);
+// export default CaptivePortal;

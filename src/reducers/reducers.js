@@ -8,7 +8,8 @@ import selectTab from './selectTab';
 
 const allReducers = combineReducers({
     file_upload: fileUpload,
-    tabName: selectTab
+    tabName: selectTab,
+
 });
 
 export default allReducers;
