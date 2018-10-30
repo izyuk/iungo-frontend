@@ -134,7 +134,7 @@ class CaptivePortal extends Component {
                             <div className={style.previewWrap}>
                                 <div className={[style.previewMain, this.state.mobile ? style.mobile : ''].join(' ')}
                                      ref={this.PreviewMain}
-                                     style={{background: this.state.backgroundType === 'image' ? (this.state.backgrName ? 'url(' + require('../../static/uploads/background/'+ this.state.backgrName)+')'  : '#ffdfca') : '#ffdfca'}}>
+                                     style={{background: this.state.backgroundType === 'image' ? (this.state.backgrName ? 'url(' + require('../../static/uploads/background/'+ this.state.backgrName)+')'  : '#f9f9fc') : '#f9f9fc'}}>
                                     <Preview logo={this.state.logoName}/>
                                 </div>
                             </div>
