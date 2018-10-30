@@ -8,33 +8,44 @@ class Preview extends Component {
         this.state = {
             changes: true,
             backgrType: 'color',
-            logoName: this.props.logo.logoName === '' ? 'logo.png' : this.props.logo.logoName
+            logoName: this.props.logo === '' ? 'logo.png' : this.props.logo
         };
         // this.eventHandler = this.eventHandler.bind(this);
     }
 
     componentDidUpdate(){
-        console.log(this.state.logoName);
+        // console.log(this.props.logo);
+        // console.log('preview update', this.state.logoName);
+        // console.log('../../static/uploads/logo/'+this.props.logo);
     }
 
     componentDidMount(){
-        console.log(this.state.logoName);
+        console.log('preview mount', this.state.logoName);
     }
 
     shouldComponentUpdate(nextProps, nextState){
         if(this.state.logoName !== nextState.logoName){
+            // console.log('Preview ======================');
             return (this.state.logoName !== nextState.logoName);
+        } else if(this.props.logo !== nextProps.logo) {
+            // console.log('Preview ======================');
+            return (this.props.logo !== nextProps.logo);
         } else {
             return false;
         }
     }
 
     render() {
+        // debugger;
         return (
             <div className={style.previewContainer}>
                 <div className={style.header}>
                     <div className={style.logoPlace}>
-                        <img src={require('../../static/images/'+this.state.logoName)} alt=""/>
+
+                        {/*<img src={require(this.props.logo === '' ? `../../static/images/${this.state.logoName}` : `../../static/uploads/logo/${this.state.logoName}`)} alt=""/>*/}
+                        {this.props.logo === '' ?
+                            <img src={require('../../static/images/logo.png')} alt=""/> :
+                            <img src={require('../../static/uploads/logo/'+this.props.logo)} alt=""/>}
                         {/*<img src={require('../../static/images/'+ this.props.logo.logoName === '' ? 'logo.png' : this.props.logo.logoName)} alt=""/>*/}
                     </div>
                 </div>
