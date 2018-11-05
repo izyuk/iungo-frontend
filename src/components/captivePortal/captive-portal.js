@@ -7,7 +7,6 @@ import Preview from '../preview/preview';
 import Options from '../builder/options';
 import {upload_file} from "../../reducers/file_upload";
 
-
 class CaptivePortal extends Component {
     constructor(props) {
         super(props);
@@ -23,13 +22,13 @@ class CaptivePortal extends Component {
         this.PreviewMain = React.createRef();
     }
 
-    eventHandler(name, type, backgroundType){
-        if(type === 'background'){
+    eventHandler(name, type, backgroundType) {
+        if (type === 'background') {
             this.setState({
                 backgrName: name
             })
         }
-        if(type === 'logo'){
+        if (type === 'logo') {
             this.setState({
                 logoName: name
             })
@@ -40,11 +39,11 @@ class CaptivePortal extends Component {
         })
     }
 
-    trigger(data){
+    trigger(data) {
         document.querySelectorAll('[data-id]')[0].classList.remove(`${style.active}`);
         document.querySelectorAll('[data-id]')[1].classList.remove(`${style.active}`);
 
-        if(data.target.nodeName === 'A') {
+        if (data.target.nodeName === 'A') {
             data.target.classList.add(`${style.active}`);
             // this.setState({
             //     mobile: !this.state.mobile
@@ -54,7 +53,7 @@ class CaptivePortal extends Component {
             data.target.closest('a').classList.add(`${style.active}`);
         }
 
-        if(data.target.getAttribute('data-id') === 'mobile' || data.target.closest('a').getAttribute('data-id') === 'mobile'){
+        if (data.target.getAttribute('data-id') === 'mobile' || data.target.closest('a').getAttribute('data-id') === 'mobile') {
             this.setState({
                 mobile: true
             });
@@ -63,24 +62,22 @@ class CaptivePortal extends Component {
                 mobile: false
             });
         }
-
-        console.log(this.state.mobile);
     }
 
-    shouldComponentUpdate(nextProps, nextState){
-        if(this.state.backgrName !== nextState.backgrName){
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.state.backgrName !== nextState.backgrName) {
             console.log('backgrName changed');
             return (this.state.backgrName !== nextState.backgrName);
-        } else if(this.state.logoName !== nextState.logoName){
+        } else if (this.state.logoName !== nextState.logoName) {
             console.log('logoName changed');
             return (this.state.logoName !== nextState.logoName);
-        } else if(this.state.type !== nextState.type){
+        } else if (this.state.type !== nextState.type) {
             console.log('type changed');
             return (this.state.type !== nextState.type);
-        } else if(this.state.backgroundType !== nextState.backgroundType){
+        } else if (this.state.backgroundType !== nextState.backgroundType) {
             console.log('backgroundType changed');
             return (this.state.backgroundType !== nextState.backgroundType);
-        } else if(this.state.mobile !== nextState.mobile){
+        } else if (this.state.mobile !== nextState.mobile) {
             console.log('mobile changed');
             return (this.state.mobile !== nextState.mobile);
         } else {
@@ -88,19 +85,15 @@ class CaptivePortal extends Component {
         }
     }
 
-    componentDidMount(){
-        console.log('mounted');
-        console.log(this.props.file_upload.backgroundType === 'image');
-        console.log(this.props.file_upload);
-        console.log(this.PreviewMain);
+    componentDidMount() {
+
     }
 
-    componentDidUpdate(){
-        console.log(this.state);
+    componentDidUpdate() {
+
     }
 
     render() {
-
         // debugger;
         return (
             <div className={[style.container].join(' ')}>
@@ -119,7 +112,8 @@ class CaptivePortal extends Component {
                                         </svg>
                                         <span>Desktop</span>
                                     </a>
-                                    <a href="javascript:void(0)" data-id="mobile" onClick={(data) => this.trigger(data)}>
+                                    <a href="javascript:void(0)" data-id="mobile"
+                                       onClick={(data) => this.trigger(data)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                              viewBox="0 0 24 24">
                                             <path fill="#AFB7C8" fillRule="nonzero"
@@ -130,14 +124,7 @@ class CaptivePortal extends Component {
                                     </a>
                                 </div>
                             </div>
-
-                            <div className={style.previewWrap}>
-                                <div className={[style.previewMain, this.state.mobile ? style.mobile : ''].join(' ')}
-                                     ref={this.PreviewMain}
-                                     style={{background: this.state.backgroundType === 'image' ? (this.state.backgrName ? 'url(' + require('../../static/uploads/background/'+ this.state.backgrName)+')'  : '#f9f9fc') : '#f9f9fc'}}>
-                                    <Preview logo={this.state.logoName}/>
-                                </div>
-                            </div>
+                            <Preview state={this.state}/>
                         </div>
                     </div>
                     <Options handler={this.eventHandler}/>

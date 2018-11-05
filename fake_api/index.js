@@ -6,6 +6,8 @@ const app = express();
 const port = 4000;
 var path = require('path');
 
+var fs = require('fs');
+
 const data = require('./data');
 
 app.use(bodyParser.json());
@@ -32,15 +34,28 @@ app.put(':/key(*)', (req, res) => {
 app.post('/upload/background', (req, res) => {
     if (req.url === '/upload/background' && req.method.toLowerCase() === 'post') {
         let form = new formidable.IncomingForm();
-        res.writeHead(200, {'content-type': 'text/plain'});
+        // res.writeHead(200, {'content-type': 'text/plain'});
         form.parse(req, function (err, fields, files) {
-            res.end(util.inspect({fields: fields, files: files}));
+            util.inspect({fields: fields, files: files});
         });
         form.on('fileBegin', function (name, file) {
             file.path = path.join(__dirname, '..', '/src/static/uploads/background/', file.name);
         });
         form.on('file', function (name, file) {
-            res.end(file.name);
+            let filename = path.join(__dirname, '..', '/src/static/uploads/background/', file.name);
+            fs.readFile(filename, "utf8", function(err, data) {
+                if (err) throw err;
+                // console.debug("FILE CONTENT: ", data);
+                // res.write(data);
+                //let img = new Buffer(data, 'base64');
+                res.writeHead(200, {
+                    'Content-Type': 'image/jpeg',
+                    'Content-Length': data.length
+                });
+                res.end(data);
+            });
+            // console.log(file.path);
+            // res.end('../src/static/uploads/background/'+file.name);
         });
     }
 });
@@ -56,7 +71,8 @@ app.post('/upload/logo', (req, res) => {
             file.path = path.join(__dirname, '..', '/src/static/uploads/logo/', file.name);
         });
         form.on('file', function (name, file) {
-            res.end(file.name);
+            console.log(file.path);
+            res.end('../src/static/uploads/logo/'+file.name);
         });
     }
 });

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from "axios";
 import {SketchPicker} from 'react-color';
 
 class ImageUploader extends Component {
@@ -24,30 +25,61 @@ class ImageUploader extends Component {
         // this.handleChange = this.handleChange.bind(this);
         this.previewRef = React.createRef();
         this.alignment = this.alignment.bind(this);
+        this.transferFileData = this.transferFileData.bind(this);
     }
 
     fileSelectedHandler = async (event)=> {
-        console.log(this.props.file_upload.file_upload.background);
+        // console.log(this.props.file_upload.file_upload.background);
         this.props.file_upload.file_upload.backgroundType = 'image';
-        // let blob = event.currentTarget.files[0].slice(0, -1, 'image/png');
-        // let newFile = new File([blob], `${this.props.type}.png`, {type: 'image/png'});
-
-        // console.log(newFile);
 
         this.state.backgroundColor = false;
         this.state.alignment = true;
-        let name = event.currentTarget.files[0].name;
         let type = this.props.type;
-        let backgroundType = 'image';
-        await this.props.uploadFile(this.props.type, event.currentTarget.files[0], event.currentTarget.files[0].name);
-        this.props.handler(name, type, backgroundType);
-        // newFile = null;
-        console.log(this.props.file_upload);
+
+        const fd = new FormData();
+        fd.append(type, event.currentTarget.files[0]);
+
+        let query = axios.create({
+            baseURL: 'http://localhost:4000'
+        });
+        if(type === 'background')
+            if(fd.get('logo'))
+                fd.delete('logo');
+        if(type === 'logo')
+            if(fd.get('background'))
+                fd.delete('background');
+
+        let promise =  await query.post(`/upload/${type}`, fd, {
+            onUploadProgress: progressEvent => {
+                console.log('Upload progress: ', Math.round(progressEvent.loaded / progressEvent.total * 100) + '%')
+            }
+        })
+            .then(result => {
+                if (result.error) {
+                    throw new Error("Error in uploading object");
+                }
+                return result.data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+        let file = {'path' : {}};
+
+        await Promise.all([promise]).then((value) => {
+            return file.path = value[0];
+        });
+
+        // console.log(file.path);
+
+        this.transferFileData(file.path, type, 'image');
     };
 
-    // fileUploadHandler = async () => {
-    //     await this.props.uploadFile(this.props.type, this.state.selectedFile, this.state.selectedFile.name);
-    // };
+    transferFileData(path, type, backgroundType){
+        // console.log(`${path}\n`, `${type}\n`, `${backgroundType}\n`);
+        this.props.uploadFile(path);
+        this.props.handler(path, type, backgroundType);
+    }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.file_upload !== this.props.file_upload) {

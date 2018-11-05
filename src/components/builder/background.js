@@ -24,8 +24,8 @@ export default connect(
         file_upload: state
     }),
     dispatch => ({
-        uploadFile: (typeString, selectedFile, selectedFileName) => {
-            dispatch(upload_file(typeString, selectedFile, selectedFileName));
+        uploadFile: (path) => {
+            dispatch({type: "UPLOAD_BACKGROUND", payload: path});
         }
     })
 )(ImageUploader);
