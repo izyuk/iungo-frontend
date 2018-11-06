@@ -195,4 +195,32 @@
   justify-content: center;
   align-items: center;
 }
+.colorWrap {
+  width: 100%;
+  max-width: 105px;
+  padding: 6px 6px 6px 16px;
+  border-radius: 4px;
+  border: 1px solid #e5e9f2;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.colorWrap button {
+  min-width: 20px;
+  display: inline-block;
+  height: 20px;
+  border: none;
+  border-radius: 4px;
+  background: #5585ed;
+}
+.colorWrap input {
+  width: 60px;
+  height: 100%;
+  border: none;
+  display: inline-block;
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+}
 /*# sourceMappingURL=builder.css.map */

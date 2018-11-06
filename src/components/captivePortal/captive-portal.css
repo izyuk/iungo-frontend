@@ -99,10 +99,10 @@
   display: flex;
   margin: auto;
   align-items: center;
-  transition: all 0.3s linear;
+  transition: width 0.3s linear;
 }
 .previewMain.mobile {
   width: 400px;
-  transition: all 0.3s linear;
+  transition: width 0.3s linear;
 }
 /*# sourceMappingURL=captive-portal.css.map */

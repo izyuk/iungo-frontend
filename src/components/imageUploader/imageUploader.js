@@ -11,25 +11,24 @@ class ImageUploader extends Component {
             selectedFile: null,
             displayColorPicker: false,
             alignment: false,
+            colorHEX: '#f9f9fc',
             color: {
-                r: '241',
-                g: '112',
-                b: '19',
+                r: '249',
+                g: '249',
+                b: '252',
                 a: '1',
             }
         };
-        // this.fileUploadHandler = this.fileUploadHandler.bind(this);
         this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
-        // this.handleClick = this.handleClick.bind(this);
-        // this.handleClose = this.handleClose.bind(this);
-        // this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.previewRef = React.createRef();
         this.alignment = this.alignment.bind(this);
         this.transferFileData = this.transferFileData.bind(this);
     }
 
     fileSelectedHandler = async (event)=> {
-        // console.log(this.props.file_upload.file_upload.background);
         this.props.file_upload.file_upload.backgroundType = 'image';
 
         this.state.backgroundColor = false;
@@ -83,26 +82,21 @@ class ImageUploader extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.file_upload !== this.props.file_upload) {
-            // this.setState({
-            //     uploadedFile: this.props.file_upload.file_upload.file_upload
-            // });
-            // console.log(this.state.uploadedFile);
             console.log(this.props.file_upload);
         }
     }
 
     componentDidMount() {
-        // console.log(this.props.type);
     }
 
-    // handleClick = () => {
-    //     this.setState({displayColorPicker: !this.state.displayColorPicker})
-    // };
-    //
-    // handleClose = () => {
-    //     this.setState({displayColorPicker: false});
-    //
-    // };
+    handleClick = () => {
+        this.setState({displayColorPicker: !this.state.displayColorPicker})
+    };
+
+    handleClose = () => {
+        this.setState({displayColorPicker: false});
+
+    };
 
     alignment(e) {
         if (e.target.getAttribute('id') === 'left')
@@ -113,24 +107,33 @@ class ImageUploader extends Component {
             this.previewRef.current.style.justifyContent = 'flex-end';
     }
 
-    // handleChange = (color) => {
-    //     this.setState({color: color.rgb});
-    //     this.state.backgroundColor = true;
-    //     this.previewRef.current.style.backgroundColor = `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`;
-    // };
+    handleChange = (color) => {
+        this.setState({color: color.rgb});
+        this.setState({colorHEX: color.hex});
+        this.state.backgroundColor = true;
+        this.props.file_upload.file_upload.backgroundType = 'color';
+        let type = this.props.type;
+        this.props.handler(`rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`, type, 'color');
+        //this.previewRef.current.style.backgroundColor = `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`;
+    };
 
     render() {
+        const popover = {
+            position: 'absolute',
+            zIndex: '2',
+            top: 32,
+            left: 0
+        };
+        const cover = {
+            position: 'fixed',
+            top: '0px',
+            right: '0px',
+            bottom: '0px',
+            left: '0px',
+        };
         return (
             <div
                 className={this.props.type == "background" ? [this.props.style.container, this.props.style.active].join(' ') : this.props.style.container}>
-                {/*<div className={this.props.style.imagePreview}*/}
-                {/*ref={this.previewRef}>*/}
-                {/*{this.state.backgroundColor == false ? <img*/}
-                {/*src={require(`../../static/uploads/${this.props.type}/${this.state.uploadedFile != '' ?*/}
-                {/*this.state.uploadedFile :*/}
-                {/*'preview.png'}`)}/> : false}*/}
-
-                {/*</div>*/}
                 <div className={this.props.style.row}>
                     <div className={this.props.style.left}>
                         <span className={this.props.style.descr}>
@@ -150,7 +153,6 @@ class ImageUploader extends Component {
                             </div>
                         </div>
                     </div>
-                    {/*<button onClick={this.fileUploadHandler}>Upload</button>*/}
                 </div>
                 {this.props.type == "background" ?
                         <div className={this.props.style.row}>
@@ -160,20 +162,16 @@ class ImageUploader extends Component {
                                 </span>
                             </div>
                             <div className={this.props.style.right}>
-                                {/*<div className={this.props.style.innerRow}>*/}
-                                    {/*<div style={styles.swatch}*/}
-                                         {/*onClick={this.handleClick}>*/}
-                                        {/*<div style={styles.color}/>*/}
-                                    {/*</div>*/}
-                                    {/*{this.state.displayColorPicker ?*/}
-                                        {/*<div style={styles.popover}>*/}
-                                            {/*<div style={styles.cover}*/}
-                                                 {/*onClick={this.handleClose}/>*/}
-                                            {/*<SketchPicker color={this.state.color}*/}
-                                                          {/*onChange={this.handleChange}/>*/}
-                                        {/*</div> :*/}
-                                        {/*null}*/}
-                                {/*</div>*/}
+                                <div className={this.props.style.innerRow}>
+                                    <div className={this.props.style.colorWrap}>
+                                        <input type="text" value={this.state.colorHEX} disabled/>
+                                        <button style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}} onClick={ this.handleClick }> </button>
+                                        { this.state.displayColorPicker ? <div style={ popover }>
+                                            <div style={ cover } onClick={ this.handleClose }/>
+                                            <SketchPicker color={this.state.color} onChange={this.handleChange}/>
+                                        </div> : null }
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     :

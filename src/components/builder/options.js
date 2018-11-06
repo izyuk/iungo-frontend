@@ -3,7 +3,6 @@ import Background from './background';
 import Logo from './logo';
 import Container from './container';
 import style from './builder.less';
-import {upload_file} from "../../reducers/file_upload";
 
 class Options extends Component {
     constructor(props) {

@@ -10,6 +10,7 @@ class Preview extends Component {
         this.state = {
             changes: true,
             backgrType: 'color',
+            backgroundColor: this.props.state.logoName.colorHEX,
             logoName: this.props.state.logoName === '' ? 'logo.png' : this.props.state.logoName
         };
         this.PreviewMain = React.createRef();
@@ -19,18 +20,25 @@ class Preview extends Component {
 
     componentDidUpdate() {
         if (this.props.state.backgroundType === 'image') {
-            console.log('image');
-            if (this.props.state.backgrName) {
-                console.log('background');
-                console.log(this.props.state.backgrName.url);
-                this.PreviewMain.current.style.background  = `url(http://${this.props.state.backgrName.url})`;
-
+            if (this.props.state.type === 'background'){
+                if (this.props.state.backgrName !== '' || this.props.state.backgrName !== undefined) {
+                    this.PreviewMain.current.style.background  = `url(http://${this.props.state.backgrName.url})`;
+                } else {
+                    console.log('backgrName is EMPTY or UNDEFINED');
+                    this.PreviewMain.current.style.background = this.state.backgroundColor;
+                }
+            } else if (this.props.state.type === 'logo'){
+                this.PreviewMain.current.style.background = this.state.backgroundColor;
+            }
+        } else if(this.props.state.backgroundType === 'color') {
+            if (this.props.state.backgrName !== '') {
+                this.PreviewMain.current.style.background = this.props.state.backgrName;
             } else {
-                console.log('NOT background');
-                this.PreviewMain.current.style.background = '#f9f9fc';
+                console.log('NO color');
+                this.PreviewMain.current.style.background = this.state.backgroundColor;
             }
         } else {
-            console.log('NOT image');
+            console.log('NO image');
             this.PreviewMain.current.style.background = '#f9f9fc';
         }
 
@@ -50,48 +58,35 @@ class Preview extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.logoName !== nextState.logoName) {
-            console.log('state.logoName Preview ======================');
-            return (this.state.logoName !== nextState.logoName);
-        } else if (this.props.state.logoName !== nextProps.state.logoName) {
-            console.log('props.state.logoName Preview ======================');
-            return (this.props.state.logoName !== nextProps.state.logoName);
+            return true;
+        } else if (this.state.backgroundColor !== nextState.backgroundColor) {
+            return true;
+        }  else if (this.props.state.logoName !== nextProps.state.logoName) {
+            return true;
         } else if (this.props.state.backgrName !== nextProps.state.backgrName) {
-            console.log('backgrName Preview ======================');
-            return (this.props.state.backgrName !== nextProps.state.backgrName);
+            return true;
         } else if (this.props.state.backgroundType !== nextProps.state.backgroundType) {
-            console.log('backgroundType Preview ======================');
-            return (this.props.state.backgroundType !== nextProps.state.backgroundType);
+            return true;
+        } else if (this.props.state.type !== nextProps.state.type) {
+            return true;
         } else if (this.props.state.mobile !== nextProps.state.mobile) {
-            console.log('mobile Preview ======================');
-            return (this.props.state.mobile !== nextProps.state.mobile);
+            return true;
         } else {
             return false;
         }
     }
 
     render() {
-        // debugger;
         return (
             <div className={style2.previewWrap}>
                 <div className={[style2.previewMain, this.props.state.mobile ? style2.mobile : ''].join(' ')}
                      ref={this.PreviewMain}>
-
-                    {/*{this.props.state.backgroundType === 'image' ?*/}
-                    {/*(this.props.state.backgrName.length>0 ?*/}
-                    {/*<img src={require(`data:image/jpeg;base64,{${this.props.state.backgrName}}`)} alt=""/> :*/}
-                    {/*'') :*/}
-                    {/*''}*/}
-
-                    {/*<img src={this.props.state.backgroundType === 'image' ? (this.props.state.backgrName ? require(this.props.state.backgrName): '') : ''} alt=""/>*/}
                     <div className={style.previewContainer}>
                         <div className={style.header}>
                             <div className={style.logoPlace}>
-
-                                {/*<img src={require(this.props.logo === '' ? `../../static/images/logo.png` : `../../static/uploads/${this.props.logo}`)} alt=""/>*/}
                                 {this.props.state.logoName === '' ?
                                     <img src={require('../../static/images/logo.png')} alt=""/> :
                                     <img src={`http://${this.props.state.logoName.url}`} alt=""/>}
-                                {/*<img src={require('../../static/images/'+ this.props.logo.logoName === '' ? 'logo.png' : this.props.logo.logoName)} alt=""/>*/}
                             </div>
                         </div>
                         <div className={style.section}>
