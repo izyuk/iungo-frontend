@@ -64,21 +64,21 @@ class ImageUploader extends Component {
                 console.log(error);
             });
 
-        let file = {'path' : {}};
+        let file = {'data' : {}};
 
         await Promise.all([promise]).then((value) => {
-            return file.path = value[0];
+            return file.data = value[0];
         });
 
-        // console.log(file.path);
+        console.log(file.data);
 
-        this.transferFileData(file.path, type, 'image');
+        this.transferFileData(file.data, type, 'image');
     };
 
-    transferFileData(path, type, backgroundType){
+    transferFileData(data, type, backgroundType){
         // console.log(`${path}\n`, `${type}\n`, `${backgroundType}\n`);
-        this.props.uploadFile(path);
-        this.props.handler(path, type, backgroundType);
+        this.props.uploadFile(data);
+        this.props.handler(data, type, backgroundType);
     }
 
     componentDidUpdate(prevProps, prevState) {

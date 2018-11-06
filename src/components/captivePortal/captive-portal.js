@@ -23,6 +23,7 @@ class CaptivePortal extends Component {
     }
 
     eventHandler(name, type, backgroundType) {
+        console.log(name);
         if (type === 'background') {
             this.setState({
                 backgrName: name

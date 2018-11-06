@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import style from './preview.less';
 import style2 from '../captivePortal/captive-portal.less';
 
+
 class Preview extends Component {
     constructor(props) {
         super(props);
@@ -13,15 +14,17 @@ class Preview extends Component {
         };
         this.PreviewMain = React.createRef();
         // this.eventHandler = this.eventHandler.bind(this);
+        this.getComponent = this.getComponent.bind(this);
     }
 
     componentDidUpdate() {
-        if(this.props.state.backgroundType === 'image'){
+        if (this.props.state.backgroundType === 'image') {
             console.log('image');
-            if(this.props.state.backgrName){
+            if (this.props.state.backgrName) {
                 console.log('background');
-                this.PreviewMain.current.style.background = `url(data:image/jpeg;base64,{${this.props.state.backgrName}})`;
-                console.log(this.PreviewMain.current.style.background);
+                console.log(this.props.state.backgrName.url);
+                this.PreviewMain.current.style.background  = `url(http://${this.props.state.backgrName.url})`;
+
             } else {
                 console.log('NOT background');
                 this.PreviewMain.current.style.background = '#f9f9fc';
@@ -30,12 +33,19 @@ class Preview extends Component {
             console.log('NOT image');
             this.PreviewMain.current.style.background = '#f9f9fc';
         }
+
+
+    }
+
+    async getComponent(data) {
+
     }
 
     componentDidMount() {
         // console.log('preview mount', this.state.logoName);
         // console.log(this.props.logo);
         // console.log(this.props.logo.replace('src', '..'));
+        // this.PreviewMain.current.style.background  = `url(${require(image123)})`;
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -65,6 +75,14 @@ class Preview extends Component {
             <div className={style2.previewWrap}>
                 <div className={[style2.previewMain, this.props.state.mobile ? style2.mobile : ''].join(' ')}
                      ref={this.PreviewMain}>
+
+                    {/*{this.props.state.backgroundType === 'image' ?*/}
+                    {/*(this.props.state.backgrName.length>0 ?*/}
+                    {/*<img src={require(`data:image/jpeg;base64,{${this.props.state.backgrName}}`)} alt=""/> :*/}
+                    {/*'') :*/}
+                    {/*''}*/}
+
+                    {/*<img src={this.props.state.backgroundType === 'image' ? (this.props.state.backgrName ? require(this.props.state.backgrName): '') : ''} alt=""/>*/}
                     <div className={style.previewContainer}>
                         <div className={style.header}>
                             <div className={style.logoPlace}>
@@ -72,7 +90,7 @@ class Preview extends Component {
                                 {/*<img src={require(this.props.logo === '' ? `../../static/images/logo.png` : `../../static/uploads/${this.props.logo}`)} alt=""/>*/}
                                 {this.props.state.logoName === '' ?
                                     <img src={require('../../static/images/logo.png')} alt=""/> :
-                                    <img src={require(this.props.state.logoName)} alt=""/>}
+                                    <img src={`http://${this.props.state.logoName.url}`} alt=""/>}
                                 {/*<img src={require('../../static/images/'+ this.props.logo.logoName === '' ? 'logo.png' : this.props.logo.logoName)} alt=""/>*/}
                             </div>
                         </div>
