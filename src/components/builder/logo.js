@@ -18,11 +18,15 @@ class Logo extends Component {
 
 export default connect(
     state => ({
-        file_upload: state
+        file_upload: state,
+        position: state.position
     }),
     dispatch => ({
         uploadFile: (path) => {
             dispatch({type: "UPLOAD_LOGO", payload: path});
+        },
+        logoPos: (position) => {
+            dispatch({type: "LOGO_POSITION", payload: position});
         }
     })
 )(ImageUploader);

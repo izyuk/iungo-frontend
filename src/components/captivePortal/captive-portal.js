@@ -15,17 +15,16 @@ class CaptivePortal extends Component {
             backgrName: '',
             logoName: '',
             type: '',
-            backgroundType: 'color'
+            backgroundType: 'color',
+            alignment: 'center'
         };
         this.trigger = this.trigger.bind(this);
         this.eventHandler = this.eventHandler.bind(this);
+        this.alignment = this.alignment.bind(this);
         this.PreviewMain = React.createRef();
     }
 
     eventHandler(name, type, backgroundType) {
-        console.log(name);
-        console.log(type);
-        console.log(backgroundType);
         if (type === 'background') {
             this.setState({
                 backgrName: name
@@ -42,15 +41,19 @@ class CaptivePortal extends Component {
         })
     }
 
+    alignment(position){
+        this.setState({
+            alignment: position
+        })
+    }
+
+
     trigger(data) {
         document.querySelectorAll('[data-id]')[0].classList.remove(`${style.active}`);
         document.querySelectorAll('[data-id]')[1].classList.remove(`${style.active}`);
 
         if (data.target.nodeName === 'A') {
             data.target.classList.add(`${style.active}`);
-            // this.setState({
-            //     mobile: !this.state.mobile
-            // });
         }
         else if (data.target.closest('a').getAttribute('data-id')) {
             data.target.closest('a').classList.add(`${style.active}`);
@@ -69,20 +72,17 @@ class CaptivePortal extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.backgrName !== nextState.backgrName) {
-            console.log('backgrName changed');
-            return (this.state.backgrName !== nextState.backgrName);
+            return true;
         } else if (this.state.logoName !== nextState.logoName) {
-            console.log('logoName changed');
-            return (this.state.logoName !== nextState.logoName);
+            return true;
         } else if (this.state.type !== nextState.type) {
-            console.log('type changed');
-            return (this.state.type !== nextState.type);
+            return true;
         } else if (this.state.backgroundType !== nextState.backgroundType) {
-            console.log('backgroundType changed');
-            return (this.state.backgroundType !== nextState.backgroundType);
+            return true;
+        }  else if (this.state.alignment !== nextState.alignment) {
+            return true;
         } else if (this.state.mobile !== nextState.mobile) {
-            console.log('mobile changed');
-            return (this.state.mobile !== nextState.mobile);
+            return true;
         } else {
             return false;
         }
@@ -97,7 +97,6 @@ class CaptivePortal extends Component {
     }
 
     render() {
-        // debugger;
         return (
             <div className={[style.container].join(' ')}>
                 <div className={[style.wrap, style.wrapFix].join(' ')}>
@@ -130,7 +129,8 @@ class CaptivePortal extends Component {
                             <Preview state={this.state}/>
                         </div>
                     </div>
-                    <Options handler={this.eventHandler}/>
+                    <Options alignment={this.alignment}
+                             handler={this.eventHandler}/>
                 </div>
             </div>
         )

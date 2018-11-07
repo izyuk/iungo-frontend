@@ -10,7 +10,14 @@ class Options extends Component {
         this.state = {
             selectedFile: null,
             visible: 'Background',
-            event: ''
+            event: '',
+            colorHEX: '#f9f9fc',
+            color: {
+                r: '249',
+                g: '249',
+                b: '252',
+                a: '1',
+            }
         };
         this.Background = React.createRef();
         this.tabHandler = this.tabHandler.bind(this);
@@ -26,8 +33,14 @@ class Options extends Component {
         this.setState({
             visible: e.currentTarget.childNodes[0].innerHTML
         });
-
     }
+
+    // colorHandler(hex, rgba){
+    //     this.setState({
+    //         colorHEX: hex,
+    //         color: rgba
+    //     });
+    // }
 
     componentDidUpdate(){
         this.state.event.closest(`.${style.head}`).classList.add(style.active);
@@ -78,7 +91,8 @@ class Options extends Component {
                             {this.state.visible === 'Logo' ?
                                 <Logo type="logo"
                                       style={style}
-                                      handler={this.props.handler}/>:
+                                      handler={this.props.handler}
+                                      alignment={this.props.alignment}/>:
                                 false}
                         </div>
                         <div className="wrap">

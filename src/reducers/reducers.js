@@ -4,12 +4,15 @@ import { combineReducers } from 'redux';
 // import thunk from 'redux-thunk';
 
 import fileUpload from './file_upload';
+import logoPos from './logoPos';
+import backgroundColor from './backgroundColor';
 import selectTab from './selectTab';
 
 const allReducers = combineReducers({
     file_upload: fileUpload,
-    tabName: selectTab,
-
+    color: backgroundColor,
+    position: logoPos,
+    tabName: selectTab
 });
 
 export default allReducers;

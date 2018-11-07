@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {upload_file} from '../../reducers/file_upload';
 import ImageUploader from '../imageUploader/imageUploader';
 
 
@@ -21,11 +20,15 @@ class Background extends Component {
 
 export default connect(
     state => ({
-        file_upload: state
+        file_upload: state,
+        color: state.color
     }),
     dispatch => ({
         uploadFile: (path) => {
             dispatch({type: "UPLOAD_BACKGROUND", payload: path});
+        },
+        updateColor: (hex, rgba) => {
+            dispatch({type: "BACKGROUND_COLOR", payload: {hex: hex, rgba: rgba}});
         }
     })
 )(ImageUploader);

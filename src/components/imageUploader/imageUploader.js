@@ -10,7 +10,7 @@ class ImageUploader extends Component {
             uploadedFile: '',
             selectedFile: null,
             displayColorPicker: false,
-            alignment: false,
+            alignment: true,
             colorHEX: '#f9f9fc',
             color: {
                 r: '249',
@@ -23,12 +23,13 @@ class ImageUploader extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.previewRef = React.createRef();
+        this.checked = React.createRef();
+        this.cpbButton = React.createRef();
         this.alignment = this.alignment.bind(this);
         this.transferFileData = this.transferFileData.bind(this);
     }
 
-    fileSelectedHandler = async (event)=> {
+    fileSelectedHandler = async (event) => {
         this.props.file_upload.file_upload.backgroundType = 'image';
 
         this.state.backgroundColor = false;
@@ -41,14 +42,14 @@ class ImageUploader extends Component {
         let query = axios.create({
             baseURL: 'http://localhost:4000'
         });
-        if(type === 'background')
-            if(fd.get('logo'))
+        if (type === 'background')
+            if (fd.get('logo'))
                 fd.delete('logo');
-        if(type === 'logo')
-            if(fd.get('background'))
+        if (type === 'logo')
+            if (fd.get('background'))
                 fd.delete('background');
 
-        let promise =  await query.post(`/upload/${type}`, fd, {
+        let promise = await query.post(`/upload/${type}`, fd, {
             onUploadProgress: progressEvent => {
                 console.log('Upload progress: ', Math.round(progressEvent.loaded / progressEvent.total * 100) + '%')
             }
@@ -63,7 +64,7 @@ class ImageUploader extends Component {
                 console.log(error);
             });
 
-        let file = {'data' : {}};
+        let file = {'data': {}};
 
         await Promise.all([promise]).then((value) => {
             return file.data = value[0];
@@ -74,8 +75,7 @@ class ImageUploader extends Component {
         this.transferFileData(file.data, type, 'image');
     };
 
-    transferFileData(data, type, backgroundType){
-        // console.log(`${path}\n`, `${type}\n`, `${backgroundType}\n`);
+    transferFileData(data, type, backgroundType) {
         this.props.uploadFile(data);
         this.props.handler(data, type, backgroundType);
     }
@@ -87,6 +87,28 @@ class ImageUploader extends Component {
     }
 
     componentDidMount() {
+        if (this.props.type == "background") {
+            if (this.props.color.color) {
+                let red = this.props.color.color.rgba.r,
+                    green = this.props.color.color.rgba.g,
+                    blue = this.props.color.color.rgba.b,
+                    alpha = this.props.color.color.rgba.a;
+                this.setState({
+                    color: {
+                        r: red,
+                        g: green,
+                        b: blue,
+                        a: alpha
+                    },
+                    colorHEX: this.props.color.color.hex
+                });
+                this.cpbButton.current.removeAttribute('style');
+                this.cpbButton.current.setAttribute('style', `background: rgba(${ red }, ${ green }, ${ blue }, ${ alpha })`);
+            }
+        }
+
+        if(this.props.type === "logo")
+            document.getElementById(this.props.position.position).setAttribute('checked', 'checked');
     }
 
     handleClick = () => {
@@ -99,22 +121,35 @@ class ImageUploader extends Component {
     };
 
     alignment(e) {
-        if (e.target.getAttribute('id') === 'left')
-            this.previewRef.current.style.justifyContent = 'flex-start';
-        if (e.target.getAttribute('id') === 'center')
-            this.previewRef.current.style.justifyContent = 'center';
-        if (e.target.getAttribute('id') === 'right')
-            this.previewRef.current.style.justifyContent = 'flex-end';
+        if (e.target.getAttribute('id') === 'left') {
+            this.props.alignment('flex-start');
+            this.props.logoPos('left');
+        }
+        if (e.target.getAttribute('id') === 'center') {
+            this.props.alignment('center');
+            this.props.logoPos('center');
+        }
+        if (e.target.getAttribute('id') === 'right') {
+            this.props.alignment('flex-end');
+            this.props.logoPos('right');
+        }
     }
 
     handleChange = (color) => {
-        this.setState({color: color.rgb});
+        this.setState({
+            color: {
+                r: color.rgb.r,
+                g: color.rgb.g,
+                b: color.rgb.b,
+                a: color.rgb.a
+            }
+        });
         this.setState({colorHEX: color.hex});
         this.state.backgroundColor = true;
         this.props.file_upload.file_upload.backgroundType = 'color';
         let type = this.props.type;
         this.props.handler(`rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`, type, 'color');
-        //this.previewRef.current.style.backgroundColor = `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`;
+        this.props.updateColor(color.hex, {r: color.rgb.r, g: color.rgb.g, b: color.rgb.b, a: color.rgb.a});
     };
 
     render() {
@@ -135,7 +170,7 @@ class ImageUploader extends Component {
             <div
                 className={this.props.type == "background" ? [this.props.style.container, this.props.style.active].join(' ') : this.props.style.container}>
                 <div className={this.props.style.row}>
-                    <div className={this.props.style.left}>
+                    <div className={this.props.type == "logo" ? this.props.style.logoLeft: this.props.style.left}>
                         <span className={this.props.style.descr}>
                             {/*upload {this.props.type}*/} Image
                         </span>
@@ -155,49 +190,61 @@ class ImageUploader extends Component {
                     </div>
                 </div>
                 {this.props.type == "background" ?
-                        <div className={this.props.style.row}>
-                            <div className={this.props.style.left}>
+                    <div className={this.props.style.row}>
+                        <div className={this.props.style.left}>
                                 <span className={this.props.style.descr}>
                                     Color
                                 </span>
-                            </div>
-                            <div className={this.props.style.right}>
-                                <div className={this.props.style.innerRow}>
-                                    <div className={this.props.style.colorWrap}>
-                                        <input type="text" value={this.state.colorHEX} disabled/>
-                                        <button style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}} onClick={ this.handleClick }> </button>
-                                        { this.state.displayColorPicker ? <div style={ popover }>
-                                            <div style={ cover } onClick={ this.handleClose }/>
-                                            <SketchPicker color={this.state.color} onChange={this.handleChange}/>
-                                        </div> : null }
-                                    </div>
+                        </div>
+                        <div className={this.props.style.right}>
+                            <div className={this.props.style.innerRow}>
+                                <div className={this.props.style.colorWrap}>
+                                    <input type="text" value={this.state.colorHEX} disabled/>
+                                    <button ref={this.cpbButton}
+                                            style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
+                                            onClick={this.handleClick}> </button>
+                                    {this.state.displayColorPicker ? <div style={popover}>
+                                        <div style={cover} onClick={this.handleClose}/>
+                                        <SketchPicker color={this.state.color} onChange={this.handleChange}/>
+                                    </div> : null}
                                 </div>
                             </div>
                         </div>
-                    :
-                    false}
+                    </div> :
+                false}
                 {this.props.type == "logo" ?
-                    <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                        {this.state.alignment ?
-                            <div className={this.props.style.row}>
+                    (this.state.alignment ?
+                        <div className={this.props.style.row}>
+                            <div className={this.props.style.logoLeft}>
                                 <span className={this.props.style.descr}>
-                                    Choose alignment
+                                    Image position
                                 </span>
-                                <div className={this.props.style.row}>
+                            </div>
+                            <div className={this.props.style.right}>
+                                <div className={this.props.style.innerCol}>
                                     <label htmlFor="left">Left
-                                        <input onChange={this.alignment} id='left' type="radio" name='alignment'/>
+                                        <div className={this.props.style.inputRadioWrap}>
+                                            <input onChange={this.alignment} id='left' type="radio" name='alignment'/>
+                                            <span className={this.props.style.radio}></span>
+                                        </div>
                                     </label>
                                     <label htmlFor="center">Center
-                                        <input onChange={this.alignment} id='center' type="radio" name='alignment'/>
+                                        <div className={this.props.style.inputRadioWrap}>
+                                            <input onChange={this.alignment} id='center' type="radio" name='alignment'/>
+                                            <span className={this.props.style.radio}></span>
+                                        </div>
                                     </label>
                                     <label htmlFor="right">Right
-                                        <input onChange={this.alignment} id='right' type="radio" name='alignment'/>
+                                        <div className={this.props.style.inputRadioWrap}>
+                                            <input onChange={this.alignment} id='right' type="radio" name='alignment'/>
+                                            <span className={this.props.style.radio}></span>
+                                        </div>
                                     </label>
                                 </div>
-                            </div> :
-                            false}
-                    </div> :
-                    false}
+                            </div>
+                        </div> :
+                    false) :
+                false}
             </div>
         )
     }

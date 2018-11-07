@@ -129,6 +129,16 @@
   line-height: 2.67;
   color: #768198;
 }
+.options .wrap .dropdown .container .row .logoLeft {
+  width: 81px;
+}
+.options .wrap .dropdown .container .row .logoLeft > span {
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  line-height: 2.67;
+  color: #768198;
+}
 .options .wrap .dropdown .container .row .right {
   flex: 5;
 }
@@ -144,6 +154,59 @@
 }
 .options .wrap .dropdown .container .row .right .innerRow > input {
   width: 100%;
+}
+.options .wrap .dropdown .container .row .right .innerCol {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 24px;
+}
+.options .wrap .dropdown .container .row .right .innerCol label {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  text-indent: 16px;
+  line-height: 1.33;
+  margin-bottom: 16px;
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  color: #768198;
+}
+.options .wrap .dropdown .container .row .right .innerCol label:last-child {
+  margin-bottom: 0;
+}
+.options .wrap .dropdown .container .row .right .innerCol label .inputRadioWrap {
+  width: 16px;
+  height: 16px;
+  position: relative;
+}
+.options .wrap .dropdown .container .row .right .innerCol label .inputRadioWrap .radio {
+  display: flex;
+  width: 16px;
+  height: 16px;
+  border-radius: 16px;
+  border: 1px solid #e5e9f2;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+.options .wrap .dropdown .container .row .right .innerCol label .inputRadioWrap input {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  left: 0;
+  opacity: 0;
+}
+.options .wrap .dropdown .container .row .right .innerCol label .inputRadioWrap input:checked + .radio:before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 10px;
+  background: #5585ed;
 }
 .options .wrap .dropdown .hr {
   margin: 20px 0;

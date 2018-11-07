@@ -69,6 +69,8 @@ class Preview extends Component {
             return true;
         } else if (this.props.state.type !== nextProps.state.type) {
             return true;
+        } else if (this.props.state.alignment !== nextProps.state.alignment) {
+            return true;
         } else if (this.props.state.mobile !== nextProps.state.mobile) {
             return true;
         } else {
@@ -83,7 +85,7 @@ class Preview extends Component {
                      ref={this.PreviewMain}>
                     <div className={style.previewContainer}>
                         <div className={style.header}>
-                            <div className={style.logoPlace}>
+                            <div className={style.logoPlace} style={{justifyContent: this.props.state.alignment}}>
                                 {this.props.state.logoName === '' ?
                                     <img src={require('../../static/images/logo.png')} alt=""/> :
                                     <img src={`http://${this.props.state.logoName.url}`} alt=""/>}

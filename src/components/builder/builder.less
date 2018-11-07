@@ -115,6 +115,15 @@
               color: @steel;
             }
           }
+          .logoLeft{
+            //flex: 2;
+            width: 81px;
+            &>span{
+              .font(@avenir-medium, 12);
+              line-height: 2.67;
+              color: @steel;
+            }
+          }
           .right{
             flex: 5;
             .innerRow{
@@ -128,6 +137,59 @@
               }
               &>input{
                 width: 100%;
+              }
+            }
+            .innerCol{
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: flex-start;
+              margin-left: 24px;
+              label{
+                display: flex;
+                flex-direction: row-reverse;
+                align-items: center;
+                text-indent: 16px;
+                line-height: 1.33;
+                margin-bottom: 16px;
+                .font(@avenir-medium, 12);
+                color: @steel;
+                &:last-child{
+                  margin-bottom: 0;
+                }
+                .inputRadioWrap{
+                  width: 16px;
+                  height: 16px;
+                  position: relative;
+                  .radio{
+                    display: flex;
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 16px;
+                    border: 1px solid @pale-grey-three;
+                    position: relative;
+                    align-items: center;
+                    justify-content: center;
+                  }
+                  input{
+                    width: 16px;
+                    height: 16px;
+                    position: absolute;
+                    left: 0;
+                    opacity: 0;
+                  }
+                  input:checked + .radio{
+                    &:before{
+                      content: '';
+                      display: block;
+                      width: 8px;
+                      height: 8px;
+                      border-radius: 10px;
+                      background: @soft-blue;
+                    }
+                  }
+                }
               }
             }
           }
