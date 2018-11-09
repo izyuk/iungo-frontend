@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Background from './background';
 import Logo from './logo';
-import Container from './container';
+import Container from '../container/container';
 import style from './builder.less';
 
 class Options extends Component {

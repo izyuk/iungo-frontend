@@ -48,26 +48,26 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        span{
+        span {
           .font(@avenir-medium, 12);
           line-height: 2;
           color: @steel;
         }
-        svg{
+        svg {
           transform: rotate(0deg);
         }
         &.active,
         &:hover {
         }
-        &.active{
-          svg{
+        &.active {
+          svg {
             transform: rotate(180deg);
           }
         }
       }
-      .tabList{
+      .tabList {
         display: flex;
-        a{
+        a {
           text-decoration: none;
           color: #000000;
         }
@@ -80,8 +80,11 @@
         padding: 24px;
         border-bottom: 1px solid @pale-grey-seven;
         max-width: 100%;
-        &.active{
+        &.active {
           display: flex;
+          & > div {
+            width: 100%;
+          }
         }
         .imagePreview {
           width: 100%;
@@ -92,61 +95,154 @@
           align-items: center;
           justify-content: center;
           background: #eee;
-          img{
+          img {
             //width: 100%;
             max-width: 100%;
             object-fit: contain;
           }
         }
-        .row{
+        .row {
           width: 100%;
           display: flex;
           justify-content: flex-start;
-          align-items: center;
+          align-items: flex-start;
           margin-bottom: 16px;
-          &:last-child{
+          &:last-child {
             margin-bottom: 0;
           }
-          .left{
+          .left {
             flex: 1;
-            &>span{
+            & > span {
               .font(@avenir-medium, 12);
               line-height: 2.67;
               color: @steel;
             }
           }
-          .logoLeft{
+          .logoLeft {
             //flex: 2;
             width: 81px;
-            &>span{
+            & > span {
               .font(@avenir-medium, 12);
               line-height: 2.67;
               color: @steel;
+              &.header {
+                font-weight: bold;
+                color: @dark-indigo;
+              }
+              &.position {
+                line-height: 1.33;
+              }
             }
           }
-          .right{
+          .right {
             flex: 5;
-            .innerRow{
+            .innerRow {
               width: 100%;
               display: flex;
               justify-content: flex-start;
               align-items: center;
               margin-left: 24px;
-              &>span{
+              select,
+              & > input {
+                width: 100%;
+                max-width: 105px;
+                padding: 6px 6px 6px 16px;
+                border-radius: 4px;
+                border: 1px solid @pale-grey-three;
+                background-color: @w;
+                display: flex;
+                align-items: center;
+                position: relative;
+                .font(@avenir-medium, 12);
+                color: @steel;
+
+                &.tin {
+                  max-width: 60px;
+                }
+                &.medium {
+                  max-width: 76px;
+                }
+              }
+              .slider{
+                display: flex;
+                align-items: center;
+                width: 74px;
+                height: 4px;
+                background: @pale-grey-three;
+                border-radius: 4px;
+                margin-right: 16px;
+                position: relative;
+                .dot{
+                  display: block;
+                  width: 12px;
+                  height: 12px;
+                  background: @soft-blue;
+                  border: 2px solid @w;
+                  border-radius: 12px;
+                  position: absolute;
+                }
+              }
+              .slider+div{
+                display: block;
+                width: 76px;
+              }
+              select {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                background-position: right;
+                background-repeat: no-repeat;
+                background-size: 24px 24px;
+                &::-ms-expand {
+                  display: none;
+                }
+                position: absolute;
+                z-index: 1;
+                opacity: 0;
+                height: 34px;
+              }
+              p{
+                &.select{
+                  position: relative;
+                  width: 100%;
+                  max-width: 105px;
+                  padding: 6px 6px 6px 16px;
+                  border-radius: 4px;
+                  border: 1px solid @pale-grey-three;
+                  background-color: @w;
+                  display: flex;
+                  align-items: center;
+                  position: relative;
+                  .font(@avenir-medium, 12);
+                  color: @steel;
+                  height: 34px;
+                  &.tin {
+                    max-width: 60px;
+                  }
+                  &.medium {
+                    max-width: 76px;
+                  }
+                  svg{
+                    position: absolute;
+                    right: 0;
+                  }
+                }
+              }
+              & > span {
                 width: 100px;
               }
-              &>input{
+              & > input {
                 width: 100%;
               }
             }
-            .innerCol{
+            .innerCol {
               width: 100%;
               display: flex;
               flex-direction: column;
               justify-content: center;
               align-items: flex-start;
               margin-left: 24px;
-              label{
+              label {
                 display: flex;
                 flex-direction: row-reverse;
                 align-items: center;
@@ -155,14 +251,14 @@
                 margin-bottom: 16px;
                 .font(@avenir-medium, 12);
                 color: @steel;
-                &:last-child{
+                &:last-child {
                   margin-bottom: 0;
                 }
-                .inputRadioWrap{
+                .inputRadioWrap {
                   width: 16px;
                   height: 16px;
                   position: relative;
-                  .radio{
+                  .radio {
                     display: flex;
                     width: 16px;
                     height: 16px;
@@ -172,15 +268,15 @@
                     align-items: center;
                     justify-content: center;
                   }
-                  input{
+                  input {
                     width: 16px;
                     height: 16px;
                     position: absolute;
                     left: 0;
                     opacity: 0;
                   }
-                  input:checked + .radio{
-                    &:before{
+                  input:checked + .radio {
+                    &:before {
                       content: '';
                       display: block;
                       width: 8px;
@@ -195,7 +291,7 @@
           }
         }
       }
-      .hr{
+      .hr {
         margin: 20px 0;
         &:before {
           content: '';
@@ -206,7 +302,7 @@
         }
         width: 100%;
       }
-      .upload{
+      .upload {
         width: 100px;
         padding: 2px 16px;
         display: flex;
@@ -216,14 +312,14 @@
         position: relative;
         overflow: hidden;
         cursor: pointer;
-        span{
+        span {
           .font(@avenir-heavy, 12);
           line-height: 2;
           color: @w;
           font-weight: bold;
           cursor: pointer;
         }
-        input{
+        input {
           width: 100%;
           height: 100%;
           position: absolute;
@@ -249,7 +345,7 @@
   }
 }
 
-.colorWrap{
+.colorWrap {
   width: 100%;
   max-width: 105px;
   padding: 6px 6px 6px 16px;
@@ -259,7 +355,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  button{
+  button {
     min-width: 20px;
     display: inline-block;
     height: 20px;
@@ -267,11 +363,33 @@
     border-radius: 4px;
     background: @soft-blue;
   }
-  input{
+  input {
     width: 60px;
     height: 100%;
     border: none;
     display: inline-block;
     .font(@avenir-medium, 12);
+    color: @steel;
+  }
+}
+
+@media screen and (min-width: 0\0 ) {
+  .option {
+    .wrap {
+      .dropdown {
+        .container {
+          .row {
+            .right {
+              .innerRow {
+                select {
+                  background-image: none \9;
+                  padding: 5px \9;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

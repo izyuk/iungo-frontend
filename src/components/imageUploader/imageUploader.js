@@ -216,7 +216,7 @@ class ImageUploader extends Component {
                     (this.state.alignment ?
                         <div className={this.props.style.row}>
                             <div className={this.props.style.logoLeft}>
-                                <span className={this.props.style.descr}>
+                                <span className={[this.props.style.descr, this.props.style.position].join(' ')}>
                                     Image position
                                 </span>
                             </div>
