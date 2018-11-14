@@ -6,16 +6,17 @@ class ContentBorder extends Component {
     constructor(props){
         super(props);
         this.state={
-            colorHEX: this.props.content_border.colorHEX || '#ffffff',
-            color: this.props.content_border.color || {
+            displayColorPicker: false,
+            colorHEX: '#ffffff' || this.props.content_border.colorHEX,
+            color: {
                 r: '255',
                 g: '255',
                 b: '255',
                 a: '1',
-            },
-            type: this.props.content_border.type || 'none',
-            thickness: this.props.content_border.thickness || '1',
-            radius: this.props.content_border.radius || '0'
+            } || this.props.content_border.color ,
+            type: 'none' || this.props.content_border.type,
+            thickness: '1' || this.props.content_border.thickness,
+            radius: '0' || this.props.content_border.radius
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -24,16 +25,25 @@ class ContentBorder extends Component {
     }
 
     handleClick = () => {
-        this.setState({displayColorPicker: !this.state.displayColorPicker})
+        console.log('click');
+        this.setState({displayColorPicker: !this.state.displayColorPicker});
+        console.log('click');
     };
 
     handleClose = () => {
         this.setState({displayColorPicker: false});
-
     };
 
     handleChange = (color) => {
-        this.setState({color: color.rgb});
+        this.setState({
+            color: {
+                r: color.rgb.r,
+                g: color.rgb.g,
+                b: color.rgb.b,
+                a: color.rgb.a
+            }
+        });
+        this.setState({colorHEX: color.hex});
     };
 
     select = (e) => {
@@ -44,8 +54,9 @@ class ContentBorder extends Component {
         this.setState({
             [state]: data
         });
-        this.props.borderStyle(this.state);
-        this.props.handler(this.state);
+        let {displayColorPicker, ...rest} = this.state;
+        this.props.borderStyle(rest);
+        this.props.handler(rest);
     };
 
     shouldComponentUpdate(nextProps, nextState){
@@ -58,6 +69,8 @@ class ContentBorder extends Component {
         } else if (this.state.colorHEX !== nextState.colorHEX){
             return true;
         } else if (this.state.color !== nextState.color){
+            return true;
+        } else if (this.state.displayColorPicker !== nextState.displayColorPicker){
             return true;
         } else {
             return false;
