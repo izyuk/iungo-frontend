@@ -1,24 +1,55 @@
 import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
+import {connect} from 'react-redux';
+import 'rc-slider/assets/index.css';
+import 'rc-tooltip/assets/bootstrap.css';
+import Tooltip from 'rc-tooltip';
+import Slider from 'rc-slider';
+import backgroundColor from "../../reducers/backgroundColor";
+
+const style = {
+    marginRight: 16,
+    position: 'relative',
+    borderRadius: 4,
+    width: 74,
+    height: 4,
+};
+
+const Handle = Slider.Handle;
+
+const handle = (props) => {
+    const { value, dragging, index, ...restProps } = props;
+    return (
+        <Tooltip
+            prefixCls="rc-slider-tooltip"
+            overlay={value}
+            visible={dragging}
+            placement="top"
+            key={index}
+        >
+            <Handle value={value} {...restProps} />
+        </Tooltip>
+    );
+};
+
 
 class ContentBackground extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            colorHEX: '#f9f9fc',
+        this.state = {
+            colorHEX: '#ffffff',
             color: {
-                r: '249',
-                g: '249',
-                b: '252',
+                r: '255',
+                g: '255',
+                b: '255',
                 a: '1',
-            }
+            },
+            opacity: '100'
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.select = this.select.bind(this);
-        this.slider = this.slider.bind(this);
-        this.drag = this.drag.bind(this);
+        this.onSliderChange = this.onSliderChange.bind(this);
     }
 
     handleClick = () => {
@@ -34,9 +65,23 @@ class ContentBackground extends Component {
         this.setState({color: color.rgb});
     };
 
-    componentDidMount(){
+    onSliderChange(value){
+        console.log(value);
+        this.setState({
+            opacity: value
+        });
+    }
+
+    shouldComponentUpdate(nextProps, nextState){
+        if(this.state.opacity !== nextState.opacity){
+            return true;
+        } else
+            return false;
+    }
+
+    componentDidMount() {
         let select = document.querySelectorAll('[ data-component="ContentBackground"]');
-        for (let i = 0; i < select.length; i++){
+        for (let i = 0; i < select.length; i++) {
             let svg = select[i].nextSibling.children[0];
             let span = document.createElement('span');
             span.innerText = select[i].options[select[i].selectedIndex].value;
@@ -44,39 +89,12 @@ class ContentBackground extends Component {
         }
     }
 
-    select = (e) => {
-        let data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
-        let span =  e.currentTarget.nextSibling.children[0];
-        span.innerText = data;
-    };
-
-    slider = (e) => {
-        // e.target.parentElement.addEventListener("dragover", function(e){
-        //     // e = e || window.event;
-        //     var dragX = e., dragY = e.pageY;
-        //
-        //     console.log("X: "+dragX+" Y: "+dragY);
-        // }, false);
-        // let childPos = e.target.offsetLeft;
-        // console.log(e.target.offsetLeft);
-        // let childOffset = {
-        //     left: childPos
-        // };
-
-        e.target.addEventListener('onmousemove', this.drag, false);
-
-    };
-
-    drag = (e) => {
-        console.log(e.pageX);
-    };
-
-    render(){
+    render() {
         const popover = {
             position: 'absolute',
             zIndex: '2',
             top: 32,
-            left: 0
+            right: 0
         };
         const cover = {
             position: 'fixed',
@@ -85,7 +103,7 @@ class ContentBackground extends Component {
             bottom: '0px',
             left: '0px',
         };
-        return(
+        return (
             <div>
                 <div className={this.props.style.row}>
                     <div className={this.props.style.logoLeft}>
@@ -120,11 +138,32 @@ class ContentBackground extends Component {
                     </div>
                     <div className={this.props.style.right}>
                         <div className={this.props.style.innerRow}>
-                            <div className={this.props.style.slider} onMouseEnter={this.slider} onClick={this.slider}>
-                                <span className={this.props.style.dot} onDrag={this.slider}></span>
+                            {/*<div className={this.props.style.slider}>*/}
+                            {/*<span className={this.props.style.dot} onMouseDown={this.slider}></span>*/}
+                            {/*</div>*/}
+                            <div style={style}>
+                                <Slider min={0}
+                                        max={100}
+                                        defaultValue={parseInt(this.state.opacity)}
+                                        handle={handle}
+                                        trackStyle={{ backgroundColor: '#5585ED', height: 4, borderRadius: 4, position: 'absolute'}}
+                                        railStyle={{ backgroundColor: '#E7E9EF', height: 4, borderRadius: 4, position: 'absolute', width: '100%'}}
+                                        handleStyle={{
+                                            border: '2px solid #fff',
+                                            height: 12,
+                                            width: 12,
+                                            borderRadius: 12,
+                                            backgroundColor: '#5585ED',
+                                            marginLeft: -6,
+                                            position: 'absolute',
+                                            top: -4
+                                        }}
+                                        onChange={this.onSliderChange}
+                                />
                             </div>
                             <div>
-                                <select className={this.props.style.medium} data-component="ContentBackground" onChange={this.select}>
+                                <select className={this.props.style.medium} disabled
+                                        onChange={this.select}>
                                     <option value="10%">10%</option>
                                     <option value="20%">20%</option>
                                     <option value="30%">30%</option>
@@ -137,9 +176,11 @@ class ContentBackground extends Component {
                                     <option value="100%">100%</option>
                                 </select>
                                 <p className={[this.props.style.select, this.props.style.medium].join(' ')}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                        <path fill="#BFC5D2" fillRule="nonzero" d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                                    </svg>
+                                    {/*<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">*/}
+                                        {/*<path fill="#BFC5D2" fillRule="nonzero"*/}
+                                              {/*d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>*/}
+                                    {/*</svg>*/}
+                                    {`${this.state.opacity}%`}
                                 </p>
                             </div>
                         </div>
@@ -150,4 +191,13 @@ class ContentBackground extends Component {
     }
 }
 
-export default ContentBackground;
+export default connect(
+    state => ({
+        content_background: state
+    }),
+    dispatch => ({
+        backgroundStyle: (data) => {
+            dispatch({type: "CONTENT_BACKGROUND", payload: data});
+        }
+    })
+)(ContentBackground);

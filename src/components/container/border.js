@@ -1,17 +1,21 @@
 import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
+import {connect} from 'react-redux';
 
 class ContentBorder extends Component {
     constructor(props){
         super(props);
         this.state={
-            colorHEX: '#f9f9fc',
-            color: {
-                r: '249',
-                g: '249',
-                b: '252',
+            colorHEX: this.props.content_border.colorHEX || '#ffffff',
+            color: this.props.content_border.color || {
+                r: '255',
+                g: '255',
+                b: '255',
                 a: '1',
-            }
+            },
+            type: this.props.content_border.type || 'none',
+            thickness: this.props.content_border.thickness || '1',
+            radius: this.props.content_border.radius || '0'
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -32,20 +36,53 @@ class ContentBorder extends Component {
         this.setState({color: color.rgb});
     };
 
+    select = (e) => {
+        let data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
+        let span =  e.currentTarget.nextSibling.children[0];
+        span.innerText = data;
+        let state = e.currentTarget.getAttribute('data-select');
+        this.setState({
+            [state]: data
+        });
+        this.props.borderStyle(this.state);
+        this.props.handler(this.state);
+    };
+
+    shouldComponentUpdate(nextProps, nextState){
+        if(this.state.type !== nextState.type){
+            return true;
+        } else if (this.state.thickness !== nextState.thickness){
+            return true;
+        } else if (this.state.radius !== nextState.radius){
+            return true;
+        } else if (this.state.colorHEX !== nextState.colorHEX){
+            return true;
+        } else if (this.state.color !== nextState.color){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     componentDidMount(){
-        let select = document.querySelectorAll('[ data-component="ContentBorder"]');
+        console.log(this.props.content_border);
+        let select = document.querySelectorAll('[data-component="ContentBorder"]');
         for (let i = 0; i < select.length; i++){
             let svg = select[i].nextSibling.children[0];
+            select[0].value = this.state.type;
+            select[1].value = this.state.thickness;
+            select[2].value = this.state.radius;
             let span = document.createElement('span');
             span.innerText = select[i].options[select[i].selectedIndex].value;
             select[i].nextSibling.insertBefore(span, svg);
         }
-    }
+        this.props.handler(this.state);
 
-    select(e){
-        let data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
-        let span =  e.currentTarget.nextSibling.children[0];
-        span.innerText = data;
+    };
+
+    componentDidUpdate(){
+        this.props.handler(this.state);
+        console.log(this.props.content_border);
     }
 
     render(){
@@ -53,7 +90,7 @@ class ContentBorder extends Component {
             position: 'absolute',
             zIndex: '2',
             top: 32,
-            left: 0
+            right: 0
         };
         const cover = {
             position: 'fixed',
@@ -71,12 +108,17 @@ class ContentBorder extends Component {
                 </div>
                 <div className={this.props.style.row}>
                     <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style}>Image</span>
+                        <span className={this.props.style}>Type</span>
                     </div>
                     <div className={this.props.style.right}>
                         <div className={this.props.style.innerRow}>
-                            <select data-component="ContentBorder" onChange={this.select}>
+                            <select data-component="ContentBorder"
+                                    data-select="type"
+                                    onChange={this.select}>
+                                <option value="none">None</option>
                                 <option value="solid">Solid</option>
+                                <option value="dotted">Dotted</option>
+                                <option value="dashed">Dashed</option>
                             </select>
                             <p className={this.props.style.select}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -111,7 +153,10 @@ class ContentBorder extends Component {
                     </div>
                     <div className={this.props.style.right}>
                         <div className={this.props.style.innerRow}>
-                            <select className={this.props.style.tin} data-component="ContentBorder" onChange={this.select}>
+                            <select className={this.props.style.tin}
+                                    data-component="ContentBorder"
+                                    data-select="thickness"
+                                    onChange={this.select}>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -132,7 +177,11 @@ class ContentBorder extends Component {
                     </div>
                     <div className={this.props.style.right}>
                         <div className={this.props.style.innerRow}>
-                            <select className={this.props.style.tin} data-component="ContentBorder" onChange={this.select}>
+                            <select className={this.props.style.tin}
+                                    data-component="ContentBorder"
+                                    data-select="radius"
+                                    onChange={this.select}>
+                                <option value="0">0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -152,4 +201,14 @@ class ContentBorder extends Component {
     }
 }
 
-export default ContentBorder;
+// export default ContentBorder;
+export default connect(
+    state => ({
+        content_border: state.content_border
+    }),
+    dispatch => ({
+        borderStyle: (data) => {
+            dispatch({type: "CONTENT_BORDER", payload: data});
+        }
+    })
+)(ContentBorder);

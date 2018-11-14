@@ -105,7 +105,8 @@ class Options extends Component {
                                 </svg>
                             </div>
                             {this.state.visible === 'Container' ?
-                                <Container style={style}/> :
+                                <Container style={style}
+                                           handler={this.props.containerHandler}/> :
                                 false}
                         </div>
                     </div>

@@ -21,6 +21,7 @@ class CaptivePortal extends Component {
         this.trigger = this.trigger.bind(this);
         this.eventHandler = this.eventHandler.bind(this);
         this.alignment = this.alignment.bind(this);
+        this.containerHandler = this.containerHandler.bind(this);
         this.PreviewMain = React.createRef();
     }
 
@@ -39,6 +40,10 @@ class CaptivePortal extends Component {
             type: type,
             backgroundType: backgroundType
         })
+    }
+
+    containerHandler(border, background, size){
+        console.log('captive-portal\n', border, background, size);
     }
 
     alignment(position){
@@ -130,7 +135,8 @@ class CaptivePortal extends Component {
                         </div>
                     </div>
                     <Options alignment={this.alignment}
-                             handler={this.eventHandler}/>
+                             handler={this.eventHandler}
+                            containerHandler={this.containerHandler }/>
                 </div>
             </div>
         )
