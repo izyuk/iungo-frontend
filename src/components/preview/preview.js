@@ -14,38 +14,50 @@ class Preview extends Component {
             logoName: this.props.state.logoName === '' ? 'logo.png' : this.props.state.logoName
         };
         this.PreviewMain = React.createRef();
+        this.ContainerMain = React.createRef();
         // this.eventHandler = this.eventHandler.bind(this);
-        this.getComponent = this.getComponent.bind(this);
     }
 
     componentDidUpdate() {
         if (this.props.state.backgroundType === 'image') {
-            if (this.props.state.type === 'background'){
+            if (this.props.state.type === 'background') {
                 if (this.props.state.backgrName !== '' || this.props.state.backgrName !== undefined) {
-                    this.PreviewMain.current.style.background  = `url(http://${this.props.state.backgrName.url})`;
+                    this.PreviewMain.current.style.background = `url(http://${this.props.state.backgrName.url})`;
                 } else {
-                    console.log('backgrName is EMPTY or UNDEFINED');
+                    console.warn('backgrName is EMPTY or UNDEFINED');
                     this.PreviewMain.current.style.background = this.state.backgroundColor;
                 }
-            } else if (this.props.state.type === 'logo'){
+            } else if (this.props.state.type === 'logo') {
                 this.PreviewMain.current.style.background = this.state.backgroundColor;
             }
-        } else if(this.props.state.backgroundType === 'color') {
+        } else if (this.props.state.backgroundType === 'color') {
             if (this.props.state.backgrName !== '') {
                 this.PreviewMain.current.style.background = this.props.state.backgrName;
             } else {
-                console.log('NO color');
+                console.warn('NO color');
                 this.PreviewMain.current.style.background = this.state.backgroundColor;
             }
         } else {
-            console.log('NO image');
+            console.warn('NO image');
             this.PreviewMain.current.style.background = '#f9f9fc';
         }
 
+        const container = ({border: {color, ...rest}, background, size: {width, padding}}) => {
+            console.log(width);
+            console.log(padding);
 
-    }
+            this.ContainerMain.current.style.borderWidth = rest.thickness ? `${rest.thickness}px` : false;
+            this.ContainerMain.current.style.borderStyle = rest.type ? `${rest.type}` : false;
+            this.ContainerMain.current.style.borderColor = color ? `rgba(${color.r},${color.g},${color.b},${color.a})` : false;
+            this.ContainerMain.current.style.borderRadius = rest.radius ? `${rest.radius}px` : false;
+            this.ContainerMain.current.style.background = background.color ? `rgba(${background.color.r},${background.color.g},${background.color.b},${background.color.a})` : false;
+            this.ContainerMain.current.style.opacity = background.opacity ? background.opacity/100 : false;
+            this.ContainerMain.current.style.maxWidth = `${width}px`;
+            this.ContainerMain.current.style.padding = `${padding}px`;
+        };
 
-    async getComponent(data) {
+        container(this.props.state.container);
+
 
     }
 
@@ -61,7 +73,7 @@ class Preview extends Component {
             return true;
         } else if (this.state.backgroundColor !== nextState.backgroundColor) {
             return true;
-        }  else if (this.props.state.logoName !== nextProps.state.logoName) {
+        } else if (this.props.state.logoName !== nextProps.state.logoName) {
             return true;
         } else if (this.props.state.backgrName !== nextProps.state.backgrName) {
             return true;
@@ -72,6 +84,8 @@ class Preview extends Component {
         } else if (this.props.state.alignment !== nextProps.state.alignment) {
             return true;
         } else if (this.props.state.mobile !== nextProps.state.mobile) {
+            return true;
+        } else if (this.props.state.container !== nextProps.state.container) {
             return true;
         } else {
             return false;
@@ -91,7 +105,8 @@ class Preview extends Component {
                                     <img src={`http://${this.props.state.logoName.url}`} alt=""/>}
                             </div>
                         </div>
-                        <div className={style.section}>
+                        <div className={style.section}
+                             ref={this.ContainerMain}>
                             <div className={style.contentPlace}>
                                 <div className={style.socialsWrap}>
                                     <div className={style.fb}>

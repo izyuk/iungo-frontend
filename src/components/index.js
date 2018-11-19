@@ -55,6 +55,7 @@ class Index extends Component {
 
         {/*<div className={style.list}>*/}
           {/*{(!this.state.data && !this.state.status && this.state.click) ? <Loader/> : this.state.data}*/}
+            {/*<Loader/>*/}
         {/*</div>*/}
         <div className={style.loginWrap}>
             <div className={style.logo}>

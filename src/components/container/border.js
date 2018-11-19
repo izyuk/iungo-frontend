@@ -3,20 +3,20 @@ import {SketchPicker} from "react-color";
 import {connect} from 'react-redux';
 
 class ContentBorder extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             displayColorPicker: false,
-            colorHEX: '#ffffff' || this.props.content_border.colorHEX,
-            color: {
+            colorHEX: this.props.content_border.colorHEX || '#ffffff',
+            color: this.props.content_border.color || {
                 r: '255',
                 g: '255',
                 b: '255',
                 a: '1',
-            } || this.props.content_border.color ,
-            type: 'none' || this.props.content_border.type,
-            thickness: '1' || this.props.content_border.thickness,
-            radius: '0' || this.props.content_border.radius
+            },
+            type: this.props.content_border.type || 'none',
+            thickness: this.props.content_border.thickness || '1',
+            radius: this.props.content_border.radius || '0'
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -48,7 +48,7 @@ class ContentBorder extends Component {
 
     select = (e) => {
         let data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
-        let span =  e.currentTarget.nextSibling.children[0];
+        let span = e.currentTarget.nextSibling.children[0];
         span.innerText = data;
         let state = e.currentTarget.getAttribute('data-select');
         this.setState({
@@ -57,30 +57,30 @@ class ContentBorder extends Component {
         let {displayColorPicker, ...rest} = this.state;
         this.props.borderStyle(rest);
         this.props.handler(rest);
+        console.log(this.state);
     };
 
-    shouldComponentUpdate(nextProps, nextState){
-        if(this.state.type !== nextState.type){
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.state.type !== nextState.type) {
             return true;
-        } else if (this.state.thickness !== nextState.thickness){
+        } else if (this.state.thickness !== nextState.thickness) {
             return true;
-        } else if (this.state.radius !== nextState.radius){
+        } else if (this.state.radius !== nextState.radius) {
             return true;
-        } else if (this.state.colorHEX !== nextState.colorHEX){
+        } else if (this.state.colorHEX !== nextState.colorHEX) {
             return true;
-        } else if (this.state.color !== nextState.color){
+        } else if (this.state.color !== nextState.color) {
             return true;
-        } else if (this.state.displayColorPicker !== nextState.displayColorPicker){
+        } else if (this.state.displayColorPicker !== nextState.displayColorPicker) {
             return true;
         } else {
             return false;
         }
     }
 
-    componentDidMount(){
-        console.log(this.props.content_border);
+    componentDidMount() {
         let select = document.querySelectorAll('[data-component="ContentBorder"]');
-        for (let i = 0; i < select.length; i++){
+        for (let i = 0; i < select.length; i++) {
             let svg = select[i].nextSibling.children[0];
             select[0].value = this.state.type;
             select[1].value = this.state.thickness;
@@ -89,16 +89,20 @@ class ContentBorder extends Component {
             span.innerText = select[i].options[select[i].selectedIndex].value;
             select[i].nextSibling.insertBefore(span, svg);
         }
-        this.props.handler(this.state);
+        let {displayColorPicker, ...rest} = this.state;
+        this.props.borderStyle(rest);
+        this.props.handler(rest);
 
     };
 
-    componentDidUpdate(){
-        this.props.handler(this.state);
+    componentDidUpdate() {
+        let {displayColorPicker, ...rest} = this.state;
+        this.props.borderStyle(rest);
+        this.props.handler(rest);
         console.log(this.props.content_border);
     }
 
-    render(){
+    render() {
         const popover = {
             position: 'absolute',
             zIndex: '2',
@@ -112,7 +116,7 @@ class ContentBorder extends Component {
             bottom: '0px',
             left: '0px',
         };
-        return(
+        return (
             <div>
                 <div className={this.props.style.row}>
                     <div className={this.props.style.logoLeft}>
@@ -135,7 +139,8 @@ class ContentBorder extends Component {
                             </select>
                             <p className={this.props.style.select}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#BFC5D2" fillRule="nonzero" d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
+                                    <path fill="#BFC5D2" fillRule="nonzero"
+                                          d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
                                 </svg>
                             </p>
                         </div>
@@ -151,7 +156,7 @@ class ContentBorder extends Component {
                                 <input type="text" value={this.state.colorHEX} disabled/>
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
-                                        onClick={this.handleClick}> </button>
+                                        onClick={this.handleClick}></button>
                                 {this.state.displayColorPicker ? <div style={popover}>
                                     <div style={cover} onClick={this.handleClose}/>
                                     <SketchPicker color={this.state.color} onChange={this.handleChange}/>
@@ -178,7 +183,8 @@ class ContentBorder extends Component {
                             </select>
                             <p className={[this.props.style.select, this.props.style.tin].join(' ')}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#BFC5D2" fillRule="nonzero" d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
+                                    <path fill="#BFC5D2" fillRule="nonzero"
+                                          d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
                                 </svg>
                             </p>
                         </div>
@@ -203,7 +209,8 @@ class ContentBorder extends Component {
                             </select>
                             <p className={[this.props.style.select, this.props.style.tin].join(' ')}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#BFC5D2" fillRule="nonzero" d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
+                                    <path fill="#BFC5D2" fillRule="nonzero"
+                                          d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
                                 </svg>
                             </p>
                         </div>

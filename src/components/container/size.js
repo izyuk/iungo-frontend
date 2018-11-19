@@ -5,8 +5,8 @@ class ContainerSize extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            width: '720',
-            padding: '10'
+            width: this.props.content_size.width || 720,
+            padding: this.props.content_size.padding || 10
         };
         this.valueWidth = this.valueWidth.bind(this);
         this.valuePadding = this.valuePadding.bind(this);
@@ -25,7 +25,7 @@ class ContainerSize extends Component {
             })
         } else {
             this.setState({
-                width: e.target.value
+                width: parseInt(e.target.value)
             });
         }
 
@@ -45,11 +45,30 @@ class ContainerSize extends Component {
             });
         } else {
             this.setState({
-                padding: e.target.value
+                padding: parseInt(e.target.value)
             });
         }
 
         console.log(this.state.padding);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.state.width !== nextState.width) {
+            return true;
+        } else if (this.state.padding !== nextState.padding) {
+            return true;
+        } else
+            return false;
+    }
+
+    componentDidMount() {
+        this.props.sizeStyle(this.state);
+        this.props.handler(this.state);
+    }
+
+    componentDidUpdate(){
+        this.props.sizeStyle(this.state);
+        this.props.handler(this.state);
     }
 
     render() {
@@ -66,7 +85,7 @@ class ContainerSize extends Component {
                     </div>
                     <div className={this.props.style.right}>
                         <div className={this.props.style.inputSelect}>
-                            <input type="number" onBlur={this.valueWidth} defaultValue={this.state.width}/>
+                            <input type="number" onChange={this.valueWidth} defaultValue={this.state.width}/>
                             <select name="" id="">
                                 <option value="px">px</option>
                                 <option value="%">%</option>
@@ -86,7 +105,7 @@ class ContainerSize extends Component {
                     <div className={this.props.style.right}>
 
                         <div className={this.props.style.inputSelect}>
-                            <input type="number" onBlur={this.valuePadding} defaultValue={this.state.padding}/>
+                            <input type="number" onChange={this.valuePadding} defaultValue={this.state.padding}/>
                             <select name="" id="">
                                 <option value="px">px</option>
                                 <option value="%">%</option>
@@ -106,7 +125,7 @@ class ContainerSize extends Component {
 
 export default connect(
     state => ({
-        content_size: state
+        content_size: state.content_size
     }),
     dispatch => ({
         sizeStyle: (data) => {

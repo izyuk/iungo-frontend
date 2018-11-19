@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
 import {connect} from 'react-redux';
-import 'rc-slider/assets/index.css';
-import 'rc-tooltip/assets/bootstrap.css';
 import Tooltip from 'rc-tooltip';
 import Slider from 'rc-slider';
 import backgroundColor from "../../reducers/backgroundColor";
@@ -18,12 +16,12 @@ const style = {
 const Handle = Slider.Handle;
 
 const handle = (props) => {
-    const { value, dragging, index, ...restProps } = props;
+    const {value, dragging, index, ...restProps} = props;
     return (
         <Tooltip
             prefixCls="rc-slider-tooltip"
             overlay={value}
-            visible={dragging}
+            visible={false}
             placement="top"
             key={index}
         >
@@ -37,14 +35,15 @@ class ContentBackground extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            colorHEX: '#ffffff',
-            color: {
+            displayColorPicker: false,
+            colorHEX: this.props.content_background.colorHEX || '#ffffff',
+            color: this.props.content_background.color || {
                 r: '255',
                 g: '255',
                 b: '255',
                 a: '1',
             },
-            opacity: '100'
+            opacity: this.props.content_background.opacity || '100'
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -62,18 +61,32 @@ class ContentBackground extends Component {
     };
 
     handleChange = (color) => {
-        this.setState({color: color.rgb});
+        this.setState({
+            color: {
+                r: color.rgb.r,
+                g: color.rgb.g,
+                b: color.rgb.b,
+                a: color.rgb.a
+            }
+        });
+        this.setState({colorHEX: color.hex});
     };
 
-    onSliderChange(value){
+    onSliderChange(value) {
         console.log(value);
         this.setState({
             opacity: value
         });
     }
 
-    shouldComponentUpdate(nextProps, nextState){
-        if(this.state.opacity !== nextState.opacity){
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.state.opacity !== nextState.opacity) {
+            return true;
+        } else if (this.state.colorHEX !== nextState.colorHEX) {
+            return true;
+        } else if (this.state.color !== nextState.color) {
+            return true;
+        } else if (this.state.displayColorPicker !== nextState.displayColorPicker) {
             return true;
         } else
             return false;
@@ -87,6 +100,19 @@ class ContentBackground extends Component {
             span.innerText = select[i].options[select[i].selectedIndex].value;
             select[i].nextSibling.insertBefore(span, svg);
         }
+        let {displayColorPicker, ...rest} = this.state;
+        console.log('background STATE', this.state);
+        console.log('background STORAGE', this.props.content_background);
+        this.props.backgroundStyle(rest);
+        this.props.handler(rest);
+    }
+
+    componentDidUpdate() {
+        let {displayColorPicker, ...rest} = this.state;
+        this.props.backgroundStyle(rest);
+        this.props.handler(rest);
+        console.log('background STORAGE UPDATED', this.props.content_background);
+        console.log('background STATE UPDATED', this.state);
     }
 
     render() {
@@ -122,7 +148,7 @@ class ContentBackground extends Component {
                                 <input type="text" value={this.state.colorHEX} disabled/>
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
-                                        onClick={this.handleClick}> </button>
+                                        onClick={this.handleClick}></button>
                                 {this.state.displayColorPicker ? <div style={popover}>
                                     <div style={cover} onClick={this.handleClose}/>
                                     <SketchPicker color={this.state.color} onChange={this.handleChange}/>
@@ -146,8 +172,19 @@ class ContentBackground extends Component {
                                         max={100}
                                         defaultValue={parseInt(this.state.opacity)}
                                         handle={handle}
-                                        trackStyle={{ backgroundColor: '#5585ED', height: 4, borderRadius: 4, position: 'absolute'}}
-                                        railStyle={{ backgroundColor: '#E7E9EF', height: 4, borderRadius: 4, position: 'absolute', width: '100%'}}
+                                        trackStyle={{
+                                            backgroundColor: '#5585ED',
+                                            height: 4,
+                                            borderRadius: 4,
+                                            position: 'absolute'
+                                        }}
+                                        railStyle={{
+                                            backgroundColor: '#E7E9EF',
+                                            height: 4,
+                                            borderRadius: 4,
+                                            position: 'absolute',
+                                            width: '100%'
+                                        }}
                                         handleStyle={{
                                             border: '2px solid #fff',
                                             height: 12,
@@ -177,8 +214,8 @@ class ContentBackground extends Component {
                                 </select>
                                 <p className={[this.props.style.select, this.props.style.medium].join(' ')}>
                                     {/*<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">*/}
-                                        {/*<path fill="#BFC5D2" fillRule="nonzero"*/}
-                                              {/*d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>*/}
+                                    {/*<path fill="#BFC5D2" fillRule="nonzero"*/}
+                                    {/*d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>*/}
                                     {/*</svg>*/}
                                     {`${this.state.opacity}%`}
                                 </p>
@@ -193,7 +230,7 @@ class ContentBackground extends Component {
 
 export default connect(
     state => ({
-        content_background: state
+        content_background: state.content_background
     }),
     dispatch => ({
         backgroundStyle: (data) => {

@@ -1,22 +1,9 @@
-const INITIAL = {
-    colorHEX: '#ffffff',
-    color: {
-        r: '255',
-        g: '255',
-        b: '255',
-        a: '1',
-    },
-    type: 'none',
-    thickness: '1',
-    radius: '0'
-};
-
-export default function (state = INITIAL, action) {
+export default function (state = {}, action) {
     switch (action.type) {
         case "CONTENT_BORDER":
-            return Object.assign(state, {
-                color: action.payload
-            });
+            return Object.assign(state,
+                 action.payload
+            );
         default:
             return state
     }

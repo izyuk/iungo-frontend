@@ -57,6 +57,7 @@ class Container extends Component {
     }
 
     componentDidUpdate(){
+        console.log(this.state);
        this.props.handler(this.state);
     }
 

@@ -16,7 +16,12 @@ class CaptivePortal extends Component {
             logoName: '',
             type: '',
             backgroundType: 'color',
-            alignment: 'center'
+            alignment: 'center',
+            container: '' || {
+                border: this.props.file_upload.content_border,
+                background: this.props.file_upload.content_background,
+                size: this.props.file_upload.content_size
+            }
         };
         this.trigger = this.trigger.bind(this);
         this.eventHandler = this.eventHandler.bind(this);
@@ -42,8 +47,12 @@ class CaptivePortal extends Component {
         })
     }
 
-    containerHandler(border, background, size){
-        console.log('captive-portal\n', border, background, size);
+
+    containerHandler(data){
+        // console.log('captive-portal\n', data);
+        this.setState({
+            container: data
+        })
     }
 
     alignment(position){
@@ -88,17 +97,19 @@ class CaptivePortal extends Component {
             return true;
         } else if (this.state.mobile !== nextState.mobile) {
             return true;
+        } else if (this.state.container !== nextState.container) {
+            return true;
         } else {
             return false;
         }
     }
 
     componentDidMount() {
-
+        console.log(this.state);
     }
-
     componentDidUpdate() {
-
+        console.log(this.state);
+        console.log(this.props.file_upload);
     }
 
     render() {
