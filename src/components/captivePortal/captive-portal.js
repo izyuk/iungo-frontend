@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 
 import style from './captive-portal.less';
 
-import Preview from '../preview/preview';
-import Options from '../builder/options';
+import Preview from './preview/preview';
+import Options from './optionsSidebar/options';
 import {upload_file} from "../../reducers/file_upload";
 
 class CaptivePortal extends Component {

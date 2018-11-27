@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import style from './preview.less';
-import style2 from '../captivePortal/captive-portal.less';
+import style2 from '../captive-portal.less';
 
 
 class Preview extends Component {
@@ -101,7 +101,7 @@ class Preview extends Component {
                         <div className={style.header}>
                             <div className={style.logoPlace} style={{justifyContent: this.props.state.alignment}}>
                                 {this.props.state.logoName === '' ?
-                                    <img src={require('../../static/images/logo.png')} alt=""/> :
+                                    <img src={require('../../../static/images/logo.png')} alt=""/> :
                                     <img src={`http://${this.props.state.logoName.url}`} alt=""/>}
                             </div>
                         </div>

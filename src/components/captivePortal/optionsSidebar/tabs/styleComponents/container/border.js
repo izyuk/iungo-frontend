@@ -25,9 +25,7 @@ class ContentBorder extends Component {
     }
 
     handleClick = () => {
-        console.log('click');
         this.setState({displayColorPicker: !this.state.displayColorPicker});
-        console.log('click');
     };
 
     handleClose = () => {

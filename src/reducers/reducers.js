@@ -9,6 +9,8 @@ import backgroundColor from './backgroundColor';
 import contentBorder from './contentBorder';
 import contentBackground from './contentBackground';
 import contentSize from './contentSize';
+import headerTopTextData from './headerTopTextColor';
+import headerDescriptionTextData from './headerDescriptionTextColor';
 import selectTab from './selectTab';
 
 const allReducers = combineReducers({
@@ -18,6 +20,8 @@ const allReducers = combineReducers({
     content_border: contentBorder,
     content_background: contentBackground,
     content_size: contentSize,
+    header_top_text_data: headerTopTextData,
+    header_description_text_data: headerDescriptionTextData,
     tabName: selectTab
 });
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import style from './header.less';
-import background from "../builder/background";
+import background from "../captivePortal/optionsSidebar/tabs/styleComponents/background";
 
 class Header extends Component {
     constructor(props){

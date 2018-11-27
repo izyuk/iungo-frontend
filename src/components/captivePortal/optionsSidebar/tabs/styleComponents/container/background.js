@@ -3,7 +3,7 @@ import {SketchPicker} from "react-color";
 import {connect} from 'react-redux';
 import Tooltip from 'rc-tooltip';
 import Slider from 'rc-slider';
-import backgroundColor from "../../reducers/backgroundColor";
+import backgroundColor from "../../../../../../reducers/backgroundColor";
 
 const style = {
     marginRight: 16,

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {upload_file} from '../../reducers/file_upload';
-import ImageUploader from '../imageUploader/imageUploader';
+import {upload_file} from '../../../../../reducers/file_upload';
+import ImageUploader from '../../../imageUploader/imageUploader';
 
 class Logo extends Component {
     constructor(props) {

@@ -1,4 +1,4 @@
-@import "../../static/exp";
+@import "../../../static/exp";
 
 .options {
   width: 320px;
@@ -133,13 +133,16 @@
               }
             }
           }
+          .left+.right .innerRow,
+          .logoLeft+.right .innerRow{
+            margin-left: 24px;
+          }
           .right {
             flex: 5;
             .innerRow {
               display: flex;
               justify-content: flex-start;
               align-items: center;
-              margin-left: 24px;
               select,
               & > input {
                 width: 100%;
@@ -233,6 +236,53 @@
               }
               & > input {
                 width: 100%;
+              }
+              textarea{
+                width: 100%;
+                resize: none;
+                min-height: 50px;
+                padding: 6px;
+                border-radius: 4px;
+                border: 1px solid @pale-grey-three;
+                background-color: @w;
+                .font(@avenir-medium, 12);
+                color: @steel;
+              }
+              .textActions{
+                width: 100%;
+                height: 30px;
+                //padding: 6px;
+                //margin-bottom: 10px;
+                margin-bottom: 5px;
+                //border-radius: 4px;
+                //border: 1px solid @pale-grey-three;
+                background-color: @w;
+                display: flex;
+                align-items: center;
+                button{
+                  width: 20px;
+                  height: 20px;
+                  border: 1px solid @pale-grey-three;
+                  background-color: @w;
+                  &:hover{
+                    background-color: @pale-grey-five;
+                  }
+                  &.active{
+                    background-color: @pale-grey-seven;
+                  }
+                  &:not(:last-child){
+                    margin-right: 10px;
+                  }
+                  &[data-type="bold"]{
+                    font-weight: bold;
+                  }
+                  &[data-type="italic"]{
+                    font-style: italic;
+                  }
+                  &[data-type="underline"]{
+                    text-decoration: underline;
+                  }
+                }
               }
             }
             .inputSelect{
