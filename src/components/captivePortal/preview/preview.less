@@ -1,10 +1,10 @@
 @import "../../../static/exp";
 
-.header{
+.header {
   width: 100%;
 }
 
-.section{
+.section {
   width: 100%;
   background: @w;
   padding: 24px 32px 32px 32px;
@@ -15,11 +15,11 @@
   margin: 0 auto;
 }
 
-.footer{
+.footer {
   width: 100%;
 }
 
-.previewContainer{
+.previewContainer {
   width: 90%;
   min-width: 320px;
   display: block;
@@ -31,13 +31,13 @@
   //}
 }
 
-.logoPlace{
+.logoPlace {
   width: 100%;
   display: flex;
   justify-content: center;
   transition: all 0.3s linear;
   margin-bottom: 30px;
-  img{
+  img {
     //width: 100%;
     max-width: 350px;
     max-height: 200px;
@@ -46,19 +46,33 @@
   }
 }
 
-.contentPlace{
-
+.contentPlace {
+  .textPlace {
+    width: 100%;
+    p{
+      text-align: center;
+    }
+    .head {
+      .font(@avenir-medium, 16);
+      line-height: 2;
+      color: @dark-indigo;
+    }
+    .description{
+      .font(@avenir-medium, 12);
+      line-height: 2;
+      color: @steel;
+    }
+  }
 }
 
-
 .inputsWrap,
-.socialsWrap{
+.socialsWrap {
   width: 100%;
   margin: 16px 0;
-  .email{
+  .email {
     margin-bottom: 16px;
   }
-  &>div{
+  & > div {
     width: 100%;
     height: 42px;
     border-radius: 2px;
@@ -66,7 +80,7 @@
     background-color: @pale-grey-five;
     position: relative;
     display: flex;
-    span{
+    span {
       position: relative;
       display: flex;
       justify-content: center;
@@ -76,8 +90,8 @@
       border-radius: 2px;
       background: @pale-grey-six;
     }
-    &.email{
-      &:after{
+    &.email {
+      &:after {
         content: '';
         display: block;
         position: absolute;
@@ -90,7 +104,7 @@
         z-index: 1;
       }
     }
-    input{
+    input {
       width: calc(100% - 40px);
       border: 1px solid transparent;
       background: transparent;
@@ -135,37 +149,37 @@
   }
 }
 
-.socialsWrap{
-  div{
+.socialsWrap {
+  div {
     cursor: pointer;
     border: 1px solid @trans;
     border-radius: 2px;
-    input{
+    input {
       color: @w;
       .font(@avenir-heavy, 12);
       justify-content: center;
       align-items: center;
     }
-    span{
+    span {
     }
-    &:not(:last-child){
+    &:not(:last-child) {
       margin-bottom: 16px;
     }
-    &.fb{
+    &.fb {
       background-color: @french-blue;
-      span{
+      span {
         background: @light-navy-blue;
       }
     }
-    &.google{
+    &.google {
       background-color: @dodger-blue;
-      span{
+      span {
         background: @dark-sky-blue;
       }
     }
-    &.tw{
+    &.tw {
       background-color: @azure;
-      span{
+      span {
         background: @water-blue;
       }
     }

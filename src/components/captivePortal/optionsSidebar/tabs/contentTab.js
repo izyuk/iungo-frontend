@@ -13,13 +13,13 @@ class ContentTab extends Component {
         this.dropDownHandler = this.dropDownHandler.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.setState({
             event: this.Header.current
         });
     }
 
-    componentDidUpdate(){
+    componentDidUpdate() {
         this.state.event.closest(`.${style.head}`).classList.add(style.active);
         this.state.event.closest(`.${style.head}`).nextSibling.classList.add(style.active);
     }
@@ -52,7 +52,8 @@ class ContentTab extends Component {
                     </div>
                     {this.state.visible === 'HeaderTop' ?
                         <HeaderText style={style}
-                                    handler={this.props.handler}/> :
+                                    handler={this.props.handler}
+                                    textData={this.props.textData}/> :
                         false}
                 </div>
                 <div className="wrap">

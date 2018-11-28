@@ -45,6 +45,26 @@
   align-self: flex-start;
   object-fit: contain;
 }
+.contentPlace .textPlace {
+  width: 100%;
+}
+.contentPlace .textPlace p {
+  text-align: center;
+}
+.contentPlace .textPlace .head {
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 2;
+  color: #071031;
+}
+.contentPlace .textPlace .description {
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  line-height: 2;
+  color: #768198;
+}
 .inputsWrap,
 .socialsWrap {
   width: 100%;

@@ -51,7 +51,7 @@ class Preview extends Component {
             this.ContainerMain.current.style.borderColor = color ? `rgba(${color.r},${color.g},${color.b},${color.a})` : false;
             this.ContainerMain.current.style.borderRadius = rest.radius ? `${rest.radius}px` : false;
             this.ContainerMain.current.style.background = background.color ? `rgba(${background.color.r},${background.color.g},${background.color.b},${background.color.a})` : false;
-            this.ContainerMain.current.style.opacity = background.opacity ? background.opacity/100 : false;
+            this.ContainerMain.current.style.opacity = background.opacity ? background.opacity / 100 : false;
             this.ContainerMain.current.style.maxWidth = `${width}px`;
             this.ContainerMain.current.style.padding = `${padding}px`;
         };
@@ -87,12 +87,16 @@ class Preview extends Component {
             return true;
         } else if (this.props.state.container !== nextProps.state.container) {
             return true;
+        } else if (this.props.state.headerText !== nextProps.state.headerText) {
+            return true;
         } else {
             return false;
         }
     }
 
     render() {
+        let descriptionData = this.props.textDescriptionData;
+        let topData = this.props.textTopData;
         return (
             <div className={style2.previewWrap}>
                 <div className={[style2.previewMain, this.props.state.mobile ? style2.mobile : ''].join(' ')}
@@ -108,6 +112,31 @@ class Preview extends Component {
                         <div className={style.section}
                              ref={this.ContainerMain}>
                             <div className={style.contentPlace}>
+                                <div className={style.textPlace}>
+                                    <p className={style.head}
+                                       style={{
+                                           color: `rgba(${topData && topData.color.r}, ${topData && topData.color.g}, ${topData && topData.color.b}, ${topData && topData.color.a})`,
+                                           fontSize: topData && topData.fontSize,
+                                           fontWeight: topData && topData.textActions.bold ? 'bold' : '100',
+                                           fontStyle: topData && topData.textActions.italic ? 'italic' : 'none',
+                                           textDecoration: topData && topData.textActions.underline ? 'underline' : 'none',
+                                           textAlign: topData && topData.alignment
+                                       }}>
+                                        {topData && topData.text}
+                                    </p>
+
+                                    <p className={style.description}
+                                       style={{
+                                           color: `rgba(${descriptionData && descriptionData.color.r}, ${descriptionData && descriptionData.color.g}, ${descriptionData && descriptionData.color.b}, ${descriptionData && descriptionData.color.a})`,
+                                           fontSize: descriptionData && descriptionData.fontSize,
+                                           fontWeight: descriptionData && descriptionData.textActions.bold ? 'bold' : '100',
+                                           fontStyle: descriptionData && descriptionData.textActions.italic ? 'italic' : 'none',
+                                           textDecoration: descriptionData && descriptionData.textActions.underline ? 'underline' : 'none',
+                                           textAlign: descriptionData && descriptionData.alignment
+                                       }}>
+                                        {descriptionData && descriptionData.text}
+                                    </p>
+                                </div>
                                 <div className={style.socialsWrap}>
                                     <div className={style.fb}>
                                 <span>

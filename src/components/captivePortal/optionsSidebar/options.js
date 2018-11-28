@@ -24,7 +24,7 @@ class Options extends Component {
         this.tabHandler = this.tabHandler.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.setState({
             event: this.Style.current
         });
@@ -65,7 +65,8 @@ class Options extends Component {
                                   alignment={this.props.alignment}
                                   containerHandler={this.props.containerHandler}/>
                         : (this.state.tab === 'Content' ?
-                            <ContentTab/>
+                            <ContentTab
+                                textData={this.props.textData}/>
                             : '')}
                 </div>
             </div>

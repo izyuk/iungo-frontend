@@ -32,22 +32,25 @@ const handle = (props) => {
 class HeaderTop extends Component {
     constructor(props) {
         super(props);
+        let storage = this.props.header_top_text_data.data;
         this.state = {
             displayColorPicker: false,
-            colorHEX: this.props.header_top_text_data.colorHEX || '#ffffff',
-            color: this.props.header_top_text_data.color || {
-                r: '255',
-                g: '255',
-                b: '255',
+            colorHEX: storage ? storage.colorHEX : '#000000',
+            color: storage ? storage.color : {
+                r: '0',
+                g: '0',
+                b: '0',
                 a: '1',
             },
-            fontSize: this.props.header_top_text_data.fontSize || '18',
+            fontSize: storage ? storage.fontSize : 18,
             // dimension: this.props.header_top_text_data.dimension || 'px',
-            textActions: {
+            textActions: storage ? storage.textActions : {
                 bold: false,
                 italic: false,
                 underline: false,
-            }
+            },
+            text: storage ? storage.text : 'Change this text',
+            alignment: storage ? storage.alignment : 'center'
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -55,6 +58,8 @@ class HeaderTop extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.onSliderChange = this.onSliderChange.bind(this);
         this.textActionsHandler = this.textActionsHandler.bind(this);
+        this.textChanges = this.textChanges.bind(this);
+        this.alignment = this.alignment.bind(this);
     }
 
     onSliderChange(value) {
@@ -72,31 +77,27 @@ class HeaderTop extends Component {
             return true;
         } else if (this.state.displayColorPicker !== nextState.displayColorPicker) {
             return true;
+        } else if (this.state.textActions !== nextState.textActions) {
+            return true;
+        } else if (this.state.text !== nextState.text) {
+            return true;
         } else
             return false;
     }
 
     componentDidMount() {
-        // let select = document.querySelectorAll('[ data-component="ContentBackground"]');
-        // for (let i = 0; i < select.length; i++) {
-        //     let svg = select[i].nextSibling.children[0];
-        //     let span = document.createElement('span');
-        //     span.innerText = select[i].options[select[i].selectedIndex].value;
-        //     select[i].nextSibling.insertBefore(span, svg);
-        // }
-        // let {displayColorPicker, ...rest} = this.state;
-        // console.log('background STATE', this.state);
-        // console.log('background STORAGE', this.props.content_background);
-        // this.props.backgroundStyle(rest);
-        // this.props.handler(rest);
+        let {displayColorPicker, ...rest} = this.state;
+        this.props.textData(rest);
+        this.props.handler(rest);
+        console.log('--------',this.props.header_top_text_data);
+        let storage = this.props.header_top_text_data.data;
+        document.getElementById((storage ? storage.alignment : 'center')+'2').checked = true;
     }
 
     componentDidUpdate() {
-        // let {displayColorPicker, ...rest} = this.state;
-        // this.props.backgroundStyle(rest);
-        // this.props.handler(rest);
-        // console.log('background STORAGE UPDATED', this.props.content_background);
-        // console.log('background STATE UPDATED', this.state);
+        let {displayColorPicker, ...rest} = this.state;
+        this.props.textData(rest);
+        this.props.handler(rest);
     }
 
     handleClick = () => {
@@ -120,15 +121,32 @@ class HeaderTop extends Component {
     };
 
     textActionsHandler(e) {
-        console.log(e.currentTarget);
-        console.log(e.currentTarget.getAttribute('data-type'));
         let name = e.currentTarget.getAttribute('data-type');
-        let currentState = this.state.textActions[name];
+        let currentState = this.state;
+        currentState.textActions[name] = !this.state.textActions[name];
+
+        this.setState(currentState);
+    }
+
+    textChanges(e) {
         this.setState({
-            currentState: !currentState
+            text: e.currentTarget.value
+        })
+    }
+
+    alignment(e) {
+        this.setState({
+            alignment: e.target.getAttribute('data-id')
         });
-        console.log(this.state.textActions);
-        console.log(this.state.textActions[name]);
+        // if (e.target.getAttribute('id') === 'left') {
+        //     this.setState({
+        //         alignment: 'left'
+        //     });
+        // }
+        // if (e.target.getAttribute('id') === 'center') {
+        // }
+        // if (e.target.getAttribute('id') === 'right') {
+        // }
     }
 
     render() {
@@ -174,7 +192,7 @@ class HeaderTop extends Component {
                             </div>
                         </div>
                         <div className={this.props.style.innerRow}>
-                            <textarea></textarea>
+                            <textarea onChange={this.textChanges}></textarea>
                         </div>
                     </div>
                 </div>
@@ -267,21 +285,21 @@ class HeaderTop extends Component {
                     </div>
                     <div className={this.props.style.right}>
                         <div className={this.props.style.innerCol}>
-                            <label htmlFor="left">Left
+                            <label htmlFor="left2">Left
                                 <div className={this.props.style.inputRadioWrap}>
-                                    <input onChange={this.alignment} id='left' type="radio" name='alignment'/>
+                                    <input onChange={this.alignment} id='left2' data-id='left' type="radio" name='alignment2'/>
                                     <span className={this.props.style.radio}></span>
                                 </div>
                             </label>
-                            <label htmlFor="center">Center
+                            <label htmlFor="center2">Center
                                 <div className={this.props.style.inputRadioWrap}>
-                                    <input onChange={this.alignment} id='center' type="radio" name='alignment'/>
+                                    <input onChange={this.alignment} id='center2' data-id='center' type="radio" name='alignment2'/>
                                     <span className={this.props.style.radio}></span>
                                 </div>
                             </label>
-                            <label htmlFor="right">Right
+                            <label htmlFor="right2">Right
                                 <div className={this.props.style.inputRadioWrap}>
-                                    <input onChange={this.alignment} id='right' type="radio" name='alignment'/>
+                                    <input onChange={this.alignment} id='right2' data-id='right' type="radio" name='alignment2'/>
                                     <span className={this.props.style.radio}></span>
                                 </div>
                             </label>
@@ -299,8 +317,8 @@ export default connect(
         header_top_text_data: state.header_top_text_data
     }),
     dispatch => ({
-        textColor: (data) => {
-            dispatch({type: "HEADER_TOP_TEXT_COLOR", payload: data});
+        textData: (data) => {
+            dispatch({type: "HEADER_TOP", payload: data});
         }
     })
 )(HeaderTop);

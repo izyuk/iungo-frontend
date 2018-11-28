@@ -21,12 +21,17 @@ class CaptivePortal extends Component {
                 border: this.props.file_upload.content_border,
                 background: this.props.file_upload.content_background,
                 size: this.props.file_upload.content_size
+            },
+            headerText: '' || {
+                top: this.props.file_upload.header_top_text_data,
+                descr: this.props.file_upload.header_description_text_data
             }
         };
         this.trigger = this.trigger.bind(this);
         this.eventHandler = this.eventHandler.bind(this);
         this.alignment = this.alignment.bind(this);
         this.containerHandler = this.containerHandler.bind(this);
+        this.contentData = this.contentData.bind(this);
         this.PreviewMain = React.createRef();
     }
 
@@ -48,14 +53,14 @@ class CaptivePortal extends Component {
     }
 
 
-    containerHandler(data){
+    containerHandler(data) {
         // console.log('captive-portal\n', data);
         this.setState({
             container: data
         })
     }
 
-    alignment(position){
+    alignment(position) {
         this.setState({
             alignment: position
         })
@@ -84,6 +89,12 @@ class CaptivePortal extends Component {
         }
     }
 
+    contentData(data) {
+        this.setState({
+            headerText: data
+        })
+    }
+
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.backgrName !== nextState.backgrName) {
             return true;
@@ -93,11 +104,13 @@ class CaptivePortal extends Component {
             return true;
         } else if (this.state.backgroundType !== nextState.backgroundType) {
             return true;
-        }  else if (this.state.alignment !== nextState.alignment) {
+        } else if (this.state.alignment !== nextState.alignment) {
             return true;
         } else if (this.state.mobile !== nextState.mobile) {
             return true;
         } else if (this.state.container !== nextState.container) {
+            return true;
+        } else if (this.state.headerText !== nextState.headerText) {
             return true;
         } else {
             return false;
@@ -107,9 +120,12 @@ class CaptivePortal extends Component {
     componentDidMount() {
         console.log(this.state);
     }
+
     componentDidUpdate() {
         console.log(this.state);
         console.log(this.props.file_upload);
+        console.log(this.state.headerText.top.text);
+        console.log(this.props.file_upload.header_top_text_data.data.text);
     }
 
     render() {
@@ -142,12 +158,15 @@ class CaptivePortal extends Component {
                                     </a>
                                 </div>
                             </div>
-                            <Preview state={this.state}/>
+                            <Preview state={this.state}
+                                     textTopData={this.props.file_upload.header_top_text_data.data}
+                                     textDescriptionData={this.props.file_upload.header_description_text_data.data}/>
                         </div>
                     </div>
                     <Options alignment={this.alignment}
                              handler={this.eventHandler}
-                            containerHandler={this.containerHandler }/>
+                             containerHandler={this.containerHandler}
+                             textData={this.contentData}/>
                 </div>
             </div>
         )
