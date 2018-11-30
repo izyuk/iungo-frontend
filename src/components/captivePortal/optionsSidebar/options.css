@@ -400,6 +400,101 @@
   border-radius: 10px;
   background: #5585ed;
 }
+.options .wrap .dropdown .container .row .right .innerCol.toRow {
+  flex-direction: row;
+  align-items: center;
+  margin-left: 0;
+}
+.options .wrap .dropdown .container .row .right .innerCol.toRow label {
+  margin-bottom: 0;
+  flex-direction: row;
+  -ms-text-align-last: left;
+  text-align-last: left;
+}
+.options .wrap .dropdown .container .row .right .innerCol.toRow label .inputRadioWrap {
+  margin-left: 10px;
+}
+.options .wrap .dropdown .container .row .right .innerCol .socialsWrap label {
+  flex-direction: row;
+  text-indent: 0;
+}
+.options .wrap .dropdown .container .row .right .innerCol .socialsWrap label .checkBoxPlace {
+  margin-right: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.options .wrap .dropdown .container .row .right .innerCol .socialsWrap label .checkBoxPlace input[type=checkbox] {
+  width: 15px;
+  height: 15px;
+  position: relative;
+  opacity: 0;
+  z-index: 1;
+}
+.options .wrap .dropdown .container .row .right .innerCol .socialsWrap label .checkBoxPlace span {
+  display: flex;
+  position: absolute;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #e5e9f2;
+  border-radius: 2px;
+  justify-content: center;
+  align-items: center;
+}
+.options .wrap .dropdown .container .row .right .innerCol .socialsWrap label .checkBoxPlace input:checked + span:before {
+  content: '';
+  display: block;
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border: 1px solid #5585ed;
+  border-radius: 2px;
+  background: #5585ed;
+}
+.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div {
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
+.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div input {
+  color: #fff;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  justify-content: center;
+  align-items: center;
+}
+.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div span {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 2px;
+}
+.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div:not(:last-child) {
+  margin-bottom: 16px;
+}
+.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div.fb {
+  background-color: #4166b2;
+}
+.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div.fb span {
+  background: #345497;
+}
+.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div.google {
+  background-color: #4285f4;
+}
+.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div.google span {
+  background: #3675de;
+}
+.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div.tw {
+  background-color: #1ca1f2;
+}
+.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div.tw span {
+  background: #1494e1;
+}
 .options .wrap .dropdown .hr {
   margin: 20px 0;
   width: 100%;

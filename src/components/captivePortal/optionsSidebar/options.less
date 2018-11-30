@@ -380,6 +380,103 @@
                   }
                 }
               }
+              &.toRow{
+                flex-direction: row;
+                align-items: center;
+                margin-left: 0;
+                label{
+                  margin-bottom: 0;
+                  flex-direction: row;
+                  -ms-text-align-last: left;
+                  text-align-last: left;
+                  .inputRadioWrap{
+                    margin-left: 10px;
+                  }
+                }
+              }
+              .socialsWrap {
+                label{
+                  flex-direction: row;
+                  text-indent: 0;
+                  .checkBoxPlace{
+                    margin-right: 10px;
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    input[type=checkbox]{
+                      width: 15px;
+                      height: 15px;
+                      position: relative;
+                      opacity: 0;
+                      z-index: 1;
+                    }
+                    span{
+                      display: flex;
+                      position: absolute;
+                      left: 0;
+                      width: 15px;
+                      height: 15px;
+                      border: 1px solid @pale-grey-three;
+                      border-radius: 2px;
+                      justify-content: center;
+                      align-items: center;
+                    }
+                    input:checked + span{
+                      &:before{
+                        content: '';
+                        display: block;
+                        position: relative;
+                        width: 7px;
+                        height: 7px;
+                        border: 1px solid @soft-blue;
+                        border-radius: 2px;
+                        background: @soft-blue;
+                      }
+                    }
+                  }
+                }
+                div {
+                  cursor: pointer;
+                  border: 1px solid @trans;
+                  border-radius: 2px;
+                  input {
+                    color: @w;
+                    .font(@avenir-heavy, 12);
+                    justify-content: center;
+                    align-items: center;
+                  }
+                  span {
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 2px;
+                  }
+                  &:not(:last-child) {
+                    margin-bottom: 16px;
+                  }
+                  &.fb {
+                    background-color: @french-blue;
+                    span {
+                      background: @light-navy-blue;
+                    }
+                  }
+                  &.google {
+                    background-color: @dodger-blue;
+                    span {
+                      background: @dark-sky-blue;
+                    }
+                  }
+                  &.tw {
+                    background-color: @azure;
+                    span {
+                      background: @water-blue;
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -426,6 +523,8 @@
   }
 
 }
+
+
 
 .preview {
   flex: 2;

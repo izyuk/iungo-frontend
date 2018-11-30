@@ -25,6 +25,11 @@ class CaptivePortal extends Component {
             headerText: '' || {
                 top: this.props.file_upload.header_top_text_data,
                 descr: this.props.file_upload.header_description_text_data
+            },
+            methods: {
+                facebook: true,
+                google: true,
+                twitter: true
             }
         };
         this.trigger = this.trigger.bind(this);
@@ -32,6 +37,7 @@ class CaptivePortal extends Component {
         this.alignment = this.alignment.bind(this);
         this.containerHandler = this.containerHandler.bind(this);
         this.contentData = this.contentData.bind(this);
+        this.loginMethods = this.loginMethods.bind(this);
         this.PreviewMain = React.createRef();
     }
 
@@ -95,6 +101,12 @@ class CaptivePortal extends Component {
         })
     }
 
+    loginMethods(data) {
+        this.setState({
+            methods: data
+        })
+    }
+
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.backgrName !== nextState.backgrName) {
             return true;
@@ -112,6 +124,8 @@ class CaptivePortal extends Component {
             return true;
         } else if (this.state.headerText !== nextState.headerText) {
             return true;
+        } else if (this.state.methods !== nextState.methods) {
+            return true;
         } else {
             return false;
         }
@@ -122,10 +136,7 @@ class CaptivePortal extends Component {
     }
 
     componentDidUpdate() {
-        console.log(this.state);
-        console.log(this.props.file_upload);
-        console.log(this.state.headerText.top.text);
-        console.log(this.props.file_upload.header_top_text_data.data.text);
+
     }
 
     render() {
@@ -160,13 +171,16 @@ class CaptivePortal extends Component {
                             </div>
                             <Preview state={this.state}
                                      textTopData={this.props.file_upload.header_top_text_data.data}
-                                     textDescriptionData={this.props.file_upload.header_description_text_data.data}/>
+                                     textDescriptionData={this.props.file_upload.header_description_text_data.data}
+                                     // methods={this.state.methods}
+                            />
                         </div>
                     </div>
                     <Options alignment={this.alignment}
                              handler={this.eventHandler}
                              containerHandler={this.containerHandler}
-                             textData={this.contentData}/>
+                             textData={this.contentData}
+                             methods={this.loginMethods}/>
                 </div>
             </div>
         )

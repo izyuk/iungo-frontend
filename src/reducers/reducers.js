@@ -11,6 +11,7 @@ import contentBackground from './contentBackground';
 import contentSize from './contentSize';
 import headerTopTextData from './headerTopTextColor';
 import headerDescriptionTextData from './headerDescriptionTextColor';
+import loginMethods from './loginMethods';
 import selectTab from './selectTab';
 
 const allReducers = combineReducers({
@@ -22,6 +23,7 @@ const allReducers = combineReducers({
     content_size: contentSize,
     header_top_text_data: headerTopTextData,
     header_description_text_data: headerDescriptionTextData,
+    login_methods: loginMethods,
     tabName: selectTab
 });
 

@@ -49,7 +49,7 @@ class HeaderTop extends Component {
                 italic: false,
                 underline: false,
             },
-            text: storage ? storage.text : 'Change this text',
+            text: storage ? storage.text : '<Company name>',
             alignment: storage ? storage.alignment : 'center'
         };
 
@@ -190,9 +190,29 @@ class HeaderTop extends Component {
                                         data-type="underline">U
                                 </button>
                             </div>
+                            <div className={[this.props.style.innerCol, this.props.style.toRow].join(' ')}>
+                                <label htmlFor="left2">Left
+                                    <div className={this.props.style.inputRadioWrap}>
+                                        <input onChange={this.alignment} id='left2' data-id='left' type="radio" name='alignment2'/>
+                                        <span className={this.props.style.radio}></span>
+                                    </div>
+                                </label>
+                                <label htmlFor="center2">Center
+                                    <div className={this.props.style.inputRadioWrap}>
+                                        <input onChange={this.alignment} id='center2' data-id='center' type="radio" name='alignment2'/>
+                                        <span className={this.props.style.radio}></span>
+                                    </div>
+                                </label>
+                                <label htmlFor="right2">Right
+                                    <div className={this.props.style.inputRadioWrap}>
+                                        <input onChange={this.alignment} id='right2' data-id='right' type="radio" name='alignment2'/>
+                                        <span className={this.props.style.radio}></span>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
                         <div className={this.props.style.innerRow}>
-                            <textarea onChange={this.textChanges}></textarea>
+                            <textarea onChange={this.textChanges} value="<Company name>"></textarea>
                         </div>
                     </div>
                 </div>
@@ -277,35 +297,35 @@ class HeaderTop extends Component {
                         </div>
                     </div>
                 </div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={[this.props.style.descr, this.props.style.position].join(' ')}>
-                            Alignment
-                        </span>
-                    </div>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.innerCol}>
-                            <label htmlFor="left2">Left
-                                <div className={this.props.style.inputRadioWrap}>
-                                    <input onChange={this.alignment} id='left2' data-id='left' type="radio" name='alignment2'/>
-                                    <span className={this.props.style.radio}></span>
-                                </div>
-                            </label>
-                            <label htmlFor="center2">Center
-                                <div className={this.props.style.inputRadioWrap}>
-                                    <input onChange={this.alignment} id='center2' data-id='center' type="radio" name='alignment2'/>
-                                    <span className={this.props.style.radio}></span>
-                                </div>
-                            </label>
-                            <label htmlFor="right2">Right
-                                <div className={this.props.style.inputRadioWrap}>
-                                    <input onChange={this.alignment} id='right2' data-id='right' type="radio" name='alignment2'/>
-                                    <span className={this.props.style.radio}></span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-                </div>
+                {/*<div className={this.props.style.row}>*/}
+                    {/*<div className={this.props.style.logoLeft}>*/}
+                        {/*<span className={[this.props.style.descr, this.props.style.position].join(' ')}>*/}
+                            {/*Alignment*/}
+                        {/*</span>*/}
+                    {/*</div>*/}
+                    {/*<div className={this.props.style.right}>*/}
+                        {/*<div className={this.props.style.innerCol}>*/}
+                            {/*<label htmlFor="left2">Left*/}
+                                {/*<div className={this.props.style.inputRadioWrap}>*/}
+                                    {/*<input onChange={this.alignment} id='left2' data-id='left' type="radio" name='alignment2'/>*/}
+                                    {/*<span className={this.props.style.radio}></span>*/}
+                                {/*</div>*/}
+                            {/*</label>*/}
+                            {/*<label htmlFor="center2">Center*/}
+                                {/*<div className={this.props.style.inputRadioWrap}>*/}
+                                    {/*<input onChange={this.alignment} id='center2' data-id='center' type="radio" name='alignment2'/>*/}
+                                    {/*<span className={this.props.style.radio}></span>*/}
+                                {/*</div>*/}
+                            {/*</label>*/}
+                            {/*<label htmlFor="right2">Right*/}
+                                {/*<div className={this.props.style.inputRadioWrap}>*/}
+                                    {/*<input onChange={this.alignment} id='right2' data-id='right' type="radio" name='alignment2'/>*/}
+                                    {/*<span className={this.props.style.radio}></span>*/}
+                                {/*</div>*/}
+                            {/*</label>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
+                {/*</div>*/}
             </div>
         )
     }

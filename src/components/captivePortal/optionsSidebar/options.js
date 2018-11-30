@@ -66,7 +66,8 @@ class Options extends Component {
                                   containerHandler={this.props.containerHandler}/>
                         : (this.state.tab === 'Content' ?
                             <ContentTab
-                                textData={this.props.textData}/>
+                                textData={this.props.textData}
+                                methods={this.props.methods}/>
                             : '')}
                 </div>
             </div>

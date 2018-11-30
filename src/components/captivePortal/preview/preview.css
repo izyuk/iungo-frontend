@@ -177,6 +177,11 @@
 .socialsWrap div:not(:last-child) {
   margin-bottom: 16px;
 }
+.socialsWrap div.hidden {
+  height: 0;
+  overflow: hidden;
+  border: 0;
+}
 .socialsWrap div.fb {
   background-color: #4166b2;
 }

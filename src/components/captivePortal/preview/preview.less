@@ -161,12 +161,19 @@
       align-items: center;
     }
     span {
+
     }
     &:not(:last-child) {
       margin-bottom: 16px;
     }
+    &.hidden{
+      height: 0;
+      overflow: hidden;
+      border: 0;
+    }
     &.fb {
       background-color: @french-blue;
+
       span {
         background: @light-navy-blue;
       }

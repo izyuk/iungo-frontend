@@ -49,7 +49,7 @@ class HeaderDescription extends Component {
                 italic: false,
                 underline: false,
             },
-            text: storage ? storage.text : 'Change this description',
+            text: storage ? storage.text : '<Venue description>',
             alignment: storage ? storage.alignment : 'center'
         };
 
@@ -167,7 +167,7 @@ class HeaderDescription extends Component {
             <div>
                 <div className={this.props.style.row}>
                     <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style.header}>Top</span>
+                        <span className={this.props.style.header}>Description</span>
                     </div>
                 </div>
                 <div className={this.props.style.row}>
@@ -190,9 +190,29 @@ class HeaderDescription extends Component {
                                         data-type="underline">U
                                 </button>
                             </div>
+                            <div className={[this.props.style.innerCol, this.props.style.toRow].join(' ')}>
+                                <label htmlFor="left">Left
+                                    <div className={this.props.style.inputRadioWrap}>
+                                        <input onChange={this.alignment} id='left' data-id='left' type="radio" name='alignment'/>
+                                        <span className={this.props.style.radio}></span>
+                                    </div>
+                                </label>
+                                <label htmlFor="center">Center
+                                    <div className={this.props.style.inputRadioWrap}>
+                                        <input onChange={this.alignment} id='center' data-id='center' type="radio" name='alignment'/>
+                                        <span className={this.props.style.radio}></span>
+                                    </div>
+                                </label>
+                                <label htmlFor="right">Right
+                                    <div className={this.props.style.inputRadioWrap}>
+                                        <input onChange={this.alignment} id='right' data-id='right' type="radio" name='alignment'/>
+                                        <span className={this.props.style.radio}></span>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
                         <div className={this.props.style.innerRow}>
-                            <textarea onChange={this.textChanges}></textarea>
+                            <textarea onChange={this.textChanges} value='<Venue description>'></textarea>
                         </div>
                     </div>
                 </div>
@@ -282,28 +302,6 @@ class HeaderDescription extends Component {
                         <span className={[this.props.style.descr, this.props.style.position].join(' ')}>
                             Alignment
                         </span>
-                    </div>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.innerCol}>
-                            <label htmlFor="left">Left
-                                <div className={this.props.style.inputRadioWrap}>
-                                    <input onChange={this.alignment} id='left' data-id='left' type="radio" name='alignment'/>
-                                    <span className={this.props.style.radio}></span>
-                                </div>
-                            </label>
-                            <label htmlFor="center">Center
-                                <div className={this.props.style.inputRadioWrap}>
-                                    <input onChange={this.alignment} id='center' data-id='center' type="radio" name='alignment'/>
-                                    <span className={this.props.style.radio}></span>
-                                </div>
-                            </label>
-                            <label htmlFor="right">Right
-                                <div className={this.props.style.inputRadioWrap}>
-                                    <input onChange={this.alignment} id='right' data-id='right' type="radio" name='alignment'/>
-                                    <span className={this.props.style.radio}></span>
-                                </div>
-                            </label>
-                        </div>
                     </div>
                 </div>
             </div>
