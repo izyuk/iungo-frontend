@@ -3,27 +3,27 @@ import { combineReducers } from 'redux';
 // import logger from 'redux-logger';
 // import thunk from 'redux-thunk';
 
-import fileUpload from './background_and_logo';
-// import logoPos from './logoPos';
+import fileUpload from './file_upload';
+import logoPos from './logoPos';
 import backgroundColor from './backgroundColor';
 import contentBorder from './contentBorder';
 import contentBackground from './contentBackground';
 import contentSize from './contentSize';
-import headerContent from './headerContent';
+import headerTopTextData from './headerTopTextColor';
 import headerDescriptionTextData from './headerDescriptionTextColor';
 import loginMethods from './loginMethods';
-import footerContent from './footerContent';
 import selectTab from './selectTab';
 
 const allReducers = combineReducers({
-    background_and_logo: fileUpload,
-    // color: backgroundColor,
+    file_upload: fileUpload,
+    color: backgroundColor,
+    position: logoPos,
     content_border: contentBorder,
     content_background: contentBackground,
     content_size: contentSize,
-    header: headerContent,
+    header_top_text_data: headerTopTextData,
+    header_description_text_data: headerDescriptionTextData,
     login_methods: loginMethods,
-    footer: footerContent,
     tabName: selectTab
 });
 

@@ -32,25 +32,25 @@ const handle = (props) => {
 class HeaderTop extends Component {
     constructor(props) {
         super(props);
-        let storage = this.props.header.top;
-        console.log(storage);
+        let storage = this.props.header_top_text_data.data;
         this.state = {
             displayColorPicker: false,
-            colorHEX: storage ? storage.styles.colorHEX : '#000000',
-            color: storage ? storage.styles.color : {
+            colorHEX: storage ? storage.colorHEX : '#000000',
+            color: storage ? storage.color : {
                 r: '0',
                 g: '0',
                 b: '0',
                 a: '1',
             },
-            fontSize: storage ? storage.styles.fontSize : 18,
-            textActions: storage ? storage.styles.textActions : {
+            fontSize: storage ? storage.fontSize : 18,
+            // dimension: this.props.header_top_text_data.dimension || 'px',
+            textActions: storage ? storage.textActions : {
                 bold: false,
                 italic: false,
                 underline: false,
             },
-            text: storage ? storage.styles.text : '<Company name>',
-            alignment: storage ? storage.styles.alignment : 'center'
+            text: storage ? storage.text : '<Company name>',
+            alignment: storage ? storage.alignment : 'center'
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -86,17 +86,17 @@ class HeaderTop extends Component {
     }
 
     componentDidMount() {
-        let {displayColorPicker, text, ...rest} = this.state;
-        this.props.textData(text, rest);
+        let {displayColorPicker, ...rest} = this.state;
+        this.props.textData(rest);
         this.props.handler(rest);
-        console.log('--------',this.props.header);
-        let storage = this.props.header.top;
-        document.getElementById((storage ? storage.styles.alignment : 'center')+'2').checked = true;
+        console.log('--------',this.props.header_top_text_data);
+        let storage = this.props.header_top_text_data.data;
+        document.getElementById((storage ? storage.alignment : 'center')+'2').checked = true;
     }
 
     componentDidUpdate() {
-        let {displayColorPicker, text, ...rest} = this.state;
-        this.props.textData(text, rest);
+        let {displayColorPicker, ...rest} = this.state;
+        this.props.textData(rest);
         this.props.handler(rest);
     }
 
@@ -138,6 +138,15 @@ class HeaderTop extends Component {
         this.setState({
             alignment: e.target.getAttribute('data-id')
         });
+        // if (e.target.getAttribute('id') === 'left') {
+        //     this.setState({
+        //         alignment: 'left'
+        //     });
+        // }
+        // if (e.target.getAttribute('id') === 'center') {
+        // }
+        // if (e.target.getAttribute('id') === 'right') {
+        // }
     }
 
     render() {
@@ -203,7 +212,7 @@ class HeaderTop extends Component {
                             </div>
                         </div>
                         <div className={this.props.style.innerRow}>
-                            <textarea onChange={this.textChanges} defaultValue={this.state.text}></textarea>
+                            <textarea onChange={this.textChanges} value="<Company name>"></textarea>
                         </div>
                     </div>
                 </div>
@@ -288,6 +297,35 @@ class HeaderTop extends Component {
                         </div>
                     </div>
                 </div>
+                {/*<div className={this.props.style.row}>*/}
+                    {/*<div className={this.props.style.logoLeft}>*/}
+                        {/*<span className={[this.props.style.descr, this.props.style.position].join(' ')}>*/}
+                            {/*Alignment*/}
+                        {/*</span>*/}
+                    {/*</div>*/}
+                    {/*<div className={this.props.style.right}>*/}
+                        {/*<div className={this.props.style.innerCol}>*/}
+                            {/*<label htmlFor="left2">Left*/}
+                                {/*<div className={this.props.style.inputRadioWrap}>*/}
+                                    {/*<input onChange={this.alignment} id='left2' data-id='left' type="radio" name='alignment2'/>*/}
+                                    {/*<span className={this.props.style.radio}></span>*/}
+                                {/*</div>*/}
+                            {/*</label>*/}
+                            {/*<label htmlFor="center2">Center*/}
+                                {/*<div className={this.props.style.inputRadioWrap}>*/}
+                                    {/*<input onChange={this.alignment} id='center2' data-id='center' type="radio" name='alignment2'/>*/}
+                                    {/*<span className={this.props.style.radio}></span>*/}
+                                {/*</div>*/}
+                            {/*</label>*/}
+                            {/*<label htmlFor="right2">Right*/}
+                                {/*<div className={this.props.style.inputRadioWrap}>*/}
+                                    {/*<input onChange={this.alignment} id='right2' data-id='right' type="radio" name='alignment2'/>*/}
+                                    {/*<span className={this.props.style.radio}></span>*/}
+                                {/*</div>*/}
+                            {/*</label>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
+                {/*</div>*/}
             </div>
         )
     }
@@ -296,11 +334,11 @@ class HeaderTop extends Component {
 // export default HeaderTop;
 export default connect(
     state => ({
-        header: state.header
+        header_top_text_data: state.header_top_text_data
     }),
     dispatch => ({
-        textData: (text, styles) => {
-            dispatch({type: "HEADER_TOP", payload: {text, styles}});
+        textData: (data) => {
+            dispatch({type: "HEADER_TOP", payload: data});
         }
     })
 )(HeaderTop);

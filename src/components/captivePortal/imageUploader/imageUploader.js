@@ -17,10 +17,7 @@ class ImageUploader extends Component {
                 g: '249',
                 b: '252',
                 a: '1',
-            },
-            background: '',
-            logo: '',
-            logoPosition: 'center'
+            }
         };
         this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -33,8 +30,7 @@ class ImageUploader extends Component {
     }
 
     fileSelectedHandler = async (event) => {
-        this.props.background_and_logo.backgroundType = 'image';
-        console.log(this.props.background_and_logo);
+        this.props.file_upload.file_upload.backgroundType = 'image';
 
         this.state.backgroundColor = false;
         this.state.alignment = true;
@@ -75,37 +71,28 @@ class ImageUploader extends Component {
         });
 
         console.log(file.data);
-        this.setState({
-            [type]: file.data
-        });
 
-        this.transferFileData(file.data, type, 'image')
+        this.transferFileData(file.data, type, 'image');
     };
 
-
     transferFileData(data, type, backgroundType) {
-        if(type === 'logo'){
-            this.props.uploadFile(data, this.state.logoPosition);
-        } else if(type === 'background' ){
-            let colorData = [this.state.colorHEX, this.state.color];
-            this.props.uploadFile(data, colorData);
-        }
+        this.props.uploadFile(data);
         this.props.handler(data, type, backgroundType);
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.background_and_logo !== this.props.background_and_logo) {
-            console.log(this.props.background_and_logo);
+        if (prevProps.file_upload !== this.props.file_upload) {
+            console.log(this.props.file_upload);
         }
     }
 
     componentDidMount() {
         if (this.props.type == "background") {
-            if (this.props.background_and_logo.background) {
-                let red = this.props.background_and_logo.background.color.rgba.r,
-                    green = this.props.background_and_logo.background.color.rgba.g,
-                    blue = this.props.background_and_logo.background.color.rgba.b,
-                    alpha = this.props.background_and_logo.background.color.rgba.a;
+            if (this.props.color.color) {
+                let red = this.props.color.color.rgba.r,
+                    green = this.props.color.color.rgba.g,
+                    blue = this.props.color.color.rgba.b,
+                    alpha = this.props.color.color.rgba.a;
                 this.setState({
                     color: {
                         r: red,
@@ -113,15 +100,15 @@ class ImageUploader extends Component {
                         b: blue,
                         a: alpha
                     },
-                    colorHEX: this.props.background_and_logo.background.color.hex
+                    colorHEX: this.props.color.color.hex
                 });
                 this.cpbButton.current.removeAttribute('style');
                 this.cpbButton.current.setAttribute('style', `background: rgba(${ red }, ${ green }, ${ blue }, ${ alpha })`);
             }
         }
 
-        // if (this.props.type === "logo")
-            // document.getElementById(this.props.position.position).setAttribute('checked', 'checked');
+        if(this.props.type === "logo")
+            document.getElementById(this.props.position.position).setAttribute('checked', 'checked');
     }
 
     handleClick = () => {
@@ -136,15 +123,15 @@ class ImageUploader extends Component {
     alignment(e) {
         if (e.target.getAttribute('id') === 'left') {
             this.props.alignment('flex-start');
-            this.props.uploadFile(this.state.logo, 'left');
+            this.props.logoPos('left');
         }
         if (e.target.getAttribute('id') === 'center') {
             this.props.alignment('center');
-            this.props.uploadFile(this.state.logo, 'center');
+            this.props.logoPos('center');
         }
         if (e.target.getAttribute('id') === 'right') {
             this.props.alignment('flex-end');
-            this.props.uploadFile(this.state.logo, 'right');
+            this.props.logoPos('right');
         }
     }
 
@@ -159,10 +146,10 @@ class ImageUploader extends Component {
         });
         this.setState({colorHEX: color.hex});
         this.state.backgroundColor = true;
-        this.props.background_and_logo.backgroundType = 'color';
+        this.props.file_upload.file_upload.backgroundType = 'color';
         let type = this.props.type;
         this.props.handler(`rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`, type, 'color');
-        this.props.uploadFile(this.state.background, {hex: color.hex, rgba: {r: color.rgb.r, g: color.rgb.g, b: color.rgb.b, a: color.rgb.a}});
+        this.props.updateColor(color.hex, {r: color.rgb.r, g: color.rgb.g, b: color.rgb.b, a: color.rgb.a});
     };
 
     render() {
@@ -183,7 +170,7 @@ class ImageUploader extends Component {
             <div
                 className={this.props.type == "background" ? [this.props.style.container, this.props.style.active].join(' ') : this.props.style.container}>
                 <div className={this.props.style.row}>
-                    <div className={this.props.type == "logo" ? this.props.style.logoLeft : this.props.style.left}>
+                    <div className={this.props.type == "logo" ? this.props.style.logoLeft: this.props.style.left}>
                         <span className={this.props.style.descr}>
                             {/*upload {this.props.type}*/} Image
                         </span>
@@ -215,7 +202,7 @@ class ImageUploader extends Component {
                                     <input type="text" value={this.state.colorHEX} disabled/>
                                     <button ref={this.cpbButton}
                                             style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
-                                            onClick={this.handleClick}></button>
+                                            onClick={this.handleClick}> </button>
                                     {this.state.displayColorPicker ? <div style={popover}>
                                         <div style={cover} onClick={this.handleClose}/>
                                         <SketchPicker color={this.state.color} onChange={this.handleChange}/>
@@ -224,7 +211,7 @@ class ImageUploader extends Component {
                             </div>
                         </div>
                     </div> :
-                    false}
+                false}
                 {this.props.type == "logo" ?
                     (this.state.alignment ?
                         <div className={this.props.style.row}>
@@ -256,8 +243,8 @@ class ImageUploader extends Component {
                                 </div>
                             </div>
                         </div> :
-                        false) :
-                    false}
+                    false) :
+                false}
             </div>
         )
     }

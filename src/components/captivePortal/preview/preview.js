@@ -17,7 +17,7 @@ class Preview extends Component {
         };
         this.PreviewMain = React.createRef();
         this.ContainerMain = React.createRef();
-        this.FooterText = React.createRef();
+        // this.eventHandler = this.eventHandler.bind(this);
     }
 
     componentDidUpdate() {
@@ -26,6 +26,7 @@ class Preview extends Component {
                 if (this.props.state.backgrName !== '' || this.props.state.backgrName !== undefined) {
                     this.PreviewMain.current.style.background = `url(http://${this.props.state.backgrName.url})`;
                 } else {
+                    console.warn('backgrName is EMPTY or UNDEFINED');
                     this.PreviewMain.current.style.background = this.state.backgroundColor;
                 }
             } else if (this.props.state.type === 'logo') {
@@ -35,13 +36,17 @@ class Preview extends Component {
             if (this.props.state.backgrName !== '') {
                 this.PreviewMain.current.style.background = this.props.state.backgrName;
             } else {
+                console.warn('NO color');
                 this.PreviewMain.current.style.background = this.state.backgroundColor;
             }
         } else {
+            console.warn('NO image');
             this.PreviewMain.current.style.background = '#f9f9fc';
         }
 
         const container = ({border: {color, ...rest}, background, size: {width, padding}}) => {
+            console.log(width);
+            console.log(padding);
 
             this.ContainerMain.current.style.borderWidth = rest.thickness ? `${rest.thickness}px` : false;
             this.ContainerMain.current.style.borderStyle = rest.type ? `${rest.type}` : false;
@@ -54,14 +59,15 @@ class Preview extends Component {
         };
 
         container(this.props.state.container);
-        // if (this.props.footerTextData.text)
-        console.log('this.props.footerTextData', this.props.footerTextData);
-            this.FooterText.current.innerHTML = this.props.footerTextData.text && this.props.footerTextData.text
+
 
     }
 
     componentDidMount() {
-
+        // console.log('preview mount', this.state.logoName);
+        // console.log(this.props.logo);
+        // console.log(this.props.logo.replace('src', '..'));
+        // this.PreviewMain.current.style.background  = `url(${require(image123)})`;
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -87,17 +93,14 @@ class Preview extends Component {
             return true;
         } else if (this.props.state.methods !== nextProps.state.methods) {
             return true;
-        } else if (this.props.state.footerContent !== nextProps.state.footerContent) {
-            return true;
         } else {
             return false;
         }
     }
 
     render() {
-        let topData = this.props.header.top;
-        let descriptionData = this.props.header.description;
-        let footerData = this.props.footerTextData;
+        let descriptionData = this.props.textDescriptionData;
+        let topData = this.props.textTopData;
         let {methods} = this.props.state;
         return (
             <div className={style2.previewWrap}>
@@ -117,24 +120,24 @@ class Preview extends Component {
                                 <div className={style.textPlace}>
                                     <p className={style.head}
                                        style={{
-                                           color: `rgba(${topData && topData.styles.color.r}, ${topData && topData.styles.color.g}, ${topData && topData.styles.color.b}, ${topData && topData.styles.color.a})`,
-                                           fontSize: topData && topData.styles.fontSize,
-                                           fontWeight: topData && topData.styles.textActions.bold ? 'bold' : '100',
-                                           fontStyle: topData && topData.styles.textActions.italic === true ? 'italic' : 'none',
-                                           textDecoration: topData && topData.styles.textActions.underline ? 'underline' : 'none',
-                                           textAlign: topData && topData.styles.alignment
+                                           color: `rgba(${topData && topData.color.r}, ${topData && topData.color.g}, ${topData && topData.color.b}, ${topData && topData.color.a})`,
+                                           fontSize: topData && topData.fontSize,
+                                           fontWeight: topData && topData.textActions.bold ? 'bold' : '100',
+                                           fontStyle: topData && topData.textActions.italic ? 'italic' : 'none',
+                                           textDecoration: topData && topData.textActions.underline ? 'underline' : 'none',
+                                           textAlign: topData && topData.alignment
                                        }}>
                                         {topData && topData.text}
                                     </p>
 
                                     <p className={style.description}
                                        style={{
-                                           color: `rgba(${descriptionData && descriptionData.styles.color.r}, ${descriptionData && descriptionData.styles.color.g}, ${descriptionData && descriptionData.styles.color.b}, ${descriptionData && descriptionData.styles.color.a})`,
-                                           fontSize: descriptionData && descriptionData.styles.fontSize,
-                                           fontWeight: descriptionData && descriptionData.styles.textActions.bold ? 'bold' : '100',
-                                           fontStyle: descriptionData && descriptionData.styles.textActions.italic ? 'italic' : 'none',
-                                           textDecoration: descriptionData && descriptionData.styles.textActions.underline ? 'underline' : 'none',
-                                           textAlign: descriptionData && descriptionData.styles.alignment
+                                           color: `rgba(${descriptionData && descriptionData.color.r}, ${descriptionData && descriptionData.color.g}, ${descriptionData && descriptionData.color.b}, ${descriptionData && descriptionData.color.a})`,
+                                           fontSize: descriptionData && descriptionData.fontSize,
+                                           fontWeight: descriptionData && descriptionData.textActions.bold ? 'bold' : '100',
+                                           fontStyle: descriptionData && descriptionData.textActions.italic ? 'italic' : 'none',
+                                           textDecoration: descriptionData && descriptionData.textActions.underline ? 'underline' : 'none',
+                                           textAlign: descriptionData && descriptionData.alignment
                                        }}>
                                         {descriptionData && descriptionData.text}
                                     </p>
@@ -167,23 +170,15 @@ class Preview extends Component {
                             </div>
 
                         </div>
-                    </div>
-                    {footerData ?
                         <div className={style.footer}>
-                            <div className={style.contentPlace}>
-                                <p className={style.text} ref={this.FooterText}
-                                   style={{
-                                       color: `rgba(${footerData.styles && footerData.styles.color.r}, ${footerData.styles && footerData.styles.color.g}, ${footerData.styles && footerData.styles.color.b}, ${footerData.styles && footerData.styles.color.a})`,
-                                       fontSize: footerData.styles && footerData.styles.fontSize,
-                                       fontWeight: footerData.styles && footerData.styles.textActions.bold ? 'bold' : '100',
-                                       fontStyle: footerData.styles && footerData.styles.textActions.italic ? 'italic' : 'none',
-                                       textDecoration: footerData.styles && footerData.styles.textActions.underline ? 'underline' : 'none',
-                                       textAlign: footerData.styles && footerData.styles.alignment
-                                   }}>
-                                    {/*{footerData && footerData.text}*/}
-                                </p>
-                            </div>
-                        </div> : ''}
+                            {/*<div className={style.contentPlace}>*/}
+                            {/*<h3>Footer Name</h3>*/}
+                            {/*<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi aperiam, architecto*/}
+                            {/*asperiores commodi dolores eos est ex facere id impedit minus nesciunt non odio recusandae*/}
+                            {/*sequi tenetur voluptas voluptatem! Eius.</p>*/}
+                            {/*</div>*/}
+                        </div>
+                    </div>
                 </div>
             </div>
         )
