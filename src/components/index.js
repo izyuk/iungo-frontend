@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { download_users } from '../reducers/background_and_logo';
+import { download_users } from '../reducers/file_upload';
 
 import Enter from './login/enter';
 

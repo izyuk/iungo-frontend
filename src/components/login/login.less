@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  p {
+  p{
     margin: 0;
     .font(@avenir-medium, 16);
     color: @dark-indigo;
@@ -20,7 +20,7 @@
     letter-spacing: normal;
     text-align: center;
   }
-  .login {
+  .login{
     .font(@avenir-heavy, 12);
     color: @w;
     font-weight: bold;
@@ -29,24 +29,16 @@
     border-radius: 16px;
     border: 1px solid @cornflower-blue;
     background: @soft-blue;
-    cursor: pointer;
-    &:hover {
+    &:hover{
       background: @cornflower-blue;
     }
-    &.disabled{
-      opacity: .5;
-      cursor: not-allowed;
-      &:hover{
-        background: @soft-blue;
-      }
-    }
   }
-  .question {
+  .question{
     .font(@avenir-medium, 14);
     color: @steel;
     line-height: unset;
     margin-top: 10px;
-    button {
+    button{
       border: none;
       .font(@avenir-medium, 14);
       color: @steel;
@@ -55,18 +47,14 @@
   }
 }
 
-.fieldsWrap{
-  width: 100%;
-}
-
 .inputsWrap,
-.socialsWrap {
+.socialsWrap{
   width: 100%;
   margin: 24px 0;
-  .email {
+  .email{
     margin-bottom: 16px;
   }
-  & > div {
+  &>div{
     width: 100%;
     height: 42px;
     border-radius: 2px;
@@ -74,7 +62,7 @@
     background-color: @pale-grey-five;
     position: relative;
     display: flex;
-    span {
+    span{
       position: relative;
       display: flex;
       justify-content: center;
@@ -84,33 +72,21 @@
       border-radius: 2px;
       background: @pale-grey-six;
     }
-    &.validationFalse {
-      border-color: #ff4d5d;
-      span {
-        background-color: #ff6976;
-      }
-      input {
-        color: #ff4d5d;
-        &::-webkit-input-placeholder {
-          color: #ff4d5d;
-        }
-        &::-moz-placeholder {
-          color: #ff4d5d;
-        }
-        &:-ms-input-placeholder {
-          color: #ff4d5d;
-        }
-        &:-moz-placeholder {
-          color: #ff4d5d;
-        }
-      }
-      svg {
-        g {
-          fill: @w
-        }
+    &.email{
+      &:after{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        background: url("../../static/images/email.svg") no-repeat;
+        background-size: 16px 14px;
+        z-index: 1;
       }
     }
-    input {
+    input{
       width: calc(100% - 40px);
       border: 1px solid transparent;
       background: transparent;
@@ -155,31 +131,31 @@
   }
 }
 
-.socialsWrap {
-  div {
+.socialsWrap{
+  div{
     cursor: pointer;
     border: 1px solid @trans;
     border-radius: 2px;
-    input {
+    input{
       color: @w;
       .font(@avenir-heavy, 12);
       justify-content: center;
       align-items: center;
     }
-    span {
+    span{
     }
-    &:first-child {
+    &:first-child{
       margin-bottom: 16px;
     }
-    &.fb {
+    &.fb{
       background-color: @french-blue;
-      span {
+      span{
         background: @light-navy-blue;
       }
     }
-    &.google {
+    &.google{
       background-color: @dodger-blue;
-      span {
+      span{
         background: @dark-sky-blue;
       }
     }

@@ -5,7 +5,7 @@ import style from './captive-portal.less';
 
 import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
-import {upload_file} from "../../reducers/background_and_logo";
+import {upload_file} from "../../reducers/file_upload";
 
 class CaptivePortal extends Component {
     constructor(props) {
@@ -18,20 +18,19 @@ class CaptivePortal extends Component {
             backgroundType: 'color',
             alignment: 'center',
             container: '' || {
-                border: this.props.background_and_logo.content_border,
-                background: this.props.background_and_logo.content_background,
-                size: this.props.background_and_logo.content_size
+                border: this.props.file_upload.content_border,
+                background: this.props.file_upload.content_background,
+                size: this.props.file_upload.content_size
             },
             headerText: '' || {
-                top: this.props.background_and_logo.header_top_text_data,
-                descr: this.props.background_and_logo.header_description_text_data
+                top: this.props.file_upload.header_top_text_data,
+                descr: this.props.file_upload.header_description_text_data
             },
             methods: {
                 facebook: true,
                 google: true,
                 twitter: true
-            },
-            footerContent: '' || this.props.background_and_logo.footer_description
+            }
         };
         this.trigger = this.trigger.bind(this);
         this.eventHandler = this.eventHandler.bind(this);
@@ -39,7 +38,6 @@ class CaptivePortal extends Component {
         this.containerHandler = this.containerHandler.bind(this);
         this.contentData = this.contentData.bind(this);
         this.loginMethods = this.loginMethods.bind(this);
-        this.footerTextData = this.footerTextData.bind(this);
         this.PreviewMain = React.createRef();
     }
 
@@ -109,12 +107,6 @@ class CaptivePortal extends Component {
         })
     }
 
-    footerTextData(data) {
-        this.setState({
-            footerContent: data
-        })
-    }
-
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.backgrName !== nextState.backgrName) {
             return true;
@@ -134,8 +126,6 @@ class CaptivePortal extends Component {
             return true;
         } else if (this.state.methods !== nextState.methods) {
             return true;
-        } else if (this.state.footerContent !== nextState.footerContent) {
-            return true;
         } else {
             return false;
         }
@@ -143,11 +133,10 @@ class CaptivePortal extends Component {
 
     componentDidMount() {
         console.log(this.state);
-        console.log(this.props.background_and_logo);
     }
 
     componentDidUpdate() {
-        console.log(this.props.background_and_logo);
+
     }
 
     render() {
@@ -181,8 +170,9 @@ class CaptivePortal extends Component {
                                 </div>
                             </div>
                             <Preview state={this.state}
-                                     header={this.props.background_and_logo.header}
-                                     footerTextData={this.props.background_and_logo.footer}
+                                     textTopData={this.props.file_upload.header_top_text_data.data}
+                                     textDescriptionData={this.props.file_upload.header_description_text_data.data}
+                                     // methods={this.state.methods}
                             />
                         </div>
                     </div>
@@ -190,8 +180,7 @@ class CaptivePortal extends Component {
                              handler={this.eventHandler}
                              containerHandler={this.containerHandler}
                              textData={this.contentData}
-                             methods={this.loginMethods}
-                             footerTextData={this.footerTextData}/>
+                             methods={this.loginMethods}/>
                 </div>
             </div>
         )
@@ -200,7 +189,7 @@ class CaptivePortal extends Component {
 
 export default connect(
     state => ({
-        background_and_logo: state
+        file_upload: state
     }),
     dispatch => ({})
 )(CaptivePortal);

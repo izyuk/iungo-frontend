@@ -3,7 +3,6 @@ import style from './options.less';
 
 import StyleTab from './tabs/styleTab';
 import ContentTab from './tabs/contentTab';
-import SettingsTab from './tabs/settingsTab';
 
 class Options extends Component {
     constructor(props) {
@@ -65,14 +64,11 @@ class Options extends Component {
                                   handler={this.props.handler}
                                   alignment={this.props.alignment}
                                   containerHandler={this.props.containerHandler}/>
-                        : (this.state.tab === 'Content') ?
+                        : (this.state.tab === 'Content' ?
                             <ContentTab
                                 textData={this.props.textData}
-                                methods={this.props.methods}
-                                footerTextData={this.props.footerTextData}/>
-                            : (this.state.tab === 'Settings') ?
-                                <SettingsTab/>
-                                : ''}
+                                methods={this.props.methods}/>
+                            : '')}
                 </div>
             </div>
         )
