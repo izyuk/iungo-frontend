@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {upload_file} from '../../../../../reducers/file_upload';
+import {upload_file} from '../../../../../reducers/background_and_logo';
 import ImageUploader from '../../../imageUploader/imageUploader';
 
 class Logo extends Component {
@@ -18,15 +18,12 @@ class Logo extends Component {
 
 export default connect(
     state => ({
-        file_upload: state,
+        background_and_logo: state,
         position: state.position
     }),
     dispatch => ({
-        uploadFile: (path) => {
-            dispatch({type: "UPLOAD_LOGO", payload: path});
-        },
-        logoPos: (position) => {
-            dispatch({type: "LOGO_POSITION", payload: position});
+        uploadFile: (path, position) => {
+            dispatch({type: "UPLOAD_LOGO", payload: {path, position}});
         }
     })
 )(ImageUploader);

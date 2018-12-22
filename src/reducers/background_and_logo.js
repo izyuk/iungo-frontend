@@ -29,16 +29,23 @@
 // }
 
 export default function (state = {}, action) {
+    console.log(action.payload);
     switch (action.type) {
         case "UPLOAD_LOGO":
             // console.log('UPLOAD_LOGO action', action.payload);
             return Object.assign(state, {
-                logo: action.payload
+                logo: {
+                    url: action.payload.path.url,
+                    position: action.payload.position
+                }
             });
         case "UPLOAD_BACKGROUND":
             // console.log('UPLOAD_BACKGROUND action', action.payload);
             return Object.assign(state, {
-                background: action.payload
+                background: {
+                    url: action.payload.path,
+                    color: action.payload.color
+                }
             });
         default:
             return state

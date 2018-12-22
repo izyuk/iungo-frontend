@@ -4,6 +4,7 @@ $ cat .gitignore
 
 # dependencies
 /node_modules
+/fake_api/node_modules
 
 # testing
 /coverage
@@ -20,3 +21,5 @@ $ cat .gitignore
 
 # IDEA's folders
 .idea/
+
+*.map

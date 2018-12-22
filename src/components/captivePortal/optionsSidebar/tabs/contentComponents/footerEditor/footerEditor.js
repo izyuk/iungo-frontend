@@ -29,10 +29,10 @@ const handle = (props) => {
     );
 };
 
-class HeaderTop extends Component {
+class FooterEditor extends Component {
     constructor(props) {
         super(props);
-        let storage = this.props.header.top;
+        let storage = this.props.footer.styles;
         console.log(storage);
         this.state = {
             displayColorPicker: false,
@@ -44,15 +44,15 @@ class HeaderTop extends Component {
                 a: '1',
             },
             fontSize: storage ? storage.styles.fontSize : 18,
+            // dimension: this.props.footer_description.dimension || 'px',
             textActions: storage ? storage.styles.textActions : {
                 bold: false,
                 italic: false,
                 underline: false,
             },
-            text: storage ? storage.styles.text : '<Company name>',
-            alignment: storage ? storage.styles.alignment : 'center'
+            text: storage ? storage.styles.text : '<Footer content>',
+            alignment: storage ? storage.styles.alignment : 'center',
         };
-
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -60,6 +60,7 @@ class HeaderTop extends Component {
         this.textActionsHandler = this.textActionsHandler.bind(this);
         this.textChanges = this.textChanges.bind(this);
         this.alignment = this.alignment.bind(this);
+        this.gettext = this.gettext.bind(this);
     }
 
     onSliderChange(value) {
@@ -88,16 +89,17 @@ class HeaderTop extends Component {
     componentDidMount() {
         let {displayColorPicker, text, ...rest} = this.state;
         this.props.textData(text, rest);
-        this.props.handler(rest);
-        console.log('--------',this.props.header);
-        let storage = this.props.header.top;
-        document.getElementById((storage ? storage.styles.alignment : 'center')+'2').checked = true;
+        this.props.footerTextData(rest);
+        console.log('--------', this.props.footer_description);
+        let storage = this.props.footer.styles;
+        document.getElementById((storage ? storage.styles.alignment : 'center')).checked = true;
     }
 
     componentDidUpdate() {
         let {displayColorPicker, text, ...rest} = this.state;
         this.props.textData(text, rest);
-        this.props.handler(rest);
+        this.props.footerTextData(rest);
+        console.log('----footer text updated----')
     }
 
     handleClick = () => {
@@ -140,6 +142,13 @@ class HeaderTop extends Component {
         });
     }
 
+    gettext(e) {
+        console.log(e.currentTarget.selectionStart);
+        console.log(e.currentTarget.selectionEnd);
+        console.log(e.currentTarget.setSelectionRange);
+
+    }
+
     render() {
         const popover = {
             position: 'absolute',
@@ -155,12 +164,12 @@ class HeaderTop extends Component {
             left: '0px',
         };
         return (
-            <div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style.header}>Top</span>
-                    </div>
-                </div>
+            <div className={this.props.style.container}>
+                {/*<div className={this.props.style.row}>*/}
+                {/*<div className={this.props.style.logoLeft}>*/}
+                {/*<span className={this.props.style.header}>Footer</span>*/}
+                {/*</div>*/}
+                {/*</div>*/}
                 <div className={this.props.style.row}>
                     <div className={this.props.style.right}>
                         <div className={this.props.style.innerRow}>
@@ -182,28 +191,32 @@ class HeaderTop extends Component {
                                 </button>
                             </div>
                             <div className={[this.props.style.innerCol, this.props.style.toRow].join(' ')}>
-                                <label htmlFor="left2">Left
+                                <label htmlFor="left">Left
                                     <div className={this.props.style.inputRadioWrap}>
-                                        <input onChange={this.alignment} id='left2' data-id='left' type="radio" name='alignment2'/>
+                                        <input onChange={this.alignment} id='left' data-id='left' type="radio"
+                                               name='alignment'/>
                                         <span className={this.props.style.radio}></span>
                                     </div>
                                 </label>
-                                <label htmlFor="center2">Center
+                                <label htmlFor="center">Center
                                     <div className={this.props.style.inputRadioWrap}>
-                                        <input onChange={this.alignment} id='center2' data-id='center' type="radio" name='alignment2'/>
+                                        <input onChange={this.alignment} id='center' data-id='center' type="radio"
+                                               name='alignment'/>
                                         <span className={this.props.style.radio}></span>
                                     </div>
                                 </label>
-                                <label htmlFor="right2">Right
+                                <label htmlFor="right">Right
                                     <div className={this.props.style.inputRadioWrap}>
-                                        <input onChange={this.alignment} id='right2' data-id='right' type="radio" name='alignment2'/>
+                                        <input onChange={this.alignment} id='right' data-id='right' type="radio"
+                                               name='alignment'/>
                                         <span className={this.props.style.radio}></span>
                                     </div>
                                 </label>
                             </div>
                         </div>
                         <div className={this.props.style.innerRow}>
-                            <textarea onChange={this.textChanges} defaultValue={this.state.text}></textarea>
+                            <textarea onChange={this.textChanges} onMouseUp={this.gettext}
+                                      defaultValue={this.state.text}></textarea>
                         </div>
                     </div>
                 </div>
@@ -259,10 +272,6 @@ class HeaderTop extends Component {
                                     <option value="100%">100%</option>
                                 </select>
                                 <p className={[this.props.style.select, this.props.style.medium].join(' ')}>
-                                    {/*<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">*/}
-                                    {/*<path fill="#BFC5D2" fillRule="nonzero"*/}
-                                    {/*d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>*/}
-                                    {/*</svg>*/}
                                     {`${this.state.fontSize}px`}
                                 </p>
                             </div>
@@ -293,14 +302,14 @@ class HeaderTop extends Component {
     }
 }
 
-// export default HeaderTop;
 export default connect(
     state => ({
-        header: state.header
+        // footer: state.footer
+        footer: state
     }),
     dispatch => ({
         textData: (text, styles) => {
-            dispatch({type: "HEADER_TOP", payload: {text, styles}});
+            dispatch({type: "FOOTER_DESCRIPTION", payload: {text, styles}});
         }
     })
-)(HeaderTop);
+)(FooterEditor);
