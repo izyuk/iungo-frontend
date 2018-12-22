@@ -20,15 +20,11 @@ class Background extends Component {
 
 export default connect(
     state => ({
-        file_upload: state,
-        color: state.color
+        background_and_logo: state.background_and_logo,
     }),
     dispatch => ({
-        uploadFile: (path) => {
-            dispatch({type: "UPLOAD_BACKGROUND", payload: path});
-        },
-        updateColor: (hex, rgba) => {
-            dispatch({type: "BACKGROUND_COLOR", payload: {hex: hex, rgba: rgba}});
+        uploadFile: (path, color) => {
+            dispatch({type: "UPLOAD_BACKGROUND", payload: {path, color}});
         }
     })
 )(ImageUploader);
