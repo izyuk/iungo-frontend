@@ -32,25 +32,26 @@ const handle = (props) => {
 class HeaderDescription extends Component {
     constructor(props) {
         super(props);
-        let storage = this.props.header_description_text_data.data;
+        let storage = this.props.header.description;
+        console.log(storage);
         this.state = {
             displayColorPicker: false,
-            colorHEX: storage ? storage.colorHEX : '#000000',
-            color: storage ? storage.color : {
+            colorHEX: storage ? storage.styles.colorHEX : '#000000',
+            color: storage ? storage.styles.color : {
                 r: '0',
                 g: '0',
                 b: '0',
                 a: '1',
             },
-            fontSize: storage ? storage.fontSize : 18,
+            fontSize: storage ? storage.styles.fontSize : 18,
             // dimension: this.props.header_description_text_data.dimension || 'px',
-            textActions: storage ? storage.textActions : {
+            textActions: storage ? storage.styles.textActions : {
                 bold: false,
                 italic: false,
                 underline: false,
             },
-            text: storage ? storage.text : '<Venue description>',
-            alignment: storage ? storage.alignment : 'center'
+            text: storage ? storage.styles.text : '<Venue description>',
+            alignment: storage ? storage.styles.alignment : 'center'
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -86,17 +87,17 @@ class HeaderDescription extends Component {
     }
 
     componentDidMount() {
-        let {displayColorPicker, ...rest} = this.state;
-        this.props.textData(rest);
+        let {displayColorPicker, text, ...rest} = this.state;
+        this.props.textData(text, rest);
         this.props.handler(rest);
-        let storage = this.props.header_description_text_data.data;
+        let storage = this.props.header.description;
         // document.querySelectorAll(`[data-id=${storage ? storage.alignment : 'center'}]`).setAttribute('checked')
-        document.getElementById(`${storage ? storage.alignment : 'center'}`).checked = true;
+        document.getElementById(`${storage ? storage.styles.alignment : 'center'}`).checked = true;
     }
 
     componentDidUpdate() {
-        let {displayColorPicker, ...rest} = this.state;
-        this.props.textData(rest);
+        let {displayColorPicker, text, ...rest} = this.state;
+        this.props.textData(text, rest);
         this.props.handler(rest);
     }
 
@@ -212,7 +213,7 @@ class HeaderDescription extends Component {
                             </div>
                         </div>
                         <div className={this.props.style.innerRow}>
-                            <textarea onChange={this.textChanges} value='<Venue description>'></textarea>
+                            <textarea onChange={this.textChanges} defaultValue={this.state.text}></textarea>
                         </div>
                     </div>
                 </div>
@@ -312,11 +313,11 @@ class HeaderDescription extends Component {
 // export default HeaderDescription;
 export default connect(
     state => ({
-        header_description_text_data: state.header_description_text_data
+        header: state.header
     }),
     dispatch => ({
-        textData: (data) => {
-            dispatch({type: "HEADER_DESCRIPTION", payload: data});
+        textData: (text, styles) => {
+            dispatch({type: "HEADER_DESCRIPTION", payload: {text, styles}});
         }
     })
 )(HeaderDescription);

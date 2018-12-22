@@ -23,7 +23,18 @@ export default function (state = {}, action) {
         case "HEADER_TOP":
             // console.log('UPLOAD_BACKGROUND action', action.payload);
             return Object.assign(state, {
-                data: action.payload
+                top: {
+                    text: action.payload.text,
+                    styles: action.payload.styles
+                }
+            });
+        case "HEADER_DESCRIPTION":
+            // console.log('UPLOAD_BACKGROUND action', action.payload);
+            return Object.assign(state, {
+                description: {
+                    text: action.payload.text,
+                    styles: action.payload.styles
+                }
             });
         default:
             return state
