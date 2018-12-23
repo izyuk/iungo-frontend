@@ -6,6 +6,9 @@ import style from './captive-portal.less';
 import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
 import {upload_file} from "../../reducers/background_and_logo";
+import {getAllPortals} from "../../api/API";
+
+
 
 class CaptivePortal extends Component {
     constructor(props) {
@@ -41,6 +44,7 @@ class CaptivePortal extends Component {
         this.loginMethods = this.loginMethods.bind(this);
         this.footerTextData = this.footerTextData.bind(this);
         this.PreviewMain = React.createRef();
+        this.findAllPortals = this.findAllPortals.bind(this);
     }
 
     eventHandler(name, type, backgroundType) {
@@ -58,6 +62,17 @@ class CaptivePortal extends Component {
             type: type,
             backgroundType: backgroundType
         })
+    }
+
+    async findAllPortals(data){
+        let {token} = data;
+        console.log(token);
+        let query = getAllPortals(token);
+
+        await query.then(res => {
+            console.log(res);
+        });
+
     }
 
 
@@ -144,6 +159,9 @@ class CaptivePortal extends Component {
     componentDidMount() {
         console.log(this.state);
         console.log(this.props.background_and_logo);
+        console.log(this.props.token);
+
+        this.props.token && this.findAllPortals(this.props.token);
     }
 
     componentDidUpdate() {
@@ -200,7 +218,8 @@ class CaptivePortal extends Component {
 
 export default connect(
     state => ({
-        background_and_logo: state
+        background_and_logo: state,
+        token: state.token
     }),
     dispatch => ({})
 )(CaptivePortal);

@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import style from './login.less';
 
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
-import { Api } from '../../api/API';
+import { userLogin, userRegister } from '../../api/API';
+
+import {connect} from 'react-redux';
 
 import Login from './login';
 import Register from './register';
@@ -17,18 +19,31 @@ class Enter extends Component {
                 login: '',
                 password: ''
             },
-            isValid: false
+            isValid: false,
+            auth: false
         };
         this.changeOption = this.changeOption.bind(this);
         this.sendData = this.sendData.bind(this);
         this.setLoginData = this.setLoginData.bind(this);
     }
 
+    // dmitriy.izyuk@gmail.com
+    // Izyuk8968
+
     async sendData(){
-        let query = this.state.login ? Api.userLogin(this.state.userData.login, this.state.userData.password) : Api.userRegister(this.state.userData.login, this.state.userData.password);
+        let query = this.state.login ? userLogin(this.state.userData.login, this.state.userData.password) : userRegister(this.state.userData.login, this.state.userData.password);
         await query.then(res => {
-            let {data} = res.data;
-            console.log(data);
+            if(this.state.login) {
+                console.log(res);
+                let {headers: {authorization}, status} = res;
+                this.props.setToken(authorization);
+                console.log(status);
+                if(status === 200){
+                    this.setState({
+                        auth: true
+                    })
+                }
+            }
         });
     }
 
@@ -53,6 +68,8 @@ class Enter extends Component {
         } else if (this.state.isValid !== nextState.isValid) {
             return true
         } else if (this.state.login !== nextState.login) {
+            return true
+        } else if (this.state.auth !== nextState.auth) {
             return true
         } else {
             return false
@@ -86,9 +103,24 @@ class Enter extends Component {
                         </p>
 
                 }
+                {
+                    this.state.auth ?
+                        <Redirect to='/dashboard'/>
+                        : false
+                }
             </div>
         )
     }
 }
 
-export default Enter;
+export default connect(
+    state => ({
+        token: state.token
+    }),
+    dispatch=>({
+        setToken:(string) => {
+            dispatch({type: "TOKEN", payload: string})
+        }
+    })
+)
+(Enter);

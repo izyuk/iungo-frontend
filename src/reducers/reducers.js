@@ -13,6 +13,7 @@ import headerContent from './headerContent';
 import headerDescriptionTextData from './headerDescriptionTextColor';
 import loginMethods from './loginMethods';
 import footerContent from './footerContent';
+import auth from './auth';
 import selectTab from './selectTab';
 
 const allReducers = combineReducers({
@@ -24,6 +25,7 @@ const allReducers = combineReducers({
     header: headerContent,
     login_methods: loginMethods,
     footer: footerContent,
+    token: auth,
     tabName: selectTab
 });
 
