@@ -5,6 +5,8 @@ import StyleTab from './tabs/styleTab';
 import ContentTab from './tabs/contentTab';
 import SettingsTab from './tabs/settingsTab';
 
+import Publish from './publish';
+
 class Options extends Component {
     constructor(props) {
         super(props);
@@ -73,6 +75,7 @@ class Options extends Component {
                             : (this.state.tab === 'Settings') ?
                                 <SettingsTab/>
                                 : ''}
+                    <Publish/>
                 </div>
             </div>
         )

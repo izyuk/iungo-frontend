@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import axios from "axios";
 import {SketchPicker} from 'react-color';
+
+import FileBase64 from 'react-file-base64';
+import {uploadImage} from '../../../api/API';
 
 class ImageUploader extends Component {
     constructor(props) {
@@ -20,7 +22,12 @@ class ImageUploader extends Component {
             },
             background: '',
             logo: '',
-            logoPosition: 'center'
+            logoPosition: 'center',
+            fileInfo: '',
+            fileAdditional: {
+                width: '',
+                height: ''
+            }
         };
         this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -30,9 +37,25 @@ class ImageUploader extends Component {
         this.cpbButton = React.createRef();
         this.alignment = this.alignment.bind(this);
         this.transferFileData = this.transferFileData.bind(this);
+        this.imageLoad = this.imageLoad.bind(this);
     }
 
-    fileSelectedHandler = async (event) => {
+    imageLoad(url) {
+        let image = new Image();
+
+        if(!image.complete){
+            image.src = url;
+            this.setState({
+                fileAdditional: {
+                    width: image.width,
+                    height: image.height
+                }
+            });
+
+        }
+    };
+
+    fileSelectedHandler = async (files) => {
         this.props.background_and_logo.backgroundType = 'image';
         console.log(this.props.background_and_logo);
 
@@ -40,53 +63,91 @@ class ImageUploader extends Component {
         this.state.alignment = true;
         let type = this.props.type;
 
-        const fd = new FormData();
-        fd.append(type, event.currentTarget.files[0]);
 
-        let query = axios.create({
-            baseURL: 'http://localhost:4000'
-        });
-        if (type === 'background')
-            if (fd.get('logo'))
-                fd.delete('logo');
-        if (type === 'logo')
-            if (fd.get('background'))
-                fd.delete('background');
 
-        let promise = await query.post(`/upload/${type}`, fd, {
-            onUploadProgress: progressEvent => {
-                console.log('Upload progress: ', Math.round(progressEvent.loaded / progressEvent.total * 100) + '%')
-            }
-        })
-            .then(result => {
-                if (result.error) {
-                    throw new Error("Error in uploading object");
-                }
-                return result.data;
-            })
-            .catch(error => {
-                console.log(error);
-            });
-
-        let file = {'data': {}};
-
-        await Promise.all([promise]).then((value) => {
-            return file.data = value[0];
-        });
-
-        console.log(file.data);
         this.setState({
-            [type]: file.data
+            fileInfo: files
         });
 
-        this.transferFileData(file.data, type, 'image')
+        console.log(this.state.fileInfo.base64);
+
+        this.imageLoad(this.state.fileInfo.base64);
+
+        let img = document.createElement('img');
+        img.setAttribute('src', this.state.fileInfo.base64);
+        img.style.opacity = 0;
+        img.style.position = 'absolute';
+        img.style.top = 0;
+        img.style.left = 0;
+        img.style.zIndex = '-100';
+        img.style.zoom = '0.1';
+        document.getElementsByTagName('BODY')[0].appendChild(img);
+        // this.state.fileAdditional.width = img.width;
+        // this.state.fileAdditional.height = img.height;
+        await this.setState({
+            fileAdditional: {
+                width: img.width,
+                height: img.height
+            }
+        });
+
+        console.log('!!!!!!!!!!!', this.state.fileAdditional.width, this.state.fileAdditional.height);
+        // console.log(width, height);
+
+
+        let query = uploadImage(this.props.token.token, this.state.fileInfo.name, this.state.fileInfo.base64, this.state.fileAdditional.width, this.state.fileAdditional.height);
+        await query.then(res => {
+            console.log(res.data);
+            this.transferFileData(res.data.externalUrl, type, 'image');
+        });
+        // img.remove();
+
+            // alert(img.width);
+        // };
+        // img.src = u;
+
+
+
+        // console.log()
+        // let query = uploadImage(this.props.token.token, this.state.fileInfo.name, this.state.fileInfo.base64);
+
+
+        // let promise = await query.post(`/upload/${type}`, fd, {
+        //     onUploadProgress: progressEvent => {
+        //         console.log('Upload progress: ', Math.round(progressEvent.loaded / progressEvent.total * 100) + '%')
+        //     }
+        // })
+        //     .then(result => {
+        //         if (result.error) {
+        //             throw new Error("Error in uploading object");
+        //         }
+        //         return result.data;
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     });
+
+        console.log(this.state.fileInfo.base64);
+
+        // let file = {'data': {}};
+        //
+        // await Promise.all([promise]).then((value) => {
+        //     return file.data = value[0];
+        // });
+        //
+        // console.log(file.data);
+        // this.setState({
+        //     [type]: file.data
+        // });
+        //
+        // this.transferFileData(file.data, type, 'image')
     };
 
 
     transferFileData(data, type, backgroundType) {
-        if(type === 'logo'){
+        if (type === 'logo') {
             this.props.uploadFile(data, this.state.logoPosition);
-        } else if(type === 'background' ){
+        } else if (type === 'background') {
             let colorData = [this.state.colorHEX, this.state.color];
             this.props.uploadFile(data, colorData);
         }
@@ -121,7 +182,7 @@ class ImageUploader extends Component {
         }
 
         // if (this.props.type === "logo")
-            // document.getElementById(this.props.position.position).setAttribute('checked', 'checked');
+        // document.getElementById(this.props.position.position).setAttribute('checked', 'checked');
     }
 
     handleClick = () => {
@@ -162,7 +223,10 @@ class ImageUploader extends Component {
         this.props.background_and_logo.backgroundType = 'color';
         let type = this.props.type;
         this.props.handler(`rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`, type, 'color');
-        this.props.uploadFile(this.state.background, {hex: color.hex, rgba: {r: color.rgb.r, g: color.rgb.g, b: color.rgb.b, a: color.rgb.a}});
+        this.props.uploadFile(this.state.background, {
+            hex: color.hex,
+            rgba: {r: color.rgb.r, g: color.rgb.g, b: color.rgb.b, a: color.rgb.a}
+        });
     };
 
     render() {
@@ -196,8 +260,11 @@ class ImageUploader extends Component {
                                           d="M17 11.1V11c0-2.8-2.2-5-5-5-2.5 0-4.6 1.8-4.9 4.3-1.8.6-3.1 2.2-3.1 4.2C4 17 6 19 8.5 19H16c2.2 0 4-1.8 4-4 0-1.9-1.3-3.4-3-3.9zM13 14v3h-2v-3H8l4-4 4 4h-3z"/>
                                 </svg>
                                 <span>Upload</span>
-                                <input type="file"
-                                       onChange={this.fileSelectedHandler} accept="image/*"/>
+                                {/*<input type="file"*/}
+                                {/*onChange={this.fileSelectedHandler} accept="image/*"/>*/}
+                                <FileBase64
+                                    multiple={false}
+                                    onDone={this.fileSelectedHandler.bind(this)} accept="image/*"/>
                             </div>
                         </div>
                     </div>

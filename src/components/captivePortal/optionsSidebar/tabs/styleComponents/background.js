@@ -21,6 +21,7 @@ class Background extends Component {
 export default connect(
     state => ({
         background_and_logo: state.background_and_logo,
+        token: state.token
     }),
     dispatch => ({
         uploadFile: (path, color) => {

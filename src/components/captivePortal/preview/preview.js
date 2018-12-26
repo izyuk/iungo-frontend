@@ -24,7 +24,7 @@ class Preview extends Component {
         if (this.props.state.backgroundType === 'image') {
             if (this.props.state.type === 'background') {
                 if (this.props.state.backgrName !== '' || this.props.state.backgrName !== undefined) {
-                    this.PreviewMain.current.style.background = `url(http://${this.props.state.backgrName.url})`;
+                    this.PreviewMain.current.style.background = `url(${this.props.state.backgrName})`;
                 } else {
                     this.PreviewMain.current.style.background = this.state.backgroundColor;
                 }
@@ -108,7 +108,7 @@ class Preview extends Component {
                             <div className={style.logoPlace} style={{justifyContent: this.props.state.alignment}}>
                                 {this.props.state.logoName === '' ?
                                     <img src={require('../../../static/images/logo.png')} alt=""/> :
-                                    <img src={`http://${this.props.state.logoName.url}`} alt=""/>}
+                                    <img src={`${this.props.state.logoName}`} alt=""/>}
                             </div>
                         </div>
                         <div className={style.section}

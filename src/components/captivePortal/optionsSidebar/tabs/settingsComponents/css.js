@@ -16,6 +16,7 @@ class CSS extends Component {
             link.setAttribute('rel', 'stylesheet');
             link.setAttribute('href', this.link.current.value);
             HEAD.appendChild(link);
+            this.props.setCSS(link);
         }
         console.log(JSON.stringify(this.props.background_and_logo));
     }
@@ -46,5 +47,10 @@ class CSS extends Component {
 export default connect(
     state => ({
         background_and_logo: state
+    }),
+    dispatch => ({
+        setCSS: (path) => {
+            dispatch({type: "SET_CSS", payload: path})
+        }
     })
 )(CSS);

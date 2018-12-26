@@ -157,15 +157,26 @@ class CaptivePortal extends Component {
     }
 
     componentDidMount() {
-        console.log(this.state);
-        console.log(this.props.background_and_logo);
-        console.log(this.props.token);
 
         this.props.token && this.findAllPortals(this.props.token);
+
+        let currentDay = function(sp){
+            let today = new Date();
+            let dd = today.getDate();
+            let mm = today.getMonth()+1;
+            let yyyy = today.getFullYear();
+
+            if(dd<10) dd='0'+dd;
+            if(mm<10) mm='0'+mm;
+            return (mm+sp+dd+sp+yyyy);
+        };
+
+        this.props.addPortalName(`CaptivePortal - ${currentDay('/')}`)
     }
 
     componentDidUpdate() {
         console.log(this.props.background_and_logo);
+        console.log(this.state.backgrName);
     }
 
     render() {
@@ -221,6 +232,10 @@ export default connect(
         background_and_logo: state,
         token: state.token
     }),
-    dispatch => ({})
+    dispatch => ({
+        addPortalName: (name) => {
+            dispatch({type: "PORTAL_NAME", payload: name})
+        }
+    })
 )(CaptivePortal);
 // export default CaptivePortal;

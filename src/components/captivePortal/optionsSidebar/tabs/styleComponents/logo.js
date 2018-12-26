@@ -19,7 +19,8 @@ class Logo extends Component {
 export default connect(
     state => ({
         background_and_logo: state,
-        position: state.position
+        position: state.position,
+        token: state.token
     }),
     dispatch => ({
         uploadFile: (path, position) => {

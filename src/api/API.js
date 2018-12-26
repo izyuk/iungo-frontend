@@ -39,59 +39,34 @@ export const userRegister = (login, password) => {
 
 };
 export const getAllPortals = (string) => {
-    let myHeaders = new Headers({
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': string
-    });
-
-    return axios({
-        method: 'get',
-        headers: myHeaders,
+    console.log(string);
+    return axios(/*`${builder_API}/portal`, */{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${string}`
+        },
         url: `${builder_API}/portal`,
-        mode: 'no-cors'
+        // mode: 'no-cors'
     })
         .then(res => res)
         .catch(err => console.warn('In getAllPortals API method\n', err));
 };
-// getReleases: async function () {
-//     const API_TOKEN = sha1(`${URL}/public/api/releasesxqg7j47xsiyesgywh7e6lexkld487w6opjcze6k2akbp6v6csy`);
-//     console.log(API_TOKEN);
-//     let myHeaders = new Headers({
-//         'Content-Type': 'application/json',
-//         'Accept': 'application/json',
-//         'api-token': API_TOKEN
-//     });
-//     return await axios.get(`${URL}/public/api/releases`, {
-//         mode: 'no-cors',
-//         headers: myHeaders
-//     })
-//         .then(res => res)
-//         .catch(err => console.warn('In getReleases API method\n', err));
-// },
-// fileUploads: async function (releases, files) {
-//     const API_TOKEN = sha1(`${URL}/public/api/releases/${releases}/videoxqg7j47xsiyesgywh7e6lexkld487w6opjcze6k2akbp6v6csy`);
-//     let myHeaders = new Headers({
-//         'Content-Type': 'multipart/form-data',
-//         'Accept': 'application/json',
-//         'api-token': API_TOKEN
-//     });
-//     let formData = new FormData();
-//     // files.forEach(file => {
-//     // });
-//     console.log('files \n', files);
-//     formData.append('videos[0]', files[0]);
-//     console.log('formData \n', formData);
-//     return await axios.post(`${URL}/public/api/releases/${releases}/videos`, formData,  {
-//         mode: 'no-cors',
-//         headers: myHeaders
-//     })
-//         .then(res => res)
-//         .catch(err => console.warn('In uploading API method\n', err));
-// }
-// };
+export const uploadImage = (string, name, base64, w, h) => {
+    console.log(string);
+    return axios({
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${builder_API}/image`,
+        mode: 'no-cors',
+        data: {"name": name, "base64Content": base64, "width": w, "height": h}
+    })
+        .then(res => res)
+        .catch(err => console.warn('In uploadImage API method\n', err));
 
-//
-// module.exports = {
-//     Api: Api
-// };
+};
