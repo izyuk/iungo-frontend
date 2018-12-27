@@ -43,7 +43,7 @@ class ImageUploader extends Component {
     imageLoad(url) {
         let image = new Image();
 
-        if(!image.complete){
+        if (!image.complete) {
             image.src = url;
             this.setState({
                 fileAdditional: {
@@ -64,7 +64,6 @@ class ImageUploader extends Component {
         let type = this.props.type;
 
 
-
         this.setState({
             fileInfo: files
         });
@@ -75,37 +74,27 @@ class ImageUploader extends Component {
 
         let img = document.createElement('img');
         img.setAttribute('src', this.state.fileInfo.base64);
+        document.getElementsByTagName('BODY')[0].appendChild(img);
         img.style.opacity = 0;
         img.style.position = 'absolute';
         img.style.top = 0;
         img.style.left = 0;
         img.style.zIndex = '-100';
         img.style.zoom = '0.1';
-        document.getElementsByTagName('BODY')[0].appendChild(img);
-        // this.state.fileAdditional.width = img.width;
-        // this.state.fileAdditional.height = img.height;
-        await this.setState({
-            fileAdditional: {
-                width: img.width,
-                height: img.height
-            }
-        });
-
-        console.log('!!!!!!!!!!!', this.state.fileAdditional.width, this.state.fileAdditional.height);
-        // console.log(width, height);
-
-
-        let query = uploadImage(this.props.token.token, this.state.fileInfo.name, this.state.fileInfo.base64, this.state.fileAdditional.width, this.state.fileAdditional.height);
+        let query = uploadImage(this.props.token.token, this.state.fileInfo.name, this.state.fileInfo.base64);
         await query.then(res => {
             console.log(res.data);
             this.transferFileData(res.data.externalUrl, type, 'image');
         });
+
+        // console.log(width, height);
+
+
         // img.remove();
 
-            // alert(img.width);
+        // alert(img.width);
         // };
         // img.src = u;
-
 
 
         // console.log()

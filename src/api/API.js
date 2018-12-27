@@ -53,7 +53,7 @@ export const getAllPortals = (string) => {
         .then(res => res)
         .catch(err => console.warn('In getAllPortals API method\n', err));
 };
-export const uploadImage = (string, name, base64, w, h) => {
+export const uploadImage = (string, name, base64) => {
     console.log(string);
     return axios({
         method: 'post',
@@ -64,7 +64,7 @@ export const uploadImage = (string, name, base64, w, h) => {
         },
         url: `${builder_API}/image`,
         mode: 'no-cors',
-        data: {"name": name, "base64Content": base64, "width": w, "height": h}
+        data: {"name": name, "base64Content": base64}
     })
         .then(res => res)
         .catch(err => console.warn('In uploadImage API method\n', err));
