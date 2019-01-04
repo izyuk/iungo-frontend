@@ -25,6 +25,9 @@ export default connect(
     dispatch => ({
         uploadFile: (path, position) => {
             dispatch({type: "UPLOAD_LOGO", payload: {path, position}});
+        },
+        setID: (num) => {
+            dispatch({type: "SET_logoID", payload: num});
         }
     })
 )(ImageUploader);

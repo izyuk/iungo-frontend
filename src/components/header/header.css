@@ -43,7 +43,8 @@ header {
   align-items: center;
   justify-content: space-between;
 }
-.right a {
+.right a,
+.right button {
   line-height: 2.29;
   color: #768198;
   font-family: 'AvenirLTStd-Medium', sans-serif;
@@ -88,11 +89,15 @@ header {
 .right .user .popup li {
   display: flex;
 }
-.right .user .popup li a {
+.right .user .popup li a,
+.right .user .popup li button {
   width: 100%;
   padding: 0 10px;
+  border: none;
+  text-align: left;
 }
-.right .user .popup li a:hover {
+.right .user .popup li a:hover,
+.right .user .popup li button:hover {
   background: #e5e9f2;
 }
 .right .user .popup.active {

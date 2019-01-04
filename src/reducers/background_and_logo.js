@@ -1,38 +1,25 @@
-// const fd = new FormData();
+const INITIAL = {
+    logo: {
+        url: '',
+        position: 'center'
+    },
+    background: {
+        url: '',
+        color: {
+            rgba: {
+                r: 249,
+                g: 249,
+                b: 252,
+                a: 1,
+            },
+            hex: '#f9f9fc'
+        }
+    }
+};
 
-// export async function upload_file(type, selectedFile) {
-//     fd.append(type, selectedFile);
-//     let query = axios.create({
-//         baseURL: 'http://localhost:4000'
-//     });
-//     if(type === 'background')
-//         if(fd.get('logo'))
-//             fd.delete('logo');
-//     if(type === 'logo')
-//         if(fd.get('background'))
-//             fd.delete('background');
-//     return {
-//         type: `UPLOAD_${type.toUpperCase()}`,
-//         payload:
-//             await query.post(`/upload/${type}`, fd)
-//                 .then(result => {
-//                     if (result.error) {
-//                         throw new Error("Error in uploading object");
-//                     }
-//                     console.log('reducer', result.data);
-//                     return result.data;
-//                 })
-//                 .catch(error => {
-//                     console.log(error);
-//                 })
-//     };
-// }
-
-export default function (state = {}, action) {
-    console.log(action.payload);
+export default function (state = INITIAL, action) {
     switch (action.type) {
         case "UPLOAD_LOGO":
-            // console.log('UPLOAD_LOGO action', action.payload);
             return Object.assign(state, {
                 logo: {
                     url: action.payload.path.url,
@@ -40,7 +27,6 @@ export default function (state = {}, action) {
                 }
             });
         case "UPLOAD_BACKGROUND":
-            // console.log('UPLOAD_BACKGROUND action', action.payload);
             return Object.assign(state, {
                 background: {
                     url: action.payload.path,

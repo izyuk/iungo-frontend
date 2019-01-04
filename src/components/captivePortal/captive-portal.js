@@ -21,9 +21,9 @@ class CaptivePortal extends Component {
             backgroundType: 'color',
             alignment: 'center',
             container: '' || {
-                border: this.props.background_and_logo.content_border,
-                background: this.props.background_and_logo.content_background,
-                size: this.props.background_and_logo.content_size
+                border: this.props.background_and_logo.container_border,
+                background: this.props.background_and_logo.container_background,
+                size: this.props.background_and_logo.container_size
             },
             headerText: '' || {
                 top: this.props.background_and_logo.header_top_text_data,
@@ -158,7 +158,7 @@ class CaptivePortal extends Component {
 
     componentDidMount() {
 
-        this.props.token && this.findAllPortals(this.props.token);
+        this.props.token ? this.findAllPortals(this.props.token): this.findAllPortals(localStorage.getItem('value')) ;
 
         let currentDay = function(sp){
             let today = new Date();

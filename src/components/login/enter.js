@@ -37,6 +37,7 @@ class Enter extends Component {
                 console.log(res);
                 let {headers: {authorization}, status} = res;
                 this.props.setToken(authorization);
+                localStorage.setItem('token', authorization);
                 console.log(status);
                 if(status === 200){
                     this.setState({

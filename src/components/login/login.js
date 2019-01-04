@@ -60,11 +60,11 @@ class Login extends Component {
                                 </g>
                             </svg>
                         </span>
-                    <input type="email" onBlur={this.fieldsHandler} datatype="login" placeholder="Your Email"/>
+                    <input type="email" onBlur={this.fieldsHandler} datatype="login" defaultValue="dmitriy.izyuk@gmail.com" placeholder="Your Email"/>
                 </div>
                 <div className={style.password}>
                     <span></span>
-                    <input type="password" onBlur={this.fieldsHandler} datatype="password" placeholder="Your Password"/>
+                    <input type="password" onBlur={this.fieldsHandler} datatype="password" defaultValue="Izyuk8968" placeholder="Your Password"/>
                 </div>
             </div>
         )

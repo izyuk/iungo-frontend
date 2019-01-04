@@ -7,16 +7,18 @@ class ContentBorder extends Component {
         super(props);
         this.state = {
             displayColorPicker: false,
-            colorHEX: this.props.content_border.colorHEX || '#ffffff',
-            color: this.props.content_border.color || {
-                r: '255',
-                g: '255',
-                b: '255',
-                a: '1',
+            color: this.props.container_border.color || {
+                rgba: {
+                    r: 255,
+                    g: 255,
+                    b: 255,
+                    a: 1,
+                },
+                hex: '#ffffff'
             },
-            type: this.props.content_border.type || 'none',
-            thickness: this.props.content_border.thickness || '1',
-            radius: this.props.content_border.radius || '0'
+            type: this.props.container_border.type || 'none',
+            thickness: this.props.container_border.thickness || '1',
+            radius: this.props.container_border.radius || '0'
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -35,13 +37,15 @@ class ContentBorder extends Component {
     handleChange = (color) => {
         this.setState({
             color: {
-                r: color.rgb.r,
-                g: color.rgb.g,
-                b: color.rgb.b,
-                a: color.rgb.a
+                rgba: {
+                    r: color.rgb.r,
+                    g: color.rgb.g,
+                    b: color.rgb.b,
+                    a: color.rgb.a
+                },
+                hex: color.hex
             }
         });
-        this.setState({colorHEX: color.hex});
     };
 
     select = (e) => {
@@ -55,7 +59,6 @@ class ContentBorder extends Component {
         let {displayColorPicker, ...rest} = this.state;
         this.props.borderStyle(rest);
         this.props.handler(rest);
-        console.log(this.state);
     };
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -65,11 +68,12 @@ class ContentBorder extends Component {
             return true;
         } else if (this.state.radius !== nextState.radius) {
             return true;
-        } else if (this.state.colorHEX !== nextState.colorHEX) {
-            return true;
         } else if (this.state.color !== nextState.color) {
+
             return true;
-        } else if (this.state.displayColorPicker !== nextState.displayColorPicker) {
+        } /*else if (this.state.color !== nextState.color) {
+            return true;
+        }*/ else if (this.state.displayColorPicker !== nextState.displayColorPicker) {
             return true;
         } else {
             return false;
@@ -87,23 +91,22 @@ class ContentBorder extends Component {
             span.innerText = select[i].options[select[i].selectedIndex].value;
             select[i].nextSibling.insertBefore(span, svg);
         }
-        let {displayColorPicker, ...rest} = this.state;
+        const {displayColorPicker, ...rest} = this.state;
         this.props.borderStyle(rest);
         this.props.handler(rest);
 
     };
 
     componentDidUpdate() {
-        let {displayColorPicker, ...rest} = this.state;
+        const {displayColorPicker, ...rest} = this.state;
         this.props.borderStyle(rest);
         this.props.handler(rest);
-        console.log(this.props.content_border);
     }
 
     render() {
         const popover = {
             position: 'absolute',
-            zIndex: '2',
+            zIndex: 2,
             top: 32,
             right: 0
         };
@@ -151,13 +154,13 @@ class ContentBorder extends Component {
                     <div className={this.props.style.right}>
                         <div className={this.props.style.innerRow}>
                             <div className={this.props.style.colorWrap}>
-                                <input type="text" value={this.state.colorHEX} disabled/>
+                                <input type="text" value={this.state.color.hex} disabled/>
                                 <button ref={this.cpbButton}
-                                        style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
+                                        style={{backgroundColor: `rgba(${ this.state.color.rgba.r }, ${ this.state.color.rgba.g }, ${ this.state.color.rgba.b }, ${ this.state.color.rgba.a })`}}
                                         onClick={this.handleClick}></button>
                                 {this.state.displayColorPicker ? <div style={popover}>
                                     <div style={cover} onClick={this.handleClose}/>
-                                    <SketchPicker color={this.state.color} onChange={this.handleChange}/>
+                                    <SketchPicker color={this.state.color.rgba} onChange={this.handleChange}/>
                                 </div> : null}
                             </div>
                         </div>
@@ -222,11 +225,11 @@ class ContentBorder extends Component {
 // export default ContentBorder;
 export default connect(
     state => ({
-        content_border: state.content_border
+        container_border: state.container_border
     }),
     dispatch => ({
         borderStyle: (data) => {
-            dispatch({type: "CONTENT_BORDER", payload: data});
+            dispatch({type: "container_border", payload: data});
         }
     })
 )(ContentBorder);

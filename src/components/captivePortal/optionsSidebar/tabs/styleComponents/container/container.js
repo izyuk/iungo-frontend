@@ -9,13 +9,13 @@ class Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            border : this.props.content_border || {
+            border : this.props.container_border || {
 
             },
-            background : this.props.content_background || {
+            background : this.props.container_background || {
 
             },
-            size : this.props.content_size || {
+            size : this.props.container_size || {
 
             },
         };
@@ -57,7 +57,6 @@ class Container extends Component {
     }
 
     componentDidUpdate(){
-        console.log(this.state);
        this.props.handler(this.state);
     }
 
@@ -74,9 +73,9 @@ class Container extends Component {
 
 export default connect(
     state => ({
-        content_border: state.content_border,
-        content_background: state.content_background,
-        content_size: state.content_size,
+        container_border: state.container_border,
+        container_background: state.container_background,
+        container_size: state.container_size,
     })
 )
 (Container);

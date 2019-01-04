@@ -3,9 +3,6 @@ class Picker {
         this.target = target;
         this.width = width;
         this.height = height;
-        console.log(target);
-        console.log(width);
-        console.log(height);
         this.target.width = width;
         this.target.height = height;
         //Get context

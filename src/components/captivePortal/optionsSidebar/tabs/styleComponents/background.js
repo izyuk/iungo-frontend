@@ -26,6 +26,9 @@ export default connect(
     dispatch => ({
         uploadFile: (path, color) => {
             dispatch({type: "UPLOAD_BACKGROUND", payload: {path, color}});
+        },
+        setID: (num) => {
+            dispatch({type: "SET_backgroundID", payload: num});
         }
     })
 )(ImageUploader);

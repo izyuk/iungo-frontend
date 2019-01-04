@@ -5,8 +5,8 @@ class ContainerSize extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            width: this.props.content_size.width || 720,
-            padding: this.props.content_size.padding || 10
+            width: this.props.container_size.width || 720,
+            padding: this.props.container_size.padding || 10
         };
         this.valueWidth = this.valueWidth.bind(this);
         this.valuePadding = this.valuePadding.bind(this);
@@ -28,8 +28,6 @@ class ContainerSize extends Component {
                 width: parseInt(e.target.value)
             });
         }
-
-        console.log(this.state.width);
     }
 
     valuePadding(e) {
@@ -48,8 +46,6 @@ class ContainerSize extends Component {
                 padding: parseInt(e.target.value)
             });
         }
-
-        console.log(this.state.padding);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -125,11 +121,11 @@ class ContainerSize extends Component {
 
 export default connect(
     state => ({
-        content_size: state.content_size
+        container_size: state.container_size
     }),
     dispatch => ({
         sizeStyle: (data) => {
-            dispatch({type: "CONTENT_SIZE", payload: data});
+            dispatch({type: "container_size", payload: data});
         }
     })
 )(ContainerSize);

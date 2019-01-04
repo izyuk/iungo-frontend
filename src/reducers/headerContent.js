@@ -1,27 +1,51 @@
-// const INITIAL = {
-//     data: {
-//         colorHEX: '#000000',
-//         color:{
-//             r: '0',
-//             g: '0',
-//             b: '0',
-//             a: '1',
-//         },
-//         fontSize: '18',
-//         textActions: {
-//             bold: false,
-//             italic: false,
-//             underline: false,
-//         },
-//         text: 'Change this text',
-//         alignment: 'center'
-//     }
-// };
+const INITIAL = {
+    top: {
+        text: '<Company name>',
+        styles: {
+            color: {
+                rgba: {
+                    r: 0,
+                    g: 0,
+                    b: 0,
+                    a: 1,
+                },
+                hex: '#000000'
+            },
+            fontSize: 18,
+            textActions: {
+                bold: false,
+                italic: false,
+                underline: false
+            },
+            alignment: 'center'
+        }
+    },
+    description: {
+        text: '<Venue description>',
+        styles: {
+            color: {
+                rgba: {
+                    r: 0,
+                    g: 0,
+                    b: 0,
+                    a: 1,
+                },
+                hex: '#000000'
+            },
+            fontSize: 18,
+            textActions: {
+                bold: false,
+                italic: false,
+                underline: false
+            },
+            alignment: 'center'
+        }
+    }
+};
 
-export default function (state = {}, action) {
+export default function (state = INITIAL, action) {
     switch (action.type) {
         case "HEADER_TOP":
-            // console.log('UPLOAD_BACKGROUND action', action.payload);
             return Object.assign(state, {
                 top: {
                     text: action.payload.text,
@@ -29,7 +53,6 @@ export default function (state = {}, action) {
                 }
             });
         case "HEADER_DESCRIPTION":
-            // console.log('UPLOAD_BACKGROUND action', action.payload);
             return Object.assign(state, {
                 description: {
                     text: action.payload.text,

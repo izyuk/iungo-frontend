@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
+import axios from 'axios';
 
 import style from './preview.less';
 import style2 from '../captive-portal.less';
@@ -45,7 +47,7 @@ class Preview extends Component {
 
             this.ContainerMain.current.style.borderWidth = rest.thickness ? `${rest.thickness}px` : false;
             this.ContainerMain.current.style.borderStyle = rest.type ? `${rest.type}` : false;
-            this.ContainerMain.current.style.borderColor = color ? `rgba(${color.r},${color.g},${color.b},${color.a})` : false;
+            this.ContainerMain.current.style.borderColor = color ? `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})` : false;
             this.ContainerMain.current.style.borderRadius = rest.radius ? `${rest.radius}px` : false;
             this.ContainerMain.current.style.background = background.color ? `rgba(${background.color.r},${background.color.g},${background.color.b},${background.color.a})` : false;
             this.ContainerMain.current.style.opacity = background.opacity ? background.opacity / 100 : false;
@@ -55,13 +57,22 @@ class Preview extends Component {
 
         container(this.props.state.container);
         // if (this.props.footerTextData.text)
-        console.log('this.props.footerTextData', this.props.footerTextData);
-            this.FooterText.current.innerHTML = this.props.footerTextData.text && this.props.footerTextData.text
+        this.FooterText.current.innerHTML = this.props.footerTextData.text && this.props.footerTextData.text
 
+        console.log(window.getComputedStyle(ReactDOM.findDOMNode(this.PreviewMain.current)));
     }
 
     componentDidMount() {
+        let innerStyles = {
 
+        };
+        // console.log(style2.previewMain);
+        let links = document.querySelectorAll('link');
+        console.log(links[0].href);
+        axios({
+            method: "GET",
+            url: links[0].href
+        }).then(res => console.log(res.data))
     }
 
     shouldComponentUpdate(nextProps, nextState) {

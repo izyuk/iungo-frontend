@@ -13,12 +13,14 @@ class ImageUploader extends Component {
             selectedFile: null,
             displayColorPicker: false,
             alignment: true,
-            colorHEX: '#f9f9fc',
             color: {
-                r: '249',
-                g: '249',
-                b: '252',
-                a: '1',
+                rgba: {
+                    r: 249,
+                    g: 249,
+                    b: 252,
+                    a: 1,
+                },
+                hex: '#f9f9fc'
             },
             background: '',
             logo: '',
@@ -33,7 +35,6 @@ class ImageUploader extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.checked = React.createRef();
         this.cpbButton = React.createRef();
         this.alignment = this.alignment.bind(this);
         this.transferFileData = this.transferFileData.bind(this);
@@ -68,8 +69,6 @@ class ImageUploader extends Component {
             fileInfo: files
         });
 
-        console.log(this.state.fileInfo.base64);
-
         this.imageLoad(this.state.fileInfo.base64);
 
         let img = document.createElement('img');
@@ -79,57 +78,13 @@ class ImageUploader extends Component {
         img.style.position = 'absolute';
         img.style.top = 0;
         img.style.left = 0;
-        img.style.zIndex = '-100';
-        img.style.zoom = '0.1';
-        let query = uploadImage(this.props.token.token, this.state.fileInfo.name, this.state.fileInfo.base64);
+        img.style.zIndex = -100;
+        img.style.zoom = 0.1;
+        let query = uploadImage(this.props.token.token ? this.props.token.token : localStorage.getItem('token'), this.state.fileInfo.name, this.state.fileInfo.base64);
         await query.then(res => {
-            console.log(res.data);
             this.transferFileData(res.data.externalUrl, type, 'image');
+            this.props.setID(res.data.id);
         });
-
-        // console.log(width, height);
-
-
-        // img.remove();
-
-        // alert(img.width);
-        // };
-        // img.src = u;
-
-
-        // console.log()
-        // let query = uploadImage(this.props.token.token, this.state.fileInfo.name, this.state.fileInfo.base64);
-
-
-        // let promise = await query.post(`/upload/${type}`, fd, {
-        //     onUploadProgress: progressEvent => {
-        //         console.log('Upload progress: ', Math.round(progressEvent.loaded / progressEvent.total * 100) + '%')
-        //     }
-        // })
-        //     .then(result => {
-        //         if (result.error) {
-        //             throw new Error("Error in uploading object");
-        //         }
-        //         return result.data;
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     });
-
-        console.log(this.state.fileInfo.base64);
-
-        // let file = {'data': {}};
-        //
-        // await Promise.all([promise]).then((value) => {
-        //     return file.data = value[0];
-        // });
-        //
-        // console.log(file.data);
-        // this.setState({
-        //     [type]: file.data
-        // });
-        //
-        // this.transferFileData(file.data, type, 'image')
     };
 
 
@@ -137,7 +92,7 @@ class ImageUploader extends Component {
         if (type === 'logo') {
             this.props.uploadFile(data, this.state.logoPosition);
         } else if (type === 'background') {
-            let colorData = [this.state.colorHEX, this.state.color];
+            let colorData = this.state.color;
             this.props.uploadFile(data, colorData);
         }
         this.props.handler(data, type, backgroundType);
@@ -145,7 +100,7 @@ class ImageUploader extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.background_and_logo !== this.props.background_and_logo) {
-            console.log(this.props.background_and_logo);
+
         }
     }
 
@@ -158,20 +113,20 @@ class ImageUploader extends Component {
                     alpha = this.props.background_and_logo.background.color.rgba.a;
                 this.setState({
                     color: {
-                        r: red,
-                        g: green,
-                        b: blue,
-                        a: alpha
-                    },
-                    colorHEX: this.props.background_and_logo.background.color.hex
+                        rgba: {
+                            r: red,
+                            g: green,
+                            b: blue,
+                            a: alpha
+                        },
+                        hex: this.props.background_and_logo.background.color.hex
+                    }
                 });
                 this.cpbButton.current.removeAttribute('style');
                 this.cpbButton.current.setAttribute('style', `background: rgba(${ red }, ${ green }, ${ blue }, ${ alpha })`);
             }
         }
 
-        // if (this.props.type === "logo")
-        // document.getElementById(this.props.position.position).setAttribute('checked', 'checked');
     }
 
     handleClick = () => {
@@ -201,17 +156,19 @@ class ImageUploader extends Component {
     handleChange = (color) => {
         this.setState({
             color: {
-                r: color.rgb.r,
-                g: color.rgb.g,
-                b: color.rgb.b,
-                a: color.rgb.a
+                rgba: {
+                    r: color.rgb.r,
+                    g: color.rgb.g,
+                    b: color.rgb.b,
+                    a: color.rgb.a
+                },
+                hex: color.hex
             }
         });
-        this.setState({colorHEX: color.hex});
         this.state.backgroundColor = true;
         this.props.background_and_logo.backgroundType = 'color';
         let type = this.props.type;
-        this.props.handler(`rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`, type, 'color');
+        this.props.handler(`rgba(${ this.state.color.rgba.r }, ${ this.state.color.rgba.g }, ${ this.state.color.rgba.b }, ${ this.state.color.rgba.a })`, type, 'color');
         this.props.uploadFile(this.state.background, {
             hex: color.hex,
             rgba: {r: color.rgb.r, g: color.rgb.g, b: color.rgb.b, a: color.rgb.a}
@@ -221,7 +178,7 @@ class ImageUploader extends Component {
     render() {
         const popover = {
             position: 'absolute',
-            zIndex: '2',
+            zIndex: 2,
             top: 32,
             left: 0
         };
@@ -268,13 +225,13 @@ class ImageUploader extends Component {
                         <div className={this.props.style.right}>
                             <div className={this.props.style.innerRow}>
                                 <div className={this.props.style.colorWrap}>
-                                    <input type="text" value={this.state.colorHEX} disabled/>
+                                    <input type="text" value={this.state.color.hex} disabled/>
                                     <button ref={this.cpbButton}
-                                            style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
+                                            style={{backgroundColor: `rgba(${ this.state.color.rgba.r }, ${ this.state.color.rgba.g }, ${ this.state.color.rgba.b }, ${ this.state.color.rgba.a })`}}
                                             onClick={this.handleClick}></button>
                                     {this.state.displayColorPicker ? <div style={popover}>
                                         <div style={cover} onClick={this.handleClose}/>
-                                        <SketchPicker color={this.state.color} onChange={this.handleChange}/>
+                                        <SketchPicker color={this.state.color.rgba} onChange={this.handleChange}/>
                                     </div> : null}
                                 </div>
                             </div>

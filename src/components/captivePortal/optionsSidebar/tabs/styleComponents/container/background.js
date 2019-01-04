@@ -36,14 +36,16 @@ class ContentBackground extends Component {
         super(props);
         this.state = {
             displayColorPicker: false,
-            colorHEX: this.props.content_background.colorHEX || '#ffffff',
-            color: this.props.content_background.color || {
-                r: '255',
-                g: '255',
-                b: '255',
-                a: '1',
+            color: this.props.container_background.color || {
+                rgba: {
+                    r: 255,
+                    g: 255,
+                    b: 255,
+                    a: 1,
+                },
+                hex: '#ffffff'
             },
-            opacity: this.props.content_background.opacity || '100'
+            opacity: this.props.container_background.opacity || '100'
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -63,13 +65,15 @@ class ContentBackground extends Component {
     handleChange = (color) => {
         this.setState({
             color: {
-                r: color.rgb.r,
-                g: color.rgb.g,
-                b: color.rgb.b,
-                a: color.rgb.a
+                rgba: {
+                    r: color.rgb.r,
+                    g: color.rgb.g,
+                    b: color.rgb.b,
+                    a: color.rgb.a
+                },
+                hex: color.hex
             }
         });
-        this.setState({colorHEX: color.hex});
     };
 
     onSliderChange(value) {
@@ -82,9 +86,9 @@ class ContentBackground extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.opacity !== nextState.opacity) {
             return true;
-        } else if (this.state.colorHEX !== nextState.colorHEX) {
+        } else if (this.state.color.hex !== nextState.color.hex) {
             return true;
-        } else if (this.state.color !== nextState.color) {
+        } else if (this.state.color.rgba !== nextState.color.rgba) {
             return true;
         } else if (this.state.displayColorPicker !== nextState.displayColorPicker) {
             return true;
@@ -102,7 +106,7 @@ class ContentBackground extends Component {
         }
         let {displayColorPicker, ...rest} = this.state;
         console.log('background STATE', this.state);
-        console.log('background STORAGE', this.props.content_background);
+        console.log('background STORAGE', this.props.container_background);
         this.props.backgroundStyle(rest);
         this.props.handler(rest);
     }
@@ -111,14 +115,14 @@ class ContentBackground extends Component {
         let {displayColorPicker, ...rest} = this.state;
         this.props.backgroundStyle(rest);
         this.props.handler(rest);
-        console.log('background STORAGE UPDATED', this.props.content_background);
+        console.log('background STORAGE UPDATED', this.props.container_background);
         console.log('background STATE UPDATED', this.state);
     }
 
     render() {
         const popover = {
             position: 'absolute',
-            zIndex: '2',
+            zIndex: 2,
             top: 32,
             right: 0
         };
@@ -145,9 +149,9 @@ class ContentBackground extends Component {
                     <div className={this.props.style.right}>
                         <div className={this.props.style.innerRow}>
                             <div className={this.props.style.colorWrap}>
-                                <input type="text" value={this.state.colorHEX} disabled/>
+                                <input type="text" value={this.state.color.hex} disabled/>
                                 <button ref={this.cpbButton}
-                                        style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
+                                        style={{backgroundColor: `rgba(${ this.state.color.rgba.r }, ${ this.state.color.rgba.g }, ${ this.state.color.rgba.b }, ${ this.state.color.rgba.a })`}}
                                         onClick={this.handleClick}></button>
                                 {this.state.displayColorPicker ? <div style={popover}>
                                     <div style={cover} onClick={this.handleClose}/>
@@ -230,11 +234,11 @@ class ContentBackground extends Component {
 
 export default connect(
     state => ({
-        content_background: state.content_background
+        container_background: state.container_background
     }),
     dispatch => ({
         backgroundStyle: (data) => {
-            dispatch({type: "CONTENT_BACKGROUND", payload: data});
+            dispatch({type: "container_background", payload: data});
         }
     })
 )(ContentBackground);

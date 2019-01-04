@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 
 import style from './header.less';
 import background from "../captivePortal/optionsSidebar/tabs/styleComponents/background";
-
+import { connect } from 'react-redux';
+import {Link, Redirect} from 'react-router-dom';
 class Header extends Component {
     constructor(props){
         super(props);
         this.state = {
-            popup: false
+            popup: false,
+            auth: true
         };
         this.openClose = this.openClose.bind(this);
         this.popup = this.popup.bind(this);
+        this.logOut = this.logOut.bind(this);
     }
 
     openClose(){
@@ -21,6 +24,24 @@ class Header extends Component {
         this.setState({
             popup: !this.state.popup
         });
+    }
+
+    logOut(){
+        this.props.setToken('');
+        localStorage.removeItem('token');
+        this.setState({
+            auth: false
+        })
+    }
+
+    shouldComponentUpdate(nextProps, nextState){
+        if(this.state.auth !== nextState.auth){
+            return true
+        } else if(this.state.popup !== nextState.popup){
+            return true
+        } else {
+            return false
+        }
     }
 
     render(){
@@ -58,18 +79,32 @@ class Header extends Component {
                                 </a>
                                 <div className={[style.popup, this.state.popup ? style.active : ''].join(' ')}>
                                     <ul>
-                                        <li><a href="javascript:void(0)">Profile</a></li>
-                                        <li><a href="javascript:void(0)">Pricing</a></li>
-                                        <li><a href="javascript:void(0)">Log out</a></li>
+                                        <li><Link to=''>Profile</Link></li>
+                                        <li><Link to=''>Pricing</Link></li>
+                                        <li><button onClick={this.logOut} type="button">Log out</button></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                {
+                    !this.state.auth ?
+                        <Redirect to=''/>
+                        : false
+                }
             </header>
         )
     }
 }
 
-export default Header;
+export default connect(
+    state => ({
+        token: state.token
+    }),
+    dispatch=>({
+        setToken:(string) => {
+            dispatch({type: "TOKEN", payload: string})
+        }
+    })
+)(Header);

@@ -37,7 +37,7 @@ header{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  a{
+  a, button{
     line-height: 2.29;
     color: @steel;
     .font(@avenir-medium, 14);
@@ -77,9 +77,11 @@ header{
       padding: 5px 0;
       li{
         display: flex;
-        a{
+        a, button{
           width: 100%;
           padding: 0 10px;
+          border: none;
+          text-align: left;
           &:hover{
             background: @pale-grey-three;
           }

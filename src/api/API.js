@@ -39,7 +39,6 @@ export const userRegister = (login, password) => {
 
 };
 export const getAllPortals = (string) => {
-    console.log(string);
     return axios(/*`${builder_API}/portal`, */{
         method: 'GET',
         headers: {
@@ -54,7 +53,6 @@ export const getAllPortals = (string) => {
         .catch(err => console.warn('In getAllPortals API method\n', err));
 };
 export const uploadImage = (string, name, base64) => {
-    console.log(string);
     return axios({
         method: 'post',
         headers: {

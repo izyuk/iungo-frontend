@@ -1,6 +1,11 @@
-export default function (state = {}, action) {
+const INITIAL = {
+    width: 720,
+    padding: 10
+};
+
+export default function (state = INITIAL, action) {
     switch (action.type) {
-        case "CONTENT_SIZE":
+        case "container_size":
             return Object.assign(state,
                 action.payload
             );

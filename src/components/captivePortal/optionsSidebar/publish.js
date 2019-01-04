@@ -16,44 +16,64 @@ class Publish extends Component {
     }
 
     getBuilderParams(){
-        let portalDataToSend = {};
 
-        let { name, css:{path}, header: {top, description}, footer, background_and_logo: {background, logo, backgroundType}, content_background, content_border, content_size , login_methods: {methods}} = this.props.tabName;
+        let { name:{name},
+            css:{path},
+            header: {top, description},
+            footer,
+            background_and_logo: {background, logo},
+            container_background,
+            container_border,
+            container_size ,
+            login_methods: {methods},
+            imagesIDs
+        } = this.props.tabName;
 
-        portalDataToSend['name'] = name;
-        portalDataToSend['externalStylesUrl'] = path;
-        /*Доробити logoId та backgrId*/
-        portalDataToSend['logoId'] = 0;
-        portalDataToSend['backgroundId'] = 0;
-        portalDataToSend['header'] = top.text;
-        portalDataToSend['description'] = description.text;
-        portalDataToSend['footer'] = footer.text;
-        portalDataToSend['style']['header']['top'] = top.styles;
-        portalDataToSend['style']['header']['description'] = description.styles;
-        portalDataToSend['style']['footer'] = footer.styles;
-
-        if(backgroundType === 'image'){
-            portalDataToSend['style']['background_and_logo']['background']['url'] = background.url.url;
-        } else {
-            portalDataToSend['style']['background_and_logo']['background']['colorHEX'] = background.url.color[0];
-            portalDataToSend['style']['background_and_logo']['background']['color'] = background.url.color[1];
-        }
-
-        portalDataToSend['style']['background_and_logo']['logo']['url'] = logo.url;
-        portalDataToSend['style']['content_background']['colorHEX'] = content_background.colorHEX;
-        portalDataToSend['style']['content_background']['color'] = content_background.color;
-
-        portalDataToSend['style']['content_border']['color'] = content_border.color;
-        portalDataToSend['style']['content_border']['colorHEX'] = content_border.colorHEX;
-        portalDataToSend['style']['content_border']['type'] = content_border.type;
-        portalDataToSend['style']['content_border']['thickness'] = content_border.thickness;
-        portalDataToSend['style']['content_border']['radius'] = content_border.radius;
-        portalDataToSend['style']['content_size']['width'] = content_size.width;
-        portalDataToSend['style']['content_size']['padding'] = content_size.padding;
-
-        portalDataToSend['googleLogin'] = methods.google;
-        portalDataToSend['facebookLogin'] = methods.facebook;
-        portalDataToSend['twitterLogin'] = methods.twitter;
+        let portalDataToSend = {
+            name: name && name,
+            externalStylesUrl: path && path,
+            logoId: imagesIDs.logoID,
+            backgroundId: imagesIDs.backgroundID,
+            header: top.text,
+            description: description.text,
+            footer: footer.text,
+            style: {
+                header: {
+                    top: top.styles,
+                    description: description.styles,
+                },
+                footer: footer.styles,
+                background_and_logo: {
+                    background: {
+                        url: background.url,
+                        color: background.color
+                    },
+                    logo: {
+                        url: logo.url,
+                        position: logo.position,
+                    }
+                },
+                container_background: {
+                    color: container_background.color,
+                    opacity: container_background.opacity,
+                },
+                container_border: {
+                    color: container_border.color,
+                    type: container_border.type,
+                    thickness: container_border.thickness,
+                    radius: container_border.radius,
+                },
+                container_size: {
+                    width: container_size.width,
+                    padding: container_size.padding
+                }
+            },
+            googleLogin: {
+                googleLogin: methods.google,
+                facebookLogin: methods.facebook,
+                twitterLogin: methods.twitter
+            }
+        };
 
         console.log(portalDataToSend);
     }
