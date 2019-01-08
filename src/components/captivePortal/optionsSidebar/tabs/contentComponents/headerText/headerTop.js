@@ -53,20 +53,13 @@ class HeaderTop extends Component {
             alignment: storage ? storage.styles.alignment : 'center'
         };
 
-        this.handleClick = this.handleClick.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.onSliderChange = this.onSliderChange.bind(this);
-        this.textActionsHandler = this.textActionsHandler.bind(this);
-        this.textChanges = this.textChanges.bind(this);
-        this.alignment = this.alignment.bind(this);
     }
 
-    onSliderChange(value) {
+    onSliderChange = (value) =>{
         this.setState({
             fontSize: value
         });
-    }
+    };
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.fontSize !== nextState.opacity) {
@@ -120,25 +113,25 @@ class HeaderTop extends Component {
         this.setState({colorHEX: color.hex});
     };
 
-    textActionsHandler(e) {
+    textActionsHandler = (e) => {
         let name = e.currentTarget.getAttribute('data-type');
         let currentState = this.state;
         currentState.textActions[name] = !this.state.textActions[name];
 
         this.setState(currentState);
-    }
+    };
 
-    textChanges(e) {
+    textChanges = (e) => {
         this.setState({
             text: e.currentTarget.value
         })
-    }
+    };
 
-    alignment(e) {
+    alignment = (e) => {
         this.setState({
             alignment: e.target.getAttribute('data-id')
         });
-    }
+    };
 
     render() {
         const popover = {
@@ -293,7 +286,6 @@ class HeaderTop extends Component {
     }
 }
 
-// export default HeaderTop;
 export default connect(
     state => ({
         header: state.header

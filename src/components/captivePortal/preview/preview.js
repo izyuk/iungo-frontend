@@ -44,35 +44,26 @@ class Preview extends Component {
         }
 
         const container = ({border: {color, ...rest}, background, size: {width, padding}}) => {
-
+            console.log(this.props.state.container);
+            console.log(background);
             this.ContainerMain.current.style.borderWidth = rest.thickness ? `${rest.thickness}px` : false;
             this.ContainerMain.current.style.borderStyle = rest.type ? `${rest.type}` : false;
             this.ContainerMain.current.style.borderColor = color ? `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})` : false;
             this.ContainerMain.current.style.borderRadius = rest.radius ? `${rest.radius}px` : false;
-            this.ContainerMain.current.style.background = background.color ? `rgba(${background.color.r},${background.color.g},${background.color.b},${background.color.a})` : false;
+            this.ContainerMain.current.style.background = background.color ? `rgba(${background.color.rgba.r},${background.color.rgba.g},${background.color.rgba.b},${background.color.rgba.a})` : false;
             this.ContainerMain.current.style.opacity = background.opacity ? background.opacity / 100 : false;
             this.ContainerMain.current.style.maxWidth = `${width}px`;
             this.ContainerMain.current.style.padding = `${padding}px`;
         };
 
         container(this.props.state.container);
-        // if (this.props.footerTextData.text)
-        this.FooterText.current.innerHTML = this.props.footerTextData.text && this.props.footerTextData.text
 
-        console.log(window.getComputedStyle(ReactDOM.findDOMNode(this.PreviewMain.current)));
+        // this.FooterText.current.innerHTML = this.props.footerTextData.text && this.props.footerTextData.text
+
     }
 
     componentDidMount() {
-        let innerStyles = {
 
-        };
-        // console.log(style2.previewMain);
-        let links = document.querySelectorAll('link');
-        console.log(links[0].href);
-        axios({
-            method: "GET",
-            url: links[0].href
-        }).then(res => console.log(res.data))
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -109,6 +100,7 @@ class Preview extends Component {
         let topData = this.props.header.top;
         let descriptionData = this.props.header.description;
         let footerData = this.props.footerTextData;
+        console.log(footerData);
         let {methods} = this.props.state;
         return (
             <div className={style2.previewWrap}>
@@ -131,7 +123,7 @@ class Preview extends Component {
                                            color: `rgba(${topData && topData.styles.color.r}, ${topData && topData.styles.color.g}, ${topData && topData.styles.color.b}, ${topData && topData.styles.color.a})`,
                                            fontSize: topData && topData.styles.fontSize,
                                            fontWeight: topData && topData.styles.textActions.bold ? 'bold' : '100',
-                                           fontStyle: topData && topData.styles.textActions.italic === true ? 'italic' : 'none',
+                                           fontStyle: topData && topData.styles.textActions.italic === true ? 'italic' : 'normal',
                                            textDecoration: topData && topData.styles.textActions.underline ? 'underline' : 'none',
                                            textAlign: topData && topData.styles.alignment
                                        }}>
@@ -143,7 +135,7 @@ class Preview extends Component {
                                            color: `rgba(${descriptionData && descriptionData.styles.color.r}, ${descriptionData && descriptionData.styles.color.g}, ${descriptionData && descriptionData.styles.color.b}, ${descriptionData && descriptionData.styles.color.a})`,
                                            fontSize: descriptionData && descriptionData.styles.fontSize,
                                            fontWeight: descriptionData && descriptionData.styles.textActions.bold ? 'bold' : '100',
-                                           fontStyle: descriptionData && descriptionData.styles.textActions.italic ? 'italic' : 'none',
+                                           fontStyle: descriptionData && descriptionData.styles.textActions.italic ? 'italic' : 'normal',
                                            textDecoration: descriptionData && descriptionData.styles.textActions.underline ? 'underline' : 'none',
                                            textAlign: descriptionData && descriptionData.styles.alignment
                                        }}>
@@ -179,7 +171,7 @@ class Preview extends Component {
 
                         </div>
                     </div>
-                    {footerData ?
+                    {/*{footerData ?*/}
                         <div className={style.footer}>
                             <div className={style.contentPlace}>
                                 <p className={style.text} ref={this.FooterText}
@@ -187,14 +179,14 @@ class Preview extends Component {
                                        color: `rgba(${footerData.styles && footerData.styles.color.r}, ${footerData.styles && footerData.styles.color.g}, ${footerData.styles && footerData.styles.color.b}, ${footerData.styles && footerData.styles.color.a})`,
                                        fontSize: footerData.styles && footerData.styles.fontSize,
                                        fontWeight: footerData.styles && footerData.styles.textActions.bold ? 'bold' : '100',
-                                       fontStyle: footerData.styles && footerData.styles.textActions.italic ? 'italic' : 'none',
+                                       fontStyle: footerData.styles && footerData.styles.textActions.italic ? 'italic' : 'normal',
                                        textDecoration: footerData.styles && footerData.styles.textActions.underline ? 'underline' : 'none',
                                        textAlign: footerData.styles && footerData.styles.alignment
                                    }}>
-                                    {/*{footerData && footerData.text}*/}
+                                    {footerData && footerData.text}
                                 </p>
                             </div>
-                        </div> : ''}
+                        </div> {/*: ''}*/}
                 </div>
             </div>
         )

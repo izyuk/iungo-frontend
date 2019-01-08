@@ -24,7 +24,6 @@ class Options extends Component {
         };
 
         this.Style = React.createRef();
-        this.tabHandler = this.tabHandler.bind(this);
     }
 
     componentDidMount() {
@@ -37,7 +36,7 @@ class Options extends Component {
         this.state.event.closest(`.${style.buttonsWrap} li`).classList.add(style.active);
     }
 
-    tabHandler(e) {
+    tabHandler = (e) => {
         this.setState({
             event: e.currentTarget
         });
@@ -47,7 +46,7 @@ class Options extends Component {
         this.setState({
             tab: e.currentTarget.innerHTML
         });
-    }
+    };
 
     render() {
         return (

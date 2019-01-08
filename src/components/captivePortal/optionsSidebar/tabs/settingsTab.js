@@ -12,7 +12,6 @@ class SettingsTab extends Component {
             visible: 'CSS',
         };
         this.CSS = React.createRef();
-        this.dropDownHandler = this.dropDownHandler.bind(this);
     }
 
     componentDidMount() {
@@ -26,7 +25,7 @@ class SettingsTab extends Component {
         this.state.event.closest(`.${style.head}`).nextSibling.classList.add(style.active);
     }
 
-    dropDownHandler(e) {
+    dropDownHandler = (e) => {
         this.setState({
             event: e.currentTarget
         });
@@ -36,7 +35,7 @@ class SettingsTab extends Component {
         this.setState({
             visible: e.currentTarget.childNodes[0].innerHTML
         });
-    }
+    };
 
     render() {
         return (

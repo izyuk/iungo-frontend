@@ -10,14 +10,13 @@ class Tool extends Component {
         this.state = {
             sidebar: false
         };
-        this.sidebarStatus = this.sidebarStatus.bind(this);
     }
 
-    sidebarStatus(){
+    sidebarStatus = () => {
         this.setState({
             sidebar: !this.state.sidebar
         })
-    }
+    };
 
     render() {
         return (

@@ -155,7 +155,7 @@ class ContentBackground extends Component {
                                         onClick={this.handleClick}></button>
                                 {this.state.displayColorPicker ? <div style={popover}>
                                     <div style={cover} onClick={this.handleClose}/>
-                                    <SketchPicker color={this.state.color} onChange={this.handleChange}/>
+                                    <SketchPicker color={this.state.color.rgba} onChange={this.handleChange}/>
                                 </div> : null}
                             </div>
                         </div>

@@ -36,38 +36,29 @@ class FooterEditor extends Component {
         console.log(storage);
         this.state = {
             displayColorPicker: false,
-            colorHEX: storage ? storage.styles.colorHEX : '#000000',
-            color: storage ? storage.styles.color : {
+            colorHEX: storage ? storage.colorHEX : '#000000',
+            color: storage ? storage.color : {
                 r: '0',
                 g: '0',
                 b: '0',
                 a: '1',
             },
-            fontSize: storage ? storage.styles.fontSize : 18,
-            // dimension: this.props.footer_description.dimension || 'px',
-            textActions: storage ? storage.styles.textActions : {
+            fontSize: storage ? storage.fontSize : 18,
+            textActions: storage ? storage.textActions : {
                 bold: false,
                 italic: false,
                 underline: false,
             },
-            text: storage ? storage.styles.text : '<Footer content>',
-            alignment: storage ? storage.styles.alignment : 'center',
+            text: storage ? storage.text : '<Footer content>',
+            alignment: storage ? storage.alignment : 'center',
         };
-        this.handleClick = this.handleClick.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.onSliderChange = this.onSliderChange.bind(this);
-        this.textActionsHandler = this.textActionsHandler.bind(this);
-        this.textChanges = this.textChanges.bind(this);
-        this.alignment = this.alignment.bind(this);
-        this.gettext = this.gettext.bind(this);
     }
 
-    onSliderChange(value) {
+    onSliderChange = (value) => {
         this.setState({
             fontSize: value
         });
-    }
+    };
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.fontSize !== nextState.opacity) {
@@ -99,7 +90,6 @@ class FooterEditor extends Component {
         let {displayColorPicker, text, ...rest} = this.state;
         this.props.textData(text, rest);
         this.props.footerTextData(rest);
-        console.log('----footer text updated----')
     }
 
     handleClick = () => {
@@ -122,32 +112,32 @@ class FooterEditor extends Component {
         this.setState({colorHEX: color.hex});
     };
 
-    textActionsHandler(e) {
+    textActionsHandler = (e) => {
         let name = e.currentTarget.getAttribute('data-type');
         let currentState = this.state;
         currentState.textActions[name] = !this.state.textActions[name];
 
         this.setState(currentState);
-    }
+    };
 
-    textChanges(e) {
+    textChanges = (e) => {
         this.setState({
             text: e.currentTarget.value
         })
-    }
+    };
 
-    alignment(e) {
+    alignment = (e) => {
         this.setState({
             alignment: e.target.getAttribute('data-id')
         });
-    }
+    };
 
-    gettext(e) {
+    getText = (e) => {
         console.log(e.currentTarget.selectionStart);
         console.log(e.currentTarget.selectionEnd);
         console.log(e.currentTarget.setSelectionRange);
 
-    }
+    };
 
     render() {
         const popover = {
@@ -165,11 +155,6 @@ class FooterEditor extends Component {
         };
         return (
             <div className={this.props.style.container}>
-                {/*<div className={this.props.style.row}>*/}
-                {/*<div className={this.props.style.logoLeft}>*/}
-                {/*<span className={this.props.style.header}>Footer</span>*/}
-                {/*</div>*/}
-                {/*</div>*/}
                 <div className={this.props.style.row}>
                     <div className={this.props.style.right}>
                         <div className={this.props.style.innerRow}>
@@ -215,7 +200,7 @@ class FooterEditor extends Component {
                             </div>
                         </div>
                         <div className={this.props.style.innerRow}>
-                            <textarea onChange={this.textChanges} onMouseUp={this.gettext}
+                            <textarea onChange={this.textChanges} onMouseUp={this.getText}
                                       defaultValue={this.state.text}></textarea>
                         </div>
                     </div>

@@ -19,28 +19,25 @@ class Container extends Component {
 
             },
         };
-        this.border = this.border.bind(this);
-        this.background = this.background.bind(this);
-        this.size = this.size.bind(this);
     }
 
-    border(data){
+    border = (data) => {
         this.setState({
             border: data
         })
-    }
+    };
 
-    background(data){
+    background = (data) => {
         this.setState({
             background: data
         })
-    }
+    };
 
-    size(data){
+    size = (data) => {
         this.setState({
             size: data
         })
-    }
+    };
 
     shouldComponentUpdate(nextProps, nextState){
         if(this.state.border !== nextState.border){

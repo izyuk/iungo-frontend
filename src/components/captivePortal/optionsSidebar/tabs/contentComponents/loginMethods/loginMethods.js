@@ -9,7 +9,6 @@ class LoginMethods extends Component {
             google: true,
             twitter: true
         };
-        this.checkBoxHandler = this.checkBoxHandler.bind(this);
     }
 
     componentDidMount() {
@@ -27,12 +26,12 @@ class LoginMethods extends Component {
         }
     }
 
-    checkBoxHandler(e) {
+    checkBoxHandler = (e) => {
         let id = e.currentTarget.id;
         this.setState({
             [id]: !this.state[id]
         });
-    }
+    };
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.facebook !== nextState.facebook) {

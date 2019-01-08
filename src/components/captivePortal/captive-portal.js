@@ -36,18 +36,9 @@ class CaptivePortal extends Component {
             },
             footerContent: '' || this.props.background_and_logo.footer_description
         };
-        this.trigger = this.trigger.bind(this);
-        this.eventHandler = this.eventHandler.bind(this);
-        this.alignment = this.alignment.bind(this);
-        this.containerHandler = this.containerHandler.bind(this);
-        this.contentData = this.contentData.bind(this);
-        this.loginMethods = this.loginMethods.bind(this);
-        this.footerTextData = this.footerTextData.bind(this);
-        this.PreviewMain = React.createRef();
-        this.findAllPortals = this.findAllPortals.bind(this);
     }
 
-    eventHandler(name, type, backgroundType) {
+    eventHandler = (name, type, backgroundType) => {
         if (type === 'background') {
             this.setState({
                 backgrName: name
@@ -62,35 +53,34 @@ class CaptivePortal extends Component {
             type: type,
             backgroundType: backgroundType
         })
-    }
+    };
 
-    async findAllPortals(data){
-        let {token} = data;
-        console.log(token);
-        let query = getAllPortals(token);
-
+    findAllPortals = async (data) => {
+        // let {token} = data;
+        console.log(data);
+        let query = getAllPortals(data);
+console.log(query);
         await query.then(res => {
             console.log(res);
         });
 
-    }
+    };
 
 
-    containerHandler(data) {
-        // console.log('captive-portal\n', data);
+    containerHandler = (data) => {
         this.setState({
             container: data
         })
-    }
+    };
 
-    alignment(position) {
+    alignment = (position = 'center') => {
         this.setState({
             alignment: position
         })
-    }
+    };
 
 
-    trigger(data) {
+    trigger = (data) => {
         document.querySelectorAll('[data-id]')[0].classList.remove(`${style.active}`);
         document.querySelectorAll('[data-id]')[1].classList.remove(`${style.active}`);
 
@@ -110,25 +100,25 @@ class CaptivePortal extends Component {
                 mobile: false
             });
         }
-    }
+    };
 
-    contentData(data) {
+    contentData = (data) => {
         this.setState({
             headerText: data
         })
-    }
+    };
 
-    loginMethods(data) {
+    loginMethods = (data) =>{
         this.setState({
             methods: data
         })
-    }
+    };
 
-    footerTextData(data) {
+    footerTextData = (data) => {
         this.setState({
             footerContent: data
         })
-    }
+    };
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.backgrName !== nextState.backgrName) {
@@ -157,8 +147,9 @@ class CaptivePortal extends Component {
     }
 
     componentDidMount() {
-
-        this.props.token ? this.findAllPortals(this.props.token): this.findAllPortals(localStorage.getItem('value')) ;
+        console.log(this.props.token);
+        console.log(localStorage.getItem('token'));
+        this.props.token.token ? this.findAllPortals(this.props.token.token): this.findAllPortals(localStorage.getItem('token'));
 
         let currentDay = function(sp){
             let today = new Date();
@@ -177,6 +168,8 @@ class CaptivePortal extends Component {
     componentDidUpdate() {
         console.log(this.props.background_and_logo);
         console.log(this.state.backgrName);
+
+        console.log(this.state.alignment);
     }
 
     render() {

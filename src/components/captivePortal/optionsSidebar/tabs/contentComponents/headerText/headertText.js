@@ -11,23 +11,21 @@ class HeaderText extends Component {
             top: '',
             description: ''
         };
-        this.textTopData = this.textTopData.bind(this);
-        this.textDescriptionData = this.textDescriptionData.bind(this);
     }
 
-    textTopData(data) {
+    textTopData = (data) => {
         this.setState({
             top: data
         });
         this.props.textData(this.state);
-    }
+    };
 
-    textDescriptionData(data) {
+    textDescriptionData = (data) => {
         this.setState({
             description: data
         });
         this.props.textData(this.state);
-    }
+    };
 
     render() {
         return (
