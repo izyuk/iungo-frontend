@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import style from "../options.less";
 import HeaderText from './contentComponents/headerText/headertText';
 import LoginMethods from './contentComponents/loginMethods/loginMethods';
 import FooterEditor from './contentComponents/footerEditor/footerEditor'
@@ -21,16 +20,16 @@ class ContentTab extends Component {
     }
 
     componentDidUpdate() {
-        this.state.event.closest(`.${style.head}`).classList.add(style.active);
-        this.state.event.closest(`.${style.head}`).nextSibling.classList.add(style.active);
+        this.state.event.closest(".head").classList.add("active");
+        this.state.event.closest(".head").nextSibling.classList.add("active");
     }
 
     dropDownHandler = (e) => {
         this.setState({
             event: e.currentTarget
         });
-        for (let i = 0; i < document.querySelectorAll(`.${style.head}`).length; i++) {
-            document.querySelectorAll(`.${style.head}`)[i].classList.remove(style.active);
+        for (let i = 0; i < document.querySelectorAll(".head").length; i++) {
+            document.querySelectorAll(".head")[i].classList.remove("active");
         }
         this.setState({
             visible: e.currentTarget.childNodes[0].innerHTML
@@ -39,10 +38,10 @@ class ContentTab extends Component {
 
     render() {
         return (
-            <div className={style.dropdown}>
+            <div className="dropdown">
                 <div className="wrap">
                     <div
-                        className={style.head}
+                        className="head"
                         onClick={this.dropDownHandler}
                         ref={this.Header}>
                         <span>Header</span>
@@ -52,13 +51,12 @@ class ContentTab extends Component {
                         </svg>
                     </div>
                     {this.state.visible === 'Header' ?
-                        <HeaderText style={style}
-                                    handler={this.props.handler}
+                        <HeaderText handler={this.props.handler}
                                     textData={this.props.textData}/> :
                         false}
                 </div>
                 <div className="wrap">
-                    <div className={style.head}
+                    <div className="head"
                          onClick={this.dropDownHandler}>
                         <span>Login Methods</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -67,15 +65,14 @@ class ContentTab extends Component {
                         </svg>
                     </div>
                     {this.state.visible === 'Login Methods' ?
-                        <LoginMethods style={style}
-                                      handler={this.props.handler}
+                        <LoginMethods handler={this.props.handler}
                                       methods={this.props.methods}
                         /> :
                         false}
                 </div>
                 <div className="wrap">
                     <div
-                        className={style.head}
+                        className="head"
                         onClick={this.dropDownHandler}>
                         <span>Footer</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -84,8 +81,7 @@ class ContentTab extends Component {
                         </svg>
                     </div>
                     {this.state.visible === 'Footer' ?
-                        <FooterEditor style={style}
-                                      handler={this.props.handler}
+                        <FooterEditor handler={this.props.handler}
                                       footerTextData={this.props.footerTextData}
                         /> :
                         false}

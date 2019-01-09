@@ -29,7 +29,7 @@
   width: 90%;
   min-width: 320px;
   display: block;
-  margin: 0 auto;
+  margin: auto;
   transition: all 0.3s linear;
 }
 .logoPlace {
@@ -37,13 +37,22 @@
   display: flex;
   justify-content: center;
   transition: all 0.3s linear;
-  margin-bottom: 30px;
 }
 .logoPlace img {
   max-width: 350px;
   max-height: 200px;
   align-self: flex-start;
   object-fit: contain;
+}
+.footer {
+  display: block;
+}
+.footer .contentPlace .text {
+  line-height: 2;
+  color: #071031;
+}
+.footer .contentPlace .text a {
+  text-decoration: underline;
 }
 .contentPlace .textPlace {
   width: 100%;
@@ -181,6 +190,7 @@
   height: 0;
   overflow: hidden;
   border: 0;
+  display: none;
 }
 .socialsWrap div.fb {
   background-color: #4166b2;

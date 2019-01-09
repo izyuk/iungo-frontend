@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import style from './captive-portal.less';
-
 import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
 import {upload_file} from "../../reducers/background_and_logo";
@@ -174,15 +172,15 @@ console.log(query);
 
     render() {
         return (
-            <div className={[style.container].join(' ')}>
-                <div className={[style.wrap, style.wrapFix].join(' ')}>
-                    <div className={[style.container, style.containerFix].join(' ')}>
-                        <div className={[style.wrap, style.wrapFix2].join(' ')}>
-                            <div className={style.info}>
+            <div className="container">
+                <div className="wrap wrapFix">
+                    <div className="container containerFix">
+                        <div className="wrap wrapFix2">
+                            <div className="info">
                                 <h3>Captive Portal Builder</h3>
-                                <div className={style.toggles}>
+                                <div className="toggles">
                                     <a href="javascript:void(0)" data-id="desktop"
-                                       className={style.active} onClick={(data) => this.trigger(data)}>
+                                       className="active" onClick={(data) => this.trigger(data)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                              viewBox="0 0 24 24">
                                             <path fill="#BFC6D3" fillRule="nonzero"

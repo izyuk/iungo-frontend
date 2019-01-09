@@ -52,20 +52,20 @@ class LoginMethods extends Component {
 
     render() {
         return (
-            <div className={this.props.style.container}>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style}>Methods list</span>
+            <div className="container">
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="">Methods list</span>
                     </div>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.innerCol}>
-                            <div className={this.props.style.socialsWrap}>
+                    <div className="right">
+                        <div className="innerCol">
+                            <div className="socialsWrap">
                                 <label htmlFor="facebook">
-                                    <span className={this.props.style.checkBoxPlace}>
+                                    <span className="checkBoxPlace">
                                         <input type="checkbox" id="facebook" onChange={this.checkBoxHandler}/>
                                         <span></span>
                                     </span>
-                                    <div className={this.props.style.fb}>
+                                    <div className="fb">
                                         <span>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                  viewBox="0 0 16 16">
@@ -76,11 +76,11 @@ class LoginMethods extends Component {
                                     </div>
                                 </label>
                                 <label htmlFor="google">
-                                    <span className={this.props.style.checkBoxPlace}>
+                                    <span className="checkBoxPlace">
                                         <input type="checkbox" id="google" onChange={this.checkBoxHandler}/>
                                         <span></span>
                                     </span>
-                                    <div className={this.props.style.google}>
+                                    <div className="google">
                                         <span>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
                                                  viewBox="0 0 14 14">
@@ -91,11 +91,11 @@ class LoginMethods extends Component {
                                     </div>
                                 </label>
                                 <label htmlFor="twitter">
-                                    <span className={this.props.style.checkBoxPlace}>
+                                    <span className="checkBoxPlace">
                                         <input type="checkbox" id="twitter" onChange={this.checkBoxHandler}/>
                                         <span></span>
                                     </span>
-                                    <div className={this.props.style.tw}>
+                                    <div className="tw">
                                         <span>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14"
                                                  viewBox="0 0 16 14">

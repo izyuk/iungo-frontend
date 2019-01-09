@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
 import {connect} from 'react-redux';
+import "../../../options.less";
 
 class ContentBorder extends Component {
     constructor(props) {
@@ -119,17 +120,17 @@ class ContentBorder extends Component {
         };
         return (
             <div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style.header}>Border</span>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="header">Border</span>
                     </div>
                 </div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style}>Type</span>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="">Type</span>
                     </div>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.innerRow}>
+                    <div className="right">
+                        <div className="innerRow">
                             <select data-component="ContentBorder"
                                     data-select="type"
                                     onChange={this.select}>
@@ -138,7 +139,7 @@ class ContentBorder extends Component {
                                 <option value="dotted">Dotted</option>
                                 <option value="dashed">Dashed</option>
                             </select>
-                            <p className={this.props.style.select}>
+                            <p className="select">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                     <path fill="#BFC5D2" fillRule="nonzero"
                                           d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
@@ -147,13 +148,13 @@ class ContentBorder extends Component {
                         </div>
                     </div>
                 </div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style}>Color</span>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="">Color</span>
                     </div>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.innerRow}>
-                            <div className={this.props.style.colorWrap}>
+                    <div className="right">
+                        <div className="innerRow">
+                            <div className="colorWrap">
                                 <input type="text" value={this.state.color.hex} disabled/>
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${ this.state.color.rgba.r }, ${ this.state.color.rgba.g }, ${ this.state.color.rgba.b }, ${ this.state.color.rgba.a })`}}
@@ -166,13 +167,13 @@ class ContentBorder extends Component {
                         </div>
                     </div>
                 </div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style}>Thickness</span>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="">Thickness</span>
                     </div>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.innerRow}>
-                            <select className={this.props.style.tin}
+                    <div className="right">
+                        <div className="innerRow">
+                            <select className="tin"
                                     data-component="ContentBorder"
                                     data-select="thickness"
                                     onChange={this.select}>
@@ -182,7 +183,7 @@ class ContentBorder extends Component {
                                 <option value="4">4</option>
                                 <option value="5">5</option>
                             </select>
-                            <p className={[this.props.style.select, this.props.style.tin].join(' ')}>
+                            <p className="select tin">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                     <path fill="#BFC5D2" fillRule="nonzero"
                                           d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
@@ -191,13 +192,13 @@ class ContentBorder extends Component {
                         </div>
                     </div>
                 </div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style}>Border Radius</span>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="">Border Radius</span>
                     </div>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.innerRow}>
-                            <select className={this.props.style.tin}
+                    <div className="right">
+                        <div className="innerRow">
+                            <select className="tin"
                                     data-component="ContentBorder"
                                     data-select="radius"
                                     onChange={this.select}>
@@ -208,7 +209,7 @@ class ContentBorder extends Component {
                                 <option value="4">4</option>
                                 <option value="5">5</option>
                             </select>
-                            <p className={[this.props.style.select, this.props.style.tin].join(' ')}>
+                            <p className="select tin">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                     <path fill="#BFC5D2" fillRule="nonzero"
                                           d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>

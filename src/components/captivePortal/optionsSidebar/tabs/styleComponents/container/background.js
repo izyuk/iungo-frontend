@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Tooltip from 'rc-tooltip';
 import Slider from 'rc-slider';
 import backgroundColor from "../../../../../../reducers/backgroundColor";
+import "../../../options.less";
 
 const style = {
     marginRight: 16,
@@ -135,20 +136,20 @@ class ContentBackground extends Component {
         };
         return (
             <div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style.header}>Background</span>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="header">Background</span>
                     </div>
                 </div>
 
 
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
+                <div className="row">
+                    <div className="logoLeft">
                         <span className={this.props.style}>Color</span>
                     </div>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.innerRow}>
-                            <div className={this.props.style.colorWrap}>
+                    <div className="right">
+                        <div className="innerRow">
+                            <div className="colorWrap">
                                 <input type="text" value={this.state.color.hex} disabled/>
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${ this.state.color.rgba.r }, ${ this.state.color.rgba.g }, ${ this.state.color.rgba.b }, ${ this.state.color.rgba.a })`}}
@@ -162,15 +163,12 @@ class ContentBackground extends Component {
                     </div>
                 </div>
 
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
+                <div className="row">
+                    <div className="logoLeft">
                         <span className={this.props.style}>Opacity</span>
                     </div>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.innerRow}>
-                            {/*<div className={this.props.style.slider}>*/}
-                            {/*<span className={this.props.style.dot} onMouseDown={this.slider}></span>*/}
-                            {/*</div>*/}
+                    <div className="right">
+                        <div className="innerRow">
                             <div style={style}>
                                 <Slider min={0}
                                         max={100}
@@ -203,7 +201,7 @@ class ContentBackground extends Component {
                                 />
                             </div>
                             <div>
-                                <select className={this.props.style.medium} disabled
+                                <select className="medium" disabled
                                         onChange={this.select}>
                                     <option value="10%">10%</option>
                                     <option value="20%">20%</option>
@@ -216,11 +214,7 @@ class ContentBackground extends Component {
                                     <option value="90%">90%</option>
                                     <option value="100%">100%</option>
                                 </select>
-                                <p className={[this.props.style.select, this.props.style.medium].join(' ')}>
-                                    {/*<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">*/}
-                                    {/*<path fill="#BFC5D2" fillRule="nonzero"*/}
-                                    {/*d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>*/}
-                                    {/*</svg>*/}
+                                <p className="select medium">
                                     {`${this.state.opacity}%`}
                                 </p>
                             </div>

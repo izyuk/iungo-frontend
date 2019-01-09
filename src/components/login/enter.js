@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import style from './login.less';
-
-import {Link, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 import { userLogin, userRegister } from '../../api/API';
 
@@ -83,21 +81,21 @@ class Enter extends Component {
 
     render() {
         return (
-            <div className={style.formWrap}>
+            <div className="formWrap">
                 <p>Welcome to IUNGO Network </p>
                 {this.state.login ? <Login getLoginData={this.setLoginData}/> : <Register getLoginData={this.setLoginData}/>}
 
                     <span disabled={!this.state.isValid}
-                            className={!this.state.isValid ? [style.login, style.disabled].join(' ') : style.login}
+                            className={!this.state.isValid ? "login disabled" : "login"}
                             onClick={this.sendData}>{this.state.login ? 'Login' : 'Register'}</span>
                 {
                     this.state.login ?
-                        <p className={style.question}>Not a member?&nbsp;
+                        <p className="question">Not a member?&nbsp;
                             <button
                             onClick={this.changeOption}
                             type="button">Sign up now</button>
                         </p> :
-                        <p className={style.question}> Have account?&nbsp;
+                        <p className="question"> Have account?&nbsp;
                             <button
                             onClick={this.changeOption}
                             type="button">Log in</button>

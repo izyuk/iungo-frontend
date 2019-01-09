@@ -1,9 +1,4 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
-
-import style from './preview.less';
-import style2 from '../captive-portal.less';
 
 import Methods from './methods';
 
@@ -103,22 +98,22 @@ class Preview extends Component {
         console.log(footerData);
         let {methods} = this.props.state;
         return (
-            <div className={style2.previewWrap}>
-                <div className={[style2.previewMain, this.props.state.mobile ? style2.mobile : ''].join(' ')}
+            <div className="previewWrap">
+                <div className={this.props.state.mobile ? "previewMain mobile" : "previewMain"}
                      ref={this.PreviewMain}>
-                    <div className={style.previewContainer}>
-                        <div className={style.header}>
-                            <div className={style.logoPlace} style={{justifyContent: this.props.state.alignment}}>
+                    <div className="previewContainer">
+                        <div className="header">
+                            <div className="logoPlace" style={{justifyContent: this.props.state.alignment}}>
                                 {this.props.state.logoName === '' ?
                                     <img src={require('../../../static/images/logo.png')} alt=""/> :
                                     <img src={`${this.props.state.logoName}`} alt=""/>}
                             </div>
                         </div>
-                        <div className={style.section}
+                        <div className="section"
                              ref={this.ContainerMain}>
-                            <div className={style.contentPlace}>
-                                <div className={style.textPlace}>
-                                    <p className={style.head}
+                            <div className="contentPlace">
+                                <div className="textPlace">
+                                    <p className="head"
                                        style={{
                                            color: `rgba(${topData && topData.styles.color.r}, ${topData && topData.styles.color.g}, ${topData && topData.styles.color.b}, ${topData && topData.styles.color.a})`,
                                            fontSize: topData && topData.styles.fontSize,
@@ -130,7 +125,7 @@ class Preview extends Component {
                                         {topData && topData.text}
                                     </p>
 
-                                    <p className={style.description}
+                                    <p className="description"
                                        style={{
                                            color: `rgba(${descriptionData && descriptionData.styles.color.r}, ${descriptionData && descriptionData.styles.color.g}, ${descriptionData && descriptionData.styles.color.b}, ${descriptionData && descriptionData.styles.color.a})`,
                                            fontSize: descriptionData && descriptionData.styles.fontSize,
@@ -143,8 +138,8 @@ class Preview extends Component {
                                     </p>
                                 </div>
                                 <Methods methods={methods}/>
-                                <div className={style.inputsWrap}>
-                                    <div className={style.email}>
+                                <div className="inputsWrap">
+                                    <div className="email">
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14">
                                         <g fill="#8D98B0" fillRule="nonzero">
@@ -156,7 +151,7 @@ class Preview extends Component {
                                 </span>
                                         <input type="email" placeholder="Continue with Email"/>
                                     </div>
-                                    <div className={style.password}>
+                                    <div className="password">
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                                         <path fill="#8D98B0" fillRule="nonzero"
@@ -171,10 +166,9 @@ class Preview extends Component {
 
                         </div>
                     </div>
-                    {/*{footerData ?*/}
-                        <div className={style.footer}>
-                            <div className={style.contentPlace}>
-                                <p className={style.text} ref={this.FooterText}
+                        <div className="footer">
+                            <div className="contentPlace">
+                                <p className="text" ref={this.FooterText}
                                    style={{
                                        color: `rgba(${footerData.styles && footerData.styles.color.r}, ${footerData.styles && footerData.styles.color.g}, ${footerData.styles && footerData.styles.color.b}, ${footerData.styles && footerData.styles.color.a})`,
                                        fontSize: footerData.styles && footerData.styles.fontSize,
@@ -186,7 +180,7 @@ class Preview extends Component {
                                     {footerData && footerData.text}
                                 </p>
                             </div>
-                        </div> {/*: ''}*/}
+                        </div>
                 </div>
             </div>
         )

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import "../../../options.less";
 
 class ContainerSize extends Component {
     constructor(props) {
@@ -70,17 +71,17 @@ class ContainerSize extends Component {
     render() {
         return (
             <div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style.header}>Size</span>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="header">Size</span>
                     </div>
                 </div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style}>Width</span>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="">width</span>
                     </div>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.inputSelect}>
+                    <div className="right">
+                        <div className="inputSelect">
                             <input type="number" onChange={this.valueWidth} defaultValue={this.state.width}/>
                             <select name="" id="">
                                 <option value="px">px</option>
@@ -94,13 +95,13 @@ class ContainerSize extends Component {
                         </div>
                     </div>
                 </div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style}>Padding</span>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="">Padding</span>
                     </div>
-                    <div className={this.props.style.right}>
+                    <div className="right">
 
-                        <div className={this.props.style.inputSelect}>
+                        <div className="inputSelect">
                             <input type="number" onChange={this.valuePadding} defaultValue={this.state.padding}/>
                             <select name="" id="">
                                 <option value="px">px</option>

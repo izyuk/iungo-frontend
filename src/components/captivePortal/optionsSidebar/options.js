@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import style from './options.less';
 
 import StyleTab from './tabs/styleTab';
 import ContentTab from './tabs/contentTab';
@@ -33,15 +32,15 @@ class Options extends Component {
     }
 
     componentDidUpdate() {
-        this.state.event.closest(`.${style.buttonsWrap} li`).classList.add(style.active);
+        this.state.event.closest(".buttonsWrap li").classList.add("active");
     }
 
     tabHandler = (e) => {
         this.setState({
             event: e.currentTarget
         });
-        for (let i = 0; i < document.querySelectorAll(`.${style.buttonsWrap} li`).length; i++) {
-            document.querySelectorAll(`.${style.buttonsWrap} li`)[i].classList.remove(style.active);
+        for (let i = 0; i < document.querySelectorAll(".buttonsWrap li").length; i++) {
+            document.querySelectorAll(".buttonsWrap li")[i].classList.remove("active");
         }
         this.setState({
             tab: e.currentTarget.innerHTML
@@ -50,10 +49,10 @@ class Options extends Component {
 
     render() {
         return (
-            <div className={style.options}>
-                <div className={style.wrap}>
-                    <ul className={style.buttonsWrap}>
-                        <li className={style.active}
+            <div className="options">
+                <div className="wrap">
+                    <ul className="buttonsWrap">
+                        <li className="active"
                             onClick={this.tabHandler}
                             ref={this.Style}>Style
                         </li>

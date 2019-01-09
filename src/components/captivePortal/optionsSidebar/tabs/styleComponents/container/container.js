@@ -59,10 +59,10 @@ class Container extends Component {
 
     render() {
         return (
-            <div className={this.props.style.container}>
-                <Border style={this.props.style} handler={this.border}/>
-                <Background style={this.props.style} handler={this.background}/>
-                <Size style={this.props.style} handler={this.size}/>
+            <div className="container">
+                <Border handler={this.border}/>
+                <Background handler={this.background}/>
+                <Size handler={this.size}/>
             </div>
         )
     }

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import style from './login.less';
 
 class Login extends Component {
     constructor(props) {
@@ -14,13 +13,13 @@ class Login extends Component {
     fieldsHandler(e) {
         let type = e.target.getAttribute('datatype');
         if ((type === 'login' && /[\w_.-]+@[0-9a-z_-]+\.[a-z]{2,5}/i.test(e.target.value)) || (type === 'password' && (e.target.value.length >= 8 && e.target.value.length <= 32))) {
-            e.target.parentNode.classList.remove(style.validationFalse);
+            e.target.parentNode.classList.remove("validationFalse");
             this.setState({
                 [type]: e.target.value
             })
         }
         else {
-            e.target.parentNode.classList.add(style.validationFalse);
+            e.target.parentNode.classList.add("validationFalse");
             this.setState({
                 [type]: ''
             })
@@ -49,8 +48,8 @@ class Login extends Component {
 
     render() {
         return (
-            <div className={style.inputsWrap}>
-                <div className={style.email}>
+            <div className="inputsWrap">
+                <div className="email">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14">
                                 <g fill="#8D98B0" fillRule="nonzero">
@@ -62,7 +61,7 @@ class Login extends Component {
                         </span>
                     <input type="email" onBlur={this.fieldsHandler} datatype="login" defaultValue="dmitriy.izyuk@gmail.com" placeholder="Your Email"/>
                 </div>
-                <div className={style.password}>
+                <div className="password">
                     <span></span>
                     <input type="password" onBlur={this.fieldsHandler} datatype="password" defaultValue="Izyuk8968" placeholder="Your Password"/>
                 </div>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import style from "./preview.less";
+
 import { connect } from 'react-redux';
 
 class Methods extends Component {
@@ -15,7 +15,7 @@ class Methods extends Component {
         let obj = this.state,
             key;
         for (key in obj) {
-            obj[key] ? document.querySelector(`[data-id=${key}]`).classList.remove(style.hidden) : document.querySelector(`[data-id=${key}]`).classList.add(style.hidden)
+            obj[key] ? document.querySelector(`[data-id=${key}]`).classList.remove("hidden") : document.querySelector(`[data-id=${key}]`).classList.add("hidden")
         }
     }
 
@@ -24,9 +24,9 @@ class Methods extends Component {
         let obj = this.state,
             key;
         for (key in obj) {
-            obj[key] ? document.querySelector(`[data-id=${key}]`).classList.remove(style.hidden) : document.querySelector(`[data-id=${key}]`).classList.add(style.hidden)
+            obj[key] ? document.querySelector(`[data-id=${key}]`).classList.remove("hidden") : document.querySelector(`[data-id=${key}]`).classList.add("hidden")
         }
-        if(document.getElementsByClassName(style.hidden).length >= this.socials.current.children.length){
+        if(document.getElementsByClassName("hidden").length >= this.socials.current.children.length){
             this.socials.current.style.display = 'none'
         } else {
             this.socials.current.style.display = 'block'
@@ -43,8 +43,8 @@ class Methods extends Component {
 
     render(){
         return(
-            <div className={style.socialsWrap} ref={this.socials}>
-                <div className={style.fb} data-id="facebook">
+            <div className="socialsWrap" ref={this.socials}>
+                <div className="fb" data-id="facebook">
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                                         <path fill="#FFF" fillRule="nonzero"
@@ -52,7 +52,7 @@ class Methods extends Component {
                                     </svg>
                                 </span>
                     <input type="button" value="Continue with Facebook"/></div>
-                <div className={style.google} data-id="google">
+                <div className="google" data-id="google">
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
                                         <path fill="#FFF" fillRule="nonzero"
@@ -60,7 +60,7 @@ class Methods extends Component {
                                     </svg>
                                 </span>
                     <input type="button" value="Continue with Google"/></div>
-                <div className={style.tw} data-id="twitter">
+                <div className="tw" data-id="twitter">
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14">
                                         <path fill="#FFF" fillRule="nonzero"

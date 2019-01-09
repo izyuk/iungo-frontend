@@ -44,7 +44,6 @@ class HeaderDescription extends Component {
                 a: '1',
             },
             fontSize: storage ? storage.styles.fontSize : 18,
-            // dimension: this.props.header_description_text_data.dimension || 'px',
             textActions: storage ? storage.styles.textActions : {
                 bold: false,
                 italic: false,
@@ -83,7 +82,6 @@ class HeaderDescription extends Component {
         this.props.textData(text, rest);
         this.props.handler(rest);
         let storage = this.props.header.description;
-        // document.querySelectorAll(`[data-id=${storage ? storage.alignment : 'center'}]`).setAttribute('checked')
         document.getElementById(`${storage ? storage.styles.alignment : 'center'}`).checked = true;
     }
 
@@ -149,63 +147,63 @@ class HeaderDescription extends Component {
         };
         return (
             <div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style.header}>Description</span>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="header">Description</span>
                     </div>
                 </div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.innerRow}>
-                            <div className={this.props.style.textActions}>
+                <div className="row">
+                    <div className="right">
+                        <div className="innerRow">
+                            <div className="textActions">
                                 <button onClick={this.textActionsHandler}
-                                        className={this.state.textActions.bold ? this.props.style.active : ''}
+                                        className={this.state.textActions.bold ? "active": ''}
                                         type="button"
                                         data-type="bold">B
                                 </button>
                                 <button onClick={this.textActionsHandler}
-                                        className={this.state.textActions.italic ? this.props.style.active : ''}
+                                        className={this.state.textActions.italic ? "active" : ''}
                                         type="button"
                                         data-type="italic">i
                                 </button>
                                 <button onClick={this.textActionsHandler}
-                                        className={this.state.textActions.underline ? this.props.style.active : ''}
+                                        className={this.state.textActions.underline ? "active" : ''}
                                         type="button"
                                         data-type="underline">U
                                 </button>
                             </div>
-                            <div className={[this.props.style.innerCol, this.props.style.toRow].join(' ')}>
+                            <div className="innerCol toRow">
                                 <label htmlFor="left">Left
-                                    <div className={this.props.style.inputRadioWrap}>
+                                    <div className="inputRadioWrap">
                                         <input onChange={this.alignment} id='left' data-id='left' type="radio" name='alignment'/>
-                                        <span className={this.props.style.radio}></span>
+                                        <span className="radio"></span>
                                     </div>
                                 </label>
                                 <label htmlFor="center">Center
-                                    <div className={this.props.style.inputRadioWrap}>
+                                    <div className="inputRadioWrap">
                                         <input onChange={this.alignment} id='center' data-id='center' type="radio" name='alignment'/>
-                                        <span className={this.props.style.radio}></span>
+                                        <span className="radio"></span>
                                     </div>
                                 </label>
                                 <label htmlFor="right">Right
-                                    <div className={this.props.style.inputRadioWrap}>
+                                    <div className="inputRadioWrap">
                                         <input onChange={this.alignment} id='right' data-id='right' type="radio" name='alignment'/>
-                                        <span className={this.props.style.radio}></span>
+                                        <span className="radio"></span>
                                     </div>
                                 </label>
                             </div>
                         </div>
-                        <div className={this.props.style.innerRow}>
+                        <div className="innerRow">
                             <textarea onChange={this.textChanges} defaultValue={this.state.text}></textarea>
                         </div>
                     </div>
                 </div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style}>Font size</span>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="">Font size</span>
                     </div>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.innerRow}>
+                    <div className="right">
+                        <div className="innerRow">
                             <div style={style}>
                                 <Slider min={8}
                                         max={52}
@@ -238,7 +236,7 @@ class HeaderDescription extends Component {
                                 />
                             </div>
                             <div>
-                                <select className={this.props.style.medium} disabled
+                                <select className="medium" disabled
                                         onChange={this.select}>
                                     <option value="10%">10%</option>
                                     <option value="20%">20%</option>
@@ -251,24 +249,20 @@ class HeaderDescription extends Component {
                                     <option value="90%">90%</option>
                                     <option value="100%">100%</option>
                                 </select>
-                                <p className={[this.props.style.select, this.props.style.medium].join(' ')}>
-                                    {/*<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">*/}
-                                    {/*<path fill="#BFC5D2" fillRule="nonzero"*/}
-                                    {/*d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>*/}
-                                    {/*</svg>*/}
+                                <p className="select medium">
                                     {`${this.state.fontSize}px`}
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style}>Color</span>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="">Color</span>
                     </div>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.innerRow}>
-                            <div className={this.props.style.colorWrap}>
+                    <div className="right">
+                        <div className="innerRow">
+                            <div className="colorWrap">
                                 <input type="text" value={this.state.colorHEX} disabled/>
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
@@ -281,9 +275,9 @@ class HeaderDescription extends Component {
                         </div>
                     </div>
                 </div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={[this.props.style.descr, this.props.style.position].join(' ')}>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="descr position">
                             Alignment
                         </span>
                     </div>

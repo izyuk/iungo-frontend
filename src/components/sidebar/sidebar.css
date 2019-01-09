@@ -63,6 +63,10 @@
 .sidebar a.active g {
   fill: #5585ed;
 }
+.sidebar a:hover circle,
+.sidebar a.active circle {
+  fill: #5585ed;
+}
 .sidebar.opened {
   transition: all 0.3s linear;
   width: 200px;

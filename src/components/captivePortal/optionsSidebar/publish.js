@@ -80,8 +80,8 @@ class Publish extends Component {
 
     render(){
         return(
-            <div className={style.buttonsRow}>
-                <button type="button" onClick={this.getBuilderParams} className={style.publish}>Publish</button>
+            <div className="buttonsRow">
+                <button type="button" onClick={this.getBuilderParams} className="publish">Publish</button>
             </div>
         )
     }

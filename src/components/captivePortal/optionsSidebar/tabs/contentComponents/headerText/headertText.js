@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import HeaderTop from './headerTop'
 import HeaderDescription from './headerDescription'
 
-// import style from "../../../options.less";
-
 class HeaderText extends Component {
     constructor(props) {
         super(props);
@@ -29,9 +27,9 @@ class HeaderText extends Component {
 
     render() {
         return (
-            <div className={this.props.style.container}>
-                <HeaderTop handler={this.textTopData} style={this.props.style}/>
-                <HeaderDescription handler={this.textDescriptionData} style={this.props.style}/>
+            <div className="container">
+                <HeaderTop handler={this.textTopData}/>
+                <HeaderDescription handler={this.textDescriptionData}/>
             </div>
         )
     }

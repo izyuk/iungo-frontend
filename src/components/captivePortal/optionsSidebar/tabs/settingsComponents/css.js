@@ -23,16 +23,16 @@ class CSS extends Component {
 
     render() {
         return (
-            <div className={this.props.style.container}>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.right}>
-                        <span className={this.props.style.innerRow}>Use your external CSS code</span>
+            <div className="container">
+                <div className="row">
+                    <div className="right">
+                        <span className="innerRow">Use your external CSS code</span>
                     </div>
                 </div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.right}>
-                        <span className={this.props.style.innerRow}>
-                            <span className={this.props.style.urlForm}>
+                <div className="row">
+                    <div className="right">
+                        <span className="innerRow">
+                            <span className="urlForm">
                                 <input type="text" placeholder="Paste URL" ref={this.link}/>
                                 <button type="button" onClick={this.addStyles}>Set</button>
                             </span>

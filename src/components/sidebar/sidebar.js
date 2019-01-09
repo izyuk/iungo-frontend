@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {NavLink} from 'react-router-dom';
 
-import style from './sidebar.less';
-
 class Sidebar extends Component {
     constructor(props) {
         super(props);
@@ -12,8 +10,8 @@ class Sidebar extends Component {
 
     render() {
         return (
-            <nav className={[style.sidebar, this.props.status ? style.opened : '' ].join(' ')}>
-                <NavLink to="/dashboard" activeClassName={style.active}>
+            <nav className={this.props.status ? 'sidebar opened' : 'sidebar'}>
+                <NavLink to="/dashboard" activeClassName='active'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <g fill="#BFC5D2" fillRule="nonzero">
                             <path d="M11 6c-3.9 0-7 3.1-7 7s3.1 7 7 7 7-3.1 7-7h-7V6z"/>
@@ -24,7 +22,7 @@ class Sidebar extends Component {
                         Dashboard
                     </span>
                 </NavLink>
-                <NavLink to="/captive-portals" activeClassName={style.active}>
+                <NavLink to="/captive-portals" activeClassName='active'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="#BFC5D2" fillRule="nonzero"
                               d="M16 4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-1 11H9v-2h6v2zm0-4H9V9h6v2z"/>
@@ -33,7 +31,7 @@ class Sidebar extends Component {
                         Captive Portals
                     </span>
                 </NavLink>
-                <NavLink to="/campaigns" activeClassName={style.active}>
+                <NavLink to="/campaigns" activeClassName='active'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="#BFC5D2" fillRule="nonzero"
                               d="M7.5 8C5.6 8 4 9.6 4 11.5S5.6 15 7.5 15h.1l2.6 4.3c.4.7 1.3.9 2.1.5.7-.4.9-1.3.5-2.1L11.1 15H13l7 4V4l-7 4H7.5z"/>
@@ -42,7 +40,7 @@ class Sidebar extends Component {
                         Campaigns
                     </span>
                 </NavLink>
-                <NavLink to="/reports" activeClassName={style.active}>
+                <NavLink to="/reports" activeClassName='active'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <g fill="#BFC5D2" fillRule="nonzero">
                             <path
@@ -52,6 +50,23 @@ class Sidebar extends Component {
                     </svg>
                     <span>
                         Reports
+                    </span>
+                </NavLink>
+                <NavLink to="/hotspot" activeClassName='active'>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" enableBackground="new 0 0 26 26" width="512px" height="512px">
+                            <g fill="#BFC5D2" fillRule="nonzero">
+                                <path
+                                    d="M25.7,8.3C22.4,5,18,3,13,3S3.5,5,0.3,8.3C0.1,8.5,0,8.7,0,9c0,0.3,0.1,0.5,0.3,0.7l1.4,1.4c0.4,0.4,1,0.4,1.4,0   C5.6,8.6,9.1,7,13,7s7.4,1.6,9.9,4.1c0.4,0.4,1,0.4,1.4,0l1.4-1.4C25.9,9.5,26,9.3,26,9S25.9,8.4,25.7,8.3z"
+                                    fill="#BFC5D2"/>
+                                <path
+                                    d="m13,11c-2.8,0-5.2,1.1-7,2.9-0.4,0.4-0.4,1 0,1.4l1.4,1.4c0.4,0.4 1,0.4 1.4,0 1.1-1.1 2.6-1.7 4.2-1.7 1.6,0 3.1,0.7 4.2,1.7 0.4,0.4 1,0.4 1.4,0l1.4-1.4c0.4-0.4 0.4-1 0-1.4-1.8-1.8-4.2-2.9-7-2.9z"
+                                    fill="#BFC5D2"/>
+                                <circle cx="13" cy="21" r="2" fill="#BFC5D2"/>
+                            </g>
+                    </svg>
+
+                    <span>
+                        Hotspot
                     </span>
                 </NavLink>
             </nav>

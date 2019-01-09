@@ -154,63 +154,63 @@ class FooterEditor extends Component {
             left: '0px',
         };
         return (
-            <div className={this.props.style.container}>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.innerRow}>
-                            <div className={this.props.style.textActions}>
+            <div className="container">
+                <div className="row">
+                    <div className="right">
+                        <div className="innerRow">
+                            <div className="textActions">
                                 <button onClick={this.textActionsHandler}
-                                        className={this.state.textActions.bold ? this.props.style.active : ''}
+                                        className={this.state.textActions.bold ? "active" : ''}
                                         type="button"
                                         data-type="bold">B
                                 </button>
                                 <button onClick={this.textActionsHandler}
-                                        className={this.state.textActions.italic ? this.props.style.active : ''}
+                                        className={this.state.textActions.italic ? "active" : ''}
                                         type="button"
                                         data-type="italic">i
                                 </button>
                                 <button onClick={this.textActionsHandler}
-                                        className={this.state.textActions.underline ? this.props.style.active : ''}
+                                        className={this.state.textActions.underline ? "active" : ''}
                                         type="button"
                                         data-type="underline">U
                                 </button>
                             </div>
-                            <div className={[this.props.style.innerCol, this.props.style.toRow].join(' ')}>
+                            <div className="innerCol toRow">
                                 <label htmlFor="left">Left
-                                    <div className={this.props.style.inputRadioWrap}>
+                                    <div className="inputRadioWrap">
                                         <input onChange={this.alignment} id='left' data-id='left' type="radio"
                                                name='alignment'/>
-                                        <span className={this.props.style.radio}></span>
+                                        <span className="radio"></span>
                                     </div>
                                 </label>
                                 <label htmlFor="center">Center
-                                    <div className={this.props.style.inputRadioWrap}>
+                                    <div className="inputRadioWrap">
                                         <input onChange={this.alignment} id='center' data-id='center' type="radio"
                                                name='alignment'/>
-                                        <span className={this.props.style.radio}></span>
+                                        <span className="radio"></span>
                                     </div>
                                 </label>
                                 <label htmlFor="right">Right
-                                    <div className={this.props.style.inputRadioWrap}>
+                                    <div className="inputRadioWrap">
                                         <input onChange={this.alignment} id='right' data-id='right' type="radio"
                                                name='alignment'/>
-                                        <span className={this.props.style.radio}></span>
+                                        <span className="radio"></span>
                                     </div>
                                 </label>
                             </div>
                         </div>
-                        <div className={this.props.style.innerRow}>
+                        <div className="innerRow">
                             <textarea onChange={this.textChanges} onMouseUp={this.getText}
                                       defaultValue={this.state.text}></textarea>
                         </div>
                     </div>
                 </div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style}>Font size</span>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="">Font size</span>
                     </div>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.innerRow}>
+                    <div className="right">
+                        <div className="innerRow">
                             <div style={style}>
                                 <Slider min={8}
                                         max={52}
@@ -243,7 +243,7 @@ class FooterEditor extends Component {
                                 />
                             </div>
                             <div>
-                                <select className={this.props.style.medium} disabled
+                                <select className="medium" disabled
                                         onChange={this.select}>
                                     <option value="10%">10%</option>
                                     <option value="20%">20%</option>
@@ -256,20 +256,20 @@ class FooterEditor extends Component {
                                     <option value="90%">90%</option>
                                     <option value="100%">100%</option>
                                 </select>
-                                <p className={[this.props.style.select, this.props.style.medium].join(' ')}>
+                                <p className="select medium">
                                     {`${this.state.fontSize}px`}
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className={this.props.style.row}>
-                    <div className={this.props.style.logoLeft}>
-                        <span className={this.props.style}>Color</span>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="">Color</span>
                     </div>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.innerRow}>
-                            <div className={this.props.style.colorWrap}>
+                    <div className="right">
+                        <div className="innerRow">
+                            <div className="colorWrap">
                                 <input type="text" value={this.state.colorHEX} disabled/>
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}

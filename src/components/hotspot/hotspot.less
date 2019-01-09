@@ -1,0 +1,49 @@
+@import "../../static/exp";
+
+.info{
+  width: 100%;
+  display: flex;
+  align-self: flex-start;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  h3{
+    .font(@avenir-medium, 24);
+    line-height: 1.67;
+    color: @dark-indigo;
+  }
+
+}
+
+.hotspotDetailsWrap{
+  width: 100%;
+  height: 100%;
+  border-top: 1px solid @pale-grey-three;
+  box-shadow: 0 1px 2px 0 rgba(191, 197, 210, 0.15);
+  padding-top: 32px;
+  display: flex;
+  .hotspotForm{
+
+  }
+  .hotspotTable{
+
+  }
+}
+
+.previewMain{
+  width: 100%;
+  height: 100%;
+  border: 1px solid @pale-grey-three;
+  border-radius: 4px;
+  background: @pale-grey-two;
+  display: flex;
+  margin: auto;
+  //align-items: center;
+  flex-direction: column;
+  transition: width 0.3s linear;
+  position: relative;
+  &.mobile{
+    width: 400px;
+    transition: width 0.3s linear;
+  }
+}

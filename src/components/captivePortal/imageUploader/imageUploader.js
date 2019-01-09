@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {SketchPicker} from 'react-color';
-
 import FileBase64 from 'react-file-base64';
 import {uploadImage} from '../../../api/API';
 
@@ -183,16 +182,16 @@ class ImageUploader extends Component {
         };
         return (
             <div
-                className={this.props.type == "background" ? [this.props.style.container, this.props.style.active].join(' ') : this.props.style.container}>
-                <div className={this.props.style.row}>
-                    <div className={this.props.type == "logo" ? this.props.style.logoLeft : this.props.style.left}>
-                        <span className={this.props.style.descr}>
+                className={this.props.type == "background" ? "container active": "container"}>
+                <div className="row">
+                    <div className={this.props.type == "logo" ? "logoLeft" : "left"}>
+                        <span className="descr">
                             {/*upload {this.props.type}*/} Image
                         </span>
                     </div>
-                    <div className={this.props.style.right}>
-                        <div className={this.props.style.innerRow}>
-                            <div className={this.props.style.upload}>
+                    <div className="right">
+                        <div className="innerRow">
+                            <div className="upload">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                     <path fill="#FFF" fillRule="nonzero"
                                           d="M17 11.1V11c0-2.8-2.2-5-5-5-2.5 0-4.6 1.8-4.9 4.3-1.8.6-3.1 2.2-3.1 4.2C4 17 6 19 8.5 19H16c2.2 0 4-1.8 4-4 0-1.9-1.3-3.4-3-3.9zM13 14v3h-2v-3H8l4-4 4 4h-3z"/>
@@ -208,15 +207,15 @@ class ImageUploader extends Component {
                     </div>
                 </div>
                 {this.props.type == "background" ?
-                    <div className={this.props.style.row}>
-                        <div className={this.props.style.left}>
-                                <span className={this.props.style.descr}>
+                    <div className="row">
+                        <div className="left">
+                                <span className="descr">
                                     Color
                                 </span>
                         </div>
-                        <div className={this.props.style.right}>
-                            <div className={this.props.style.innerRow}>
-                                <div className={this.props.style.colorWrap}>
+                        <div className="right">
+                            <div className="innerRow">
+                                <div className="colorWrap">
                                     <input type="text" value={this.state.color.hex} disabled/>
                                     <button ref={this.cpbButton}
                                             style={{backgroundColor: `rgba(${ this.state.color.rgba.r }, ${ this.state.color.rgba.g }, ${ this.state.color.rgba.b }, ${ this.state.color.rgba.a })`}}
@@ -232,30 +231,30 @@ class ImageUploader extends Component {
                     false}
                 {this.props.type == "logo" ?
                     (this.state.logoPosition ?
-                        <div className={this.props.style.row}>
-                            <div className={this.props.style.logoLeft}>
-                                <span className={[this.props.style.descr, this.props.style.position].join(' ')}>
+                        <div className="row">
+                            <div className="logoLeft">
+                                <span className="descr position">
                                     Image position
                                 </span>
                             </div>
-                            <div className={this.props.style.right}>
-                                <div className={this.props.style.innerCol}>
+                            <div className="right">
+                                <div className="innerCol">
                                     <label htmlFor="left">Left
-                                        <div className={this.props.style.inputRadioWrap}>
+                                        <div className="inputRadioWrap">
                                             <input onChange={this.alignment} id='left' type="radio" name='alignment'/>
-                                            <span className={this.props.style.radio}></span>
+                                            <span className="radio"></span>
                                         </div>
                                     </label>
                                     <label htmlFor="center">Center
-                                        <div className={this.props.style.inputRadioWrap}>
+                                        <div className="inputRadioWrap">
                                             <input onChange={this.alignment} id='center' type="radio" name='alignment'/>
-                                            <span className={this.props.style.radio}></span>
+                                            <span className="radio"></span>
                                         </div>
                                     </label>
                                     <label htmlFor="right">Right
-                                        <div className={this.props.style.inputRadioWrap}>
+                                        <div className="inputRadioWrap">
                                             <input onChange={this.alignment} id='right' type="radio" name='alignment'/>
-                                            <span className={this.props.style.radio}></span>
+                                            <span className="radio"></span>
                                         </div>
                                     </label>
                                 </div>
