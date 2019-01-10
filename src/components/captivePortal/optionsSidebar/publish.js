@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import style from './options.less';
 import {connect} from 'react-redux';
 
 class Publish extends Component {

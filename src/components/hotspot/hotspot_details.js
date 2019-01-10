@@ -1,30 +1,45 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import HotspotForm from './hotspotForm';
+import HotspotTable from './hotspotTable';
 
 export default class HotspotDetails extends Component {
-    state = {};
+    state = {correct: false};
 
     static propTypes = {
         name: PropTypes.string.isRequired,
         address: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
         portalId: PropTypes.number,
-        writable: true
+        data: PropTypes.object.isRequired
     };
 
     static defaultProps = {
         name: 'Your name',
         address: 'Your address',
         description: 'Your description',
+        url: 'Your virtual URL',
         portalId: 0,
+        data: {
+            id: 0
+        }
     };
 
     handleInputChange = (e) => {
         const type = e.target.getAttribute('datatype');
-        console.log(type);
-        console.log(this.props[type]);
 
-        this.props[type] = e.target.value
+        this.props.data[type] = e.target.value
+    };
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.data.save()
+    };
+
+    handleCorrect = (e) => {
+        e.preventDefault();
+        this.setState(prevState => ({ correct: !prevState.correct }))
     };
 
     render() {
@@ -33,50 +48,62 @@ export default class HotspotDetails extends Component {
             address,
             description,
             portalId,
+            url,
         } = this.props;
         return (
             <div className="hotspotDetailsWrap">
-                <div className="hotspotForm">
+                <HotspotForm
+                    onSubmit={this.handleSubmit}
+                    correct={this.state.correct}
+                    onCorrect={this.handleCorrect}>
+
                     <div>
-                        <span>Name</span>
+                        {/*<span>Name</span>*/}
                         <input
                             type="text"
                             datatype="name"
-                            value={name}
+                            placeholder={name}
                             onChange={this.handleInputChange}
                         />
                     </div>
                     <div>
-                        <span>Address</span>
+                        {/*<span>Address</span>*/}
                         <input
                             type="text"
                             datatype="address"
-                            value={address}
+                            placeholder={address}
                             onChange={this.handleInputChange}/>
                     </div>
                     <div>
-                        <span>Description</span>
+                        {/*<span>Description</span>*/}
                         <textarea
                             datatype="description"
-                            value={description}
+                            placeholder={description}
                             onChange={this.handleInputChange}>
 
                         </textarea>
                     </div>
                     <div>
-                        <span>PortalId</span>
+                        {/*<span>Address</span>*/}
+                        <input
+                            type="text"
+                            datatype="url"
+                            placeholder={url}
+                            onChange={this.handleInputChange}/>
+                    </div>
+                    <div>
+                        {/*<span>PortalId</span>*/}
                         <input
                             type="number"
                             datatype="portalId"
-                            value={portalId}
                             onChange={this.handleInputChange}/>
                     </div>
-                    <button>Save</button>
-                </div>
-                <div className="hotspotTable">
+                </HotspotForm>
+                <HotspotTable/>
 
-                </div>
+                {/*</HotspotTable>*/}
             </div>
         )
     }
 }
+

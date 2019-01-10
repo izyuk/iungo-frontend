@@ -68,3 +68,18 @@ export const uploadImage = (string, name, base64) => {
         .catch(err => console.warn('In uploadImage API method\n', err));
 
 };
+
+export const getHotspots = (string) => {
+    return axios({
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${builder_API}/hotspot`,
+        mode: 'no-cors'
+    })
+        .then(res => res)
+        .catch(err => console.warn('In getHotspots API method\n', err));
+};
