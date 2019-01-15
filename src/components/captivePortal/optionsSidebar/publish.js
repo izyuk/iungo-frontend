@@ -16,7 +16,7 @@ class Publish extends Component {
     publishPortalMethodHandler = async (id) => {
         const portalDataToSend = this.getBuilderParams();
         const token = localStorage.getItem('token');
-        const query = publishPortal(token, portalDataToSend, id);
+        const query = createPortal(token, portalDataToSend);
         await query.then(res => {
             console.log(res);
         });
@@ -28,6 +28,14 @@ class Publish extends Component {
         const query = previewPortal(token, portalDataToSend);
         await query.then(res => {
             console.log(res);
+            const {data} = res;
+
+            // window.open(data, '_blank');
+            let a = document.createElement('a');
+            a.setAttribute('href', data);
+            a.setAttribute('target', '_blank');
+
+            a.click();
         });
     };
 
