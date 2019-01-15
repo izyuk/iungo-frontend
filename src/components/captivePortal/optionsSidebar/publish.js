@@ -30,12 +30,12 @@ class Publish extends Component {
             console.log(res);
             const {data} = res;
 
-            // window.open(data, '_blank');
-            let a = document.createElement('a');
-            a.setAttribute('href', data);
-            a.setAttribute('target', '_blank');
-
-            a.click();
+            window.open(data, '_blank');
+            // let a = document.createElement('a');
+            // a.setAttribute('href', data);
+            // a.setAttribute('target', '_blank');
+            //
+            // a.click();
         });
     };
 
