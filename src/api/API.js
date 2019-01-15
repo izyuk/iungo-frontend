@@ -83,3 +83,89 @@ export const getHotspots = (string) => {
         .then(res => res)
         .catch(err => console.warn('In getHotspots API method\n', err));
 };
+export const createHotspot = (string, name, address, description, id) => {
+    return axios({
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${builder_API}/hotspot`,
+        mode: 'no-cors',
+        data: {
+            "name": name,
+            "address": address,
+            "description": description,
+            "portalId": id
+        }
+    })
+        .then(res => res)
+        .catch(err => console.warn('In createHotspot API method\n', err));
+};
+export const updateHotspotById = (string, name, address, description, id) => {
+    return axios({
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${builder_API}/hotspot/${id}`,
+        mode: 'no-cors',
+        data: {
+            "name": name,
+            "address": address,
+            "description": description,
+            "portalId": null
+        }
+    })
+        .then(res => res)
+        .catch(err => console.warn('In updateHotspotById API method\n', err));
+};
+export const createPortal = (string, info) => {
+    return axios({
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${builder_API}/portal`,
+        mode: 'no-cors',
+        data: info
+    })
+        .then(res => res)
+        .catch(err => console.warn('In createPortal API method\n', err));
+};
+
+export const publishPortal = (string, info, id) => {
+    return axios({
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${builder_API}/portal/publish/${id}`,
+        mode: 'no-cors',
+        data: info
+    })
+        .then(res => res)
+        .catch(err => console.warn('In publishPortal API method\n', err));
+};
+export const previewPortal = (string, info) => {
+    return axios({
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${builder_API}/portal/preview`,
+        mode: 'no-cors',
+        data: info
+    })
+        .then(res => res)
+        .catch(err => console.warn('In previewPortal API method\n', err));
+};

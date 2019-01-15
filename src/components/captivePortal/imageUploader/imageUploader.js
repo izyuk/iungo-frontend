@@ -97,7 +97,7 @@ class ImageUploader extends Component {
     }
 
     componentDidMount() {
-        if (this.props.type == "background") {
+        if (this.props.type === "background") {
             if (this.props.background_and_logo.background) {
                 let red = this.props.background_and_logo.background.color.rgba.r,
                     green = this.props.background_and_logo.background.color.rgba.g,
@@ -117,6 +117,10 @@ class ImageUploader extends Component {
                 this.cpbButton.current.removeAttribute('style');
                 this.cpbButton.current.setAttribute('style', `background: rgba(${ red }, ${ green }, ${ blue }, ${ alpha })`);
             }
+        }
+        if (this.props.type === 'logo') {
+            const position = this.props.position;
+            document.getElementById((position ? position : this.state.logoPosition)).checked = true;
         }
     }
 
@@ -182,7 +186,7 @@ class ImageUploader extends Component {
         };
         return (
             <div
-                className={this.props.type == "background" ? "container active": "container"}>
+                className={this.props.type == "background" ? "container active" : "container"}>
                 <div className="row">
                     <div className={this.props.type == "logo" ? "logoLeft" : "left"}>
                         <span className="descr">
@@ -230,37 +234,35 @@ class ImageUploader extends Component {
                     </div> :
                     false}
                 {this.props.type == "logo" ?
-                    (this.state.logoPosition ?
-                        <div className="row">
-                            <div className="logoLeft">
+                    <div className="row">
+                        <div className="logoLeft">
                                 <span className="descr position">
                                     Image position
                                 </span>
+                        </div>
+                        <div className="right">
+                            <div className="innerCol">
+                                <label htmlFor="left">Left
+                                    <div className="inputRadioWrap">
+                                        <input onChange={this.alignment} id='left' type="radio" name='alignment'/>
+                                        <span className="radio"></span>
+                                    </div>
+                                </label>
+                                <label htmlFor="center">Center
+                                    <div className="inputRadioWrap">
+                                        <input onChange={this.alignment} id='center' type="radio" name='alignment'/>
+                                        <span className="radio"></span>
+                                    </div>
+                                </label>
+                                <label htmlFor="right">Right
+                                    <div className="inputRadioWrap">
+                                        <input onChange={this.alignment} id='right' type="radio" name='alignment'/>
+                                        <span className="radio"></span>
+                                    </div>
+                                </label>
                             </div>
-                            <div className="right">
-                                <div className="innerCol">
-                                    <label htmlFor="left">Left
-                                        <div className="inputRadioWrap">
-                                            <input onChange={this.alignment} id='left' type="radio" name='alignment'/>
-                                            <span className="radio"></span>
-                                        </div>
-                                    </label>
-                                    <label htmlFor="center">Center
-                                        <div className="inputRadioWrap">
-                                            <input onChange={this.alignment} id='center' type="radio" name='alignment'/>
-                                            <span className="radio"></span>
-                                        </div>
-                                    </label>
-                                    <label htmlFor="right">Right
-                                        <div className="inputRadioWrap">
-                                            <input onChange={this.alignment} id='right' type="radio" name='alignment'/>
-                                            <span className="radio"></span>
-                                        </div>
-                                    </label>
-                                </div>
-                            </div>
-                        </div> :
-                        false) :
+                        </div>
+                    </div> :
                     false}
             </div>
         )

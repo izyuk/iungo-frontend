@@ -22,7 +22,7 @@ export default function (state = INITIAL, action) {
         case "UPLOAD_LOGO":
             return Object.assign(state, {
                 logo: {
-                    url: action.payload.path.url,
+                    url: action.payload.path,
                     position: action.payload.position
                 }
             });

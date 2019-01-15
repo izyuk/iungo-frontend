@@ -1,6 +1,6 @@
 const INITIAL = {
     width: 720,
-    padding: 10
+    padding: '24px 32px 32px 32px'
 };
 
 export default function (state = INITIAL, action) {

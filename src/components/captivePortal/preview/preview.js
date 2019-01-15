@@ -103,7 +103,7 @@ class Preview extends Component {
                      ref={this.PreviewMain}>
                     <div className="previewContainer">
                         <div className="header">
-                            <div className="logoPlace" style={{justifyContent: this.props.state.alignment}}>
+                            <div className="previewLogoPlace" style={{justifyContent: this.props.state.alignment}}>
                                 {this.props.state.logoName === '' ?
                                     <img src={require('../../../static/images/logo.png')} alt=""/> :
                                     <img src={`${this.props.state.logoName}`} alt=""/>}

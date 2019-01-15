@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import Tooltip from 'rc-tooltip';
 import Slider from 'rc-slider';
 import backgroundColor from "../../../../../../reducers/backgroundColor";
-import "../../../options.less";
 
 const style = {
     marginRight: 16,

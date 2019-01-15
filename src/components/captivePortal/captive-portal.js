@@ -79,14 +79,14 @@ console.log(query);
 
 
     trigger = (data) => {
-        document.querySelectorAll('[data-id]')[0].classList.remove(`${style.active}`);
-        document.querySelectorAll('[data-id]')[1].classList.remove(`${style.active}`);
+        document.querySelectorAll('[data-id]')[0].classList.remove('active');
+        document.querySelectorAll('[data-id]')[1].classList.remove('active');
 
         if (data.target.nodeName === 'A') {
-            data.target.classList.add(`${style.active}`);
+            data.target.classList.add('active');
         }
         else if (data.target.closest('a').getAttribute('data-id')) {
-            data.target.closest('a').classList.add(`${style.active}`);
+            data.target.closest('a').classList.add('active');
         }
 
         if (data.target.getAttribute('data-id') === 'mobile' || data.target.closest('a').getAttribute('data-id') === 'mobile') {
@@ -166,6 +166,7 @@ console.log(query);
     componentDidUpdate() {
         console.log(this.props.background_and_logo);
         console.log(this.state.backgrName);
+        console.log(this.state.logoName);
 
         console.log(this.state.alignment);
     }

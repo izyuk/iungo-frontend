@@ -2,6 +2,7 @@
   width: 100%;
   max-width: calc(100% - 48px);
   margin: auto;
+  height: 100%;
 }
 .wrap {
   display: flex;
@@ -14,73 +15,73 @@
   font-family: 'Avenir LT Std 55 Roman';
   font-style: normal;
   font-weight: normal;
-  src: local('Avenir LT Std 55 Roman'), url('./static/fonts/AvenirLTStd-Roman.woff') format('woff');
+  src: local('Avenir LT Std 55 Roman'), url('/fonts/AvenirLTStd-Roman.woff') format('woff');
 }
 @font-face {
   font-family: 'Avenir LT Std 55 Oblique';
   font-style: normal;
   font-weight: normal;
-  src: local('Avenir LT Std 55 Oblique'), url('./static/fonts/AvenirLTStd-Oblique.woff') format('woff');
+  src: local('Avenir LT Std 55 Oblique'), url('/fonts/AvenirLTStd-Oblique.woff') format('woff');
 }
 @font-face {
   font-family: 'Avenir LT Std 35 Light';
   font-style: normal;
   font-weight: normal;
-  src: local('Avenir LT Std 35 Light'), url('./static/fonts/AvenirLTStd-Light.woff') format('woff');
+  src: local('Avenir LT Std 35 Light'), url('/fonts/AvenirLTStd-Light.woff') format('woff');
 }
 @font-face {
   font-family: 'Avenir LT Std 35 Light Oblique';
   font-style: normal;
   font-weight: normal;
-  src: local('Avenir LT Std 35 Light Oblique'), url('./static/fonts/AvenirLTStd-LightOblique.woff') format('woff');
+  src: local('Avenir LT Std 35 Light Oblique'), url('/fonts/AvenirLTStd-LightOblique.woff') format('woff');
 }
 @font-face {
   font-family: 'Avenir LT Std 45 Book';
   font-style: normal;
   font-weight: normal;
-  src: local('Avenir LT Std 45 Book'), url('./static/fonts/AvenirLTStd-Book.woff') format('woff');
+  src: local('Avenir LT Std 45 Book'), url('/fonts/AvenirLTStd-Book.woff') format('woff');
 }
 @font-face {
   font-family: 'Avenir LT Std 45 Book Oblique';
   font-style: normal;
   font-weight: normal;
-  src: local('Avenir LT Std 45 Book Oblique'), url('./static/fonts/AvenirLTStd-BookOblique.woff') format('woff');
+  src: local('Avenir LT Std 45 Book Oblique'), url('/fonts/AvenirLTStd-BookOblique.woff') format('woff');
 }
 @font-face {
   font-family: 'Avenir LT Std 65 Medium';
   font-style: normal;
   font-weight: normal;
-  src: local('Avenir LT Std 65 Medium'), url('./static/fonts/AvenirLTStd-Medium.woff') format('woff');
+  src: local('Avenir LT Std 65 Medium'), url('/fonts/AvenirLTStd-Medium.woff') format('woff');
 }
 @font-face {
   font-family: 'Avenir LT Std 65 Medium Oblique';
   font-style: normal;
   font-weight: normal;
-  src: local('Avenir LT Std 65 Medium Oblique'), url('./static/fonts/AvenirLTStd-MediumOblique.woff') format('woff');
+  src: local('Avenir LT Std 65 Medium Oblique'), url('/fonts/AvenirLTStd-MediumOblique.woff') format('woff');
 }
 @font-face {
   font-family: 'Avenir LT Std 85 Heavy';
   font-style: normal;
   font-weight: normal;
-  src: local('Avenir LT Std 85 Heavy'), url('./static/fonts/AvenirLTStd-Heavy.woff') format('woff');
+  src: local('Avenir LT Std 85 Heavy'), url('/fonts/AvenirLTStd-Heavy.woff') format('woff');
 }
 @font-face {
   font-family: 'Avenir LT Std 85 Heavy Oblique';
   font-style: normal;
   font-weight: normal;
-  src: local('Avenir LT Std 85 Heavy Oblique'), url('./static/fonts/AvenirLTStd-HeavyOblique.woff') format('woff');
+  src: local('Avenir LT Std 85 Heavy Oblique'), url('/fonts/AvenirLTStd-HeavyOblique.woff') format('woff');
 }
 @font-face {
   font-family: 'Avenir LT Std 95 Black';
   font-style: normal;
   font-weight: normal;
-  src: local('Avenir LT Std 95 Black'), url('./static/fonts/AvenirLTStd-Black.woff') format('woff');
+  src: local('Avenir LT Std 95 Black'), url('/fonts/AvenirLTStd-Black.woff') format('woff');
 }
 @font-face {
   font-family: 'Avenir LT Std 95 Black Oblique';
   font-style: normal;
   font-weight: normal;
-  src: local('Avenir LT Std 95 Black Oblique'), url('./static/fonts/AvenirLTStd-BlackOblique.woff') format('woff');
+  src: local('Avenir LT Std 95 Black Oblique'), url('/fonts/AvenirLTStd-BlackOblique.woff') format('woff');
 }
 html,
 body,
@@ -630,10 +631,6 @@ header {
 .right .user .popup.active {
   display: block;
 }
-.container {
-  max-width: 100%;
-  height: 100%;
-}
 .wrap {
   justify-content: space-between;
   height: 100%;
@@ -868,14 +865,17 @@ header {
 .options .wrap .dropdown .container .row .left + .right .innerRow,
 .options .wrap .dropdown .container .row .logoLeft + .right .innerRow {
   margin-left: 24px;
+  width: 100%;
 }
 .options .wrap .dropdown .container .row .right {
   flex: 5;
+  flex-direction: column;
 }
 .options .wrap .dropdown .container .row .right .innerRow {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  width: 100%;
 }
 .options .wrap .dropdown .container .row .right .innerRow select,
 .options .wrap .dropdown .container .row .right .innerRow > input {
@@ -999,6 +999,7 @@ header {
   height: 20px;
   border: 1px solid #e5e9f2;
   background-color: #fff;
+  line-height: normal;
 }
 .options .wrap .dropdown .container .row .right .innerRow .textActions button:hover {
   background-color: #f1f3f8;
@@ -1311,13 +1312,14 @@ header {
 .options .wrap .buttonsRow {
   margin-top: auto;
   margin-bottom: 10px;
+  display: flex;
+  padding: 20px 0 0 0;
+  justify-content: space-around;
+  width: 100%;
 }
-.options .wrap .buttonsRow .publish {
+.options .wrap .buttonsRow button {
   width: 128px;
   height: 40px;
-  border: 1px solid #4372d6;
-  background: #5585ed;
-  color: #fff;
   font-family: 'AvenirLTStd-Heavy', sans-serif;
   font-size: 14px;
   font-size: 0.875rem;
@@ -1326,6 +1328,15 @@ header {
   justify-content: center;
   border-radius: 20px;
   font-weight: bold;
+}
+.options .wrap .buttonsRow button.publishBtn {
+  color: #fff;
+  border: 1px solid #4372d6;
+  background: #5585ed;
+}
+.options .wrap .buttonsRow button.previewBtn {
+  border: 1px solid #dee5f3;
+  color: #071031;
 }
 .preview {
   flex: 2;
@@ -1394,13 +1405,14 @@ header {
   margin: auto;
   transition: all 0.3s linear;
 }
-.logoPlace {
+.previewLogoPlace {
   width: 100%;
   display: flex;
   justify-content: center;
   transition: all 0.3s linear;
+  margin-bottom: 30px;
 }
-.logoPlace img {
+.previewLogoPlace img {
   max-width: 350px;
   max-height: 200px;
   align-self: flex-start;
@@ -1592,7 +1604,253 @@ header {
   border-top: 1px solid #e5e9f2;
   box-shadow: 0 1px 2px 0 rgba(191, 197, 210, 0.15);
   padding-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
+  grid-template-rows: 330px auto;
+  grid-column-gap: 20px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.hotspotDetailsWrap .hotspotForm {
+  flex: 1;
+  flex-basis: 450px;
+  background: #fff;
+  border-radius: 4px;
   display: flex;
+  flex-direction: column;
+  height: 230px;
+  padding: 10px;
+  border: 1px solid #e5e9f2;
+  box-shadow: 0 1px 2px 0 rgba(191, 197, 210, 0.15);
+}
+.hotspotDetailsWrap .hotspotForm > div {
+  position: relative;
+  display: flex;
+}
+.hotspotDetailsWrap .hotspotForm > div:not(:last-child) {
+  margin-bottom: 10px;
+}
+.hotspotDetailsWrap .hotspotForm > div:not(.cpSelector) {
+  width: 100%;
+  height: 42px;
+  border-radius: 2px;
+  border: solid 1px #dee5f3;
+  background-color: #f1f3f8;
+}
+.hotspotDetailsWrap .hotspotForm > div textarea,
+.hotspotDetailsWrap .hotspotForm > div input {
+  width: 100%;
+  border: 1px solid transparent;
+  background: transparent;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+  color: #7a859b;
+  resize: none;
+}
+.hotspotDetailsWrap .hotspotForm > div textarea::-webkit-input-placeholder,
+.hotspotDetailsWrap .hotspotForm > div input::-webkit-input-placeholder {
+  color: #7a859b;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+}
+.hotspotDetailsWrap .hotspotForm > div textarea::-moz-placeholder,
+.hotspotDetailsWrap .hotspotForm > div input::-moz-placeholder {
+  color: #7a859b;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+}
+.hotspotDetailsWrap .hotspotForm > div textarea:-ms-input-placeholder,
+.hotspotDetailsWrap .hotspotForm > div input:-ms-input-placeholder {
+  color: #7a859b;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+}
+.hotspotDetailsWrap .hotspotForm > div textarea:-moz-placeholder,
+.hotspotDetailsWrap .hotspotForm > div input:-moz-placeholder {
+  color: #7a859b;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+}
+.hotspotDetailsWrap .hotspotForm > div .cpSelector {
+  display: flex;
+  justify-content: center;
+  width: 330px;
+  border: 1px solid #5585ed;
+  border-radius: 16px;
+  background: #5585ed;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+.hotspotDetailsWrap .hotspotForm > div .cpSelector p {
+  width: 100%;
+  height: 34px;
+  color: #fff;
+  text-align: center;
+  line-height: 2.1;
+}
+.hotspotDetailsWrap .hotspotForm > div .cpSelector .list {
+  width: calc(100% + 2px);
+  position: absolute;
+  top: 32px;
+  left: 0;
+  height: 0;
+  overflow: hidden;
+}
+.hotspotDetailsWrap .hotspotForm > div .cpSelector.active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.hotspotDetailsWrap .hotspotForm > div .cpSelector.active > p {
+  border-bottom: 1px solid #e5e9f2;
+}
+.hotspotDetailsWrap .hotspotForm > div .cpSelector.active .list {
+  height: auto;
+  max-height: 200px;
+  overflow: visible;
+  border: 1px solid #5585ed;
+  background: #5585ed;
+  margin-left: -1px;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+.hotspotDetailsWrap .hotspotForm > div .cpSelector.active .list p {
+  text-align: center;
+  cursor: pointer;
+}
+.hotspotDetailsWrap .hotspotForm > div .cpSelector.active .list p:not(:last-child) {
+  border-bottom: 1px solid #e5e9f2;
+}
+.hotspotDetailsWrap .hotspotForm > div.cpSelectorHead {
+  justify-content: center;
+  border: none;
+  background-color: #fff;
+}
+.hotspotDetailsWrap .hotspotForm button {
+  width: 128px;
+  height: 40px;
+  border: 1px solid #4372d6;
+  background: #5585ed;
+  color: #fff;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 14px;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  font-weight: bold;
+  margin: auto;
+}
+.hotspotDetailsWrap .hotspotTable {
+  flex: 1;
+  flex-basis: 585px;
+  background: #fff;
+  border-radius: 4px;
+  height: fit-content;
+}
+.hotspotDetailsWrap .hotspotTable thead {
+  display: table;
+  /* width: 100%; */
+  table-layout: fixed;
+  width: calc(100% - 1em);
+}
+.hotspotDetailsWrap .hotspotTable tbody {
+  display: block;
+  max-height: 624px;
+  overflow-y: auto;
+}
+.hotspotDetailsWrap .hotspotTable tbody tr {
+  min-height: 48px;
+  height: auto;
+  cursor: pointer;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+.hotspotDetailsWrap .hotspotTable tbody tr:hover {
+  background-color: #e5e9f2;
+}
+.hotspotDetailsWrap .hotspotTable tbody tr td button {
+  color: #fff;
+  border: 1px solid transparent;
+  width: 50px;
+}
+.hotspotDetailsWrap .hotspotTable tbody tr td button:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background: #5585ed;
+  padding: 3px 5px;
+}
+.hotspotDetailsWrap .hotspotTable tbody tr td button:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background: #ff6976;
+  padding: 3px 5px;
+}
+table {
+  width: 100%;
+  border: 1px solid #e5e9f2;
+  box-shadow: 0 1px 2px 0 rgba(191, 197, 210, 0.15);
+}
+table tr {
+  padding: 0 16px;
+  height: 48px;
+  width: 100%;
+}
+table tr td,
+table tr th {
+  padding: 16px 0;
+  text-align: left;
+  border-bottom: none;
+}
+table tr td:first-child,
+table tr th:first-child {
+  padding-left: 16px;
+}
+table tr td:last-child,
+table tr th:last-child {
+  padding-right: 16px;
+}
+table tr td {
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  color: #768198;
+}
+table tr td.url {
+  color: #5585ed;
+}
+table tr td:last-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+table tr th {
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 16px;
+  font-size: 1rem;
+  color: #2a314e;
 }
 .previewMain {
   width: 100%;

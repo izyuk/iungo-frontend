@@ -78,8 +78,7 @@ class StyleTab extends Component {
                         </svg>
                     </div>
                     {this.state.visible === 'Container' ?
-                        <Container style={style}
-                                   handler={this.props.containerHandler}/> :
+                        <Container handler={this.props.containerHandler}/> :
                         false}
                 </div>
             </div>

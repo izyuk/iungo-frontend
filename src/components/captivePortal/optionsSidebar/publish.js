@@ -1,29 +1,47 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {createPortal, publishPortal, previewPortal} from "../../../api/API";
 
 class Publish extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state = {
-
-        };
+        this.state = {};
         this.getBuilderParams = this.getBuilderParams.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         // console.log(this.props.state);
     }
 
-    getBuilderParams(){
+    publishPortalMethodHandler = async (id) => {
+        const portalDataToSend = this.getBuilderParams();
+        const token = localStorage.getItem('token');
+        const query = publishPortal(token, portalDataToSend, id);
+        await query.then(res => {
+            console.log(res);
+        });
+    };
 
-        let { name:{name},
-            css:{path},
+    previewPortalMethodHandler = async () => {
+        const portalDataToSend = this.getBuilderParams();
+        const token = localStorage.getItem('token');
+        const query = previewPortal(token, portalDataToSend);
+        await query.then(res => {
+            console.log(res);
+        });
+    };
+
+    getBuilderParams() {
+
+        let {
+            name: {name},
+            css: {path},
             header: {top, description},
             footer,
             background_and_logo: {background, logo},
             container_background,
             container_border,
-            container_size ,
+            container_size,
             login_methods: {methods},
             imagesIDs
         } = this.props.tabName;
@@ -67,20 +85,19 @@ class Publish extends Component {
                     padding: container_size.padding
                 }
             },
-            googleLogin: {
-                googleLogin: methods.google,
-                facebookLogin: methods.facebook,
-                twitterLogin: methods.twitter
-            }
+            googleLogin: methods.google,
+            facebookLogin: methods.facebook,
+            twitterLogin: methods.twitter
         };
-
-        console.log(portalDataToSend);
+        return portalDataToSend;
+        // this.publishPortalMethodHandler(portalDataToSend, 4);
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div className="buttonsRow">
-                <button type="button" onClick={this.getBuilderParams} className="publish">Publish</button>
+                <button type="button" onClick={this.previewPortalMethodHandler} className="previewBtn">Preview</button>
+                <button type="button" onClick={this.publishPortalMethodHandler} className="publishBtn">Publish</button>
             </div>
         )
     }

@@ -19,7 +19,7 @@ class Logo extends Component {
 export default connect(
     state => ({
         background_and_logo: state,
-        position: state.position,
+        position: state.background_and_logo.logo.position,
         token: state.token
     }),
     dispatch => ({

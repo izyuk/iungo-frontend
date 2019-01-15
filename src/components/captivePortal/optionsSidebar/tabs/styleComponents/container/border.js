@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
 import {connect} from 'react-redux';
-import "../../../options.less";
 
 class ContentBorder extends Component {
     constructor(props) {

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-
-import {getHotspots} from '../../api/API';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 // HotspotTable.propTypes = {
@@ -10,24 +9,32 @@ import {connect} from 'react-redux';
 // };
 
 class HotspotTable extends Component {
-
-    state = {};
-
-    getHotspotsMethodHandler = async(str) => {
-        const query = getHotspots(str);
-        await query.then(res => {
-            console.log(res);
-        });
+    state = {
+        list: ''
     };
 
-    componentDidMount(){
-        console.log(this.props.token.token);
-        console.log(localStorage.getItem('token'));
-        this.props.token.token !== undefined ? this.getHotspotsMethodHandler(this.props.token.token): this.getHotspotsMethodHandler(localStorage.getItem('token'));
-        // this.getHotspotsMethodHandler();
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.hotspotList !== nextProps.hotspotList) {
+            this.setState({
+                list: nextProps.hotspotList
+            });
+            return true
+        } else {
+            return false
+        }
     }
 
-    render(){
+    getDataToEdit = (e, currentId) => {
+        e.preventDefault();
+        const {hotspotList} = this.props;
+        const {[0]: {id, name, address, description}} = hotspotList.filter(el => el.id === currentId);
+        this.props.editHandler(id, name, address, description);
+        console.log(id, name, address, description);
+    };
+
+    render() {
+        const {hotspotList} = this.props;
+        console.log(hotspotList);
         return (
             <table className={"hotspotTable"} rules="rows">
                 <thead>
@@ -36,22 +43,25 @@ class HotspotTable extends Component {
                     <th>Address</th>
                     <th>Description</th>
                     <th>Virtual URL</th>
-                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Some name</td>
-                    <td>Some address</td>
-                    <td>Some description</td>
-                    <td className={"url"}>
-                        <a href="https://stackoverflow.com/questions/43662552/getting-columns-to-wrap-in-css-grid">https://stacko...</a>
-                    </td>
-                    <td>
-                        <button>Edit</button>
-                        <button>Delete</button>
-                    </td>
-                </tr>
+                {hotspotList && hotspotList.map((item, i) => {
+                    const {id, name, address, description, virtualUrl} = item;
+                    return (
+                        <tr key={i} onClick={(e) => ::this.getDataToEdit(e, id)}>
+                            <td>{name}</td>
+                            <td>{address}</td>
+                            <td>{description}</td>
+                            <td className={"url"}>
+                                {virtualUrl !== null ?
+                                    <Link to={virtualUrl}>{`${virtualUrl.slice(0, 10)}...`}</Link>
+                                    : ''
+                                }
+                            </td>
+                        </tr>
+                    )
+                })}
                 </tbody>
             </table>
         )

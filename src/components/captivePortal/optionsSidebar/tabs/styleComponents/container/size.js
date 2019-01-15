@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import "../../../options.less";
 
 class ContainerSize extends Component {
     constructor(props) {
