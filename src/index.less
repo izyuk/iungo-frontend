@@ -324,6 +324,11 @@ header {
   box-shadow: 0 1px 2px 0 rgba(191, 197, 210, .15);
   border-bottom: 1px solid @pale-grey-seven;
   background: @w;
+  .container{
+    width: 100%;
+    max-width: calc(100% - 48px);
+    margin: auto;
+  }
 }
 
 .wrap {
@@ -1598,6 +1603,21 @@ header {
               background: @pink;
               padding: 3px 5px;
             }
+          }
+        }
+      }
+    }
+  }
+
+}
+.captivePortalList{
+  tbody{
+    tr{
+      cursor: pointer;
+      td{
+        &:first-child{
+          &:hover{
+            color: @soft-blue;
           }
         }
       }

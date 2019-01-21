@@ -1,6 +1,5 @@
 .container {
   width: 100%;
-  max-width: calc(100% - 48px);
   margin: auto;
   height: 100%;
 }
@@ -547,6 +546,11 @@ header {
   box-shadow: 0 1px 2px 0 rgba(191, 197, 210, 0.15);
   border-bottom: 1px solid #e7e9ef;
   background: #fff;
+}
+header .container {
+  width: 100%;
+  max-width: calc(100% - 48px);
+  margin: auto;
 }
 .wrap {
   justify-content: space-between;
@@ -1807,6 +1811,12 @@ header {
   border-bottom-right-radius: 8px;
   background: #ff6976;
   padding: 3px 5px;
+}
+.captivePortalList tbody tr {
+  cursor: pointer;
+}
+.captivePortalList tbody tr td:first-child:hover {
+  color: #5585ed;
 }
 table {
   width: 100%;

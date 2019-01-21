@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Dashboard from '../dashboard/dashboard';
-import CaptivePortal from '../captivePortal/captive-portal';
+import CaptivePortalWrap from '../captivePortal/captivePortalWrap';
 import Hotspot from '../hotspot/hotspot';
 
 class MainSide extends Component{
@@ -15,7 +15,7 @@ class MainSide extends Component{
             <div className="mainSide">
                 <Switch>
                     <Route exact path="/dashboard" component={Dashboard}/>
-                    <Route exact path="/captive-portals" component={CaptivePortal}/>
+                    <Route exact path="/captive-portals" component={CaptivePortalWrap}/>
                     <Route exact path="/hotspot" component={Hotspot}/>
                 </Switch>
             </div>
