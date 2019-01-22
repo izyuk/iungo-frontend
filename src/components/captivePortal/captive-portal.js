@@ -4,37 +4,36 @@ import {connect} from 'react-redux';
 import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
 import {upload_file} from "../../reducers/background_and_logo";
-import {getAllPortals} from "../../api/API";
-
+import {getPortal} from "../../api/API";
 
 
 class CaptivePortal extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            mobile: false,
-            backgrName: '',
-            logoName: '',
-            type: '',
-            backgroundType: 'color',
-            alignment: 'center',
-            container: '' || {
-                border: this.props.background_and_logo.container_border,
-                background: this.props.background_and_logo.container_background,
-                size: this.props.background_and_logo.container_size
-            },
-            headerText: '' || {
-                top: this.props.background_and_logo.header_top_text_data,
-                descr: this.props.background_and_logo.header_description_text_data
-            },
-            methods: {
-                facebook: true,
-                google: true,
-                twitter: true
-            },
-            footerContent: '' || this.props.background_and_logo.footer_description
-        };
-    }
+    // constructor(props) {
+    //     super(props);
+    state = {
+        mobile: false,
+        backgrName: '',
+        logoName: '',
+        type: '',
+        backgroundType: 'color',
+        alignment: 'center',
+        container: '' || {
+            border: this.props.background_and_logo.container_border,
+            background: this.props.background_and_logo.container_background,
+            size: this.props.background_and_logo.container_size
+        },
+        headerText: '' || {
+            top: this.props.background_and_logo.header_top_text_data,
+            descr: this.props.background_and_logo.header_description_text_data
+        },
+        methods: {
+            facebook: true,
+            google: true,
+            twitter: true
+        },
+        footerContent: '' || this.props.background_and_logo.footer_description
+    };
+    // }
 
     eventHandler = (name, type, backgroundType) => {
         if (type === 'background') {
@@ -53,15 +52,30 @@ class CaptivePortal extends Component {
         })
     };
 
-    findAllPortals = async (data) => {
-        // let {token} = data;
+    // findAllPortals = async (data) => {
+    //     // let {token} = data;
+    //     console.log(data);
+    //     let query = getAllPortals(data);
+    //     console.log(query);
+    //     await query.then(res => {
+    //         console.log(res);
+    //     });
+    //
+    // };
+
+    findPortal = async (data) => {
         console.log(data);
-        let query = getAllPortals(data);
-console.log(query);
+        const id = this.props.settedId ? this.props.settedId : localStorage.getItem('cpID');
+        let query = getPortal(data, id);
+        console.log(query);
+        let store = '';
         await query.then(res => {
             console.log(res);
+            store = res.data;
         });
+        this.setState({
 
+        })
     };
 
 
@@ -106,69 +120,52 @@ console.log(query);
         })
     };
 
-    loginMethods = (data) =>{
+    loginMethods = (data) => {
         this.setState({
             methods: data
         })
     };
 
     footerTextData = (data) => {
+        console.log(data);
         this.setState({
             footerContent: data
         })
     };
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.backgrName !== nextState.backgrName) {
-            return true;
-        } else if (this.state.logoName !== nextState.logoName) {
-            return true;
-        } else if (this.state.type !== nextState.type) {
-            return true;
-        } else if (this.state.backgroundType !== nextState.backgroundType) {
-            return true;
-        } else if (this.state.alignment !== nextState.alignment) {
-            return true;
-        } else if (this.state.mobile !== nextState.mobile) {
-            return true;
-        } else if (this.state.container !== nextState.container) {
-            return true;
-        } else if (this.state.headerText !== nextState.headerText) {
-            return true;
-        } else if (this.state.methods !== nextState.methods) {
-            return true;
-        } else if (this.state.footerContent !== nextState.footerContent) {
-            return true;
-        } else {
-            return false;
-        }
+        if (this.state.backgrName !== nextState.backgrName) return true;
+        else if (this.state.logoName !== nextState.logoName) return true;
+        else if (this.state.type !== nextState.type) return true;
+        else if (this.state.backgroundType !== nextState.backgroundType) return true;
+        else if (this.state.alignment !== nextState.alignment) return true;
+        else if (this.state.mobile !== nextState.mobile) return true;
+        else if (this.state.container !== nextState.container) return true;
+        else if (this.state.headerText !== nextState.headerText) return true;
+        else if (this.state.methods !== nextState.methods) return true;
+        else if (this.state.footerContent !== nextState.footerContent) return true;
+        else return false;
     }
 
     componentDidMount() {
-        console.log(this.props.token);
-        console.log(localStorage.getItem('token'));
-        this.props.token.token ? this.findAllPortals(this.props.token.token): this.findAllPortals(localStorage.getItem('token'));
+        this.props.token.token ? this.findPortal(this.props.token.token) : this.findPortal(localStorage.getItem('token'));
 
-        let currentDay = function(sp){
+        let currentDay = function (sp) {
             let today = new Date();
             let dd = today.getDate();
-            let mm = today.getMonth()+1;
+            let mm = today.getMonth() + 1;
             let yyyy = today.getFullYear();
 
-            if(dd<10) dd='0'+dd;
-            if(mm<10) mm='0'+mm;
-            return (mm+sp+dd+sp+yyyy);
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+            return (mm + sp + dd + sp + yyyy);
         };
 
         this.props.addPortalName(`CaptivePortal - ${currentDay('/')}`)
     }
 
     componentDidUpdate() {
-        console.log(this.props.background_and_logo);
-        console.log(this.state.backgrName);
-        console.log(this.state.logoName);
 
-        console.log(this.state.alignment);
     }
 
     render() {

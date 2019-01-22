@@ -39,7 +39,7 @@ export const userRegister = (login, password) => {
 
 };
 export const getAllPortals = (string) => {
-    return axios(/*`${builder_API}/portal`, */{
+    return axios({
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -47,11 +47,24 @@ export const getAllPortals = (string) => {
             'Authorization': `${string}`
         },
         url: `${builder_API}/portal`,
-        // mode: 'no-cors'
     })
         .then(res => res)
         .catch(err => console.warn('In getAllPortals API method\n', err));
 };
+export const getPortal = (string, id) => {
+    return axios({
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${builder_API}/portal/${id}`,
+    })
+        .then(res => res)
+        .catch(err => console.warn('In getPortal API method\n', err));
+};
+
 export const uploadImage = (string, name, base64) => {
     return axios({
         method: 'post',

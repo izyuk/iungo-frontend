@@ -1,12 +1,12 @@
 const INITIAL = {
     color: {
         rgba: {
-            r: 255,
-            g: 255,
-            b: 255,
+            r: 249,
+            g: 249,
+            b: 252,
             a: 1,
         },
-        hex: '#ffffff'
+        hex: '#f9f9fc'
     },
     opacity: 100
 };

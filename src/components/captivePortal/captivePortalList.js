@@ -7,6 +7,10 @@ class CaptivePortalList extends Component {
         list: ''
     };
 
+    getId = (e) => {
+        this.props.setId(e.currentTarget.getAttribute('dataid'))
+    };
+
     findAllPortals = async (data) => {
         let query = getAllPortals(data);
         let listArray = [];
@@ -15,7 +19,7 @@ class CaptivePortalList extends Component {
             let {data} = res;
             data.map((item, i) => {
                 listArray.push(
-                    <tr key={i} dataid={item.id}>
+                    <tr key={i} dataid={item.id} onClick={this.getId}>
                         <td className={"CaptivePortalItem"}>{item.name}</td>
                         <td>{item.externalStylesUrl}</td>
                     </tr>

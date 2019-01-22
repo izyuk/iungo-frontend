@@ -170,7 +170,7 @@ class Preview extends Component {
                             <div className="contentPlace">
                                 <p className="text" ref={this.FooterText}
                                    style={{
-                                       color: `rgba(${footerData.styles && footerData.styles.color.r}, ${footerData.styles && footerData.styles.color.g}, ${footerData.styles && footerData.styles.color.b}, ${footerData.styles && footerData.styles.color.a})`,
+                                       color: `rgba(${footerData.styles && footerData.styles.color.rgba.r}, ${footerData.styles && footerData.styles.color.rgba.g}, ${footerData.styles && footerData.styles.color.rgba.b}, ${footerData.styles && footerData.styles.color.rgba.a})`,
                                        fontSize: footerData.styles && footerData.styles.fontSize,
                                        fontWeight: footerData.styles && footerData.styles.textActions.bold ? 'bold' : '100',
                                        fontStyle: footerData.styles && footerData.styles.textActions.italic ? 'italic' : 'normal',

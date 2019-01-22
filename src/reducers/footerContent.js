@@ -3,12 +3,12 @@ const INITIAL = {
     styles: {
         color: {
             rgba: {
-                r: 0,
-                g: 0,
-                b: 0,
+                r: 249,
+                g: 249,
+                b: 252,
                 a: 1,
             },
-            hex: '#000000'
+            hex: '#f9f9fc'
         },
         fontSize: 18,
         textActions: {

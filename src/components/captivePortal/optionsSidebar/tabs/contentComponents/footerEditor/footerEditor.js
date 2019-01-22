@@ -36,13 +36,13 @@ class FooterEditor extends Component {
         console.log(storage);
         this.state = {
             displayColorPicker: false,
-            colorHEX: storage ? storage.colorHEX : '#000000',
-            color: storage ? storage.color : {
+            color: storage ? storage.color.rgba : {
                 r: '0',
                 g: '0',
                 b: '0',
                 a: '1',
             },
+            colorHEX: storage ? storage.color.hex : '#000000',
             fontSize: storage ? storage.fontSize : 18,
             textActions: storage ? storage.textActions : {
                 bold: false,
@@ -63,9 +63,9 @@ class FooterEditor extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.fontSize !== nextState.opacity) {
             return true;
-        } else if (this.state.colorHEX !== nextState.colorHEX) {
+        } /*else if (this.state.color.hex !== nextState.color.hex) {
             return true;
-        } else if (this.state.color !== nextState.color) {
+        }*/ else if (this.state.color !== nextState.color) {
             return true;
         } else if (this.state.displayColorPicker !== nextState.displayColorPicker) {
             return true;
@@ -78,18 +78,21 @@ class FooterEditor extends Component {
     }
 
     componentDidMount() {
-        let {displayColorPicker, text, ...rest} = this.state;
-        this.props.textData(text, rest);
-        this.props.footerTextData(rest);
+        let {displayColorPicker, text, color, colorHEX, ...rest} = this.state;
+        console.log({color: {rgba: color, hex: colorHEX}, ...rest});
+        this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
+        this.props.footerTextData({color: {rgba: color, hex: colorHEX}, ...rest});
         console.log('--------', this.props.footer_description);
         let storage = this.props.footer.styles;
-        document.getElementById((storage ? storage.styles.alignment : 'center')).checked = true;
+        document.getElementById((storage ? storage.alignment : 'center')).checked = true;
     }
 
     componentDidUpdate() {
-        let {displayColorPicker, text, ...rest} = this.state;
-        this.props.textData(text, rest);
-        this.props.footerTextData(rest);
+        let {displayColorPicker, text, color, colorHEX, ...rest} = this.state;
+
+        console.log({color: {rgba: color, hex: colorHEX}, ...rest});
+        this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
+        this.props.footerTextData({color: {rgba: color, hex: colorHEX}, ...rest});
     }
 
     handleClick = () => {
@@ -101,15 +104,16 @@ class FooterEditor extends Component {
     };
 
     handleChange = (color) => {
+        console.log(color);
+        console.log(this.props.footer.styles.color.rgba);
+        const setColor = this.state.color.rgba;
+        const hex = this.state.color.hex;
         this.setState({
-            color: {
-                r: color.rgb.r,
-                g: color.rgb.g,
-                b: color.rgb.b,
-                a: color.rgb.a
-            }
+            color: color.rgb
         });
-        this.setState({colorHEX: color.hex});
+        this.setState({
+            colorHEX: color.hex
+        })
     };
 
     textActionsHandler = (e) => {
@@ -274,10 +278,14 @@ class FooterEditor extends Component {
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
                                         onClick={this.handleClick}></button>
-                                {this.state.displayColorPicker ? <div style={popover}>
-                                    <div style={cover} onClick={this.handleClose}/>
-                                    <SketchPicker color={this.state.color} onChange={this.handleChange}/>
-                                </div> : null}
+                                {
+                                    this.state.displayColorPicker ?
+                                        <div style={popover}>
+                                            <div style={cover} onClick={this.handleClose}/>
+                                            <SketchPicker color={this.state.color} onChange={this.handleChange}/>
+                                        </div>
+                                        : null
+                                }
                             </div>
                         </div>
                     </div>
@@ -289,8 +297,8 @@ class FooterEditor extends Component {
 
 export default connect(
     state => ({
-        // footer: state.footer
-        footer: state
+        footer: state.footer
+        // footer: stated
     }),
     dispatch => ({
         textData: (text, styles) => {

@@ -645,6 +645,7 @@ header .container {
 .wrapFix2 {
   align-items: flex-start;
   flex-direction: column;
+  justify-content: flex-start;
 }
 .containerFix {
   margin: unset;
@@ -1811,6 +1812,9 @@ header .container {
   border-bottom-right-radius: 8px;
   background: #ff6976;
   padding: 3px 5px;
+}
+.captivePortalList {
+  background: #fff;
 }
 .captivePortalList tbody tr {
   cursor: pointer;
