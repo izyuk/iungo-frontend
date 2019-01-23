@@ -31,7 +31,8 @@ class CaptivePortal extends Component {
             google: true,
             twitter: true
         },
-        footerContent: '' || this.props.background_and_logo.footer_description
+        footerContent: '' || this.props.background_and_logo.footer_description,
+        loader: false
     };
     // }
 
@@ -50,6 +51,12 @@ class CaptivePortal extends Component {
             type: type,
             backgroundType: backgroundType
         })
+    };
+
+    loaderHandler = () => {
+        this.setState({
+            loader: !this.state.loader
+        });
     };
 
     // findAllPortals = async (data) => {
@@ -209,7 +216,8 @@ class CaptivePortal extends Component {
                              containerHandler={this.containerHandler}
                              textData={this.contentData}
                              methods={this.loginMethods}
-                             footerTextData={this.footerTextData}/>
+                             footerTextData={this.footerTextData}
+                             loaderHandler={this.props.loaderHandler}/>
                 </div>
             </div>
         )

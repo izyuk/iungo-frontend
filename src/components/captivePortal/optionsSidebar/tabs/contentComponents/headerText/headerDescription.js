@@ -78,18 +78,17 @@ class HeaderDescription extends Component {
     }
 
     componentDidMount() {
-        let {displayColorPicker, text, color, colorHEX, ...rest} = this.state;
-        this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
-        // this.props.textData(text, rest);
-        this.props.handler({color: {rgba: color, hex: colorHEX}, ...rest});
+        let {displayColorPicker, text, color, ...rest} = this.state;
+        this.props.textData(text, {color:  color, ...rest});
+        this.props.handler({color:  color, ...rest});
         let storage = this.props.header.description;
         document.getElementById(`${storage ? storage.styles.alignment : 'center'}`).checked = true;
     }
 
     componentDidUpdate() {
-        let {displayColorPicker, text, color, colorHEX, ...rest} = this.state;
-        this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
-        this.props.handler({color: {rgba: color, hex: colorHEX}, ...rest});
+        let {displayColorPicker, text, color, ...rest} = this.state;
+        this.props.textData(text, {color:  color, ...rest});
+        this.props.handler({color:  color, ...rest});
     }
 
     handleClick = () => {

@@ -73,7 +73,7 @@ class Options extends Component {
                             : (this.state.tab === 'Settings') ?
                                 <SettingsTab/>
                                 : ''}
-                    <Publish/>
+                    <Publish loaderHandler={this.props.loaderHandler}/>
                 </div>
             </div>
         )

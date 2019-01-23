@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {createPortal, publishPortal, previewPortal} from "../../../api/API";
+import Loader from "../../../loader";
 
 class Publish extends Component {
     constructor(props) {
@@ -14,34 +15,33 @@ class Publish extends Component {
     }
 
     publishPortalMethodHandler = async (id) => {
+        this.props.loaderHandler();
         const portalDataToSend = this.getBuilderParams();
         const token = localStorage.getItem('token');
-        const query = createPortal(token, portalDataToSend);
+        const cpID = localStorage.getItem('cpID');
+        const query = cpID ? publishPortal(token, portalDataToSend, cpID) : createPortal(token, portalDataToSend);
         await query.then(res => {
             console.log(res);
+            this.props.loaderHandler();
         });
     };
 
     previewPortalMethodHandler = async () => {
+        this.props.loaderHandler();
         const portalDataToSend = this.getBuilderParams();
         const token = localStorage.getItem('token');
         const query = previewPortal(token, portalDataToSend);
         await query.then(res => {
             console.log(res);
             const {data} = res;
-
+            this.props.loaderHandler();
             window.open(data, '_blank');
-            // let a = document.createElement('a');
-            // a.setAttribute('href', data);
-            // a.setAttribute('target', '_blank');
-            //
-            // a.click();
         });
     };
 
     getBuilderParams() {
 
-        let {
+        const {
             name: {name},
             css: {path},
             header: {top, description},
@@ -54,7 +54,7 @@ class Publish extends Component {
             imagesIDs
         } = this.props.tabName;
 
-        let portalDataToSend = {
+        const portalDataToSend = {
             name: name && name,
             externalStylesUrl: path && path,
             logoId: imagesIDs.logoID,
@@ -98,14 +98,16 @@ class Publish extends Component {
             twitterLogin: methods.twitter
         };
         return portalDataToSend;
-        // this.publishPortalMethodHandler(portalDataToSend, 4);
     }
 
     render() {
         return (
             <div className="buttonsRow">
-                <button type="button" onClick={this.previewPortalMethodHandler} className="previewBtn">Preview</button>
-                <button type="button" onClick={this.publishPortalMethodHandler} className="publishBtn">Publish</button>
+                <button type="button" onClick={this.previewPortalMethodHandler} className="previewBtn">Preview
+                </button>
+                <button type="button" onClick={this.publishPortalMethodHandler} className="publishBtn">Publish
+                </button>
+                {/*<span>Please allow new windows opening</span>*/}
             </div>
         )
     }

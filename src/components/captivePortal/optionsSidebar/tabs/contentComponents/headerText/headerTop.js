@@ -79,18 +79,17 @@ class HeaderTop extends Component {
     }
 
     componentDidMount() {
-        let {displayColorPicker, text, color, colorHEX, ...rest} = this.state;
-        this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
-        this.props.handler({color: {rgba: color, hex: colorHEX}, ...rest});
-        console.log('--------',this.props.header);
+        let {displayColorPicker, text, color, ...rest} = this.state;
+        this.props.textData(text, {color:  color, ...rest});
+        this.props.handler({color:  color, ...rest});
         let storage = this.props.header.top;
         document.getElementById((storage ? storage.styles.alignment : 'center')+'2').checked = true;
     }
 
     componentDidUpdate() {
-        let {displayColorPicker, text, color, colorHEX, ...rest} = this.state;
-        this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
-        this.props.handler({color: {rgba: color, hex: colorHEX}, ...rest});
+        let {displayColorPicker, text, color, ...rest} = this.state;
+        this.props.textData(text, {color:  color, ...rest});
+        this.props.handler({color:  color, ...rest});
     }
 
     handleClick = () => {

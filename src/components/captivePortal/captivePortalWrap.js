@@ -3,10 +3,12 @@ import {connect} from 'react-redux';
 
 import CaptivePortal from './captive-portal';
 import CaptivePortalList from './captivePortalList';
+import Loader from "../../loader";
 
 export default class CaptivePortalWrap extends Component {
     state = {
-        currentId: ''
+        currentId: '',
+        loader: false
     };
 
     idHandler = (id) => {
@@ -17,13 +19,22 @@ export default class CaptivePortalWrap extends Component {
         console.log(id);
     };
 
+
+    loaderHandler = () => {
+        this.setState({
+            loader: !this.state.loader
+        });
+    };
+
     render(){
         return(
             <div className={this.state.currentId !== '' ? "container" : "container containerFix"}>
+                {this.state.loader && <Loader/>}
                 {
                     this.state.currentId === '' ?
                         <CaptivePortalList setId={this.idHandler}/> :
-                        <CaptivePortal settedId={this.state.currentId}/>
+                        <CaptivePortal settedId={this.state.currentId}
+                                       loaderHandler={this.loaderHandler}/>
                 }
             </div>
         )
