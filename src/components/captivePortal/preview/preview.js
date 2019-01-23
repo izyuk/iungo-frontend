@@ -95,7 +95,7 @@ class Preview extends Component {
         let topData = this.props.header.top;
         let descriptionData = this.props.header.description;
         let footerData = this.props.footerTextData;
-        console.log(footerData);
+        console.log(topData);
         let {methods} = this.props.state;
         return (
             <div className="previewWrap">
@@ -115,7 +115,7 @@ class Preview extends Component {
                                 <div className="textPlace">
                                     <p className="head"
                                        style={{
-                                           color: `rgba(${topData && topData.styles.color.r}, ${topData && topData.styles.color.g}, ${topData && topData.styles.color.b}, ${topData && topData.styles.color.a})`,
+                                           color: `rgba(${topData && topData.styles.color.rgba.r}, ${topData && topData.styles.color.rgba.g}, ${topData && topData.styles.color.rgba.b}, ${topData && topData.styles.color.rgba.a})`,
                                            fontSize: topData && topData.styles.fontSize,
                                            fontWeight: topData && topData.styles.textActions.bold ? 'bold' : '100',
                                            fontStyle: topData && topData.styles.textActions.italic === true ? 'italic' : 'normal',
@@ -127,7 +127,7 @@ class Preview extends Component {
 
                                     <p className="description"
                                        style={{
-                                           color: `rgba(${descriptionData && descriptionData.styles.color.r}, ${descriptionData && descriptionData.styles.color.g}, ${descriptionData && descriptionData.styles.color.b}, ${descriptionData && descriptionData.styles.color.a})`,
+                                           color: `rgba(${descriptionData && descriptionData.styles.color.rgba.r}, ${descriptionData && descriptionData.styles.color.rgba.g}, ${descriptionData && descriptionData.styles.color.rgba.b}, ${descriptionData && descriptionData.styles.color.rgba.a})`,
                                            fontSize: descriptionData && descriptionData.styles.fontSize,
                                            fontWeight: descriptionData && descriptionData.styles.textActions.bold ? 'bold' : '100',
                                            fontStyle: descriptionData && descriptionData.styles.textActions.italic ? 'italic' : 'normal',

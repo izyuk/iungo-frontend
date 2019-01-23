@@ -37,19 +37,19 @@ class FooterEditor extends Component {
         this.state = {
             displayColorPicker: false,
             color: storage ? storage.color.rgba : {
-                r: '0',
-                g: '0',
-                b: '0',
-                a: '1',
+                r: 85,
+                g: 133,
+                b: 237,
+                a: 1,
             },
-            colorHEX: storage ? storage.color.hex : '#000000',
+            colorHEX: storage ? storage.color.hex : '#5585ed',
             fontSize: storage ? storage.fontSize : 18,
             textActions: storage ? storage.textActions : {
                 bold: false,
                 italic: false,
                 underline: false,
             },
-            text: storage ? storage.text : '<Footer content>',
+            text: storage ? storage.text : 'Footer content',
             alignment: storage ? storage.alignment : 'center',
         };
     }

@@ -1,14 +1,14 @@
 const INITIAL = {
-    text: '<Footer content>',
+    text: 'Footer content',
     styles: {
         color: {
             rgba: {
-                r: 249,
-                g: 249,
-                b: 252,
+                r: 85,
+                g: 133,
+                b: 237,
                 a: 1,
             },
-            hex: '#f9f9fc'
+            hex: '#5585ed'
         },
         fontSize: 18,
         textActions: {

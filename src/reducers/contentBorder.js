@@ -1,16 +1,16 @@
 const INITIAL = {
     color: {
         rgba: {
-            r: 255,
-            g: 255,
-            b: 255,
+            r: 229,
+            g: 233,
+            b: 242,
             a: 1,
         },
-        hex: '#ffffff'
+        hex: '#e5e9f2'
     },
-    type: 'none',
+    type: 'solid',
     thickness: 1,
-    radius: 0
+    radius: 4
 };
 
 export default function (state = INITIAL, action) {

@@ -36,12 +36,12 @@ class HeaderTop extends Component {
         console.log(storage);
         this.state = {
             displayColorPicker: false,
-            colorHEX: storage ? storage.styles.colorHEX : '#000000',
+            colorHEX: storage ? storage.styles.colorHEX : '#5585ed',
             color: storage ? storage.styles.color : {
-                r: '0',
-                g: '0',
-                b: '0',
-                a: '1',
+                r: 85,
+                g: 133,
+                b: 237,
+                a: 1,
             },
             fontSize: storage ? storage.styles.fontSize : 18,
             textActions: storage ? storage.styles.textActions : {
@@ -49,7 +49,7 @@ class HeaderTop extends Component {
                 italic: false,
                 underline: false,
             },
-            text: storage ? storage.styles.text : '<Company name>',
+            text: storage ? storage.styles.text : 'Venue name',
             alignment: storage ? storage.styles.alignment : 'center'
         };
 
@@ -79,18 +79,18 @@ class HeaderTop extends Component {
     }
 
     componentDidMount() {
-        let {displayColorPicker, text, ...rest} = this.state;
-        this.props.textData(text, rest);
-        this.props.handler(rest);
+        let {displayColorPicker, text, color, colorHEX, ...rest} = this.state;
+        this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
+        this.props.handler({color: {rgba: color, hex: colorHEX}, ...rest});
         console.log('--------',this.props.header);
         let storage = this.props.header.top;
         document.getElementById((storage ? storage.styles.alignment : 'center')+'2').checked = true;
     }
 
     componentDidUpdate() {
-        let {displayColorPicker, text, ...rest} = this.state;
-        this.props.textData(text, rest);
-        this.props.handler(rest);
+        let {displayColorPicker, text, color, colorHEX, ...rest} = this.state;
+        this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
+        this.props.handler({color: {rgba: color, hex: colorHEX}, ...rest});
     }
 
     handleClick = () => {
