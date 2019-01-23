@@ -30,14 +30,6 @@ class Index extends Component {
   }
 }
 
-export const Loader = () => {
-  return (
-    <div className="loader">
-      <span></span>
-    </div>
-  );
-};
-
 export const Button = props => {
   return (
     <button type='button' onClick={props.onClick}>Press me</button>

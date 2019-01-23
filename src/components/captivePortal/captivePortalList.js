@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getAllPortals} from "../../api/API";
+import Loader from "../../loader";
 
 class CaptivePortalList extends Component {
     state = {
-        list: ''
+        list: '',
     };
 
     getId = (e) => {
@@ -53,6 +54,7 @@ class CaptivePortalList extends Component {
                         </thead>
                         <tbody>{this.state.list !== '' && this.state.list}</tbody>
                     </table>
+                    {this.state.list === '' && <Loader/>}
                 </div>
             </div>
         )

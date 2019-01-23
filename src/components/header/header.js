@@ -70,15 +70,13 @@ class Header extends Component {
                                 <a href="javascript:void(0)"
                                    className="caret"
                                    onClick={this.popup}>
-                                    <span>Steve Banks</span>
+                                    <span>{localStorage.getItem('email')}</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                         <path fill="#BFC5D2" fillRule="nonzero" d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
                                     </svg>
                                 </a>
                                 <div className={this.state.popup ? "popup active" : 'popup'}>
                                     <ul>
-                                        <li><Link to=''>Profile</Link></li>
-                                        <li><Link to=''>Pricing</Link></li>
                                         <li><button onClick={this.logOut} type="button">Log out</button></li>
                                     </ul>
                                 </div>

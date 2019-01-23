@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {Redirect} from 'react-router-dom';
 
-import { userLogin, userRegister } from '../../api/API';
+import {userLogin, userRegister} from '../../api/API';
 
 import {connect} from 'react-redux';
 
 import Login from './login';
 import Register from './register';
+
+import Loader from '../../loader';
 
 class Enter extends Component {
     constructor(props) {
@@ -18,7 +20,8 @@ class Enter extends Component {
                 password: ''
             },
             isValid: false,
-            auth: false
+            auth: false,
+            loader: false
         };
         this.changeOption = this.changeOption.bind(this);
         this.sendData = this.sendData.bind(this);
@@ -28,31 +31,38 @@ class Enter extends Component {
     // dmitriy.izyuk@gmail.com
     // Izyuk8968
 
-    async sendData(){
+    async sendData() {
         let query = this.state.login ? userLogin(this.state.userData.login, this.state.userData.password) : userRegister(this.state.userData.login, this.state.userData.password);
         await query.then(res => {
-            if(this.state.login) {
+            if (this.state.login) {
+                this.setState({
+                    loader: true
+                });
                 console.log(res);
                 let {headers: {authorization}, status} = res;
                 this.props.setToken(authorization);
                 localStorage.setItem('token', authorization);
+                localStorage.setItem('email', this.state.userData.login);
                 console.log(status);
-                if(status === 200){
+                if (status === 200) {
                     this.setState({
                         auth: true
                     })
                 }
             }
         });
+        this.setState({
+            loader: false
+        });
     }
 
-    changeOption(){
+    changeOption() {
         this.setState({
             login: !this.state.login
         });
     }
 
-    setLoginData(data, status){
+    setLoginData(data, status) {
         this.setState({
             userData: data
         });
@@ -70,6 +80,8 @@ class Enter extends Component {
             return true
         } else if (this.state.auth !== nextState.auth) {
             return true
+        } else if (this.state.loader !== nextState.loader) {
+            return true
         } else {
             return false
         }
@@ -80,35 +92,44 @@ class Enter extends Component {
     }
 
     render() {
-        return (
-            <div className="formWrap">
-                <p>Welcome to IUNGO Network </p>
-                {this.state.login ? <Login getLoginData={this.setLoginData}/> : <Register getLoginData={this.setLoginData}/>}
+        if (this.state.loader) {
+            return (
+                <Loader/>
+            )
+        } else {
+            return (
+                <div className="formWrap">
+                    <p>Welcome to IUNGO Network </p>
+                    {this.state.login ? <Login getLoginData={this.setLoginData}/> :
+                        <Register getLoginData={this.setLoginData}/>}
 
                     <span disabled={!this.state.isValid}
-                            className={!this.state.isValid ? "login disabled" : "login"}
-                            onClick={this.sendData}>{this.state.login ? 'Login' : 'Register'}</span>
-                {
-                    this.state.login ?
-                        <p className="question">Not a member?&nbsp;
-                            <button
-                            onClick={this.changeOption}
-                            type="button">Sign up now</button>
-                        </p> :
-                        <p className="question"> Have account?&nbsp;
-                            <button
-                            onClick={this.changeOption}
-                            type="button">Log in</button>
-                        </p>
+                          className={!this.state.isValid ? "login disabled" : "login"}
+                          onClick={this.sendData}>{this.state.login ? 'Login' : 'Register'}</span>
+                    {
+                        this.state.login ?
+                            <p className="question">Not a member?&nbsp;
+                                <button
+                                    onClick={this.changeOption}
+                                    type="button">Sign up now
+                                </button>
+                            </p> :
+                            <p className="question"> Have account?&nbsp;
+                                <button
+                                    onClick={this.changeOption}
+                                    type="button">Log in
+                                </button>
+                            </p>
 
-                }
-                {
-                    this.state.auth ?
-                        <Redirect to='/dashboard'/>
-                        : false
-                }
-            </div>
-        )
+                    }
+                    {
+                        this.state.auth ?
+                            <Redirect to='/dashboard'/>
+                            : false
+                    }
+                </div>
+            )
+        }
     }
 }
 
@@ -116,8 +137,8 @@ export default connect(
     state => ({
         token: state.token
     }),
-    dispatch=>({
-        setToken:(string) => {
+    dispatch => ({
+        setToken: (string) => {
             dispatch({type: "TOKEN", payload: string})
         }
     })

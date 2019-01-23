@@ -220,6 +220,7 @@ body {
 .loader {
   width: 50px;
   height: 50px;
+  margin: auto;
 }
 .loader span {
   width: 50px;
@@ -229,7 +230,6 @@ body {
   border-top-color: #5585ed;
   animation: loader 1s linear infinite;
   position: absolute;
-  display: inline-flex;
 }
 @keyframes loader {
   0% {
@@ -367,6 +367,10 @@ body {
 }
 .formWrap .login:hover {
   background: #4372d6;
+}
+.formWrap .login:active:hover {
+  background: #4372d6;
+  box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 .formWrap .login.disabled {
   opacity: 0.5;
@@ -1081,6 +1085,13 @@ header .container {
   font-size: 0.75rem;
   line-height: 2;
 }
+.options .wrap .dropdown .container .row .right .innerRow .urlForm button:hover {
+  background: #4372d6;
+}
+.options .wrap .dropdown .container .row .right .innerRow .urlForm button:active:hover {
+  background: #4372d6;
+  box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
 .options .wrap .dropdown .container .row .right .inputSelect {
   width: 100%;
   max-width: 105px;
@@ -1305,6 +1316,13 @@ header .container {
   font-weight: bold;
   cursor: pointer;
 }
+.options .wrap .dropdown .upload:hover {
+  background: #4372d6;
+}
+.options .wrap .dropdown .upload:active:hover {
+  background: #4372d6;
+  box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
 .options .wrap .dropdown .upload input {
   width: 100%;
   height: 100%;
@@ -1339,9 +1357,23 @@ header .container {
   border: 1px solid #4372d6;
   background: #5585ed;
 }
+.options .wrap .buttonsRow button.publishBtn:hover {
+  background: #4372d6;
+}
+.options .wrap .buttonsRow button.publishBtn:active:hover {
+  background: #4372d6;
+  box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
 .options .wrap .buttonsRow button.previewBtn {
   border: 1px solid #dee5f3;
   color: #071031;
+}
+.options .wrap .buttonsRow button.previewBtn:hover {
+  background: #fff;
+}
+.options .wrap .buttonsRow button.previewBtn:active:hover {
+  background: #fff;
+  box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 .preview {
   flex: 2;
@@ -1707,6 +1739,13 @@ header .container {
   position: relative;
   cursor: pointer;
 }
+.hotspotDetailsWrap .hotspotForm > div .cpSelector:hover {
+  background: #4372d6;
+}
+.hotspotDetailsWrap .hotspotForm > div .cpSelector:active:hover {
+  background: #4372d6;
+  box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
 .hotspotDetailsWrap .hotspotForm > div .cpSelector p {
   width: 100%;
   height: 34px;
@@ -1725,6 +1764,13 @@ header .container {
 .hotspotDetailsWrap .hotspotForm > div .cpSelector.active {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}
+.hotspotDetailsWrap .hotspotForm > div .cpSelector.active:hover {
+  background: #5585ed;
+}
+.hotspotDetailsWrap .hotspotForm > div .cpSelector.active:active:hover {
+  background: #5585ed;
+  box-shadow: none;
 }
 .hotspotDetailsWrap .hotspotForm > div .cpSelector.active > p {
   border-bottom: 1px solid #e5e9f2;
@@ -1766,6 +1812,13 @@ header .container {
   border-radius: 20px;
   font-weight: bold;
   margin: auto;
+}
+.hotspotDetailsWrap .hotspotForm button:hover {
+  background: #4372d6;
+}
+.hotspotDetailsWrap .hotspotForm button:active:hover {
+  background: #4372d6;
+  box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 .hotspotDetailsWrap .hotspotTable {
   flex: 1;
