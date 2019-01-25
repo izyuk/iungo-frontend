@@ -167,6 +167,23 @@ export const publishPortal = (string, info, id) => {
         .then(res => res)
         .catch(err => console.warn('In publishPortal API method\n', err));
 };
+
+export const updatePortal = (string, info, id) => {
+    return axios({
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${builder_API}/portal/${id}`,
+        mode: 'no-cors',
+        data: info
+    })
+        .then(res => res)
+        .catch(err => console.warn('In publishPortal API method\n', err));
+};
+
 export const previewPortal = (string, info) => {
     return axios({
         method: 'post',

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {createPortal, publishPortal, previewPortal} from "../../../api/API";
+import {createPortal, publishPortal, previewPortal, updatePortal} from "../../../api/API";
 import Loader from "../../../loader";
 
 class Publish extends Component {
@@ -19,7 +19,7 @@ class Publish extends Component {
         const portalDataToSend = this.getBuilderParams();
         const token = localStorage.getItem('token');
         const cpID = localStorage.getItem('cpID');
-        const query = cpID ? publishPortal(token, portalDataToSend, cpID) : createPortal(token, portalDataToSend);
+        const query = cpID ? (publishPortal(token, portalDataToSend, cpID), updatePortal(token, portalDataToSend, cpID)) : createPortal(token, portalDataToSend);
         await query.then(res => {
             console.log(res);
             this.props.loaderHandler();
@@ -54,7 +54,11 @@ class Publish extends Component {
             imagesIDs
         } = this.props.tabName;
 
+        alert(background.url);
+        alert(logo.url);
+
         const portalDataToSend = {
+            background: background.url,
             name: name && name,
             externalStylesUrl: path && path,
             logoId: imagesIDs.logoID,
@@ -80,7 +84,7 @@ class Publish extends Component {
                 },
                 container_background: {
                     color: container_background.color,
-                    opacity: container_background.opacity,
+                    opacity: container_background.opacity !== null ? container_background.opacity : 100,
                 },
                 container_border: {
                     color: container_border.color,

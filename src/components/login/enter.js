@@ -92,13 +92,14 @@ class Enter extends Component {
     }
 
     render() {
-        if (this.state.loader) {
-            return (
-                <Loader/>
-            )
-        } else {
+        // if (this.state.loader) {
+        //     return (
+        //         <Loader/>
+        //     )
+        // } else {
             return (
                 <div className="formWrap">
+                    {this.state.loader && <Loader/>}
                     <p>Welcome to IUNGO Network </p>
                     {this.state.login ? <Login getLoginData={this.setLoginData}/> :
                         <Register getLoginData={this.setLoginData}/>}
@@ -129,7 +130,7 @@ class Enter extends Component {
                     }
                 </div>
             )
-        }
+        // }
     }
 }
 

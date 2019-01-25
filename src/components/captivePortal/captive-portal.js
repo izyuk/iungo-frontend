@@ -22,16 +22,16 @@ class CaptivePortal extends Component {
             background: this.props.background_and_logo.container_background,
             size: this.props.background_and_logo.container_size
         },
-        headerText: '' || {
+        headerText: (this.props.background_and_logo.header_top_text_data && this.props.background_and_logo.header_description_text_data) ? {
             top: this.props.background_and_logo.header_top_text_data,
             descr: this.props.background_and_logo.header_description_text_data
-        },
+        } : '',
         methods: {
             facebook: true,
             google: true,
             twitter: true
         },
-        footerContent: '' || this.props.background_and_logo.footer_description,
+        footerContent: this.props.background_and_logo.footer_description || '',
         loader: false
     };
     // }
@@ -75,14 +75,49 @@ class CaptivePortal extends Component {
         const id = this.props.settedId ? this.props.settedId : localStorage.getItem('cpID');
         let query = getPortal(data, id);
         console.log(query);
-        let store = '';
-        await query.then(res => {
-            console.log(res);
-            store = res.data;
-        });
-        this.setState({
+        // let store = '';
 
-        })
+        console.log(this.props.tabName);
+        this.props.loaderHandler();
+        await query.then(res => {
+            const {data} = res;
+            console.log(data);
+
+            this.props.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.background.color);
+            this.props.setLogo(data.logo !== null ? data.logo.externalUrl : '', data.style.background_and_logo.logo.position);
+            this.props.setBorderStyle(data.style.container_border);
+            this.props.setBackgroundStyle(data.style.container_background);
+            this.props.setSizeStyle(data.style.container_size);
+            this.props.setHedaerTopData(data.header, data.style.header.top);
+            this.props.setHedaerDescriptionData(data.description, data.style.header.description);
+            this.props.setLoginMethods({
+                facebook: data.facebookLogin,
+                google: data.googleLogin,
+                twitter: data.twitterLogin
+            });
+            this.props.setFooterData(data.footer, data.style.footer);
+            this.setState({
+                type: data.background !== null? 'image' : 'color',
+                backgrName: data.background !== null ? data.background.externalUrl : data.style.background_and_logo.background.color,
+                logoName: data.logo !== null ? data.logo.externalUrl : '',
+                alignment: data.style.background_and_logo.logo.position,
+                container: {
+                    border: data.style.container_border,
+                    background: data.style.container_background,
+                    size: data.style.container_size
+                },
+                headerText: {
+                    top: data.header,
+                    descr: data.description
+                },
+                methods: {
+                    facebook: data.facebookLogin, google: data.googleLogin, twitter: data.twitterLogin
+                },
+                footerContent: data.footer
+            });
+            console.log(this.state);
+            this.props.loaderHandler();
+        });
     };
 
 
@@ -151,6 +186,7 @@ class CaptivePortal extends Component {
         else if (this.state.headerText !== nextState.headerText) return true;
         else if (this.state.methods !== nextState.methods) return true;
         else if (this.state.footerContent !== nextState.footerContent) return true;
+        else if (this.props.tabName !== nextProps.tabName) return true;
         else return false;
     }
 
@@ -227,11 +263,39 @@ class CaptivePortal extends Component {
 export default connect(
     state => ({
         background_and_logo: state,
-        token: state.token
+        token: state.token,
+        tabName: state
     }),
     dispatch => ({
         addPortalName: (name) => {
             dispatch({type: "PORTAL_NAME", payload: name})
+        },
+        setBackground: (path, color) => {
+            dispatch({type: "UPLOAD_BACKGROUND", payload: {path, color}});
+        },
+        setLogo: (path, position) => {
+            dispatch({type: "UPLOAD_LOGO", payload: {path, position}});
+        },
+        setBorderStyle: (data) => {
+            dispatch({type: "container_border", payload: data});
+        },
+        setBackgroundStyle: (data) => {
+            dispatch({type: "container_background", payload: data});
+        },
+        setSizeStyle: (data) => {
+            dispatch({type: "container_size", payload: data});
+        },
+        setHedaerTopData: (text, styles) => {
+            dispatch({type: "HEADER_TOP", payload: {text, styles}});
+        },
+        setHedaerDescriptionData: (text, styles) => {
+            dispatch({type: "HEADER_DESCRIPTION", payload: {text, styles}});
+        },
+        setLoginMethods: (data) => {
+            dispatch({type: "LOGIN_METHODS", payload: data});
+        },
+        setFooterData: (text, styles) => {
+            dispatch({type: "FOOTER_DESCRIPTION", payload: {text, styles}});
         }
     })
 )(CaptivePortal);

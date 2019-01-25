@@ -18,7 +18,7 @@ class CSS extends Component {
             HEAD.appendChild(link);
             this.props.setCSS(link);
         }
-        console.log(JSON.stringify(this.props.background_and_logo));
+        console.log(this.props.background_and_logo);
     }
 
     render() {
