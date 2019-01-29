@@ -3,47 +3,30 @@ import React, {Component} from 'react';
 import Methods from './methods';
 
 
-
-
 class Preview extends Component {
-    // constructor(props) {
-    //     super(props);
-    /*this.*/
     state = {
         changes: true,
-        backgrType: 'color',
+        backgroundType: 'COLOR',
         backgroundColor: this.props.state.logoName.colorHEX,
         logoName: this.props.state.logoName === '' ? 'logo.png' : this.props.state.logoName,
         backgrName: this.props.state.backgrName || ''
     };
-    /*this.*/
     PreviewMain = React.createRef();
-    /*this.*/
     ContainerMain = React.createRef();
-    /*this.*/
     FooterText = React.createRef();
 
-    // }
-
     container = ({border: {color, ...rest}, background, size: {width, padding}}) => {
-        if (this.props.state.backgroundType === 'image') {
-            if (this.props.state.type === 'background') {
-                if (this.props.state.backgrName !== '' || this.props.state.backgrName !== undefined) {
-                    this.PreviewMain.current.style.background = `url(${this.props.state.backgrName})`;
-                } else {
-                    this.PreviewMain.current.style.background = this.state.backgroundColor;
-                }
-            } else if (this.props.state.type === 'logo') {
-                this.PreviewMain.current.style.background = this.state.backgroundColor;
-            }
-        } else if (this.props.state.backgroundType === 'color') {
-            if (this.props.state.backgrName !== '') {
-                this.PreviewMain.current.style.background = this.props.state.backgrName;
+        if (this.props.state.type === 'background') {
+            if (typeof this.props.state.backgrName === 'string') {
+                this.PreviewMain.current.style.background = `url(${this.props.state.backgrName})`;
+            } else if (typeof this.props.state.backgrName === 'object') {
+                const {rgba} = this.props.state.backgrName;
+                this.PreviewMain.current.style.background = `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
             } else {
                 this.PreviewMain.current.style.background = this.state.backgroundColor;
             }
-        } else {
-            this.PreviewMain.current.style.background = '#f9f9fc';
+        } else if (this.props.state.type === 'logo') {
+            this.PreviewMain.current.style.background = this.state.backgroundColor;
         }
         this.ContainerMain.current.style.borderWidth = rest.thickness ? `${rest.thickness}px` : false;
         this.ContainerMain.current.style.borderStyle = rest.type ? `${rest.type}` : false;

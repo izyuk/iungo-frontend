@@ -16,7 +16,7 @@ class CaptivePortal extends Component {
         backgrName: '',
         logoName: '',
         type: '',
-        backgroundType: 'color',
+        backgroundType: 'COLOR',
         alignment: 'center',
         container: '' || {
             border: this.props.background_and_logo.container_border,
@@ -70,8 +70,9 @@ class CaptivePortal extends Component {
             this.props.loaderHandler();
             await query.then(res => {
                 const {data} = res;
-                this.props.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.background.color, 'background');
-                this.props.setLogo(data.logo !== null ? data.logo.externalUrl : '', data.style.background_and_logo.logo.position, 'logo');
+                    console.log(data);
+                this.props.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.background.color, data.style.background_and_logo.background.backgroundType);
+                this.props.setLogo(data.logo !== null ? data.logo.externalUrl : '', data.style.background_and_logo.logo.position);
                 this.props.setBorderStyle(data.style.container_border);
                 this.props.setBackgroundStyle(data.style.container_background);
                 this.props.setSizeStyle(data.style.container_size);
@@ -85,7 +86,7 @@ class CaptivePortal extends Component {
                 this.props.setFooterData(data.footer, data.style.footer);
                 this.setState({
                     type: 'background',
-                    backgroundType: data.background !== null ? 'image' : 'color',
+                    backgroundType: data.style.background_and_logo.background.backgroundType,
                     backgrName: data.background !== null ? data.background.externalUrl : data.style.background_and_logo.background.color,
                     logoName: data.logo !== null ? data.logo.externalUrl : '',
                     alignment: data.style.background_and_logo.logo.position,
@@ -106,9 +107,7 @@ class CaptivePortal extends Component {
                 });
                 this.props.loaderHandler();
             });
-        } /*else {
-            this.props.reset();
-        }*/
+        }
 
     };
 
@@ -202,6 +201,7 @@ class CaptivePortal extends Component {
 
     componentDidUpdate() {
         console.log(this.props.background_and_logo);
+        console.log('updated', this.state);
     }
 
     render() {
@@ -274,8 +274,8 @@ export default connect(
         addPortalName: (name) => {
             dispatch({type: "PORTAL_NAME", payload: name})
         },
-        setBackground: (path, color) => {
-            dispatch({type: "UPLOAD_BACKGROUND", payload: {path, color}});
+        setBackground: (path, color, type) => {
+            dispatch({type: "UPLOAD_BACKGROUND", payload: {path, color, type}});
         },
         setLogo: (path, position) => {
             dispatch({type: "UPLOAD_LOGO", payload: {path, position}});

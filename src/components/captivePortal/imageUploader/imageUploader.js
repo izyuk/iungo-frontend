@@ -49,7 +49,7 @@ class ImageUploader extends Component {
     };
 
     fileSelectedHandler = async (files) => {
-        this.props.background_and_logo.backgroundType = 'image';
+        this.props.background_and_logo.backgroundType = 'IMAGE';
 
 
         this.state.backgroundColor = false;
@@ -74,7 +74,7 @@ class ImageUploader extends Component {
         img.style.zoom = 0.1;
         let query = uploadImage(this.props.token.token ? this.props.token.token : localStorage.getItem('token'), this.state.fileInfo.name, this.state.fileInfo.base64);
         await query.then(res => {
-            this.transferFileData(res.data.externalUrl, type, 'image');
+            this.transferFileData(res.data.externalUrl, type, 'IMAGE');
             this.props.setID(res.data.id);
         });
     };
@@ -85,7 +85,7 @@ class ImageUploader extends Component {
             this.props.uploadFile(data, this.state.logoPosition);
         } else if (type === 'background') {
             let colorData = this.state.color;
-            this.props.uploadFile(data, colorData);
+            this.props.uploadFile(data, colorData, backgroundType);
         }
         this.props.handler(data, type, backgroundType);
     };
@@ -119,8 +119,8 @@ class ImageUploader extends Component {
             }
         }
         if (this.props.type === 'logo') {
-            const position = this.props.position;
-            document.getElementById((position ? position : this.state.logoPosition)).checked = true;
+            let position = this.props.position;
+            document.getElementById((position ? (position === 'flex-start' ? 'left' : (position === 'flex-end' ? 'right' : 'center')) : this.state.logoPosition)).checked = true;
         }
     }
 
@@ -134,18 +134,9 @@ class ImageUploader extends Component {
     };
 
     alignment = (e) => {
-        if (e.target.getAttribute('id') === 'left') {
-            this.props.alignment('flex-start');
-            this.props.uploadFile(this.state.logo, 'left');
-        }
-        if (e.target.getAttribute('id') === 'center') {
-            this.props.alignment('center');
-            this.props.uploadFile(this.state.logo, 'center');
-        }
-        if (e.target.getAttribute('id') === 'right') {
-            this.props.alignment('flex-end');
-            this.props.uploadFile(this.state.logo, 'right');
-        }
+        this.props.alignment(e.target.getAttribute('datatype'));
+        // console.log(this.props.background_and_logo.background_and_logo.logo.url);
+        this.props.uploadFile(this.props.background_and_logo.background_and_logo.logo.url, e.target.getAttribute('datatype'));
     };
 
     handleChange = (color) => {
@@ -161,13 +152,14 @@ class ImageUploader extends Component {
             }
         });
         this.state.backgroundColor = true;
-        this.props.background_and_logo.backgroundType = 'color';
-        let type = this.props.type;
-        this.props.handler(`rgba(${ this.state.color.rgba.r }, ${ this.state.color.rgba.g }, ${ this.state.color.rgba.b }, ${ this.state.color.rgba.a })`, type, 'color');
+        this.props.background_and_logo.backgroundType = 'COLOR';
+        const type = this.props.type;
+
+        this.props.handler(this.state.color, type, 'COLOR');
         this.props.uploadFile(this.state.background, {
             hex: color.hex,
             rgba: {r: color.rgb.r, g: color.rgb.g, b: color.rgb.b, a: color.rgb.a}
-        });
+        }, 'COLOR');
     };
 
     render() {
@@ -244,19 +236,19 @@ class ImageUploader extends Component {
                             <div className="innerCol">
                                 <label htmlFor="left">Left
                                     <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='left' type="radio" name='alignment'/>
+                                        <input onChange={this.alignment} id='left' datatype={'flex-start'} type="radio" name='alignment'/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
                                 <label htmlFor="center">Center
                                     <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='center' type="radio" name='alignment'/>
+                                        <input onChange={this.alignment} id='center' datatype={'center'} type="radio" name='alignment'/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
                                 <label htmlFor="right">Right
                                     <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='right' type="radio" name='alignment'/>
+                                        <input onChange={this.alignment} id='right' datatype={'flex-end'} type="radio" name='alignment'/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>

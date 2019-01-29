@@ -45,7 +45,7 @@ class Publish extends Component {
             css: {path},
             header: {top, description},
             footer,
-            background_and_logo: {background, logo},
+            background_and_logo: {background, logo, type},
             container_background,
             container_border,
             container_size,
@@ -54,7 +54,7 @@ class Publish extends Component {
         } = this.props.tabName;
 
         const portalDataToSend = {
-            background: background.url,
+            background: type === 'COLOR' ? null : background.url,
             name: name && name,
             externalStylesUrl: path && path,
             logoId: imagesIDs.logoID,
@@ -97,6 +97,7 @@ class Publish extends Component {
             facebookLogin: methods.facebook,
             twitterLogin: methods.twitter
         };
+        console.log(portalDataToSend);
         return portalDataToSend;
     };
 

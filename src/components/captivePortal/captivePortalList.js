@@ -40,7 +40,7 @@ class CaptivePortalList extends Component {
 
         this.props.clearing();
 
-        
+
 
         console.log(this.props.tabName);
     };

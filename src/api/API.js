@@ -152,7 +152,7 @@ export const createPortal = (string, info) => {
         .catch(err => console.warn('In createPortal API method\n', err));
 };
 
-export const publishPortal = (string, info, id) => {
+export const updatePortal = (string, info, id) => {
     return axios({
         method: 'post',
         headers: {
@@ -168,7 +168,7 @@ export const publishPortal = (string, info, id) => {
         .catch(err => console.warn('In publishPortal API method\n', err));
 };
 
-export const updatePortal = (string, info, id) => {
+export const publishPortal = (string, info, id) => {
     return axios({
         method: 'put',
         headers: {

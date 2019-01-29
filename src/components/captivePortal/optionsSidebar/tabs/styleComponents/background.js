@@ -24,8 +24,8 @@ export default connect(
         token: state.token
     }),
     dispatch => ({
-        uploadFile: (path, color) => {
-            dispatch({type: "UPLOAD_BACKGROUND", payload: {path, color}});
+        uploadFile: (path, color, type) => {
+            dispatch({type: "UPLOAD_BACKGROUND", payload: {path, color, type}});
         },
         setID: (num) => {
             dispatch({type: "SET_backgroundID", payload: num});

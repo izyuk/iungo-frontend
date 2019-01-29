@@ -1,7 +1,4 @@
-// import {createStore, combineReducers, applyMiddleware } from 'redux';
-import { combineReducers } from 'redux';
-// import logger from 'redux-logger';
-// import thunk from 'redux-thunk';
+import {combineReducers} from 'redux';
 
 import fileUpload from './background_and_logo';
 import selectTab from './selectTab';
@@ -33,13 +30,13 @@ const allReducers = combineReducers({
 });
 
 const rootReducer = (state, action) => {
-    console.log('here');
+    // console.log('before reset IF', state);
+    // console.log('here');
     if (action.type === 'RESET_APP') {
-        console.log('reset');
         state = undefined;
-        return allReducers(undefined, action);
+        // console.log('inside of reset IF, after state re-assigning', state);
     }
-
+    // console.log('after reset IF', state);
     return allReducers(state, action);
 };
 

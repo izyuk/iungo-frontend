@@ -13,7 +13,8 @@ const INITIAL = {
                 a: 1,
             },
             hex: '#e5e9f2'
-        }
+        },
+        type: ''
     }
 };
 
@@ -30,7 +31,8 @@ export default function (state = INITIAL, action) {
             return Object.assign(state, {
                 background: {
                     url: action.payload.path,
-                    color: action.payload.color
+                    color: action.payload.color,
+                    type: action.payload.type
                 }
             });
         default:
