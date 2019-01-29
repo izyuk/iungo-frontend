@@ -38,12 +38,10 @@ class Enter extends Component {
                 this.setState({
                     loader: true
                 });
-                console.log(res);
                 let {headers: {authorization}, status} = res;
                 this.props.setToken(authorization);
                 localStorage.setItem('token', authorization);
                 localStorage.setItem('email', this.state.userData.login);
-                console.log(status);
                 if (status === 200) {
                     this.setState({
                         auth: true
@@ -88,7 +86,7 @@ class Enter extends Component {
     }
 
     componentDidUpdate() {
-        console.log(this.state);
+
     }
 
     render() {

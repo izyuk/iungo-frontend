@@ -77,7 +77,6 @@ class ContentBackground extends Component {
     };
 
     onSliderChange(value) {
-        console.log(value);
         this.setState({
             opacity: value
         });
@@ -105,8 +104,6 @@ class ContentBackground extends Component {
             select[i].nextSibling.insertBefore(span, svg);
         }
         let {displayColorPicker, ...rest} = this.state;
-        console.log('background STATE', this.state);
-        console.log('background STORAGE', this.props.container_background);
         this.props.backgroundStyle(rest);
         this.props.handler(rest);
     }
@@ -115,8 +112,6 @@ class ContentBackground extends Component {
         let {displayColorPicker, ...rest} = this.state;
         this.props.backgroundStyle(rest);
         this.props.handler(rest);
-        console.log('background STORAGE UPDATED', this.props.container_background);
-        console.log('background STATE UPDATED', this.state);
     }
 
     render() {

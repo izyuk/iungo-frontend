@@ -50,7 +50,7 @@ class ImageUploader extends Component {
 
     fileSelectedHandler = async (files) => {
         this.props.background_and_logo.backgroundType = 'image';
-        console.log(this.props.background_and_logo);
+
 
         this.state.backgroundColor = false;
         this.state.alignment = true;

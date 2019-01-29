@@ -5,6 +5,7 @@ import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
 import {upload_file} from "../../reducers/background_and_logo";
 import {getPortal} from "../../api/API";
+import Loader from "../../loader";
 
 
 class CaptivePortal extends Component {
@@ -32,7 +33,7 @@ class CaptivePortal extends Component {
             twitter: true
         },
         footerContent: this.props.background_and_logo.footer_description || '',
-        loader: false
+        loader: true
     };
     // }
 
@@ -59,65 +60,56 @@ class CaptivePortal extends Component {
         });
     };
 
-    // findAllPortals = async (data) => {
-    //     // let {token} = data;
-    //     console.log(data);
-    //     let query = getAllPortals(data);
-    //     console.log(query);
-    //     await query.then(res => {
-    //         console.log(res);
-    //     });
-    //
-    // };
 
     findPortal = async (data) => {
-        console.log(data);
+
         const id = this.props.settedId ? this.props.settedId : localStorage.getItem('cpID');
-        let query = getPortal(data, id);
-        console.log(query);
-        // let store = '';
+        if(id !== undefined){
+            let query = getPortal(data, id);
 
-        console.log(this.props.tabName);
-        this.props.loaderHandler();
-        await query.then(res => {
-            const {data} = res;
-            console.log(data);
-
-            this.props.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.background.color);
-            this.props.setLogo(data.logo !== null ? data.logo.externalUrl : '', data.style.background_and_logo.logo.position);
-            this.props.setBorderStyle(data.style.container_border);
-            this.props.setBackgroundStyle(data.style.container_background);
-            this.props.setSizeStyle(data.style.container_size);
-            this.props.setHedaerTopData(data.header, data.style.header.top);
-            this.props.setHedaerDescriptionData(data.description, data.style.header.description);
-            this.props.setLoginMethods({
-                facebook: data.facebookLogin,
-                google: data.googleLogin,
-                twitter: data.twitterLogin
-            });
-            this.props.setFooterData(data.footer, data.style.footer);
-            this.setState({
-                type: data.background !== null? 'image' : 'color',
-                backgrName: data.background !== null ? data.background.externalUrl : data.style.background_and_logo.background.color,
-                logoName: data.logo !== null ? data.logo.externalUrl : '',
-                alignment: data.style.background_and_logo.logo.position,
-                container: {
-                    border: data.style.container_border,
-                    background: data.style.container_background,
-                    size: data.style.container_size
-                },
-                headerText: {
-                    top: data.header,
-                    descr: data.description
-                },
-                methods: {
-                    facebook: data.facebookLogin, google: data.googleLogin, twitter: data.twitterLogin
-                },
-                footerContent: data.footer
-            });
-            console.log(this.state);
             this.props.loaderHandler();
-        });
+            await query.then(res => {
+                const {data} = res;
+                this.props.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.background.color, 'background');
+                this.props.setLogo(data.logo !== null ? data.logo.externalUrl : '', data.style.background_and_logo.logo.position, 'logo');
+                this.props.setBorderStyle(data.style.container_border);
+                this.props.setBackgroundStyle(data.style.container_background);
+                this.props.setSizeStyle(data.style.container_size);
+                this.props.setHedaerTopData(data.header, data.style.header.top);
+                this.props.setHedaerDescriptionData(data.description, data.style.header.description);
+                this.props.setLoginMethods({
+                    facebook: data.facebookLogin,
+                    google: data.googleLogin,
+                    twitter: data.twitterLogin
+                });
+                this.props.setFooterData(data.footer, data.style.footer);
+                this.setState({
+                    type: 'background',
+                    backgroundType: data.background !== null ? 'image' : 'color',
+                    backgrName: data.background !== null ? data.background.externalUrl : data.style.background_and_logo.background.color,
+                    logoName: data.logo !== null ? data.logo.externalUrl : '',
+                    alignment: data.style.background_and_logo.logo.position,
+                    container: {
+                        border: data.style.container_border,
+                        background: data.style.container_background,
+                        size: data.style.container_size
+                    },
+                    headerText: {
+                        top: data.header,
+                        descr: data.description
+                    },
+                    methods: {
+                        facebook: data.facebookLogin, google: data.googleLogin, twitter: data.twitterLogin
+                    },
+                    footerContent: data.footer,
+                    loader: false
+                });
+                this.props.loaderHandler();
+            });
+        } /*else {
+            this.props.reset();
+        }*/
+
     };
 
 
@@ -169,7 +161,7 @@ class CaptivePortal extends Component {
     };
 
     footerTextData = (data) => {
-        console.log(data);
+
         this.setState({
             footerContent: data
         })
@@ -187,7 +179,7 @@ class CaptivePortal extends Component {
         else if (this.state.methods !== nextState.methods) return true;
         else if (this.state.footerContent !== nextState.footerContent) return true;
         else if (this.props.tabName !== nextProps.tabName) return true;
-        else return false;
+        else return true;
     }
 
     componentDidMount() {
@@ -204,59 +196,71 @@ class CaptivePortal extends Component {
             return (mm + sp + dd + sp + yyyy);
         };
 
-        this.props.addPortalName(`CaptivePortal - ${currentDay('/')}`)
+        this.props.addPortalName(`CaptivePortal - ${currentDay('/')}`);
+
     }
 
     componentDidUpdate() {
-
+        console.log(this.props.background_and_logo);
     }
 
     render() {
-        return (
-            <div className="container">
-                <div className="wrap wrapFix">
-                    <div className="container containerFix">
-                        <div className="wrap wrapFix2">
-                            <div className="info">
-                                <h3>Captive Portal Builder</h3>
-                                <div className="toggles">
-                                    <a href="javascript:void(0)" data-id="desktop"
-                                       className="active" onClick={(data) => this.trigger(data)}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24">
-                                            <path fill="#BFC6D3" fillRule="nonzero"
-                                                  d="M17.25 6H6.75C6.3 6 6 6.3 6 6.75V14c0 .45.3 1 .75 1H11v2H9v1h6v-1h-2v-2h4.25c.45 0 .75-.55.75-1V6.75c0-.45-.3-.75-.75-.75zM16 8v5H8V8h8z"/>
-                                        </svg>
-                                        <span>Desktop</span>
-                                    </a>
-                                    <a href="javascript:void(0)" data-id="mobile"
-                                       onClick={(data) => this.trigger(data)}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24">
-                                            <path fill="#AFB7C8" fillRule="nonzero"
-                                                  d="M15.5 6h-6C8.673 6 8 6.673 8 7.5v9c0 .827.673 1.5 1.5 1.5h6c.827 0 1.5-.673 1.5-1.5v-9c0-.827-.673-1.5-1.5-1.5zm-3 10.375a.625.625 0 1 1 0-1.25.625.625 0 0 1 0 1.25zM15 14h-5V8h5v6z"
-                                                  opacity=".8"/>
-                                        </svg>
-                                        <span>Mobile</span>
-                                    </a>
-                                </div>
-                            </div>
-                            <Preview state={this.state}
-                                     header={this.props.background_and_logo.header}
-                                     footerTextData={this.props.background_and_logo.footer}
-                            />
-                        </div>
-                    </div>
-                    <Options alignment={this.alignment}
-                             handler={this.eventHandler}
-                             containerHandler={this.containerHandler}
-                             textData={this.contentData}
-                             methods={this.loginMethods}
-                             footerTextData={this.footerTextData}
-                             loaderHandler={this.props.loaderHandler}/>
+        if (this.state.loader) {
+            return (
+                <div className="container">
+                    <Loader/>
                 </div>
-            </div>
-        )
+            )
+        }
+        else {
+            return (
+                <div className="container">
+                    <div className="wrap wrapFix">
+                        <div className="container containerFix">
+                            <div className="wrap wrapFix2">
+                                <div className="info">
+                                    <h3>Captive Portal Builder</h3>
+                                    <div className="toggles">
+                                        <a href="javascript:void(0)" data-id="desktop"
+                                           className="active" onClick={(data) => this.trigger(data)}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24">
+                                                <path fill="#BFC6D3" fillRule="nonzero"
+                                                      d="M17.25 6H6.75C6.3 6 6 6.3 6 6.75V14c0 .45.3 1 .75 1H11v2H9v1h6v-1h-2v-2h4.25c.45 0 .75-.55.75-1V6.75c0-.45-.3-.75-.75-.75zM16 8v5H8V8h8z"/>
+                                            </svg>
+                                            <span>Desktop</span>
+                                        </a>
+                                        <a href="javascript:void(0)" data-id="mobile"
+                                           onClick={(data) => this.trigger(data)}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24">
+                                                <path fill="#AFB7C8" fillRule="nonzero"
+                                                      d="M15.5 6h-6C8.673 6 8 6.673 8 7.5v9c0 .827.673 1.5 1.5 1.5h6c.827 0 1.5-.673 1.5-1.5v-9c0-.827-.673-1.5-1.5-1.5zm-3 10.375a.625.625 0 1 1 0-1.25.625.625 0 0 1 0 1.25zM15 14h-5V8h5v6z"
+                                                      opacity=".8"/>
+                                            </svg>
+                                            <span>Mobile</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <Preview state={this.state}
+                                         header={this.props.background_and_logo.header}
+                                         footerTextData={this.props.background_and_logo.footer}
+                                />
+
+                            </div>
+                        </div>
+                        <Options alignment={this.alignment}
+                                 handler={this.eventHandler}
+                                 containerHandler={this.containerHandler}
+                                 textData={this.contentData}
+                                 methods={this.loginMethods}
+                                 footerTextData={this.footerTextData}
+                                 loaderHandler={this.props.loaderHandler}/>
+                    </div>
+                </div>
+            )
+        }
+
     }
 }
 

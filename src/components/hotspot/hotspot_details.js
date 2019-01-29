@@ -58,7 +58,6 @@ class HotspotDetails extends Component {
         const query = getAllPortals(str);
         await query.then(res => {
             const {data} = res;
-            console.log(data);
             // let arr = [];
             // data.map((item, i) => {
             //     arr.push(`<p key=${i} dataid=${item.id}>${item.name}</p>`);
@@ -138,8 +137,6 @@ class HotspotDetails extends Component {
     }
 
     render() {
-        console.log(this.state.portalsList);
-        console.log(this.state.id);
         const {
             name,
             address,

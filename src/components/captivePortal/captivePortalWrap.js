@@ -8,7 +8,8 @@ import Loader from "../../loader";
 export default class CaptivePortalWrap extends Component {
     state = {
         currentId: '',
-        loader: false
+        loader: false,
+        storageCleared: false
     };
 
     idHandler = (id) => {
@@ -16,7 +17,6 @@ export default class CaptivePortalWrap extends Component {
             currentId: id
         });
         localStorage.setItem('cpID', id);
-        console.log(id);
     };
 
 
@@ -26,15 +26,23 @@ export default class CaptivePortalWrap extends Component {
         });
     };
 
-    render(){
-        return(
+    storageCleaningHandler = () => {
+        // this.setState(prevState => ({
+        //     storageCleared: !prevState.storageCleared
+        // }))
+    };
+
+    render() {
+        return (
             <div className={this.state.currentId !== '' ? "container" : "container containerFix"}>
                 {this.state.loader && <Loader/>}
                 {
-                    this.state.currentId === '' ?
-                        <CaptivePortalList setId={this.idHandler}/> :
+                    (this.state.currentId !== '' || this.state.storageCleared) ?
                         <CaptivePortal settedId={this.state.currentId}
-                                       loaderHandler={this.loaderHandler}/>
+                                       loaderHandler={this.loaderHandler}/>:
+                        <CaptivePortalList setId={this.idHandler}
+                                           clearing={this.storageCleaningHandler}/>
+
                 }
             </div>
         )

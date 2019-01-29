@@ -4,14 +4,15 @@ import {createPortal, publishPortal, previewPortal, updatePortal} from "../../..
 import Loader from "../../../loader";
 
 class Publish extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-        this.getBuilderParams = this.getBuilderParams.bind(this);
-    }
+    // constructor(props) {
+    //     super(props);
+        /*this.*/state = {};
+        // this.getBuilderParams = this.getBuilderParams.bind(this);
+    // }
 
     componentDidMount() {
-        // console.log(this.props.state);
+        console.log(this.props.tabName.background_and_logo.background);
+        console.log(this.props.tabName.background_and_logo.logo);
     }
 
     publishPortalMethodHandler = async (id) => {
@@ -21,7 +22,6 @@ class Publish extends Component {
         const cpID = localStorage.getItem('cpID');
         const query = cpID ? (publishPortal(token, portalDataToSend, cpID), updatePortal(token, portalDataToSend, cpID)) : createPortal(token, portalDataToSend);
         await query.then(res => {
-            console.log(res);
             this.props.loaderHandler();
         });
     };
@@ -32,14 +32,13 @@ class Publish extends Component {
         const token = localStorage.getItem('token');
         const query = previewPortal(token, portalDataToSend);
         await query.then(res => {
-            console.log(res);
             const {data} = res;
             this.props.loaderHandler();
             window.open(data, '_blank');
         });
     };
 
-    getBuilderParams() {
+    getBuilderParams = () => {
 
         const {
             name: {name},
@@ -53,9 +52,6 @@ class Publish extends Component {
             login_methods: {methods},
             imagesIDs
         } = this.props.tabName;
-
-        alert(background.url);
-        alert(logo.url);
 
         const portalDataToSend = {
             background: background.url,
@@ -102,16 +98,18 @@ class Publish extends Component {
             twitterLogin: methods.twitter
         };
         return portalDataToSend;
-    }
+    };
 
     render() {
         return (
             <div className="buttonsRow">
-                <button type="button" onClick={this.previewPortalMethodHandler} className="previewBtn">Preview
-                </button>
+                <p>
+                    <button type="button" onClick={this.previewPortalMethodHandler} className="previewBtn">Preview
+                    </button>
+                    <span>Please allow new windows opening</span>
+                </p>
                 <button type="button" onClick={this.publishPortalMethodHandler} className="publishBtn">Publish
                 </button>
-                {/*<span>Please allow new windows opening</span>*/}
             </div>
         )
     }

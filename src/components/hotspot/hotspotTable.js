@@ -29,12 +29,10 @@ class HotspotTable extends Component {
         const {hotspotList} = this.props;
         const {[0]: {id, name, address, description}} = hotspotList.filter(el => el.id === currentId);
         this.props.editHandler(id, name, address, description);
-        console.log(id, name, address, description);
     };
 
     render() {
         const {hotspotList} = this.props;
-        console.log(hotspotList);
         return (
             <table className={"hotspotTable"} rules="rows">
                 <thead>

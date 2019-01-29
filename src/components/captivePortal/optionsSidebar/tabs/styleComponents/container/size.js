@@ -81,7 +81,7 @@ class ContainerSize extends Component {
                     </div>
                     <div className="right">
                         <div className="inputSelect">
-                            <input type="number" onChange={this.valueWidth} defaultValue={this.state.width}/>
+                            <input type="number" onBlur={this.valueWidth} defaultValue={this.state.width}/>
                             <select name="" id="">
                                 <option value="px">px</option>
                                 <option value="%">%</option>
@@ -101,7 +101,7 @@ class ContainerSize extends Component {
                     <div className="right">
 
                         <div className="inputSelect">
-                            <input type="number" onChange={this.valuePadding} defaultValue={this.state.padding}/>
+                            <input type="number" onBlur={this.valuePadding} defaultValue={this.state.padding}/>
                             <select name="" id="">
                                 <option value="px">px</option>
                                 <option value="%">%</option>

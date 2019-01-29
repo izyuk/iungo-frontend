@@ -33,24 +33,24 @@ class FooterEditor extends Component {
     constructor(props) {
         super(props);
         let storage = this.props.footer.styles;
-        console.log(storage);
+
         this.state = {
             displayColorPicker: false,
-            color: storage ? storage.color.rgba : {
+            color: storage.color.rgba || {
                 r: 85,
                 g: 133,
                 b: 237,
                 a: 1,
             },
-            colorHEX: storage ? storage.color.hex : '#5585ed',
-            fontSize: storage ? storage.fontSize : 18,
-            textActions: storage ? storage.textActions : {
+            colorHEX: storage.color.hex || '#5585ed',
+            fontSize: storage.fontSize || 18,
+            textActions: storage.textActions || {
                 bold: false,
                 italic: false,
                 underline: false,
             },
-            text: storage ? storage.text : 'Footer content',
-            alignment: storage ? storage.alignment : 'center',
+            text: storage.text || 'Footer content',
+            alignment: storage.alignment ||'center',
         };
     }
 
@@ -79,10 +79,8 @@ class FooterEditor extends Component {
 
     componentDidMount() {
         let {displayColorPicker, text, color, colorHEX, ...rest} = this.state;
-        console.log({color: {rgba: color, hex: colorHEX}, ...rest});
         this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
         this.props.footerTextData({color: {rgba: color, hex: colorHEX}, ...rest});
-        console.log('--------', this.props.footer_description);
         let storage = this.props.footer.styles;
         document.getElementById((storage ? storage.alignment : 'center')).checked = true;
     }
@@ -90,7 +88,6 @@ class FooterEditor extends Component {
     componentDidUpdate() {
         let {displayColorPicker, text, color, colorHEX, ...rest} = this.state;
 
-        console.log({color: {rgba: color, hex: colorHEX}, ...rest});
         this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
         this.props.footerTextData({color: {rgba: color, hex: colorHEX}, ...rest});
     }
@@ -104,8 +101,6 @@ class FooterEditor extends Component {
     };
 
     handleChange = (color) => {
-        console.log(color);
-        console.log(this.props.footer.styles.color.rgba);
         const setColor = this.state.color.rgba;
         const hex = this.state.color.hex;
         this.setState({
@@ -136,12 +131,9 @@ class FooterEditor extends Component {
         });
     };
 
-    getText = (e) => {
-        console.log(e.currentTarget.selectionStart);
-        console.log(e.currentTarget.selectionEnd);
-        console.log(e.currentTarget.setSelectionRange);
-
-    };
+    // getText = (e) => {
+    //
+    // };
 
     render() {
         const popover = {

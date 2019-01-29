@@ -16,6 +16,7 @@ import portalName from './portalName';
 import css from './css';
 import imagesIDs from './imagesIDs';
 
+
 const allReducers = combineReducers({
     background_and_logo: fileUpload,
     tabName: selectTab,
@@ -31,4 +32,15 @@ const allReducers = combineReducers({
     imagesIDs: imagesIDs
 });
 
-export default allReducers;
+const rootReducer = (state, action) => {
+    console.log('here');
+    if (action.type === 'RESET_APP') {
+        console.log('reset');
+        state = undefined;
+        return allReducers(undefined, action);
+    }
+
+    return allReducers(state, action);
+};
+
+export default rootReducer;
