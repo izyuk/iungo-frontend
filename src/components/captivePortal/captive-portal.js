@@ -84,6 +84,8 @@ class CaptivePortal extends Component {
                     twitter: data.twitterLogin
                 });
                 this.props.setFooterData(data.footer, data.style.footer);
+                this.props.setLogoID(data.logo === null ? '' : data.logo.id);
+                this.props.setBackgroundID(data.background === null ? '' : data.background.id);
                 this.setState({
                     type: 'background',
                     backgroundType: data.style.background_and_logo.background.backgroundType,
@@ -300,6 +302,12 @@ export default connect(
         },
         setFooterData: (text, styles) => {
             dispatch({type: "FOOTER_DESCRIPTION", payload: {text, styles}});
+        },
+        setLogoID: (id) => {
+            dispatch({type: "SET_logoID", payload: id});
+        },
+        setBackgroundID: (id) => {
+            dispatch({type: "SET_backgroundID", payload: id});
         }
     })
 )(CaptivePortal);

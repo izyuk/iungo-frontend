@@ -24,10 +24,10 @@ class HotspotTable extends Component {
         }
     }
 
-    getDataToEdit = (e, currentId) => {
+    getDataToEdit = (e, currentHotSpotId) => {
         e.preventDefault();
         const {hotspotList} = this.props;
-        const {[0]: {id, name, address, description}} = hotspotList.filter(el => el.id === currentId);
+        const {[0]: {id, name, address, description}} = hotspotList.filter(el => el.id === currentHotSpotId);
         this.props.editHandler(id, name, address, description);
     };
 
@@ -46,6 +46,7 @@ class HotspotTable extends Component {
                 <tbody>
                 {hotspotList && hotspotList.map((item, i) => {
                     const {id, name, address, description, virtualUrl} = item;
+                    console.log(id);
                     return (
                         <tr key={i} onClick={(e) => ::this.getDataToEdit(e, id)}>
                             <td>{name}</td>

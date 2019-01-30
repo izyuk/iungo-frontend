@@ -28,7 +28,9 @@ export default function (state = INITIAL, action) {
                 }
             });
         case "UPLOAD_BACKGROUND":
+            console.log(action.payload.type);
             return Object.assign(state, {
+
                 background: {
                     url: action.payload.path,
                     color: action.payload.color,

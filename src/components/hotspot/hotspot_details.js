@@ -15,6 +15,7 @@ class HotspotDetails extends Component {
         url: '',
         list: '',
         id: '',
+        captivePortalID: '',
         portalsList: ''
     };
 
@@ -40,8 +41,10 @@ class HotspotDetails extends Component {
 
     handleInputChange = (e) => {
         const type = e.target.getAttribute('datatype');
-
-        this.state[type] = e.target.value
+        console.log(type);
+        this.setState({
+            [type]: e.target.value
+        })
     };
 
     getHotspotsMethodHandler = async (str) => {
@@ -85,10 +88,10 @@ class HotspotDetails extends Component {
             const token = this.props.token.token !== undefined ? this.props.token.token : localStorage.getItem('token');
             var query;
             if (this.state.id !== '') {
-                query = updateHotspotById(token, this.state.name, this.state.address, this.state.description, this.state.id);
+                query = updateHotspotById(token, this.state.name, this.state.address, this.state.description, this.state.captivePortalID, this.state.id);
             }
             else {
-                query = createHotspot(token, this.state.name, this.state.address, this.state.description, this.state.id);
+                query = createHotspot(token, this.state.name, this.state.address, this.state.description, this.state.captivePortalID);
             }
 
             await query.then(res => {
@@ -114,7 +117,10 @@ class HotspotDetails extends Component {
 
     editHandler = (id, name, address, description) => {
         const data = {id: id, name: name, address: address, description: description};
+        console.log(data);
+        console.log(this.state);
         Object.keys(data).map((el) => {
+            console.log(el);
             this.setState({
                 [el]: data[el]
             });
@@ -123,7 +129,7 @@ class HotspotDetails extends Component {
 
     setCPId(e) {
         document.getElementsByClassName('selectedPortal')[0].innerText =  e.currentTarget.innerText;
-        this.setState({id: e.currentTarget.getAttribute('dataid') ? e.currentTarget.getAttribute('dataid') : ''});
+        this.setState({captivePortalID: e.currentTarget.getAttribute('dataid') ? e.currentTarget.getAttribute('dataid') : ''});
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -170,7 +176,7 @@ class HotspotDetails extends Component {
                         <textarea
                             datatype="description"
                             placeholder={"Your description"}
-                            defaultValue={description}
+                            value={description}
                             onChange={this.handleInputChange}
                         >
 

@@ -154,7 +154,7 @@ class ImageUploader extends Component {
         this.state.backgroundColor = true;
         this.props.background_and_logo.backgroundType = 'COLOR';
         const type = this.props.type;
-
+        console.log(type);
         this.props.handler(this.state.color, type, 'COLOR');
         this.props.uploadFile(this.state.background, {
             hex: color.hex,
@@ -236,19 +236,22 @@ class ImageUploader extends Component {
                             <div className="innerCol">
                                 <label htmlFor="left">Left
                                     <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='left' datatype={'flex-start'} type="radio" name='alignment'/>
+                                        <input onChange={this.alignment} id='left' datatype={'flex-start'} type="radio"
+                                               name='alignment'/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
                                 <label htmlFor="center">Center
                                     <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='center' datatype={'center'} type="radio" name='alignment'/>
+                                        <input onChange={this.alignment} id='center' datatype={'center'} type="radio"
+                                               name='alignment'/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
                                 <label htmlFor="right">Right
                                     <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='right' datatype={'flex-end'} type="radio" name='alignment'/>
+                                        <input onChange={this.alignment} id='right' datatype={'flex-end'} type="radio"
+                                               name='alignment'/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>

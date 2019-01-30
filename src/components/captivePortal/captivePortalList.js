@@ -85,7 +85,7 @@ export default connect(
     }),
     dispatch => ({
         reset: () => {
-            dispatch({type: "RESET"});
+            dispatch({type: "RESET_APP"});
         }
     })
 )(CaptivePortalList);

@@ -45,20 +45,21 @@ class Publish extends Component {
             css: {path},
             header: {top, description},
             footer,
-            background_and_logo: {background, logo, type},
+            background_and_logo: {background, logo},
             container_background,
             container_border,
             container_size,
             login_methods: {methods},
             imagesIDs
         } = this.props.tabName;
+        console.log(background.type);
 
         const portalDataToSend = {
-            background: type === 'COLOR' ? null : background.url,
+            background: background.type === 'COLOR' ? null : background.url,
             name: name && name,
             externalStylesUrl: path && path,
             logoId: imagesIDs.logoID,
-            backgroundId: imagesIDs.backgroundID,
+            backgroundId: background.type === 'COLOR' ? null : imagesIDs.backgroundID,
             header: top.text,
             description: description.text,
             footer: footer.text,

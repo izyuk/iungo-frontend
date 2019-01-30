@@ -96,7 +96,7 @@ export const getHotspots = (string) => {
         .then(res => res)
         .catch(err => console.warn('In getHotspots API method\n', err));
 };
-export const createHotspot = (string, name, address, description, id) => {
+export const createHotspot = (string, name, address, description, portalId) => {
     return axios({
         method: 'post',
         headers: {
@@ -110,13 +110,13 @@ export const createHotspot = (string, name, address, description, id) => {
             "name": name,
             "address": address,
             "description": description,
-            "portalId": id
+            "portalId": portalId
         }
     })
         .then(res => res)
         .catch(err => console.warn('In createHotspot API method\n', err));
 };
-export const updateHotspotById = (string, name, address, description, id) => {
+export const updateHotspotById = (string, name, address, description, portalId, hotspotId) => {
     return axios({
         method: 'put',
         headers: {
@@ -124,13 +124,13 @@ export const updateHotspotById = (string, name, address, description, id) => {
             'Accept': 'application/json',
             'Authorization': `${string}`
         },
-        url: `${builder_API}/hotspot/${id}`,
+        url: `${builder_API}/hotspot/${hotspotId}`,
         mode: 'no-cors',
         data: {
             "name": name,
             "address": address,
             "description": description,
-            "portalId": null
+            "portalId": !portalId ? null : portalId
         }
     })
         .then(res => res)
