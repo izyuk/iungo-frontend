@@ -6,8 +6,9 @@ import Loader from "../../../loader";
 class Publish extends Component {
     // constructor(props) {
     //     super(props);
-        /*this.*/state = {};
-        // this.getBuilderParams = this.getBuilderParams.bind(this);
+    /*this.*/
+    state = {};
+    // this.getBuilderParams = this.getBuilderParams.bind(this);
     // }
 
     componentDidMount() {
@@ -20,10 +21,21 @@ class Publish extends Component {
         const portalDataToSend = this.getBuilderParams();
         const token = localStorage.getItem('token');
         const cpID = localStorage.getItem('cpID');
-        const query = cpID ? (publishPortal(token, portalDataToSend, cpID), updatePortal(token, portalDataToSend, cpID)) : createPortal(token, portalDataToSend);
-        await query.then(res => {
-            this.props.loaderHandler();
-        });
+        if (cpID) {
+            const query = (publishPortal(token, portalDataToSend, cpID), updatePortal(token, portalDataToSend, cpID));
+            await query.then(res => {
+                this.props.loaderHandler();
+            });
+        }
+        else {
+            await createPortal(token, portalDataToSend)
+                .then(res => {
+                    console.log(res);
+                    publishPortal(token, portalDataToSend, res.data.id);
+                    this.props.loaderHandler();
+                });
+
+        }
     };
 
     previewPortalMethodHandler = async () => {

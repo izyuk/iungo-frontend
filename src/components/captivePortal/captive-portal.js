@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
 import {upload_file} from "../../reducers/background_and_logo";
-import {getPortal} from "../../api/API";
+import {getPortal, createPortal} from "../../api/API";
 import Loader from "../../loader";
 
 
@@ -64,13 +64,14 @@ class CaptivePortal extends Component {
     findPortal = async (data) => {
 
         const id = this.props.settedId ? this.props.settedId : localStorage.getItem('cpID');
-        if(id !== undefined){
+        console.log(id);
+        if (id !== null) {
             let query = getPortal(data, id);
 
             this.props.loaderHandler();
             await query.then(res => {
                 const {data} = res;
-                    console.log(data);
+                console.log(data);
                 this.props.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.background.color, data.style.background_and_logo.background.backgroundType);
                 this.props.setLogo(data.logo !== null ? data.logo.externalUrl : '', data.style.background_and_logo.logo.position);
                 this.props.setBorderStyle(data.style.container_border);
@@ -108,6 +109,12 @@ class CaptivePortal extends Component {
                     loader: false
                 });
                 this.props.loaderHandler();
+            });
+        }
+
+        else {
+            this.setState({
+                loader: false
             });
         }
 
@@ -184,6 +191,7 @@ class CaptivePortal extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props.token.token);
         this.props.token.token ? this.findPortal(this.props.token.token) : this.findPortal(localStorage.getItem('token'));
 
         let currentDay = function (sp) {
@@ -191,10 +199,11 @@ class CaptivePortal extends Component {
             let dd = today.getDate();
             let mm = today.getMonth() + 1;
             let yyyy = today.getFullYear();
+            let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
             if (dd < 10) dd = '0' + dd;
             if (mm < 10) mm = '0' + mm;
-            return (mm + sp + dd + sp + yyyy);
+            return (mm + sp + dd + sp + yyyy + sp + time);
         };
 
         this.props.addPortalName(`CaptivePortal - ${currentDay('/')}`);

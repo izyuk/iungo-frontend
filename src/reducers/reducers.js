@@ -30,14 +30,10 @@ const allReducers = combineReducers({
 });
 
 const rootReducer = (state, action) => {
-    // console.log('before reset IF', state);
     if (action.type === 'RESET_APP') {
-        // state = undefined;
-        // console.log('inside of reset IF, after state re-assigning', state);
-        // console.log(action);
-        return allReducers(null, action);
+        Object.assign(state, action.payload);
+        console.clear();
     }
-    // console.log('after reset IF', state);
     return allReducers(state, action);
 };
 

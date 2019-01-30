@@ -27,10 +27,18 @@ export default class CaptivePortalWrap extends Component {
     };
 
     storageCleaningHandler = () => {
-        // this.setState(prevState => ({
-        //     storageCleared: !prevState.storageCleared
-        // }))
+        localStorage.removeItem('cpID');
+        this.setState({
+            currentId: '',
+            storageCleared: true
+        });
     };
+
+    componentDidMount(){
+        this.setState({
+            storageCleared: false
+        });
+    }
 
     render() {
         return (

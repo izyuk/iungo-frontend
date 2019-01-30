@@ -36,7 +36,137 @@ class CaptivePortalList extends Component {
     };
 
     addNewCP = async () => {
-        await this.props.reset();
+        const INITIAL = {
+            background_and_logo: {
+                logo: {
+                    url: '',
+                    position: 'center'
+                },
+                background: {
+                    url: '',
+                    color: {
+                        rgba: {
+                            r: 229,
+                            g: 233,
+                            b: 242,
+                            a: 1,
+                        },
+                        hex: '#e5e9f2'
+                    },
+                    type: ''
+                }
+            },
+            container_border: {
+                color: {
+                    rgba: {
+                        r: 229,
+                        g: 233,
+                        b: 242,
+                        a: 1,
+                    },
+                    hex: '#e5e9f2'
+                },
+                type: 'solid',
+                thickness: 1,
+                radius: 4
+            },
+            container_background: {
+                color: {
+                    rgba: {
+                        r: 255,
+                        g: 255,
+                        b: 255,
+                        a: 1,
+                    },
+                    hex: '#ffffff'
+                },
+                opacity: 100
+            },
+            container_size: {
+                width: 720,
+                padding: 20
+            },
+            header: {
+                top: {
+                    text: 'Company name',
+                    styles: {
+                        color: {
+                            rgba: {
+                                r: 85,
+                                g: 133,
+                                b: 237,
+                                a: 1,
+                            },
+                            hex: '#5585ed'
+                        },
+                        fontSize: 18,
+                        textActions: {
+                            bold: false,
+                            italic: false,
+                            underline: false
+                        },
+                        alignment: 'center'
+                    }
+                },
+                description: {
+                    text: 'Venue description',
+                    styles: {
+                        color: {
+                            rgba: {
+                                r: 85,
+                                g: 133,
+                                b: 237,
+                                a: 1,
+                            },
+                            hex: '#5585ed'
+                        },
+                        fontSize: 18,
+                        textActions: {
+                            bold: false,
+                            italic: false,
+                            underline: false
+                        },
+                        alignment: 'center'
+                    }
+                }
+            },
+            login_methods: {
+                methods: {
+                    google: false,
+                    facebook: false,
+                    twitter: false
+                }
+            },
+            footer: {
+                text: 'Footer content',
+                styles: {
+                    color: {
+                        rgba: {
+                            r: 85,
+                            g: 133,
+                            b: 237,
+                            a: 1,
+                        },
+                        hex: '#5585ed'
+                    },
+                    fontSize: 18,
+                    textActions: {
+                        bold: false,
+                        italic: false,
+                        underline: false
+                    },
+                    alignment: 'center'
+                }
+            },
+            css: {
+                path: ''
+            },
+            imagesIDs: {
+                logoID: '',
+                backgroundID: ''
+            },
+        };
+        await this.props.reset(INITIAL);
 
         this.props.clearing();
 
@@ -84,8 +214,8 @@ export default connect(
         tabName: state
     }),
     dispatch => ({
-        reset: () => {
-            dispatch({type: "RESET_APP"});
+        reset: (data) => {
+            dispatch({type: "RESET_APP", payload: data});
         }
     })
 )(CaptivePortalList);
