@@ -1303,42 +1303,6 @@ header .container {
   height: 1px;
   background: #000;
 }
-.options .wrap .dropdown .upload {
-  width: 100px;
-  padding: 2px 16px;
-  display: flex;
-  background: #5585ed;
-  border: 1px solid #4372d6;
-  border-radius: 16px;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-}
-.options .wrap .dropdown .upload span {
-  font-family: 'AvenirLTStd-Heavy', sans-serif;
-  font-size: 12px;
-  font-size: 0.75rem;
-  line-height: 2;
-  color: #fff;
-  font-weight: bold;
-  cursor: pointer;
-}
-.options .wrap .dropdown .upload:hover {
-  background: #4372d6;
-}
-.options .wrap .dropdown .upload:active:hover {
-  background: #4372d6;
-  box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.5);
-}
-.options .wrap .dropdown .upload input {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  cursor: pointer;
-}
 .options .wrap .buttonsRow {
   margin-top: auto;
   margin-bottom: 10px;
@@ -1346,6 +1310,12 @@ header .container {
   padding: 20px 0 0 0;
   justify-content: space-around;
   width: 100%;
+}
+.options .wrap .buttonsRow p {
+  width: 128px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .options .wrap .buttonsRow button {
   width: 128px;
@@ -1382,6 +1352,50 @@ header .container {
   background: #fff;
   box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
+.options .wrap .buttonsRow span {
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  color: #768198;
+  text-align: center;
+  margin-top: 10px;
+}
+.upload {
+  width: 100px;
+  padding: 2px 16px;
+  display: flex;
+  background: #5585ed;
+  border: 1px solid #4372d6;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.upload span {
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  line-height: 2;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+.upload:hover {
+  background: #4372d6;
+}
+.upload:active:hover {
+  background: #4372d6;
+  box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+.upload input {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
 .preview {
   flex: 2;
 }
@@ -1407,9 +1421,9 @@ header .container {
   min-width: 20px;
   display: inline-block;
   height: 20px;
-  border: none;
   border-radius: 4px;
   background: #5585ed;
+  border: 1px solid #768198;
 }
 .colorWrap input {
   width: 60px;
@@ -1641,6 +1655,28 @@ header .container {
   font-size: 1.5rem;
   line-height: 1.67;
   color: #071031;
+}
+.info .addNewCPButton {
+  width: 180px;
+  height: 40px;
+  color: #fff;
+  border: 1px solid #4372d6;
+  background: #5585ed;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 14px;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  font-weight: bold;
+}
+.info .addNewCPButton:hover {
+  background: #4372d6;
+}
+.info .addNewCPButton:active:hover {
+  background: #4372d6;
+  box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 .hotspotDetailsWrap {
   width: 100%;
@@ -1941,5 +1977,152 @@ table tr th {
 .previewMain.mobile {
   width: 400px;
   transition: width 0.3s linear;
+}
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background: rgba(229, 233, 242, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal .modalContent {
+  width: 80%;
+  height: 80%;
+  background: #fff;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+}
+.modal .modalContent button {
+  border: none;
+}
+.modal .modalContent .modalHead {
+  width: 100%;
+  border-bottom: 2px solid #e5e9f2;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.modal .modalContent .modalHead .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25px;
+  height: 25px;
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 25px;
+  font-size: 1.5625rem;
+}
+.modal .modalContent .modalHead p {
+  margin-left: 30px;
+}
+.modal .modalContent .modalBody {
+  display: flex;
+  align-items: stretch;
+  height: calc(100% - 60px);
+  overflow-y: auto;
+}
+.modal .modalContent .modalBody .sideBar {
+  width: 60px;
+  border-right: 1px solid #e5e9f2;
+}
+.modal .modalContent .modalBody .sideBar button {
+  text-align: center;
+  width: 100%;
+  height: 30px;
+}
+.modal .modalContent .modalBody .imagesList {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 350px));
+  grid-template-rows: repeat(auto-fill, auto);
+  grid-gap: 20px;
+  justify-content: center;
+}
+.modal .modalContent .modalBody .imagesList div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  border: 4px solid transparent;
+  position: relative;
+}
+.modal .modalContent .modalBody .imagesList div svg {
+  display: none;
+}
+.modal .modalContent .modalBody .imagesList div.active {
+  border-color: #5585ed;
+}
+.modal .modalContent .modalBody .imagesList div.active svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 3px;
+  right: 3px;
+}
+.modal .modalContent .modalBody .imagesList div.active:before {
+  content: '';
+  position: absolute;
+  display: block;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  background: #5585ed;
+}
+.modal .modalContent .modalBody .imagesList div img {
+  width: 100%;
+  objectt: contain;
+}
+.modal .modalContent .modalBody .imagesList div span {
+  margin-top: 10px;
+  word-break: break-word;
+}
+.modal .modalContent .modalFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  border-top: 2px solid #e5e9f2;
+  padding: 0 30px;
+}
+.modal .modalContent .modalFooter .uploadInfo {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+.modal .modalContent .modalFooter .uploadInfo .top span:not(:last-child) {
+  margin-right: 20px;
+}
+.modal .modalContent .modalFooter .uploadInfo .progress {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal .modalContent .modalFooter .uploadInfo .progress .bar {
+  width: 90%;
+  height: 5px;
+  position: relative;
+  background: #e9ebf0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.modal .modalContent .modalFooter .uploadInfo .progress .bar span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5px;
+  background: #5585ed;
+  width: 50%;
 }
 /*# sourceMappingURL=index.css.map */

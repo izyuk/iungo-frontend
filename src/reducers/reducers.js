@@ -32,7 +32,6 @@ const allReducers = combineReducers({
 const rootReducer = (state, action) => {
     if (action.type === 'RESET_APP') {
         Object.assign(state, action.payload);
-        console.clear();
     }
     return allReducers(state, action);
 };

@@ -1,10 +1,9 @@
-import style from '../../index.less';
 import React, {Component} from 'react';
 
 class Loader extends Component {
     render() {
         return (
-            <div className={style.loader}>
+            <div className={"loader"}>
                 <span></span>
             </div>
         );

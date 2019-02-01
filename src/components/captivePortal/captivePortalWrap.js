@@ -7,6 +7,7 @@ import Loader from "../../loader";
 
 export default class CaptivePortalWrap extends Component {
     state = {
+        // currentId: '',
         currentId: '',
         loader: false,
         storageCleared: false
