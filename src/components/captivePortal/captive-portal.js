@@ -33,7 +33,8 @@ class CaptivePortal extends Component {
             twitter: true
         },
         footerContent: this.props.background_and_logo.footer_description || '',
-        loader: true
+        loader: true,
+        portalName: 'Captive Portal Builder'
     };
 
     portalName = React.createRef();
@@ -108,7 +109,8 @@ class CaptivePortal extends Component {
                         facebook: data.facebookLogin, google: data.googleLogin, twitter: data.twitterLogin
                     },
                     footerContent: data.footer,
-                    loader: false
+                    loader: false,
+                    portalName: data.name
                 });
                 this.props.loaderHandler();
             });
@@ -215,6 +217,7 @@ class CaptivePortal extends Component {
     componentDidUpdate() {
         console.log(this.props.background_and_logo);
         console.log('updated', this.state);
+        console.log('updated', this.props.name);
     }
 
     nameEditor = (e) => {
@@ -230,6 +233,9 @@ class CaptivePortal extends Component {
             e.currentTarget.classList.remove('active');
             e.currentTarget.classList.remove('error');
             // e.currentTarget.setAttribute('disable', true);
+            this.setState({
+                portalName: e.currentTarget.value
+            });
             this.props.addPortalName(e.currentTarget.value);
         } else {
             e.currentTarget.classList.add('error');
@@ -255,7 +261,7 @@ class CaptivePortal extends Component {
                                     {/*<h3>Captive Portal Builder</h3>*/}
                                     <input ref={this.portalName}
                                            type="text"
-                                           defaultValue={'Captive Portal Builder'}
+                                           defaultValue={this.state.portalName}
                                            // disabled={true}
                                            onDoubleClick={this.nameEditor}
                                            onBlur={this.setName}/>
@@ -307,6 +313,7 @@ export default connect(
     state => ({
         background_and_logo: state,
         token: state.token,
+        name: state.name,
         tabName: state
     }),
     dispatch => ({
