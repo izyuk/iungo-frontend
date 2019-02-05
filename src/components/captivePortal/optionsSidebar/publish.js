@@ -7,7 +7,9 @@ class Publish extends Component {
     // constructor(props) {
     //     super(props);
     /*this.*/
-    state = {};
+    state = {
+        id: localStorage.getItem('cpID')
+    };
     // this.getBuilderParams = this.getBuilderParams.bind(this);
     // }
 
@@ -20,7 +22,7 @@ class Publish extends Component {
         this.props.loaderHandler();
         const portalDataToSend = this.getBuilderParams();
         const token = localStorage.getItem('token');
-        const cpID = localStorage.getItem('cpID');
+        const cpID = this.state.id;
         if (cpID) {
             const query = (publishPortal(token, portalDataToSend, cpID), updatePortal(token, portalDataToSend, cpID));
             await query.then(res => {
@@ -31,6 +33,9 @@ class Publish extends Component {
             await createPortal(token, portalDataToSend)
                 .then(res => {
                     console.log(res);
+                    this.setState({
+                        id: res.data.id
+                    });
                     publishPortal(token, portalDataToSend, res.data.id);
                     this.props.loaderHandler();
                 });
@@ -114,6 +119,11 @@ class Publish extends Component {
         console.log(portalDataToSend);
         return portalDataToSend;
     };
+
+    shouldComponentUpdate(nextProps, nextState){
+        if(this.state.id !== nextState.id) return true;
+        else return false;
+    }
 
     render() {
         return (
