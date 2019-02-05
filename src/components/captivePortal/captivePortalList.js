@@ -36,6 +36,8 @@ class CaptivePortalList extends Component {
     };
 
     addNewCP = async () => {
+        const STYLE = document.getElementsByTagName('STYLE')[0];
+        if (STYLE) STYLE.parentNode.removeChild(STYLE);
         const INITIAL = {
             background_and_logo: {
                 logo: {

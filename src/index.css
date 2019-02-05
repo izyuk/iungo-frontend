@@ -435,6 +435,71 @@ body {
   border-radius: 2px;
   background: #dde1ec;
 }
+.inputsWrap > div.email:after,
+.socialsWrap > div.email:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  background-size: 16px 14px;
+  z-index: 1;
+}
+.inputsWrap > div input,
+.socialsWrap > div input {
+  width: calc(100% - 40px);
+  border: 1px solid transparent;
+  background: transparent;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+  color: #7a859b;
+}
+.inputsWrap > div input::-webkit-input-placeholder,
+.socialsWrap > div input::-webkit-input-placeholder {
+  color: #7a859b;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+}
+.inputsWrap > div input::-moz-placeholder,
+.socialsWrap > div input::-moz-placeholder {
+  color: #7a859b;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+}
+.inputsWrap > div input:-ms-input-placeholder,
+.socialsWrap > div input:-ms-input-placeholder {
+  color: #7a859b;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+}
+.inputsWrap > div input:-moz-placeholder,
+.socialsWrap > div input:-moz-placeholder {
+  color: #7a859b;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+}
 .inputsWrap > div.validationFalse,
 .socialsWrap > div.validationFalse {
   border-color: #ff4d5d;
@@ -1506,101 +1571,6 @@ header .container {
   line-height: 2;
   color: #768198;
 }
-.inputsWrap,
-.socialsWrap {
-  width: 100%;
-  margin: 16px 0;
-}
-.inputsWrap .email,
-.socialsWrap .email {
-  margin-bottom: 16px;
-}
-.inputsWrap > div,
-.socialsWrap > div {
-  width: 100%;
-  height: 42px;
-  border-radius: 2px;
-  border: solid 1px #dee5f3;
-  background-color: #f1f3f8;
-  position: relative;
-  display: flex;
-}
-.inputsWrap > div span,
-.socialsWrap > div span {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 2px;
-  background: #dde1ec;
-}
-.inputsWrap > div.email:after,
-.socialsWrap > div.email:after {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 40px;
-  background-size: 16px 14px;
-  z-index: 1;
-}
-.inputsWrap > div input,
-.socialsWrap > div input {
-  width: calc(100% - 40px);
-  border: 1px solid transparent;
-  background: transparent;
-  font-family: 'AvenirLTStd-Heavy', sans-serif;
-  font-size: 12px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  line-height: 2;
-  text-align: center;
-  color: #7a859b;
-}
-.inputsWrap > div input::-webkit-input-placeholder,
-.socialsWrap > div input::-webkit-input-placeholder {
-  color: #7a859b;
-  font-family: 'AvenirLTStd-Heavy', sans-serif;
-  font-size: 12px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  line-height: 2;
-  text-align: center;
-}
-.inputsWrap > div input::-moz-placeholder,
-.socialsWrap > div input::-moz-placeholder {
-  color: #7a859b;
-  font-family: 'AvenirLTStd-Heavy', sans-serif;
-  font-size: 12px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  line-height: 2;
-  text-align: center;
-}
-.inputsWrap > div input:-ms-input-placeholder,
-.socialsWrap > div input:-ms-input-placeholder {
-  color: #7a859b;
-  font-family: 'AvenirLTStd-Heavy', sans-serif;
-  font-size: 12px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  line-height: 2;
-  text-align: center;
-}
-.inputsWrap > div input:-moz-placeholder,
-.socialsWrap > div input:-moz-placeholder {
-  color: #7a859b;
-  font-family: 'AvenirLTStd-Heavy', sans-serif;
-  font-size: 12px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  line-height: 2;
-  text-align: center;
-}
 .socialsWrap div {
   cursor: pointer;
   border: 1px solid transparent;
@@ -1685,7 +1655,7 @@ header .container {
   box-shadow: 0 1px 2px 0 rgba(191, 197, 210, 0.15);
   padding-top: 32px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
+  grid-template-columns: minmax(550px, 1fr);
   grid-template-rows: 330px auto;
   grid-column-gap: 20px;
   align-items: flex-start;

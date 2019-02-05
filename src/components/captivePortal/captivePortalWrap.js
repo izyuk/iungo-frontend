@@ -43,7 +43,7 @@ export default class CaptivePortalWrap extends Component {
 
     render() {
         return (
-            <div className={this.state.currentId !== '' ? "container" : "container containerFix"}>
+            <div className={this.state.currentId !== '' ? "container" : "container"}>
                 {this.state.loader && <Loader/>}
                 {
                     (this.state.currentId !== '' || this.state.storageCleared) ?

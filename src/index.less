@@ -222,6 +222,62 @@
       border-radius: 2px;
       background: @pale-grey-six;
     }
+    &.email {
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        //background: url("../../../static/images/email.svg") no-repeat;
+        background-size: 16px 14px;
+        z-index: 1;
+      }
+    }
+    input {
+      width: calc(100% - 40px);
+      border: 1px solid transparent;
+      background: transparent;
+      .font(@avenir-heavy, 12);
+      font-weight: bold;
+      line-height: 2;
+      text-align: center;
+      color: @steel-three;
+      &::-webkit-input-placeholder {
+        color: @steel-three;
+        text-align: center;
+        .font(@avenir-heavy, 12);
+        font-weight: bold;
+        line-height: 2;
+        text-align: center;
+      }
+      &::-moz-placeholder {
+        color: @steel-three;
+        text-align: center;
+        .font(@avenir-heavy, 12);
+        font-weight: bold;
+        line-height: 2;
+        text-align: center;
+      }
+      &:-ms-input-placeholder {
+        color: @steel-three;
+        text-align: center;
+        .font(@avenir-heavy, 12);
+        font-weight: bold;
+        line-height: 2;
+        text-align: center;
+      }
+      &:-moz-placeholder {
+        color: @steel-three;
+        text-align: center;
+        .font(@avenir-heavy, 12);
+        font-weight: bold;
+        line-height: 2;
+        text-align: center;
+      }
+    }
     &.validationFalse {
       border-color: #ff4d5d;
       span {
@@ -1315,89 +1371,89 @@ header {
   }
 }
 
-.inputsWrap,
-.socialsWrap {
-  width: 100%;
-  margin: 16px 0;
-  .email {
-    margin-bottom: 16px;
-  }
-  & > div {
-    width: 100%;
-    height: 42px;
-    border-radius: 2px;
-    border: solid 1px @light-blue-grey;
-    background-color: @pale-grey-five;
-    position: relative;
-    display: flex;
-    span {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 2px;
-      background: @pale-grey-six;
-    }
-    &.email {
-      &:after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 40px;
-        height: 40px;
-        //background: url("../../../static/images/email.svg") no-repeat;
-        background-size: 16px 14px;
-        z-index: 1;
-      }
-    }
-    input {
-      width: calc(100% - 40px);
-      border: 1px solid transparent;
-      background: transparent;
-      .font(@avenir-heavy, 12);
-      font-weight: bold;
-      line-height: 2;
-      text-align: center;
-      color: @steel-three;
-      &::-webkit-input-placeholder {
-        color: @steel-three;
-        text-align: center;
-        .font(@avenir-heavy, 12);
-        font-weight: bold;
-        line-height: 2;
-        text-align: center;
-      }
-      &::-moz-placeholder {
-        color: @steel-three;
-        text-align: center;
-        .font(@avenir-heavy, 12);
-        font-weight: bold;
-        line-height: 2;
-        text-align: center;
-      }
-      &:-ms-input-placeholder {
-        color: @steel-three;
-        text-align: center;
-        .font(@avenir-heavy, 12);
-        font-weight: bold;
-        line-height: 2;
-        text-align: center;
-      }
-      &:-moz-placeholder {
-        color: @steel-three;
-        text-align: center;
-        .font(@avenir-heavy, 12);
-        font-weight: bold;
-        line-height: 2;
-        text-align: center;
-      }
-    }
-  }
-}
+//.inputsWrap,
+//.socialsWrap {
+//  width: 100%;
+//  margin: 16px 0;
+//  .email {
+//    margin-bottom: 16px;
+//  }
+//  & > div {
+//    width: 100%;
+//    height: 42px;
+//    border-radius: 2px;
+//    border: solid 1px @light-blue-grey;
+//    background-color: @pale-grey-five;
+//    position: relative;
+//    display: flex;
+//    span {
+//      position: relative;
+//      display: flex;
+//      justify-content: center;
+//      align-items: center;
+//      width: 40px;
+//      height: 40px;
+//      border-radius: 2px;
+//      background: @pale-grey-six;
+//    }
+//    &.email {
+//      &:after {
+//        content: '';
+//        display: block;
+//        position: absolute;
+//        top: 0;
+//        left: 0;
+//        width: 40px;
+//        height: 40px;
+//        //background: url("../../../static/images/email.svg") no-repeat;
+//        background-size: 16px 14px;
+//        z-index: 1;
+//      }
+//    }
+//    input {
+//      width: calc(100% - 40px);
+//      border: 1px solid transparent;
+//      background: transparent;
+//      .font(@avenir-heavy, 12);
+//      font-weight: bold;
+//      line-height: 2;
+//      text-align: center;
+//      color: @steel-three;
+//      &::-webkit-input-placeholder {
+//        color: @steel-three;
+//        text-align: center;
+//        .font(@avenir-heavy, 12);
+//        font-weight: bold;
+//        line-height: 2;
+//        text-align: center;
+//      }
+//      &::-moz-placeholder {
+//        color: @steel-three;
+//        text-align: center;
+//        .font(@avenir-heavy, 12);
+//        font-weight: bold;
+//        line-height: 2;
+//        text-align: center;
+//      }
+//      &:-ms-input-placeholder {
+//        color: @steel-three;
+//        text-align: center;
+//        .font(@avenir-heavy, 12);
+//        font-weight: bold;
+//        line-height: 2;
+//        text-align: center;
+//      }
+//      &:-moz-placeholder {
+//        color: @steel-three;
+//        text-align: center;
+//        .font(@avenir-heavy, 12);
+//        font-weight: bold;
+//        line-height: 2;
+//        text-align: center;
+//      }
+//    }
+//  }
+//}
 
 .socialsWrap {
   div {
@@ -1485,17 +1541,14 @@ header {
   box-shadow: 0 1px 2px 0 rgba(191, 197, 210, 0.15);
   padding-top: 32px;
   display: grid;
-  //grid-template-columns: 1fr 1fr;
-  grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
+  grid-template-columns: minmax(550px, 1fr);
   grid-template-rows: 330px auto;
   grid-column-gap: 20px;
   align-items: flex-start;
   justify-content: space-between;
-  //flex-wrap: wrap;
   .hotspotForm {
     flex: 1;
     flex-basis: 450px;
-    //max-width: 500px;
     background: @w;
     border-radius: 4px;
     display: flex;

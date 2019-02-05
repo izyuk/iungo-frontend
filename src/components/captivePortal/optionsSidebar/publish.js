@@ -65,6 +65,7 @@ class Publish extends Component {
             imagesIDs
         } = this.props.tabName;
         console.log(background.type);
+        console.log(this.props.tabName);
 
         const portalDataToSend = {
             background: background.type === 'COLOR' ? null : background.url,

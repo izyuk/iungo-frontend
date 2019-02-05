@@ -20,13 +20,10 @@ class Modal extends Component {
                                 <path fill="#FFF" fillRule="nonzero"
                                       d="M17 11.1V11c0-2.8-2.2-5-5-5-2.5 0-4.6 1.8-4.9 4.3-1.8.6-3.1 2.2-3.1 4.2C4 17 6 19 8.5 19H16c2.2 0 4-1.8 4-4 0-1.9-1.3-3.4-3-3.9zM13 14v3h-2v-3H8l4-4 4 4h-3z"/>
                             </svg>
-                            <span>Choose</span>
+                            <span>Upload</span>
                             <FileBase64
                                 multiple={false}
                                 onDone={this.props.uploadHandler} accept="image/*"/>
-                            {/*<Modal/>*/}
-                            {/*<input type="file"*/}
-                            {/*onChange={this.fileSelectedHandler} accept="image/*"/>*/}
 
                         </div>
                         {console.log(this.props.data)}
