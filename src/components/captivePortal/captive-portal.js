@@ -35,6 +35,8 @@ class CaptivePortal extends Component {
         footerContent: this.props.background_and_logo.footer_description || '',
         loader: true
     };
+
+    portalName = React.createRef();
     // }
 
     eventHandler = (name, type, backgroundType) => {
@@ -206,7 +208,7 @@ class CaptivePortal extends Component {
             return (mm + sp + dd + sp + yyyy + sp + time);
         };
 
-        this.props.addPortalName(`CaptivePortal - ${currentDay('/')}`);
+        // this.props.addPortalName(`CaptivePortal - ${currentDay('/')}`);
 
     }
 
@@ -214,6 +216,26 @@ class CaptivePortal extends Component {
         console.log(this.props.background_and_logo);
         console.log('updated', this.state);
     }
+
+    nameEditor = (e) => {
+        console.log('db click');
+        e.currentTarget.classList.add('active');
+        // e.currentTarget.setAttribute('disable', false);
+    };
+
+    setName = (e) => {
+        console.log(e.currentTarget.value);
+        console.log(e.currentTarget.value.length);
+        if (e.currentTarget.value.length > 3){
+            e.currentTarget.classList.remove('active');
+            e.currentTarget.classList.remove('error');
+            // e.currentTarget.setAttribute('disable', true);
+            this.props.addPortalName(e.currentTarget.value);
+        } else {
+            e.currentTarget.classList.add('error');
+            // e.currentTarget.setAttribute('disable', false);
+        }
+    };
 
     render() {
         if (this.state.loader) {
@@ -230,7 +252,13 @@ class CaptivePortal extends Component {
                         <div className="container containerFix">
                             <div className="wrap wrapFix2">
                                 <div className="info">
-                                    <h3>Captive Portal Builder</h3>
+                                    {/*<h3>Captive Portal Builder</h3>*/}
+                                    <input ref={this.portalName}
+                                           type="text"
+                                           defaultValue={'Captive Portal Builder'}
+                                           // disabled={true}
+                                           onDoubleClick={this.nameEditor}
+                                           onBlur={this.setName}/>
                                     <div className="toggles">
                                         <a href="javascript:void(0)" data-id="desktop"
                                            className="active" onClick={(data) => this.trigger(data)}>

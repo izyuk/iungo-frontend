@@ -742,6 +742,19 @@ header .container {
   line-height: 1.67;
   color: #071031;
 }
+.info input {
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 24px;
+  font-size: 1.5rem;
+  line-height: 1.67;
+  color: #071031;
+  border: 1px solid transparent;
+}
+.info input.active {
+  padding: 0 10px;
+  background: #fff;
+  border: 1px solid #e5e9f2;
+}
 .info .toggles {
   display: flex;
 }

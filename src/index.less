@@ -521,6 +521,17 @@ header {
     line-height: 1.67;
     color: @dark-indigo;
   }
+  input{
+    .font(@avenir-medium, 24);
+    line-height: 1.67;
+    color: @dark-indigo;
+    border: 1px solid @trans;
+    &.active{
+      padding: 0 10px;
+      background: @w;
+      border: 1px solid @pale-grey-three;
+    }
+  }
   .toggles {
     display: flex;
     a {
