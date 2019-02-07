@@ -1804,7 +1804,7 @@ header .container {
 .hotspotDetailsWrap .hotspotForm > div .cpSelector.active .list {
   height: auto;
   max-height: 200px;
-  overflow: visible;
+  overflow-y: auto;
   border: 1px solid #5585ed;
   background: #5585ed;
   margin-left: -1px;
@@ -1891,6 +1891,18 @@ header .container {
   border-bottom-right-radius: 8px;
   background: #ff6976;
   padding: 3px 5px;
+}
+.hotspotDetailsWrap .hotspotTable tbody tr td a {
+  width: auto;
+  height: 14px;
+  display: inline-block;
+  overflow: hidden;
+}
+.hotspotDetailsWrap .hotspotTable tbody tr td a span {
+  width: auto;
+  height: auto;
+  display: inline-block;
+  overflow: visible;
 }
 .captivePortalList {
   background: #fff;

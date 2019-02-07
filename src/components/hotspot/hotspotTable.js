@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 // HotspotTable.propTypes = {
 //     // onCorrect: PropTypes.func.isRequired,
@@ -31,6 +32,27 @@ class HotspotTable extends Component {
         this.props.editHandler(id, name, address, description);
     };
 
+    copyToClipboard = (e) => {
+        const NODE = e.currentTarget;
+        console.log(NODE);
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(NODE);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        try {
+            let successful = document.execCommand('copy');
+            selection.removeAllRanges();
+            let msg = successful ? 'successful' : 'unsuccessful';
+            console.log(successful);
+            console.log('Copying text command was ' + msg);
+        } catch (err) {
+            console.log('Oops, unable to copy');
+        }
+        e.preventDefault();
+    };
+
     render() {
         const {hotspotList} = this.props;
         return (
@@ -54,7 +76,13 @@ class HotspotTable extends Component {
                             <td>{description}</td>
                             <td className={"url"}>
                                 {virtualUrl !== null ?
-                                    <Link to={virtualUrl}>{`${virtualUrl.slice(0, 10)}...`}</Link>
+                                    <a href={`${virtualUrl}`}
+                                       onClick={this.copyToClipboard}
+                                    >
+                                        <span>{`${virtualUrl.slice(0, 20)}...`}</span>
+                                        {/*{`${virtualUrl.slice(0, 20)}...`}*/}
+                                        {virtualUrl}
+                                    </a>
                                     : ''
                                 }
                             </td>

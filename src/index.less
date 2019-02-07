@@ -1674,7 +1674,7 @@ header {
           .list {
             height: auto;
             max-height: 200px;
-            overflow: visible;
+            overflow-y: auto;
             border: 1px solid @soft-blue;
             background: @soft-blue;
             margin-left: -1px;
@@ -1760,6 +1760,18 @@ header {
               border-bottom-right-radius: 8px;
               background: @pink;
               padding: 3px 5px;
+            }
+          }
+          a{
+            width: auto;
+            height: 14px;
+            display: inline-block;
+            overflow: hidden;
+            span{
+              width: auto;
+              height: auto;
+              display: inline-block;
+              overflow: visible;
             }
           }
         }
