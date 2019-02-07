@@ -33,7 +33,6 @@ class HeaderTop extends Component {
     constructor(props) {
         super(props);
         let storage = this.props.header.top;
-        console.log(storage);
         this.state = {
             displayColorPicker: false,
             colorHEX: storage.styles.color.hex || '#5585ed',

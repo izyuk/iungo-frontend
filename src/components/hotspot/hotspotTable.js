@@ -34,7 +34,6 @@ class HotspotTable extends Component {
 
     copyToClipboard = (e) => {
         const NODE = e.currentTarget;
-        console.log(NODE);
         const selection = window.getSelection();
         const range = document.createRange();
         range.selectNodeContents(NODE);
@@ -45,10 +44,9 @@ class HotspotTable extends Component {
             let successful = document.execCommand('copy');
             selection.removeAllRanges();
             let msg = successful ? 'successful' : 'unsuccessful';
-            console.log(successful);
-            console.log('Copying text command was ' + msg);
+            console.info('Copying text command was ' + msg);
         } catch (err) {
-            console.log('Oops, unable to copy');
+            console.warn('Oops, unable to copy');
         }
         e.preventDefault();
     };
@@ -68,7 +66,6 @@ class HotspotTable extends Component {
                 <tbody>
                 {hotspotList && hotspotList.map((item, i) => {
                     const {id, name, address, description, virtualUrl} = item;
-                    console.log(id);
                     return (
                         <tr key={i} onClick={(e) => ::this.getDataToEdit(e, id)}>
                             <td>{name}</td>

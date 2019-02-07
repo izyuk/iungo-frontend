@@ -67,14 +67,12 @@ class CaptivePortal extends Component {
     findPortal = async (data) => {
 
         const id = this.props.settedId ? this.props.settedId : localStorage.getItem('cpID');
-        console.log(id);
         if (id !== null) {
             let query = getPortal(data, id);
 
             this.props.loaderHandler();
             await query.then(res => {
                 const {data} = res;
-                console.log(data);
                 this.props.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.background.color, data.style.background_and_logo.background.backgroundType);
                 this.props.setLogo(data.logo !== null ? data.logo.externalUrl : '', data.style.background_and_logo.logo.position);
                 this.props.setBorderStyle(data.style.container_border);
@@ -90,6 +88,7 @@ class CaptivePortal extends Component {
                 this.props.setFooterData(data.footer, data.style.footer);
                 this.props.setLogoID(data.logo === null ? '' : data.logo.id);
                 this.props.setBackgroundID(data.background === null ? '' : data.background.id);
+                this.props.addPortalName(data.name);
                 this.setState({
                     type: 'background',
                     backgroundType: data.style.background_and_logo.background.backgroundType,
@@ -195,7 +194,6 @@ class CaptivePortal extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.token.token);
         this.props.token.token ? this.findPortal(this.props.token.token) : this.findPortal(localStorage.getItem('token'));
 
         let currentDay = function (sp) {
@@ -215,20 +213,17 @@ class CaptivePortal extends Component {
     }
 
     componentDidUpdate() {
-        console.log(this.props.background_and_logo);
-        console.log('updated', this.state);
-        console.log('updated', this.props.name);
+
     }
 
     nameEditor = (e) => {
-        console.log('db click');
+
         e.currentTarget.classList.add('active');
         // e.currentTarget.setAttribute('disable', false);
     };
 
     setName = (e) => {
-        console.log(e.currentTarget.value);
-        console.log(e.currentTarget.value.length);
+
         if (e.currentTarget.value.length > 3){
             e.currentTarget.classList.remove('active');
             e.currentTarget.classList.remove('error');

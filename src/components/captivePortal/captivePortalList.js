@@ -171,16 +171,10 @@ class CaptivePortalList extends Component {
         await this.props.reset(INITIAL);
 
         this.props.clearing();
-
-
-
-        console.log(this.props.tabName);
     };
 
     componentDidMount() {
         this.props.token.token ? this.findAllPortals(this.props.token.token) : this.findAllPortals(localStorage.getItem('token'));
-        console.log(this.props.tabName);
-        console.log('store\n');
     }
 
     render() {

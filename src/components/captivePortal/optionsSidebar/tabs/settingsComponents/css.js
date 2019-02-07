@@ -22,7 +22,6 @@ class CSS extends Component {
 
             reader.onload = (evt) => {
                 style.innerText = evt.target.result;
-                console.log(evt.target.result);
                 this.props.setCSS(evt.target.result);
             };
             reader.onerror = (evt) => {
@@ -32,7 +31,6 @@ class CSS extends Component {
             HEAD.appendChild(style);
 
         }
-        console.log(e.currentTarget.files[0])
 
     }
 

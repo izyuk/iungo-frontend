@@ -63,7 +63,6 @@ class ImageUploader extends Component {
             mode: 'no-cors',
             data: {"name": name, "base64Content": base64},
             onUploadProgress: progressEvent => {
-                console.log(Math.round(progressEvent.loaded/progressEvent.total*100));
                 this.setState({
                     progress: Math.round(progressEvent.loaded/progressEvent.total*100)
                 })
@@ -106,8 +105,7 @@ class ImageUploader extends Component {
     };
 
     chooseImage = (e) => {
-        const list = document.querySelectorAll('.imagesList div');
-        console.log(list.length);
+        const list = document.querySelectorAll('.imagesList div');s
         for (let i = 0; i < list.length; i++) {
             list[i].classList.remove('active');
         }
@@ -194,7 +192,6 @@ class ImageUploader extends Component {
     };
 
     componentDidUpdate(prevProps, prevState) {
-        console.log(this.state.imagesList)
     }
 
     componentDidMount() {

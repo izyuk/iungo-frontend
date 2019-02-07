@@ -41,7 +41,6 @@ class HotspotDetails extends Component {
 
     handleInputChange = (e) => {
         const type = e.target.getAttribute('datatype');
-        console.log(type);
         this.setState({
             [type]: e.target.value
         })
@@ -117,10 +116,7 @@ class HotspotDetails extends Component {
 
     editHandler = (id, name, address, description) => {
         const data = {id: id, name: name, address: address, description: description};
-        console.log(data);
-        console.log(this.state);
         Object.keys(data).map((el) => {
-            console.log(el);
             this.setState({
                 [el]: data[el]
             });

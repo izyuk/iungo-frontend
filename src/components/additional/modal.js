@@ -26,7 +26,6 @@ class Modal extends Component {
                                 onDone={this.props.uploadHandler} accept="image/*"/>
 
                         </div>
-                        {console.log(this.props.data)}
                         {this.props.fileInfo &&
 
                         <div className="uploadInfo">

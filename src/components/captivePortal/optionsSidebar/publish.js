@@ -14,8 +14,7 @@ class Publish extends Component {
     // }
 
     componentDidMount() {
-        console.log(this.props.tabName.background_and_logo.background);
-        console.log(this.props.tabName.background_and_logo.logo);
+
     }
 
     publishPortalMethodHandler = async (id) => {
@@ -32,7 +31,6 @@ class Publish extends Component {
         else {
             await createPortal(token, portalDataToSend)
                 .then(res => {
-                    console.log(res);
                     this.setState({
                         id: res.data.id
                     });
@@ -69,9 +67,6 @@ class Publish extends Component {
             login_methods: {methods},
             imagesIDs
         } = this.props.tabName;
-        console.log(background.type);
-        console.log(this.props.tabName);
-
         const portalDataToSend = {
             background: background.type === 'COLOR' ? null : background.url,
             name: name && name,
@@ -116,7 +111,6 @@ class Publish extends Component {
             facebookLogin: methods.facebook,
             twitterLogin: methods.twitter
         };
-        console.log(portalDataToSend);
         return portalDataToSend;
     };
 
