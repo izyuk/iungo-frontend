@@ -1,8 +1,8 @@
 // import sha1 from 'sha1';
 import axios from 'axios';
 
-let auth_URL = 'http://a183d5946045f11e9bce002baace7c8b-29493317.eu-west-1.elb.amazonaws.com';
-let builder_API = 'http://a8b116236046611e9bce002baace7c8b-245451943.eu-west-1.elb.amazonaws.com';
+let auth_URL = 'https://marketing-auth.iungo.network';
+let builder_API = 'https://marketing-backend.iungo.network';
 
 // const Api = {
 export const userLogin = (login, password) => {
