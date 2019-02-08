@@ -59,7 +59,8 @@ class ImageUploader extends Component {
                 'Accept': 'application/json',
                 'Authorization': `${string}`
             },
-            url: `http://a8b116236046611e9bce002baace7c8b-245451943.eu-west-1.elb.amazonaws.com/image`,
+            //TODO move to the property file
+            url: `https://marketing-backend.iungo.network/image`,
             mode: 'no-cors',
             data: {"name": name, "base64Content": base64},
             onUploadProgress: progressEvent => {
@@ -105,7 +106,7 @@ class ImageUploader extends Component {
     };
 
     chooseImage = (e) => {
-        const list = document.querySelectorAll('.imagesList div');s
+        const list = document.querySelectorAll('.imagesList div');
         for (let i = 0; i < list.length; i++) {
             list[i].classList.remove('active');
         }
