@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {SketchPicker} from 'react-color';
-import {uploadImage, getAllImages} from '../../../api/API';
+import {BACKEND_API, getAllImages} from '../../../api/API';
 
 import Modal from '../../additional/modal';
 import axios from "axios";
@@ -59,8 +59,7 @@ class ImageUploader extends Component {
                 'Accept': 'application/json',
                 'Authorization': `${string}`
             },
-            //TODO move to the property file
-            url: `https://marketing-backend.iungo.network/image`,
+            url: `${BACKEND_API}/image`,
             mode: 'no-cors',
             data: {"name": name, "base64Content": base64},
             onUploadProgress: progressEvent => {

@@ -1,8 +1,8 @@
 // import sha1 from 'sha1';
 import axios from 'axios';
 
-let auth_URL = 'https://marketing-auth.iungo.network';
-let builder_API = 'https://marketing-backend.iungo.network';
+const AUTH_API = 'https://marketing-auth.iungo.network';
+const BACKEND_API = 'https://marketing-backend.iungo.network';
 
 // const Api = {
 export const userLogin = (login, password) => {
@@ -13,12 +13,12 @@ export const userLogin = (login, password) => {
     return axios({
         method: 'post',
         headers: myHeaders,
-        url: `${auth_URL}/login`,
+        url: `${AUTH_API}/login`,
         mode: 'no-cors',
         data: {"username": login, "password": password}
     })
         .then(res => res)
-        .catch(err => console.warn('In userLogin API method\n', err));
+        .catch(err => err.response);
 
 };
 export const userRegister = (login, password) => {
@@ -30,7 +30,7 @@ export const userRegister = (login, password) => {
     return axios({
         method: 'post',
         headers: myHeaders,
-        url: `${auth_URL}/user`,
+        url: `${AUTH_API}/user`,
         mode: 'no-cors',
         data: {"username": login, "password": password}
     })
@@ -46,7 +46,7 @@ export const getAllPortals = (string) => {
             'Accept': 'application/json',
             'Authorization': `${string}`
         },
-        url: `${builder_API}/portal`,
+        url: `${BACKEND_API}/portal`,
     })
         .then(res => res)
         .catch(err => console.warn('In getAllPortals API method\n', err));
@@ -59,7 +59,7 @@ export const getPortal = (string, id) => {
             'Accept': 'application/json',
             'Authorization': `${string}`
         },
-        url: `${builder_API}/portal/${id}`,
+        url: `${BACKEND_API}/portal/${id}`,
     })
         .then(res => res)
         .catch(err => console.warn('In getPortal API method\n', err));
@@ -73,7 +73,7 @@ export const getPortal = (string, id) => {
 //             'Accept': 'application/json',
 //             'Authorization': `${string}`
 //         },
-//         url: `${builder_API}/image`,
+//         url: `${BACKEND_API}/image`,
 //         mode: 'no-cors',
 //         data: {"name": name, "base64Content": base64},
 //         onUploadProgress: progressEvent => {
@@ -95,7 +95,7 @@ export const getAllImages = (string) => {
             'Accept': 'application/json',
             'Authorization': `${string}`
         },
-        url: `${builder_API}/image`,
+        url: `${BACKEND_API}/image`,
         mode: 'no-cors'
     })
         .then(res => res)
@@ -110,7 +110,7 @@ export const getHotspots = (string) => {
             'Accept': 'application/json',
             'Authorization': `${string}`
         },
-        url: `${builder_API}/hotspot`,
+        url: `${BACKEND_API}/hotspot`,
         mode: 'no-cors'
     })
         .then(res => res)
@@ -124,7 +124,7 @@ export const createHotspot = (string, name, address, description, portalId) => {
             'Accept': 'application/json',
             'Authorization': `${string}`
         },
-        url: `${builder_API}/hotspot`,
+        url: `${BACKEND_API}/hotspot`,
         mode: 'no-cors',
         data: {
             "name": name,
@@ -144,7 +144,7 @@ export const updateHotspotById = (string, name, address, description, portalId, 
             'Accept': 'application/json',
             'Authorization': `${string}`
         },
-        url: `${builder_API}/hotspot/${hotspotId}`,
+        url: `${BACKEND_API}/hotspot/${hotspotId}`,
         mode: 'no-cors',
         data: {
             "name": name,
@@ -164,12 +164,12 @@ export const createPortal = (string, info) => {
             'Accept': 'application/json',
             'Authorization': `${string}`
         },
-        url: `${builder_API}/portal`,
+        url: `${BACKEND_API}/portal`,
         mode: 'no-cors',
         data: info
     })
         .then(res => res)
-        .catch(err => console.warn('In createPortal API method\n', err));
+        .catch(err => err.response);
 };
 
 export const updatePortal = (string, info, id) => {
@@ -180,7 +180,7 @@ export const updatePortal = (string, info, id) => {
             'Accept': 'application/json',
             'Authorization': `${string}`
         },
-        url: `${builder_API}/portal/publish/${id}`,
+        url: `${BACKEND_API}/portal/publish/${id}`,
         mode: 'no-cors',
         data: info
     })
@@ -196,7 +196,7 @@ export const publishPortal = (string, info, id) => {
             'Accept': 'application/json',
             'Authorization': `${string}`
         },
-        url: `${builder_API}/portal/${id}`,
+        url: `${BACKEND_API}/portal/${id}`,
         mode: 'no-cors',
         data: info
     })
@@ -212,7 +212,7 @@ export const previewPortal = (string, info) => {
             'Accept': 'application/json',
             'Authorization': `${string}`
         },
-        url: `${builder_API}/portal/preview`,
+        url: `${BACKEND_API}/portal/preview`,
         mode: 'no-cors',
         data: info
     })

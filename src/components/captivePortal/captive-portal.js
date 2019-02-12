@@ -196,17 +196,17 @@ class CaptivePortal extends Component {
     componentDidMount() {
         this.props.token.token ? this.findPortal(this.props.token.token) : this.findPortal(localStorage.getItem('token'));
 
-        let currentDay = function (sp) {
-            let today = new Date();
-            let dd = today.getDate();
-            let mm = today.getMonth() + 1;
-            let yyyy = today.getFullYear();
-            let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-
-            if (dd < 10) dd = '0' + dd;
-            if (mm < 10) mm = '0' + mm;
-            return (mm + sp + dd + sp + yyyy + sp + time);
-        };
+        // let currentDay = function (sp) {
+        //     let today = new Date();
+        //     let dd = today.getDate();
+        //     let mm = today.getMonth() + 1;
+        //     let yyyy = today.getFullYear();
+        //     let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        //
+        //     if (dd < 10) dd = '0' + dd;
+        //     if (mm < 10) mm = '0' + mm;
+        //     return (mm + sp + dd + sp + yyyy + sp + time);
+        // };
 
         // this.props.addPortalName(`CaptivePortal - ${currentDay('/')}`);
 
@@ -217,24 +217,22 @@ class CaptivePortal extends Component {
     }
 
     nameEditor = (e) => {
-
         e.currentTarget.classList.add('active');
-        // e.currentTarget.setAttribute('disable', false);
+        e.currentTarget.removeAttribute('disabled');
     };
 
     setName = (e) => {
 
-        if (e.currentTarget.value.length > 3){
+        if (e.currentTarget.value.length > 3) {
             e.currentTarget.classList.remove('active');
             e.currentTarget.classList.remove('error');
-            // e.currentTarget.setAttribute('disable', true);
+            e.currentTarget.setAttribute('disabled', true);
             this.setState({
                 portalName: e.currentTarget.value
             });
             this.props.addPortalName(e.currentTarget.value);
         } else {
             e.currentTarget.classList.add('error');
-            // e.currentTarget.setAttribute('disable', false);
         }
     };
 
@@ -256,10 +254,12 @@ class CaptivePortal extends Component {
                                     {/*<h3>Captive Portal Builder</h3>*/}
                                     <input ref={this.portalName}
                                            type="text"
-                                           defaultValue={this.state.portalName}
-                                           // disabled={true}
+                                           placeholder={'Name'}
+                                           disabled={false}
                                            onDoubleClick={this.nameEditor}
-                                           onBlur={this.setName}/>
+                                           onBlur={this.setName}
+                                           className={'active'}/>
+                                    <span></span>
                                     <div className="toggles">
                                         <a href="javascript:void(0)" data-id="desktop"
                                            className="active" onClick={(data) => this.trigger(data)}>

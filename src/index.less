@@ -153,6 +153,11 @@
     line-height: 2;
     letter-spacing: normal;
     text-align: center;
+
+    &.fail {
+      color: #ff4d5d;
+      margin-bottom: 10px;
+    }
   }
   .login {
     .font(@avenir-heavy, 12);
@@ -223,62 +228,9 @@
       background: @pale-grey-six;
     }
     &.email {
-      &:after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 40px;
-        height: 40px;
-        //background: url("../../../static/images/email.svg") no-repeat;
-        background-size: 16px 14px;
-        z-index: 1;
-      }
+
     }
-    input {
-      width: calc(100% - 40px);
-      border: 1px solid transparent;
-      background: transparent;
-      .font(@avenir-heavy, 12);
-      font-weight: bold;
-      line-height: 2;
-      text-align: center;
-      color: @steel-three;
-      &::-webkit-input-placeholder {
-        color: @steel-three;
-        text-align: center;
-        .font(@avenir-heavy, 12);
-        font-weight: bold;
-        line-height: 2;
-        text-align: center;
-      }
-      &::-moz-placeholder {
-        color: @steel-three;
-        text-align: center;
-        .font(@avenir-heavy, 12);
-        font-weight: bold;
-        line-height: 2;
-        text-align: center;
-      }
-      &:-ms-input-placeholder {
-        color: @steel-three;
-        text-align: center;
-        .font(@avenir-heavy, 12);
-        font-weight: bold;
-        line-height: 2;
-        text-align: center;
-      }
-      &:-moz-placeholder {
-        color: @steel-three;
-        text-align: center;
-        .font(@avenir-heavy, 12);
-        font-weight: bold;
-        line-height: 2;
-        text-align: center;
-      }
-    }
-    &.validationFalse {
+    &.validationFail {
       border-color: #ff4d5d;
       span {
         background-color: @pink;
@@ -311,41 +263,42 @@
       .font(@avenir-heavy, 12);
       font-weight: bold;
       line-height: 2;
-      text-align: center;
       color: @steel-three;
+      padding: 0 10px;
       &::-webkit-input-placeholder {
         color: @steel-three;
-        text-align: center;
         .font(@avenir-heavy, 12);
         font-weight: bold;
         line-height: 2;
-        text-align: center;
       }
       &::-moz-placeholder {
         color: @steel-three;
-        text-align: center;
         .font(@avenir-heavy, 12);
         font-weight: bold;
         line-height: 2;
-        text-align: center;
       }
       &:-ms-input-placeholder {
         color: @steel-three;
-        text-align: center;
         .font(@avenir-heavy, 12);
         font-weight: bold;
         line-height: 2;
-
-        text-align: center;
       }
       &:-moz-placeholder {
         color: @steel-three;
-        text-align: center;
         .font(@avenir-heavy, 12);
         font-weight: bold;
         line-height: 2;
-        text-align: center;
       }
+    }
+  }
+  &.validationFail {
+    &:after {
+      margin-top: 20px;
+      position: relative;
+      display: block;
+      content: 'Wrong username or password';
+      color: #ff4d5d;
+      text-align: center;
     }
   }
 }
@@ -521,15 +474,19 @@ header {
     line-height: 1.67;
     color: @dark-indigo;
   }
-  input{
+  input {
     .font(@avenir-medium, 24);
     line-height: 1.67;
     color: @dark-indigo;
     border: 1px solid @trans;
-    &.active{
+    border-radius: 4px;
+    &.active {
       padding: 0 10px;
       background: @w;
       border: 1px solid @pale-grey-three;
+    }
+    &.error {
+      border-color: #ff4d5d;
     }
   }
   .toggles {
@@ -1382,90 +1339,6 @@ header {
   }
 }
 
-//.inputsWrap,
-//.socialsWrap {
-//  width: 100%;
-//  margin: 16px 0;
-//  .email {
-//    margin-bottom: 16px;
-//  }
-//  & > div {
-//    width: 100%;
-//    height: 42px;
-//    border-radius: 2px;
-//    border: solid 1px @light-blue-grey;
-//    background-color: @pale-grey-five;
-//    position: relative;
-//    display: flex;
-//    span {
-//      position: relative;
-//      display: flex;
-//      justify-content: center;
-//      align-items: center;
-//      width: 40px;
-//      height: 40px;
-//      border-radius: 2px;
-//      background: @pale-grey-six;
-//    }
-//    &.email {
-//      &:after {
-//        content: '';
-//        display: block;
-//        position: absolute;
-//        top: 0;
-//        left: 0;
-//        width: 40px;
-//        height: 40px;
-//        //background: url("../../../static/images/email.svg") no-repeat;
-//        background-size: 16px 14px;
-//        z-index: 1;
-//      }
-//    }
-//    input {
-//      width: calc(100% - 40px);
-//      border: 1px solid transparent;
-//      background: transparent;
-//      .font(@avenir-heavy, 12);
-//      font-weight: bold;
-//      line-height: 2;
-//      text-align: center;
-//      color: @steel-three;
-//      &::-webkit-input-placeholder {
-//        color: @steel-three;
-//        text-align: center;
-//        .font(@avenir-heavy, 12);
-//        font-weight: bold;
-//        line-height: 2;
-//        text-align: center;
-//      }
-//      &::-moz-placeholder {
-//        color: @steel-three;
-//        text-align: center;
-//        .font(@avenir-heavy, 12);
-//        font-weight: bold;
-//        line-height: 2;
-//        text-align: center;
-//      }
-//      &:-ms-input-placeholder {
-//        color: @steel-three;
-//        text-align: center;
-//        .font(@avenir-heavy, 12);
-//        font-weight: bold;
-//        line-height: 2;
-//        text-align: center;
-//      }
-//      &:-moz-placeholder {
-//        color: @steel-three;
-//        text-align: center;
-//        .font(@avenir-heavy, 12);
-//        font-weight: bold;
-//        line-height: 2;
-//        text-align: center;
-//      }
-//    }
-//  }
-//}
-
 .socialsWrap {
   div {
     cursor: pointer;
@@ -1762,12 +1635,12 @@ header {
               padding: 3px 5px;
             }
           }
-          a{
+          a {
             width: auto;
             height: 14px;
             display: inline-block;
             overflow: hidden;
-            span{
+            span {
               width: auto;
               height: auto;
               display: inline-block;
@@ -1780,6 +1653,10 @@ header {
   }
 
 }
+
+/*
+  Table styles
+*/
 
 .captivePortalList {
   background: @w;
@@ -1847,6 +1724,10 @@ table {
   }
 }
 
+/*
+    Main Preview look style
+*/
+
 .previewMain {
   width: 100%;
   height: 100%;
@@ -1864,6 +1745,10 @@ table {
     transition: width 0.3s linear;
   }
 }
+
+/*
+    Modal window
+*/
 
 .modal {
   position: absolute;
@@ -1928,7 +1813,7 @@ table {
         grid-gap: 20px;
         //column-gap: 20px;
         justify-content: center;
-        div{
+        div {
           display: flex;
           flex-direction: column;
           width: 100%;
@@ -1936,12 +1821,12 @@ table {
           justify-content: space-between;
           border: 4px solid @trans;
           position: relative;
-          svg{
+          svg {
             display: none;
           }
-          &.active{
+          &.active {
             border-color: @soft-blue;
-            svg{
+            svg {
               display: block;
               width: 20px;
               height: 20px;
@@ -1949,7 +1834,7 @@ table {
               top: 3px;
               right: 3px;
             }
-            &:before{
+            &:before {
               content: '';
               position: absolute;
               display: block;
@@ -1960,12 +1845,12 @@ table {
               background: @soft-blue;
             }
           }
-          img{
+          img {
             width: 100%;
             //height: 100%;
             objectt: contain;
           }
-          span{
+          span {
             margin-top: 10px;
             word-break: break-word;
           }
@@ -1983,9 +1868,9 @@ table {
         width: 80%;
         display: flex;
         flex-direction: column;
-        .top{
-          span{
-            &:not(:last-child){
+        .top {
+          span {
+            &:not(:last-child) {
               margin-right: 20px;
             }
           }
@@ -2002,7 +1887,7 @@ table {
             background: @pale-grey;
             border-radius: 5px;
             overflow: hidden;
-            span{
+            span {
               position: absolute;
               top: 0;
               left: 0;
@@ -2014,5 +1899,33 @@ table {
         }
       }
     }
+  }
+}
+
+.notification {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  right: 0;
+  width: 400px;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+  margin: auto;
+  transition: all linear .5s;
+  &.fail {
+    top: 0;
+    border: 1px solid #ff4d5d;
+    background: rgba(255, 77, 93, .5);
+    color: #fff;
+  }
+  &.info {
+    top: 0;
+    border: 1px solid #4d4d4d;
+    background: rgba(77, 77, 77, .5);
+    color: #fff;
   }
 }

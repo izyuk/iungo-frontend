@@ -359,6 +359,10 @@ body {
   letter-spacing: normal;
   text-align: center;
 }
+.formWrap p.fail {
+  color: #ff4d5d;
+  margin-bottom: 10px;
+}
 .formWrap .login {
   font-family: 'AvenirLTStd-Heavy', sans-serif;
   font-size: 12px;
@@ -435,101 +439,36 @@ body {
   border-radius: 2px;
   background: #dde1ec;
 }
-.inputsWrap > div.email:after,
-.socialsWrap > div.email:after {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 40px;
-  background-size: 16px 14px;
-  z-index: 1;
-}
-.inputsWrap > div input,
-.socialsWrap > div input {
-  width: calc(100% - 40px);
-  border: 1px solid transparent;
-  background: transparent;
-  font-family: 'AvenirLTStd-Heavy', sans-serif;
-  font-size: 12px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  line-height: 2;
-  text-align: center;
-  color: #7a859b;
-}
-.inputsWrap > div input::-webkit-input-placeholder,
-.socialsWrap > div input::-webkit-input-placeholder {
-  color: #7a859b;
-  font-family: 'AvenirLTStd-Heavy', sans-serif;
-  font-size: 12px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  line-height: 2;
-  text-align: center;
-}
-.inputsWrap > div input::-moz-placeholder,
-.socialsWrap > div input::-moz-placeholder {
-  color: #7a859b;
-  font-family: 'AvenirLTStd-Heavy', sans-serif;
-  font-size: 12px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  line-height: 2;
-  text-align: center;
-}
-.inputsWrap > div input:-ms-input-placeholder,
-.socialsWrap > div input:-ms-input-placeholder {
-  color: #7a859b;
-  font-family: 'AvenirLTStd-Heavy', sans-serif;
-  font-size: 12px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  line-height: 2;
-  text-align: center;
-}
-.inputsWrap > div input:-moz-placeholder,
-.socialsWrap > div input:-moz-placeholder {
-  color: #7a859b;
-  font-family: 'AvenirLTStd-Heavy', sans-serif;
-  font-size: 12px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  line-height: 2;
-  text-align: center;
-}
-.inputsWrap > div.validationFalse,
-.socialsWrap > div.validationFalse {
+.inputsWrap > div.validationFail,
+.socialsWrap > div.validationFail {
   border-color: #ff4d5d;
 }
-.inputsWrap > div.validationFalse span,
-.socialsWrap > div.validationFalse span {
+.inputsWrap > div.validationFail span,
+.socialsWrap > div.validationFail span {
   background-color: #ff6976;
 }
-.inputsWrap > div.validationFalse input,
-.socialsWrap > div.validationFalse input {
+.inputsWrap > div.validationFail input,
+.socialsWrap > div.validationFail input {
   color: #ff4d5d;
 }
-.inputsWrap > div.validationFalse input::-webkit-input-placeholder,
-.socialsWrap > div.validationFalse input::-webkit-input-placeholder {
+.inputsWrap > div.validationFail input::-webkit-input-placeholder,
+.socialsWrap > div.validationFail input::-webkit-input-placeholder {
   color: #ff4d5d;
 }
-.inputsWrap > div.validationFalse input::-moz-placeholder,
-.socialsWrap > div.validationFalse input::-moz-placeholder {
+.inputsWrap > div.validationFail input::-moz-placeholder,
+.socialsWrap > div.validationFail input::-moz-placeholder {
   color: #ff4d5d;
 }
-.inputsWrap > div.validationFalse input:-ms-input-placeholder,
-.socialsWrap > div.validationFalse input:-ms-input-placeholder {
+.inputsWrap > div.validationFail input:-ms-input-placeholder,
+.socialsWrap > div.validationFail input:-ms-input-placeholder {
   color: #ff4d5d;
 }
-.inputsWrap > div.validationFalse input:-moz-placeholder,
-.socialsWrap > div.validationFalse input:-moz-placeholder {
+.inputsWrap > div.validationFail input:-moz-placeholder,
+.socialsWrap > div.validationFail input:-moz-placeholder {
   color: #ff4d5d;
 }
-.inputsWrap > div.validationFalse svg g,
-.socialsWrap > div.validationFalse svg g {
+.inputsWrap > div.validationFail svg g,
+.socialsWrap > div.validationFail svg g {
   fill: #fff;
 }
 .inputsWrap > div input,
@@ -542,8 +481,8 @@ body {
   font-size: 0.75rem;
   font-weight: bold;
   line-height: 2;
-  text-align: center;
   color: #7a859b;
+  padding: 0 10px;
 }
 .inputsWrap > div input::-webkit-input-placeholder,
 .socialsWrap > div input::-webkit-input-placeholder {
@@ -553,7 +492,6 @@ body {
   font-size: 0.75rem;
   font-weight: bold;
   line-height: 2;
-  text-align: center;
 }
 .inputsWrap > div input::-moz-placeholder,
 .socialsWrap > div input::-moz-placeholder {
@@ -563,7 +501,6 @@ body {
   font-size: 0.75rem;
   font-weight: bold;
   line-height: 2;
-  text-align: center;
 }
 .inputsWrap > div input:-ms-input-placeholder,
 .socialsWrap > div input:-ms-input-placeholder {
@@ -573,7 +510,6 @@ body {
   font-size: 0.75rem;
   font-weight: bold;
   line-height: 2;
-  text-align: center;
 }
 .inputsWrap > div input:-moz-placeholder,
 .socialsWrap > div input:-moz-placeholder {
@@ -583,6 +519,14 @@ body {
   font-size: 0.75rem;
   font-weight: bold;
   line-height: 2;
+}
+.inputsWrap.validationFail:after,
+.socialsWrap.validationFail:after {
+  margin-top: 20px;
+  position: relative;
+  display: block;
+  content: 'Wrong username or password';
+  color: #ff4d5d;
   text-align: center;
 }
 .socialsWrap div {
@@ -749,11 +693,15 @@ header .container {
   line-height: 1.67;
   color: #071031;
   border: 1px solid transparent;
+  border-radius: 4px;
 }
 .info input.active {
   padding: 0 10px;
   background: #fff;
   border: 1px solid #e5e9f2;
+}
+.info input.error {
+  border-color: #ff4d5d;
 }
 .info .toggles {
   display: flex;
@@ -1904,6 +1852,9 @@ header .container {
   display: inline-block;
   overflow: visible;
 }
+/*
+  Table styles
+*/
 .captivePortalList {
   background: #fff;
 }
@@ -1957,6 +1908,9 @@ table tr th {
   font-size: 1rem;
   color: #2a314e;
 }
+/*
+    Main Preview look style
+*/
 .previewMain {
   width: 100%;
   height: 100%;
@@ -1973,6 +1927,9 @@ table tr th {
   width: 400px;
   transition: width 0.3s linear;
 }
+/*
+    Modal window
+*/
 .modal {
   position: absolute;
   top: 0;
@@ -2119,5 +2076,32 @@ table tr th {
   height: 5px;
   background: #5585ed;
   width: 50%;
+}
+.notification {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  right: 0;
+  width: 400px;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+  margin: auto;
+  transition: all linear 0.5s;
+}
+.notification.fail {
+  top: 0;
+  border: 1px solid #ff4d5d;
+  background: rgba(255, 77, 93, 0.5);
+  color: #fff;
+}
+.notification.info {
+  top: 0;
+  border: 1px solid #4d4d4d;
+  background: rgba(77, 77, 77, 0.5);
+  color: #fff;
 }
 /*# sourceMappingURL=index.css.map */

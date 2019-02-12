@@ -1,35 +1,36 @@
 import React, {Component} from 'react';
 
 class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            login: '',
-            password: '',
-        };
-        this.fieldsHandler = this.fieldsHandler.bind(this);
-    }
 
-    fieldsHandler(e) {
-        let type = e.target.getAttribute('datatype');
-        if ((type === 'login' && /[\w_.-]+@[0-9a-z_-]+\.[a-z]{2,5}/i.test(e.target.value)) || (type === 'password' && (e.target.value.length >= 8 && e.target.value.length <= 32))) {
-            e.target.parentNode.classList.remove("validationFalse");
-            this.setState({
-                [type]: e.target.value
-            })
-        }
-        else {
-            e.target.parentNode.classList.add("validationFalse");
-            this.setState({
-                [type]: ''
-            })
-        }
-    }
+    state = {
+        email: '',
+        password: '',
+    };
+
+    email = React.createRef();
+    password = React.createRef();
+
+    fieldsHandler = (e) => {
+        let type = e.target.getAttribute('type');
+        this.setState({
+            [type]: e.target.value
+        });
+        // const {email, password} = this.state;
+        // const expEmail = /[\w_.-]+@[0-9a-z_-]+\.[a-z]{2,5}/i.test(email);
+        // const expPassword = (password.length >= 8 && password.length <= 32);
+        // if (expEmail || expPassword) {
+        //     this.setState({
+        //         [type]: e.target.value
+        //     });
+        // }
+    };
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.login !== nextState.login) {
+        if (this.state.email !== nextState.email) {
             return true
         } else if (this.state.password !== nextState.password) {
+            return true
+        } else if (this.props.showNotification !== nextProps.showNotification) {
             return true
         } else {
             return false
@@ -37,11 +38,24 @@ class Login extends Component {
     }
 
     componentDidUpdate() {
-        let {login, password} = this.state;
-        if (login.length>0 && password.length>0){
-            this.props.getLoginData(this.state, true)
+        let {email, password} = this.state;
+        if (email.length > 0 && password.length > 0) {
+            this.props.setLoginData(this.state)
         } else {
-            this.props.getLoginData(null, false)
+            this.props.setLoginData(null)
+        }
+    }
+
+    componentDidMount() {
+        this.setState({
+            email: this.email.current.value,
+            password: this.password.current.value
+        });
+        let {email, password} = this.state;
+        if (email.length > 0 && password.length > 0) {
+            this.props.setLoginData(this.state)
+        } else {
+            this.props.setLoginData(null)
         }
     }
 
@@ -49,7 +63,7 @@ class Login extends Component {
     render() {
         return (
             <div className="inputsWrap">
-                <div className="email">
+                <div className={this.props.showNotification ? 'email validationFail' : 'email'}>
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14">
                                 <g fill="#8D98B0" fillRule="nonzero">
@@ -59,12 +73,19 @@ class Login extends Component {
                                 </g>
                             </svg>
                         </span>
-                    <input type="email" onBlur={this.fieldsHandler} datatype="login" defaultValue="dmitriy.izyuk@gmail.com" placeholder="Your Email"/>
+                    <input type="email"
+                           ref={this.email}
+                           onBlur={this.fieldsHandler}
+                           placeholder="Your Email"/>
                 </div>
-                <div className="password">
+                <div className={this.props.showNotification ? 'password validationFail' : 'password'}>
                     <span></span>
-                    <input type="password" onBlur={this.fieldsHandler} datatype="password" defaultValue="Izyuk8968" placeholder="Your Password"/>
+                    <input type="password"
+                           ref={this.password}
+                           onBlur={this.fieldsHandler}
+                           placeholder="Your Password"/>
                 </div>
+
             </div>
         )
     }

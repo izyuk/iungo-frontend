@@ -1,17 +1,11 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
-
-// HotspotTable.propTypes = {
-//     // onCorrect: PropTypes.func.isRequired,
-//     // expanded: PropTypes.bool
-// };
+import Notification from '../additional/notification';
 
 class HotspotTable extends Component {
     state = {
-        list: ''
+        list: '',
+        copied: false
     };
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -20,9 +14,9 @@ class HotspotTable extends Component {
                 list: nextProps.hotspotList
             });
             return true
-        } else {
-            return false
         }
+        else if (this.state.copied !== nextState.copied) return true;
+        else return false
     }
 
     getDataToEdit = (e, currentHotSpotId) => {
@@ -42,6 +36,9 @@ class HotspotTable extends Component {
 
         try {
             let successful = document.execCommand('copy');
+            this.setState({
+                copied: successful
+            });
             selection.removeAllRanges();
             let msg = successful ? 'successful' : 'unsuccessful';
             console.info('Copying text command was ' + msg);
@@ -49,6 +46,9 @@ class HotspotTable extends Component {
             console.warn('Oops, unable to copy');
         }
         e.preventDefault();
+        setTimeout(() => {
+            this.setState({copied: false});
+        }, 2000)
     };
 
     render() {
@@ -87,6 +87,7 @@ class HotspotTable extends Component {
                     )
                 })}
                 </tbody>
+                {this.state.copied && <Notification type={'info'} text={'Virtual URL was copied'}/>}
             </table>
         )
     }

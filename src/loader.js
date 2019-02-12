@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 
 
-export default class Loader extends Component {
+class Loader extends Component {
     render() {
         return (
             <div className="loader">
@@ -9,4 +9,6 @@ export default class Loader extends Component {
             </div>
         );
     }
-};
+}
+
+export default Loader;

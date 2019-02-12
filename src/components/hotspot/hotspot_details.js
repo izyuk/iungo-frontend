@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import HotspotForm from './hotspotForm';
 import HotspotTable from './hotspotTable';
+import Notification from '../additional/notification';
 
 import {createHotspot, getHotspots, updateHotspotById, getAllPortals} from '../../api/API';
 import connect from "react-redux/es/connect/connect";
@@ -16,7 +17,9 @@ class HotspotDetails extends Component {
         list: '',
         id: '',
         captivePortalID: '',
-        portalsList: ''
+        portalsList: '',
+        submitted: false,
+        submittedType: ''
     };
 
     static propTypes = {
@@ -88,14 +91,27 @@ class HotspotDetails extends Component {
             var query;
             if (this.state.id !== '') {
                 query = updateHotspotById(token, this.state.name, this.state.address, this.state.description, this.state.captivePortalID, this.state.id);
+                this.setState({
+                    submitted: true,
+                    submittedType: 'updated'
+                })
             }
             else {
                 query = createHotspot(token, this.state.name, this.state.address, this.state.description, this.state.captivePortalID);
+                this.setState({
+                    submitted: true,
+                    submittedType: 'created'
+                })
             }
 
             await query.then(res => {
                 this.props.token.token !== undefined ? this.getHotspotsMethodHandler(this.props.token.token) : this.getHotspotsMethodHandler(localStorage.getItem('token'));
             });
+
+
+            setTimeout(() => {
+                this.setState({submitted: false, submittedType: ''});
+            }, 2000)
 
         } else {
             this.setState({
@@ -135,6 +151,8 @@ class HotspotDetails extends Component {
         else if (this.state.address !== nextState.address) return true;
         else if (this.state.description !== nextState.description) return true;
         else if (this.state.portalsList !== nextState.portalsList) return true;
+        else if (this.state.submitted !== nextState.submitted) return true;
+        else if (this.state.submittedType !== nextState.submittedType) return true;
         else return true;
     }
 
@@ -155,7 +173,7 @@ class HotspotDetails extends Component {
                             type="text"
                             datatype="name"
                             placeholder={"Your name"}
-                            defaultValue={name}
+                            value={name}
                             onChange={this.handleInputChange}
                         />
                     </div>
@@ -164,7 +182,7 @@ class HotspotDetails extends Component {
                             type="text"
                             datatype="address"
                             placeholder={"Your address"}
-                            defaultValue={address}
+                            value={address}
                             onChange={this.handleInputChange}
                         />
                     </div>
@@ -194,6 +212,7 @@ class HotspotDetails extends Component {
                 <HotspotTable
                     hotspotList={this.state.list !== '' ? this.state.list : false}
                     editHandler={this.editHandler}/>
+                {this.state.submitted && <Notification type={'info'} text={`Hotspot settings was ${this.state.submittedType} successfully`}/>}
             </div>
         )
     }

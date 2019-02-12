@@ -44,7 +44,6 @@ export default class CaptivePortalWrap extends Component {
     render() {
         return (
             <div className={this.state.currentId !== '' ? "container" : "container"}>
-                {this.state.loader && <Loader/>}
                 {
                     (this.state.currentId !== '' || this.state.storageCleared) ?
                         <CaptivePortal settedId={this.state.currentId}
@@ -53,6 +52,7 @@ export default class CaptivePortalWrap extends Component {
                                            clearing={this.storageCleaningHandler}/>
 
                 }
+                {this.state.loader && <Loader/>}
             </div>
         )
     }

@@ -2,18 +2,26 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {createPortal, publishPortal, previewPortal, updatePortal} from "../../../api/API";
 import Loader from "../../../loader";
+import Notification from "../../additional/notification";
 
 class Publish extends Component {
     // constructor(props) {
     //     super(props);
     /*this.*/
     state = {
-        id: localStorage.getItem('cpID')
+        id: localStorage.getItem('cpID'),
+        notification: false,
+        publishedType: '',
+        failed: false
     };
     // this.getBuilderParams = this.getBuilderParams.bind(this);
     // }
 
     componentDidMount() {
+
+    }
+
+    componentDidUpdate() {
 
     }
 
@@ -26,19 +34,45 @@ class Publish extends Component {
             const query = (publishPortal(token, portalDataToSend, cpID), updatePortal(token, portalDataToSend, cpID));
             await query.then(res => {
                 this.props.loaderHandler();
-            });
+                this.setState({
+                    notification: true,
+                    publishedType: 'updated and published'
+                })
+            })
         }
         else {
             await createPortal(token, portalDataToSend)
                 .then(res => {
-                    this.setState({
-                        id: res.data.id
-                    });
-                    publishPortal(token, portalDataToSend, res.data.id);
-                    this.props.loaderHandler();
-                });
+                    if (res.status !== 400) {
+                        this.setState({
+                            id: res.data.id,
+                            notification: true,
+                            publishedType: 'created and published'
+                        });
 
+                        this.props.loaderHandler();
+
+                        publishPortal(token, portalDataToSend, res.data.id);
+                    } else {
+                        this.setState({
+                            notification: true,
+                            failed: true,
+                            publishedType: `Error: ${res.data.errors[0].field} input ${res.data.errors[0].message}`
+                        });
+                        this.props.loaderHandler();
+                        document.onclick = () => {
+                            console.log('here');
+                            console.log(document);
+                            this.setState({notification: false, failed: false});
+                        }
+                    }
+                })
         }
+
+        setTimeout(() => {
+            this.setState({notification: false, failed: false});
+        }, 2000)
+
     };
 
     previewPortalMethodHandler = async () => {
@@ -111,11 +145,14 @@ class Publish extends Component {
             facebookLogin: methods.facebook,
             twitterLogin: methods.twitter
         };
+
         return portalDataToSend;
     };
 
-    shouldComponentUpdate(nextProps, nextState){
-        if(this.state.id !== nextState.id) return true;
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.state.id !== nextState.id) return true;
+        else if (this.state.notification !== nextState.notification) return true;
+        else if (this.state.publishedType !== nextState.publishedType) return true;
         else return false;
     }
 
@@ -129,6 +166,9 @@ class Publish extends Component {
                 </p>
                 <button type="button" onClick={this.publishPortalMethodHandler} className="publishBtn">Publish
                 </button>
+                {this.state.notification &&
+                <Notification type={this.state.failed ? 'fail' : 'info'}
+                              text={!this.state.failed ? `Your Captive Portal was ${this.state.publishedType}` : this.state.publishedType}/>}
             </div>
         )
     }

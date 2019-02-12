@@ -197,8 +197,8 @@ class CaptivePortalList extends Component {
                         </thead>
                         <tbody>{this.state.list !== '' && this.state.list}</tbody>
                     </table>
-                    {this.state.list === '' && <Loader/>}
                 </div>
+                {this.state.list === '' && <Loader/>}
             </div>
         )
     }

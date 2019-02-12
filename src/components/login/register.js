@@ -21,7 +21,7 @@ class Register extends Component{
                         </span>
                         <input type="button" value="Continue with Google"/></div>
                 </div>
-                <Login getLoginData={this.props.getLoginData}/>
+                <Login setLoginData={this.props.setLoginData}/>
             </div>
         )
     }

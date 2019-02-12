@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 
 class Loader extends Component {
     render() {
-        return (
+        return ReactDOM.createPortal(
             <div className={"loader"}>
                 <span></span>
-            </div>
+            </div>,
+            document.getElementById('loaderPlace')
         );
     }
 }
