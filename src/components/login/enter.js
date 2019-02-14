@@ -13,8 +13,6 @@ import Loader from '../../loader';
 import Notification from '../additional/notification';
 
 class Enter extends Component {
-    // constructor(props) {
-    //     super(props);
     state = {
         login: true,
         userData: null,
@@ -22,12 +20,9 @@ class Enter extends Component {
         auth: false,
         loader: false,
         showNotification: false,
-        text: 'Wrong username or password'
+        notificationText: '',
+        notificationType: ''
     };
-    // }
-
-    // dmitriy.izyuk@gmail.com
-    // Izyuk8968
 
     fieldsHandler = (e) => {
         if (this.state.userData !== null) {
@@ -54,15 +49,26 @@ class Enter extends Component {
                     this.setState({
                         auth: true,
                         loader: false,
-                        showNotification: false
+                        showNotification: false,
+                        notificationType: 'info'
                     })
 
-                } else if (status === 401){
+                } else {
                     this.setState({
                         auth: false,
                         loader: false,
-                        showNotification: true
-                    })
+                        showNotification: true,
+                        notificationType: 'fail'
+                    });
+                    if (status === 401){
+                        this.setState({
+                            notificationText: 'Wrong username or password'
+                        })
+                    } else if (status === 400){
+                        this.setState({
+                            notificationText: res.data.errors[0].message
+                        })
+                    }
                 }
             })
         }
@@ -75,7 +81,6 @@ class Enter extends Component {
     };
 
     setLoginData = (data) => {
-        console.log(data);
         this.setState({
             userData: data
         });
@@ -92,7 +97,8 @@ class Enter extends Component {
         else if (this.state.auth !== nextState.auth) return true;
         else if (this.state.loader !== nextState.loader) return true;
         else if (this.state.showNotification !== nextState.showNotification) return true;
-        else if (this.state.text !== nextState.text) return true;
+        else if (this.state.notificationText !== nextState.notificationText) return true;
+        else if (this.state.notificationType !== nextState.notificationType) return true;
         else return false
 
     }
@@ -104,7 +110,8 @@ class Enter extends Component {
             auth,
             loader,
             showNotification,
-            text
+            notificationText,
+            notificationType
         } = this.state;
 
         return (
@@ -116,7 +123,7 @@ class Enter extends Component {
                 {login ? <Login setLoginData={this.setLoginData} showNotification={showNotification}>{this.props.children}</Login> :
                     <Register setLoginData={this.setLoginData}>{this.props.children}</Register>}
                 {/*{showNotification && <Notification type={'fail'} text={text} />}*/}
-                {showNotification && <p className={'fail'}>{text}</p>}
+                {showNotification && <p className={notificationType}>{notificationText}</p>}
 
                 <span
                     className={"login"}

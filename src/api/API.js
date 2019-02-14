@@ -35,7 +35,7 @@ export const userRegister = (login, password) => {
         data: {"username": login, "password": password}
     })
         .then(res => res)
-        .catch(err => console.warn('In userRegister API method\n', err));
+        .catch(err => err.response);
 
 };
 export const getAllPortals = (string) => {

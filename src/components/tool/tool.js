@@ -8,7 +8,7 @@ class Tool extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sidebar: false
+            sidebar: true
         };
     }
 

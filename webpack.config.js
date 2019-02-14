@@ -83,6 +83,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebPackPlugin({
+            favicon: 'src/static/images/favicon.ico',
             template: "./public/index.html",
             filename: "./index.html",
             minify: {

@@ -153,9 +153,12 @@
     line-height: 2;
     letter-spacing: normal;
     text-align: center;
-
     &.fail {
       color: #ff4d5d;
+      margin-bottom: 10px;
+    }
+    &.info {
+      color: @soft-blue;
       margin-bottom: 10px;
     }
   }
@@ -389,9 +392,17 @@ header {
     position: relative;
     .avatar {
       display: flex;
+      width: 32px;
+      height: 32px;
+      border-radius: 32px;
+      overflow: hidden;
       img {
         width: 100%;
         object-fit: contain;
+      }
+      svg {
+        width: 32px;
+        height: 32px;
       }
     }
     .caret {
@@ -1224,9 +1235,9 @@ header {
     min-width: 20px;
     display: inline-block;
     height: 20px;
-    border: none;
     border-radius: 4px;
     background: @soft-blue;
+    border: 1px solid @steel;
   }
   input {
     width: 60px;

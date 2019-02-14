@@ -65,7 +65,19 @@ class Header extends Component {
                             <a href="javascript:void(0)">Help</a>
                             <div className="user">
                                 <div className="avatar">
-                                    <img src={require('../../static/images/oval.png')} alt=""/>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="53" height="67" viewBox="0 0 53 67">
+                                        <g fill="none" fillRule="evenodd">
+                                            <path fill="#5282F0" d="M53 67v-5.675C53 46.847 41.075 35 26.5 35S0 46.847 0 61.325V67h53z"/>
+                                            <path fill="#FFF" d="M18 42V30l12 6z"/>
+                                            <path fill="#FFF" d="M37 42V30l-12 6z"/>
+                                            <path fill="#BFC5D3" d="M44 17c0 9.389-7.611 17-17 17s-17-7.611-17-17S17.611 0 27 0s17 7.611 17 17"/>
+                                            <path fill="#082265" d="M10 14.393a22.03 22.03 0 0 0 5.131.607C24.06 15 31.721 9.684 35 2.106A17.087 17.087 0 0 0 26.754 0C18.17 0 11.086 6.272 10 14.393"/>
+                                            <path fill="#BFC5D3" d="M46 22a4 4 0 1 1-8 0 4 4 0 0 1 8 0M16 22a4 4 0 1 1-8 0 4 4 0 0 1 8 0"/>
+                                            <path stroke="#FFF" strokeWidth=".75" d="M42 60H31V49h11zM31 53h11"/>
+                                            <path fill="#082265" d="M24 .34C25.071 8.059 31.64 14 39.59 14c1.53 0 3.01-.225 4.41-.636C42.275 5.713 35.493 0 27.384 0c-1.159 0-2.29.118-3.384.34"/>
+                                        </g>
+                                    </svg>
+
                                 </div>
                                 <a href="javascript:void(0)"
                                    className="caret"

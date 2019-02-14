@@ -28,6 +28,7 @@ class Publish extends Component {
     publishPortalMethodHandler = async (id) => {
         this.props.loaderHandler();
         const portalDataToSend = this.getBuilderParams();
+        console.log(portalDataToSend);
         const token = localStorage.getItem('token');
         const cpID = this.state.id;
         if (cpID) {
@@ -104,7 +105,7 @@ class Publish extends Component {
         const portalDataToSend = {
             background: background.type === 'COLOR' ? null : background.url,
             name: name && name,
-            externalStylesUrl: path && path,
+            externalCss: path && path,
             logoId: imagesIDs.logoID,
             backgroundId: background.type === 'COLOR' ? null : imagesIDs.backgroundID,
             header: top.text,
