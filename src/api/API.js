@@ -4,6 +4,13 @@ import axios from 'axios';
 const AUTH_API = 'https://marketing-auth.iungo.network';
 const BACKEND_API = 'https://marketing-backend.iungo.network';
 
+
+function authChecker(response){
+    if (response.status === 401){
+        window.location = '/';
+    } else return response
+}
+
 // const Api = {
 export const userLogin = (login, password) => {
     let myHeaders = new Headers({
@@ -49,7 +56,7 @@ export const getAllPortals = (string) => {
         url: `${BACKEND_API}/portal`,
     })
         .then(res => res)
-        .catch(err => console.warn('In getAllPortals API method\n', err));
+        .catch(err => authChecker(err.response));
 };
 export const getPortal = (string, id) => {
     return axios({
@@ -62,7 +69,7 @@ export const getPortal = (string, id) => {
         url: `${BACKEND_API}/portal/${id}`,
     })
         .then(res => res)
-        .catch(err => console.warn('In getPortal API method\n', err));
+        .catch(err => authChecker(err.response));
 };
 
 // export const uploadImage = (string, name, base64) => {
@@ -99,7 +106,7 @@ export const getAllImages = (string) => {
         mode: 'no-cors'
     })
         .then(res => res)
-        .catch(err => console.warn('In getAllImages API method\n', err));
+        .catch(err => authChecker(err.response));
 };
 
 export const getHotspots = (string) => {
@@ -114,7 +121,7 @@ export const getHotspots = (string) => {
         mode: 'no-cors'
     })
         .then(res => res)
-        .catch(err => console.warn('In getHotspots API method\n', err));
+        .catch(err => authChecker(err.response));
 };
 export const createHotspot = (string, name, address, description, portalId) => {
     return axios({
@@ -134,7 +141,7 @@ export const createHotspot = (string, name, address, description, portalId) => {
         }
     })
         .then(res => res)
-        .catch(err => console.warn('In createHotspot API method\n', err));
+        .catch(err => authChecker(err.response));
 };
 export const updateHotspotById = (string, name, address, description, portalId, hotspotId) => {
     return axios({
@@ -154,7 +161,7 @@ export const updateHotspotById = (string, name, address, description, portalId, 
         }
     })
         .then(res => res)
-        .catch(err => console.warn('In updateHotspotById API method\n', err));
+        .catch(err => authChecker(err.response));
 };
 export const createPortal = (string, info) => {
     return axios({
@@ -169,7 +176,7 @@ export const createPortal = (string, info) => {
         data: info
     })
         .then(res => res)
-        .catch(err => err.response);
+        .catch(err => authChecker(err.response));
 };
 
 export const updatePortal = (string, info, id) => {
@@ -185,7 +192,7 @@ export const updatePortal = (string, info, id) => {
         data: info
     })
         .then(res => res)
-        .catch(err => console.warn('In publishPortal API method\n', err));
+        .catch(err => authChecker(err.response));
 };
 
 export const publishPortal = (string, info, id) => {
@@ -201,7 +208,7 @@ export const publishPortal = (string, info, id) => {
         data: info
     })
         .then(res => res)
-        .catch(err => console.warn('In publishPortal API method\n', err));
+        .catch(err => authChecker(err.response));
 };
 
 export const previewPortal = (string, info) => {
@@ -217,5 +224,5 @@ export const previewPortal = (string, info) => {
         data: info
     })
         .then(res => res)
-        .catch(err => console.warn('In previewPortal API method\n', err));
+        .catch(err => authChecker(err.response));
 };

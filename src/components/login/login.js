@@ -26,15 +26,10 @@ class Login extends Component {
     };
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.email !== nextState.email) {
-            return true
-        } else if (this.state.password !== nextState.password) {
-            return true
-        } else if (this.props.showNotification !== nextProps.showNotification) {
-            return true
-        } else {
-            return false
-        }
+        if (this.state.email !== nextState.email) return true;
+        else if (this.state.password !== nextState.password) return true;
+        else if (this.props.notificationType !== nextProps.notificationType) return true;
+        else return false
     }
 
     componentDidUpdate() {
@@ -51,11 +46,9 @@ class Login extends Component {
             email: this.email.current.value,
             password: this.password.current.value
         });
-        let {email, password} = this.state;
+        const {email, password} = this.state;
         if (email.length > 0 && password.length > 0) {
             this.props.setLoginData(this.state)
-        } else {
-            this.props.setLoginData(null)
         }
     }
 
@@ -63,7 +56,7 @@ class Login extends Component {
     render() {
         return (
             <div className="inputsWrap">
-                <div className={this.props.showNotification ? 'email validationFail' : 'email'}>
+                <div className={this.props.notificationType === 'fail' ? 'email validationFail' : 'email'}>
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14">
                                 <g fill="#8D98B0" fillRule="nonzero">
@@ -78,7 +71,7 @@ class Login extends Component {
                            onBlur={this.fieldsHandler}
                            placeholder="Your Email"/>
                 </div>
-                <div className={this.props.showNotification ? 'password validationFail' : 'password'}>
+                <div className={this.props.notificationType === 'fail' ? 'password validationFail' : 'password'}>
                     <span></span>
                     <input type="password"
                            ref={this.password}

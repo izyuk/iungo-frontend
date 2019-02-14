@@ -348,6 +348,7 @@ body {
   align-items: center;
 }
 .formWrap p {
+  width: auto;
   margin: 0;
   font-family: 'AvenirLTStd-Medium', sans-serif;
   font-size: 16px;
@@ -358,8 +359,10 @@ body {
   line-height: 2;
   letter-spacing: normal;
   text-align: center;
+  align-self: unset;
 }
-.formWrap p.fail {
+.formWrap p.fail,
+.formWrap p.confirmation-fail {
   color: #ff4d5d;
   margin-bottom: 10px;
 }
@@ -750,6 +753,28 @@ header .container {
 }
 .info .toggles a.active svg path {
   fill: #fff;
+}
+.info .addNewCPButton {
+  width: 180px;
+  height: 40px;
+  color: #fff;
+  border: 1px solid #4372d6;
+  background: #5585ed;
+  font-family: 'AvenirLTStd-Heavy', sans-serif;
+  font-size: 14px;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  font-weight: bold;
+}
+.info .addNewCPButton:hover {
+  background: #4372d6;
+}
+.info .addNewCPButton:active:hover {
+  background: #4372d6;
+  box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 .previewWrap {
   width: 100%;
@@ -1583,43 +1608,6 @@ header .container {
 }
 .socialsWrap div.tw span {
   background: #1494e1;
-}
-.info {
-  width: 100%;
-  display: flex;
-  align-self: flex-start;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-}
-.info h3 {
-  font-family: 'AvenirLTStd-Medium', sans-serif;
-  font-size: 24px;
-  font-size: 1.5rem;
-  line-height: 1.67;
-  color: #071031;
-}
-.info .addNewCPButton {
-  width: 180px;
-  height: 40px;
-  color: #fff;
-  border: 1px solid #4372d6;
-  background: #5585ed;
-  font-family: 'AvenirLTStd-Heavy', sans-serif;
-  font-size: 14px;
-  font-size: 0.875rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 20px;
-  font-weight: bold;
-}
-.info .addNewCPButton:hover {
-  background: #4372d6;
-}
-.info .addNewCPButton:active:hover {
-  background: #4372d6;
-  box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 .hotspotDetailsWrap {
   width: 100%;

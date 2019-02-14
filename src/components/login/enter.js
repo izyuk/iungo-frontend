@@ -24,13 +24,13 @@ class Enter extends Component {
         notificationType: ''
     };
 
-    fieldsHandler = (e) => {
-        if (this.state.userData !== null) {
-            const {email, password} = this.state.userData;
-            const expEmail = /[\w_.-]+@[0-9a-z_-]+\.[a-z]{2,5}/i.test(email.value);
-            const expPassword = (password.length >= 8 && password.length <= 32);
-        }
-    };
+    // fieldsHandler = (e) => {
+    //     if (this.state.userData !== null) {
+    //         const {email, password} = this.state.userData;
+    //         const expEmail = /[\w_.-]+@[0-9a-z_-]+\.[a-z]{2,5}/i.test(email.value);
+    //         const expPassword = (password.length >= 8 && password.length <= 32);
+    //     }
+    // };
 
     sendData = async () => {
         if (this.state.userData !== null) {
@@ -43,15 +43,26 @@ class Enter extends Component {
                 localStorage.setItem('email', email);
                 const {status} = res;
                 if(status === 200){
-                    const {headers: {authorization}} = res;
-                    this.props.setToken(authorization);
-                    localStorage.setItem('token', authorization);
-                    this.setState({
-                        auth: true,
-                        loader: false,
-                        showNotification: false,
-                        notificationType: 'info'
-                    })
+                    if(this.state.login){
+                        const {headers: {authorization}} = res;
+                        this.props.setToken(authorization);
+                        localStorage.setItem('token', authorization);
+                        this.setState({
+                            auth: true,
+                            loader: false,
+                            showNotification: false,
+                            notificationType: ''
+                        });
+                    } else {
+                        this.setState({
+                            auth: false,
+                            loader: false,
+                            showNotification: true,
+                            notificationType: 'info',
+                            notificationText: 'Please check your e-mail'
+                        })
+                    }
+
 
                 } else {
                     this.setState({
@@ -103,10 +114,28 @@ class Enter extends Component {
 
     }
 
+    componentDidMount(){
+        const url_string = window.location.href;
+        const url = new URL(url_string);
+        const confirmed = url.searchParams.get("confirmed");
+        if(confirmed === 'true'){
+            this.setState({
+                showNotification: true,
+                notificationType: 'info',
+                notificationText: 'Your account was confirmed'
+            })
+        } else if (confirmed === 'false'){
+            this.setState({
+                showNotification: true,
+                notificationType: 'confirmation-fail',
+                notificationText: 'Your account was not confirmed. Please try again or contact a system administrator'
+            })
+        }
+    }
+
     render() {
         const {
             login,
-            userData,
             auth,
             loader,
             showNotification,
@@ -120,7 +149,7 @@ class Enter extends Component {
                 {/*{showNotification && <Notification text={text} type={'fail'}/>}*/}
                 {loader && <Loader/>}
                 <p>Welcome to IUNGO Network </p>
-                {login ? <Login setLoginData={this.setLoginData} showNotification={showNotification}>{this.props.children}</Login> :
+                {login ? <Login setLoginData={this.setLoginData} notificationType={notificationType}>{this.props.children}</Login> :
                     <Register setLoginData={this.setLoginData}>{this.props.children}</Register>}
                 {/*{showNotification && <Notification type={'fail'} text={text} />}*/}
                 {showNotification && <p className={notificationType}>{notificationText}</p>}
