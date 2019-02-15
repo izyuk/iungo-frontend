@@ -9,7 +9,7 @@ stages:
 npm-build:
   only:
   - master
-  image: node:10-alpine
+  image: node:10
   stage: build
   script:
   - npm i
