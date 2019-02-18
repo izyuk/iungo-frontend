@@ -33,6 +33,7 @@ class Enter extends Component {
     // };
 
     sendData = async () => {
+        debugger;
         console.log(this.state.userData);
         if (this.state.userData !== null) {
             const {email, password} = this.state.userData;
