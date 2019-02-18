@@ -33,8 +33,6 @@ class Enter extends Component {
     // };
 
     sendData = async () => {
-        debugger;
-        console.log(this.state.userData);
         if (this.state.userData !== null) {
             const {email, password} = this.state.userData;
             let query = this.state.login ? userLogin(email, password) : userRegister(email, password);
