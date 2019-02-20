@@ -144,7 +144,7 @@ class Enter extends Component {
             <div className="formWrap">
 
                 {loader && <Loader/>}
-                <p>Welcome to IUNGO Network </p>
+                <p>{login ? 'Welcome to IUNGO Network' : 'Create your account now'}</p>
                 {login ? <Login setLoginData={this.setLoginData}
                                 notificationType={notificationType}>{this.props.children}</Login> :
                     <Register setLoginData={this.setLoginData}>{this.props.children}</Register>}
