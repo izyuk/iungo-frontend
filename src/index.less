@@ -953,6 +953,14 @@ header {
                 width: 100%;
                 padding: 6px 6px 6px 16px;
                 text-align: right;
+                &[type=number] {
+                  &::-webkit-outer-spin-button,
+                  ::-webkit-inner-spin-button{
+                    -webkit-appearance: none;
+                    margin: 0;
+                  }
+                  -moz-appearance:textfield;
+                }
               }
               select {
                 padding: 6px 16px 6px 0;

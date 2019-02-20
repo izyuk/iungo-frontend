@@ -82,15 +82,15 @@ class ContainerSize extends Component {
                     <div className="right">
                         <div className="inputSelect">
                             <input type="number" onBlur={this.valueWidth} defaultValue={this.state.width}/>
-                            <select name="" id="">
-                                <option value="px">px</option>
+                            <select name="" id="" disabled>
+                                <option value="px" selected>px</option>
                                 <option value="%">%</option>
                                 <option value="rem">rem</option>
                             </select>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path fill="#BFC5D2" fillRule="nonzero"
-                                      d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                            </svg>
+                            {/*<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">*/}
+                                {/*<path fill="#BFC5D2" fillRule="nonzero"*/}
+                                      {/*d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>*/}
+                            {/*</svg>*/}
                         </div>
                     </div>
                 </div>
@@ -102,15 +102,15 @@ class ContainerSize extends Component {
 
                         <div className="inputSelect">
                             <input type="number" onBlur={this.valuePadding} defaultValue={this.state.padding}/>
-                            <select name="" id="">
-                                <option value="px">px</option>
+                            <select name="" id="" disabled>
+                                <option value="px" selected>px</option>
                                 <option value="%">%</option>
                                 <option value="rem">rem</option>
                             </select>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path fill="#BFC5D2" fillRule="nonzero"
-                                      d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                            </svg>
+                            {/*<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">*/}
+                            {/*<path fill="#BFC5D2" fillRule="nonzero"*/}
+                            {/*d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>*/}
+                            {/*</svg>*/}
                         </div>
                     </div>
                 </div>

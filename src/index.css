@@ -1188,6 +1188,14 @@ header .container {
   padding: 6px 6px 6px 16px;
   text-align: right;
 }
+.options .wrap .dropdown .container .row .right .inputSelect input[type=number] {
+  -moz-appearance: textfield;
+}
+.options .wrap .dropdown .container .row .right .inputSelect input[type=number]::-webkit-outer-spin-button,
+.options .wrap .dropdown .container .row .right .inputSelect input[type=number] ::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 .options .wrap .dropdown .container .row .right .inputSelect select {
   padding: 6px 16px 6px 0;
   width: 50%;
