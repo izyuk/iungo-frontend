@@ -32,25 +32,25 @@ const handle = (props) => {
 class FooterEditor extends Component {
     constructor(props) {
         super(props);
-        let storage = this.props.footer.styles;
+        let storage = this.props.footer;
 
         this.state = {
             displayColorPicker: false,
-            color: storage.color.rgba || {
+            color: storage.styles.color.rgba || {
                 r: 85,
                 g: 133,
                 b: 237,
                 a: 1,
             },
-            colorHEX: storage.color.hex || '#5585ed',
-            fontSize: storage.fontSize || 18,
-            textActions: storage.textActions || {
+            colorHEX: storage.styles.color.hex || '#5585ed',
+            fontSize: storage.styles.fontSize || 18,
+            textActions: storage.styles.textActions || {
                 bold: false,
                 italic: false,
                 underline: false,
             },
             text: storage.text || 'Footer content',
-            alignment: storage.alignment ||'center',
+            alignment: storage.styles.alignment ||'center',
         };
     }
 
@@ -87,7 +87,6 @@ class FooterEditor extends Component {
 
     componentDidUpdate() {
         let {displayColorPicker, text, color, colorHEX, ...rest} = this.state;
-
         this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
         this.props.footerTextData({color: {rgba: color, hex: colorHEX}, ...rest});
     }
