@@ -73,6 +73,7 @@ class CaptivePortal extends Component {
             this.props.loaderHandler();
             await query.then(res => {
                 const {data} = res;
+                console.log(data);
                 this.props.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.background.color, data.style.background_and_logo.background.backgroundType);
                 this.props.setLogo(data.logo !== null ? data.logo.externalUrl : '', data.style.background_and_logo.logo.position);
                 this.props.setBorderStyle(data.style.container_border);
@@ -89,6 +90,16 @@ class CaptivePortal extends Component {
                 this.props.setLogoID(data.logo === null ? '' : data.logo.id);
                 this.props.setBackgroundID(data.background === null ? '' : data.background.id);
                 this.props.addPortalName(data.name);
+                this.props.setCSS(data.externalCss);
+                if (data.externalCss) {
+                    const STYLE = document.getElementsByTagName('STYLE')[0];
+                    if (STYLE) STYLE.parentNode.removeChild(STYLE);
+                    const HEAD = document.getElementsByTagName('HEAD')[0];
+                    let style = document.createElement('style');
+                    style.innerText = data.externalCss;
+
+                    HEAD.appendChild(style);
+                }
                 this.setState({
                     type: 'background',
                     backgroundType: data.style.background_and_logo.background.backgroundType,
@@ -111,6 +122,8 @@ class CaptivePortal extends Component {
                     loader: false,
                     portalName: data.name
                 });
+                console.log(this.portalName);
+                this.portalName.current.value = data.name;
                 this.props.loaderHandler();
             });
         }
@@ -190,6 +203,7 @@ class CaptivePortal extends Component {
         else if (this.state.methods !== nextState.methods) return true;
         else if (this.state.footerContent !== nextState.footerContent) return true;
         else if (this.props.tabName !== nextProps.tabName) return true;
+        else if (this.state.portalName !== nextProps.portalName) return true;
         else return true;
     }
 
@@ -347,6 +361,9 @@ export default connect(
         },
         setBackgroundID: (id) => {
             dispatch({type: "SET_backgroundID", payload: id});
+        },
+        setCSS: (str) => {
+            dispatch({type: 'SET_CSS', payload: str})
         }
     })
 )(CaptivePortal);

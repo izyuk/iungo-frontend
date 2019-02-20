@@ -31,7 +31,6 @@ class CSS extends Component {
             HEAD.appendChild(style);
 
         }
-
     }
 
     render() {

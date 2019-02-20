@@ -119,7 +119,7 @@ class Preview extends Component {
                                         </g>
                                     </svg>
                                 </span>
-                                        <input type="email" placeholder="Continue with Email"/>
+                                        <input type="email" placeholder="Continue with Email" autoComplete='off'/>
                                     </div>
                                     <div className="password">
                                 <span>
@@ -128,7 +128,7 @@ class Preview extends Component {
                                               d="M15.285 12.305l-2.578-2.594a1 1 0 0 0-1.416-.002L9 12 4 7l2.294-2.294a1 1 0 0 0 .001-1.414L3.715.708a1 1 0 0 0-1.415 0L.004 3.003 0 3c0 7.18 5.82 13 13 13l2.283-2.283a1 1 0 0 0 .002-1.412z"/>
                                     </svg>
                                 </span>
-                                        <input type="password" placeholder="Continue with Phone"/>
+                                        <input type="text" placeholder="Continue with Phone" autoComplete='off'/>
                                     </div>
                                 </div>
 

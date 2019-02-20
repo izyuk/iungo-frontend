@@ -16,13 +16,17 @@ class MainRouter extends Component {
                 unauthorized: true
             })
         }
+        setTimeout(() => {
+            this.setState({unauthorized: false});
+        }, 2000)
+
     }
 
     render() {
         return (
             <Switch>
                 {this.state.unauthorized && <Redirect to={'/'}/>}
-                <Route exact path="/" component={Index}/>
+                <Route exact path="/(|register)" component={Index}/>
                 <Route component={Tool}/>
             </Switch>
         )

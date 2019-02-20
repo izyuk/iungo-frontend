@@ -810,7 +810,7 @@ header .container {
 }
 .options .wrap {
   width: 100%;
-  height: 100%;
+  height: unset;
   display: flex;
   flex-direction: column;
 }

@@ -174,6 +174,8 @@ class CaptivePortalList extends Component {
     };
 
     componentDidMount() {
+        const STYLE = document.getElementsByTagName('STYLE')[0];
+        if (STYLE) STYLE.parentNode.removeChild(STYLE);
         this.props.token.token ? this.findAllPortals(this.props.token.token) : this.findAllPortals(localStorage.getItem('token'));
     }
 

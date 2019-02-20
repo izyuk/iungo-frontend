@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Redirect} from 'react-router-dom';
+import {Redirect, Switch, Router, Route, Link} from 'react-router-dom';
+import {createBrowserHistory} from 'history';
 
 import {userLogin, userRegister} from '../../api/API';
 
@@ -21,16 +22,9 @@ class Enter extends Component {
         loader: false,
         showNotification: false,
         notificationText: '',
-        notificationType: ''
+        notificationType: '',
+        path: ''
     };
-
-    // fieldsHandler = (e) => {
-    //     if (this.state.userData !== null) {
-    //         const {email, password} = this.state.userData;
-    //         const expEmail = /[\w_.-]+@[0-9a-z_-]+\.[a-z]{2,5}/i.test(email.value);
-    //         const expPassword = (password.length >= 8 && password.length <= 32);
-    //     }
-    // };
 
     sendData = async () => {
         if (this.state.userData !== null) {
@@ -42,8 +36,8 @@ class Enter extends Component {
             query.then(res => {
                 localStorage.setItem('email', email);
                 const {status} = res;
-                if(status === 200){
-                    if(this.state.login){
+                if (status === 200) {
+                    if (this.state.login) {
                         const {headers: {authorization}} = res;
                         this.props.setToken(authorization);
                         localStorage.setItem('token', authorization);
@@ -71,11 +65,11 @@ class Enter extends Component {
                         showNotification: true,
                         notificationType: 'fail'
                     });
-                    if (status === 401){
+                    if (status === 401) {
                         this.setState({
                             notificationText: 'Wrong username or password'
                         })
-                    } else if (status === 400){
+                    } else if (status === 400) {
                         this.setState({
                             notificationText: res.data.errors[0].message
                         })
@@ -85,10 +79,12 @@ class Enter extends Component {
         }
     };
 
-    changeOption = () => {
+    changeOption = (e) => {
         this.setState({
-            login: !this.state.login
+            login: !this.state.login,
         });
+        // history.pushState({page: e.target.getAttribute('dataurl')}, null, e.target.getAttribute('dataurl'));
+        // history.pushState({page: str}, null, str)
     };
 
     setLoginData = (data) => {
@@ -110,21 +106,22 @@ class Enter extends Component {
         else if (this.state.showNotification !== nextState.showNotification) return true;
         else if (this.state.notificationText !== nextState.notificationText) return true;
         else if (this.state.notificationType !== nextState.notificationType) return true;
+        else if (this.state.path !== nextState.path) return true;
         else return false
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const url_string = window.location.href;
         const url = new URL(url_string);
         const confirmed = url.searchParams.get("confirmed");
-        if(confirmed === 'true'){
+        if (confirmed === 'true') {
             this.setState({
                 showNotification: true,
                 notificationType: 'info',
                 notificationText: 'Your account was confirmed'
             })
-        } else if (confirmed === 'false'){
+        } else if (confirmed === 'false') {
             this.setState({
                 showNotification: true,
                 notificationType: 'confirmation-fail',
@@ -146,12 +143,11 @@ class Enter extends Component {
         return (
             <div className="formWrap">
 
-                {/*{showNotification && <Notification text={text} type={'fail'}/>}*/}
                 {loader && <Loader/>}
                 <p>Welcome to IUNGO Network </p>
-                {login ? <Login setLoginData={this.setLoginData} notificationType={notificationType}>{this.props.children}</Login> :
+                {login ? <Login setLoginData={this.setLoginData}
+                                notificationType={notificationType}>{this.props.children}</Login> :
                     <Register setLoginData={this.setLoginData}>{this.props.children}</Register>}
-                {/*{showNotification && <Notification type={'fail'} text={text} />}*/}
                 {showNotification && <p className={notificationType}>{notificationText}</p>}
 
                 <span
@@ -161,14 +157,17 @@ class Enter extends Component {
                     login ?
                         <p className="question">Not a member?&nbsp;
                             <button
-                                onClick={this.changeOption}
-                                type="button">Sign up now
+                            onClick={this.changeOption}
+                            type="button"
+                            dataurl="register">Sign up now
                             </button>
+
                         </p> :
                         <p className="question"> Have account?&nbsp;
                             <button
-                                onClick={this.changeOption}
-                                type="button">Log in
+                            onClick={this.changeOption}
+                            type="button"
+                            dataurl="">Log in
                             </button>
                         </p>
 
@@ -180,7 +179,6 @@ class Enter extends Component {
                 }
             </div>
         )
-        // }
     }
 }
 
