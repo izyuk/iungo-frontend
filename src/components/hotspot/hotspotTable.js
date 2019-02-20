@@ -19,11 +19,11 @@ class HotspotTable extends Component {
         else return false
     }
 
-    getDataToEdit = (e, currentHotSpotId) => {
+    getDataToEdit = (e, currentHotSpotId, portal) => {
         e.preventDefault();
         const {hotspotList} = this.props;
         const {[0]: {id, name, address, description}} = hotspotList.filter(el => el.id === currentHotSpotId);
-        this.props.editHandler(id, name, address, description);
+        this.props.editHandler(id, name, address, description, portal.id);
     };
 
     copyToClipboard = (e) => {
@@ -53,6 +53,7 @@ class HotspotTable extends Component {
 
     render() {
         const {hotspotList} = this.props;
+        console.log(hotspotList);
         return (
             <table className={"hotspotTable"} rules="rows">
                 <thead>
@@ -65,9 +66,9 @@ class HotspotTable extends Component {
                 </thead>
                 <tbody>
                 {hotspotList && hotspotList.map((item, i) => {
-                    const {id, name, address, description, virtualUrl} = item;
+                    const {id, name, address, description, virtualUrl, portal } = item;
                     return (
-                        <tr key={i} onClick={(e) => ::this.getDataToEdit(e, id)}>
+                        <tr key={i} onClick={(e) => ::this.getDataToEdit(e, id, portal)}>
                             <td>{name}</td>
                             <td>{address}</td>
                             <td>{description}</td>

@@ -130,17 +130,26 @@ class HotspotDetails extends Component {
         }
     }
 
-    editHandler = (id, name, address, description) => {
-        const data = {id: id, name: name, address: address, description: description};
+    editHandler = (HSid, HSname, HSaddress, HSdescription, portalID) => {
+        const data = {id: HSid, name: HSname, address: HSaddress, description: HSdescription};
         Object.keys(data).map((el) => {
             this.setState({
                 [el]: data[el]
             });
         });
+        let portalsList = this.state.portalsList;
+        const {[0]: {id, name}} = portalsList.filter(el => {
+            if(el.id === portalID) {
+                console.log(el);
+                return el;
+            }
+        });
+        document.getElementsByClassName('selectedPortal')[0].innerText =  name;
+        this.setState({captivePortalID: id});
     };
 
     setCPId(e) {
-        document.getElementsByClassName('selectedPortal')[0].innerText =  e.currentTarget.innerText;
+        document.getElementsByClassName('selectedPortal')[0].innerText = e.currentTarget.innerText;
         this.setState({captivePortalID: e.currentTarget.getAttribute('dataid') ? e.currentTarget.getAttribute('dataid') : ''});
     }
 
@@ -212,7 +221,8 @@ class HotspotDetails extends Component {
                 <HotspotTable
                     hotspotList={this.state.list !== '' ? this.state.list : false}
                     editHandler={this.editHandler}/>
-                {this.state.submitted && <Notification type={'info'} text={`Hotspot settings was ${this.state.submittedType} successfully`}/>}
+                {this.state.submitted &&
+                <Notification type={'info'} text={`Hotspot settings was ${this.state.submittedType} successfully`}/>}
             </div>
         )
     }
