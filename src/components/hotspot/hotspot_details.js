@@ -147,6 +147,10 @@ class HotspotDetails extends Component {
             });
             document.getElementsByClassName('selectedPortal')[0].innerText =  name;
             this.setState({captivePortalID: id});
+        } else {
+            document.getElementsByClassName('selectedPortal')[0].innerText =  'Select Captive Portal';
+            this.setState({captivePortalID: ''});
+
         }
     };
 
