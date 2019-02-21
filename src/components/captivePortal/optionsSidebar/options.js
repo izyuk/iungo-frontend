@@ -69,7 +69,8 @@ class Options extends Component {
                             <ContentTab
                                 textData={this.props.textData}
                                 methods={this.props.methods}
-                                footerTextData={this.props.footerTextData}/>
+                                footerTextData={this.props.footerTextData}
+                                successData={this.props.successData}/>
                             : (this.state.tab === 'Settings') ?
                                 <SettingsTab/>
                                 : ''}

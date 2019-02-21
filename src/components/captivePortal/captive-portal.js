@@ -33,6 +33,7 @@ class CaptivePortal extends Component {
             twitter: true
         },
         footerContent: this.props.background_and_logo.footer_description || '',
+        successData: this.props.background_and_logo.successMessage || '',
         loader: true,
         portalName: 'Captive Portal Builder'
     };
@@ -191,6 +192,13 @@ class CaptivePortal extends Component {
         })
     };
 
+    successData = (data) => {
+
+        this.setState({
+            successData: data
+        })
+    };
+
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.backgrName !== nextState.backgrName) return true;
         else if (this.state.logoName !== nextState.logoName) return true;
@@ -204,6 +212,7 @@ class CaptivePortal extends Component {
         else if (this.state.footerContent !== nextState.footerContent) return true;
         else if (this.props.tabName !== nextProps.tabName) return true;
         else if (this.state.portalName !== nextProps.portalName) return true;
+        else if (this.state.successData !== nextProps.successData) return true;
         else return true;
     }
 
@@ -309,6 +318,7 @@ class CaptivePortal extends Component {
                                  textData={this.contentData}
                                  methods={this.loginMethods}
                                  footerTextData={this.footerTextData}
+                                 successData={this.successData}
                                  loaderHandler={this.props.loaderHandler}/>
                     </div>
                 </div>

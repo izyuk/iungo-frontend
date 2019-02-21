@@ -95,6 +95,7 @@ class Publish extends Component {
             css: {path},
             header: {top, description},
             footer,
+            successMessage,
             background_and_logo: {background, logo},
             container_background,
             container_border,
@@ -111,12 +112,14 @@ class Publish extends Component {
             header: top.text,
             description: description.text,
             footer: footer.text,
+            successMessage: successMessage.text,
             style: {
                 header: {
                     top: top.styles,
                     description: description.styles,
                 },
                 footer: footer.styles,
+                success_message: successMessage.styles,
                 background_and_logo: {
                     background: {
                         url: background.url,

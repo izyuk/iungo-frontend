@@ -8,6 +8,7 @@ import contentSize from './contentSize';
 import headerContent from './headerContent';
 import loginMethods from './loginMethods';
 import footerContent from './footerContent';
+import successMessage from './successMessage';
 import auth from './auth';
 import portalName from './portalName';
 import css from './css';
@@ -23,6 +24,7 @@ const allReducers = combineReducers({
     header: headerContent,
     login_methods: loginMethods,
     footer: footerContent,
+    successMessage: successMessage,
     token: auth,
     name: portalName,
     css: css,
