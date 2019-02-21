@@ -1,5 +1,5 @@
 const INITIAL = {
-    text: 'Success message',
+    text: 'Default success message',
     styles: {
         color: {
             rgba: {
