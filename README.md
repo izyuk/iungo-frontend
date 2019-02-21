@@ -17,5 +17,3 @@ Explain how to run the automated tests for this system
 ## Deployment
 
 Add additional notes about how to deploy this on a live system
-
-Just for test
