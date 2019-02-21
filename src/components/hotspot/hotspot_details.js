@@ -137,15 +137,17 @@ class HotspotDetails extends Component {
                 [el]: data[el]
             });
         });
-        let portalsList = this.state.portalsList;
-        const {[0]: {id, name}} = portalsList.filter(el => {
-            if(el.id === portalID) {
-                console.log(el);
-                return el;
-            }
-        });
-        document.getElementsByClassName('selectedPortal')[0].innerText =  name;
-        this.setState({captivePortalID: id});
+        if(portalID){
+            let portalsList = this.state.portalsList;
+            const {[0]: {id, name}} = portalsList.filter(el => {
+                if(el.id === portalID) {
+                    console.log(el);
+                    return el;
+                }
+            });
+            document.getElementsByClassName('selectedPortal')[0].innerText =  name;
+            this.setState({captivePortalID: id});
+        }
     };
 
     setCPId(e) {
