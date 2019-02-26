@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import HeaderText from './contentComponents/headerText/headertText';
 import LoginMethods from './contentComponents/loginMethods/loginMethods';
-import SuccessMessage from './contentComponents/successMessage/successMessage';
+import SuccessActions from './contentComponents/successMessage/successMessage';
 import FooterEditor from './contentComponents/footerEditor/footerEditor'
 
 class ContentTab extends Component {
@@ -91,14 +91,14 @@ class ContentTab extends Component {
                     <div
                         className="head"
                         onClick={this.dropDownHandler}>
-                        <span>Success Message</span>
+                        <span>Success Actions</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <path fill="#BFC5D2" fillRule="nonzero"
                                   d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
                         </svg>
                     </div>
-                    {this.state.visible === 'Success Message' ?
-                        <SuccessMessage handler={this.props.handler}
+                    {this.state.visible === 'Success Actions' ?
+                        <SuccessActions handler={this.props.handler}
                                       successData={this.props.successData}
                         /> :
                         false}

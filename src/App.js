@@ -19,7 +19,6 @@ class MainRouter extends Component {
         setTimeout(() => {
             this.setState({unauthorized: false});
         }, 2000);
-        
     }
 
     render() {

@@ -59,6 +59,8 @@ class Preview extends Component {
         else if (this.props.state.headerText !== nextProps.state.headerText) return true;
         else if (this.props.state.methods !== nextProps.state.methods) return true;
         else if (this.props.state.footerContent !== nextProps.state.footerContent) return true;
+        else if (this.props.state.successData !== nextProps.state.successData) return true;
+        else if (this.props.state.successMessageComponentStatus !== nextProps.state.successMessageComponentStatus) return true;
         else return false;
     }
 
@@ -66,7 +68,8 @@ class Preview extends Component {
         let topData = this.props.header.top;
         let descriptionData = this.props.header.description;
         let footerData = this.props.footerTextData;
-        let {methods} = this.props.state;
+        let successData = this.props.successTextData;
+        let {methods, successMessageComponentStatus} = this.props.state;
         return (
             <div className="previewWrap">
                 <div className={this.props.state.mobile ? "previewMain mobile" : "previewMain"}
@@ -81,6 +84,7 @@ class Preview extends Component {
                         </div>
                         <div className="section"
                              ref={this.ContainerMain}>
+                            { !successMessageComponentStatus ?
                             <div className="contentPlace">
                                 <div className="textPlace">
                                     <p className="head"
@@ -133,7 +137,21 @@ class Preview extends Component {
                                 </div>
 
                             </div>
-
+                                :
+                                <div className="contentPlace">
+                                    <p className="text" ref={this.FooterText}
+                                       style={{
+                                           color: `rgba(${successData.styles && successData.styles.color.rgba.r}, ${successData.styles && successData.styles.color.rgba.g}, ${successData.styles && successData.styles.color.rgba.b}, ${successData.styles && successData.styles.color.rgba.a})`,
+                                           fontSize: successData.styles && successData.styles.fontSize,
+                                           fontWeight: successData.styles && successData.styles.textActions.bold ? 'bold' : '100',
+                                           fontStyle: successData.styles && successData.styles.textActions.italic ? 'italic' : 'normal',
+                                           textDecoration: successData.styles && successData.styles.textActions.underline ? 'underline' : 'none',
+                                           textAlign: successData.styles && successData.styles.alignment
+                                       }}>
+                                        {successData && successData.text}
+                                    </p>
+                                </div>
+}
                         </div>
                     </div>
                     <div className="footer">

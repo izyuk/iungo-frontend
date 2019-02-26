@@ -12,6 +12,7 @@ import successMessage from './successMessage';
 import auth from './auth';
 import portalName from './portalName';
 import css from './css';
+import redirectURL from './redirectURL';
 import imagesIDs from './imagesIDs';
 
 
@@ -28,6 +29,7 @@ const allReducers = combineReducers({
     token: auth,
     name: portalName,
     css: css,
+    redirectURL: redirectURL,
     imagesIDs: imagesIDs
 });
 

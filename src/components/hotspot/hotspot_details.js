@@ -63,13 +63,6 @@ class HotspotDetails extends Component {
         const query = getAllPortals(str);
         await query.then(res => {
             const {data} = res;
-            // let arr = [];
-            // data.map((item, i) => {
-            //     arr.push(`<p key=${i} dataid=${item.id}>${item.name}</p>`);
-            // });
-            // this.setState({
-            //     portalsList: arr
-            // })
             this.setState({
                 portalsList: data
             })
@@ -219,7 +212,6 @@ class HotspotDetails extends Component {
                                 {this.state.portalsList !== '' && this.state.portalsList.map((item, i) => {
                                     return <p onClick={(e) => this.setCPId(e)} key={i} dataid={item.id}>{item.name}</p>
                                 })}
-                                {/*<p>Portal Name</p>*/}
                             </div>
                         </div>
                     </div>

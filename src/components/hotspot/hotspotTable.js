@@ -22,7 +22,6 @@ class HotspotTable extends Component {
     getDataToEdit = (e, currentHotSpotId, portal) => {
         e.preventDefault();
         const {hotspotList} = this.props;
-        console.log(hotspotList);
         const {[0]: {id, name, address, description}} = hotspotList.filter(el => el.id === currentHotSpotId);
         this.props.editHandler(id, name, address, description, portal && portal.id);
     };
@@ -79,7 +78,6 @@ class HotspotTable extends Component {
                                        onClick={this.copyToClipboard}
                                     >
                                         <span>{`${virtualUrl.slice(0, 20)}...`}</span>
-                                        {/*{`${virtualUrl.slice(0, 20)}...`}*/}
                                         {virtualUrl}
                                     </a>
                                     : ''

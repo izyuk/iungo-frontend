@@ -29,30 +29,29 @@ const handle = (props) => {
     );
 };
 
-class SuccessMessage extends Component {
-    constructor(props) {
-        super(props);
-        let storage = this.props.successMessage;
+class SuccessActions extends Component {
+    storage = this.props;
+    _isMounted = false;
 
-        this.state = {
-            displayColorPicker: false,
-            color: storage.styles.color.rgba || {
-                r: 85,
-                g: 133,
-                b: 237,
-                a: 1,
-            },
-            colorHEX: storage.styles.color.hex || '#5585ed',
-            fontSize: storage.styles.fontSize || 18,
-            textActions: storage.styles.textActions || {
-                bold: false,
-                italic: false,
-                underline: false,
-            },
-            text: storage.text || 'Success message',
-            alignment: storage.styles.alignment ||'center',
-        };
-    }
+    state = {
+        displayColorPicker: false,
+        color: this.storage.successMessage.styles.color.rgba || {
+            r: 85,
+            g: 133,
+            b: 237,
+            a: 1,
+        },
+        colorHEX: this.storage.successMessage.styles.color.hex || '#5585ed',
+        fontSize: this.storage.successMessage.styles.fontSize || 18,
+        textActions: this.storage.successMessage.styles.textActions || {
+            bold: false,
+            italic: false,
+            underline: false,
+        },
+        text: this.storage.successMessage.text || 'Success message',
+        alignment: this.storage.successMessage.styles.alignment || 'center',
+        redirectURL: this.storage.redirectURL.url || ''
+    };
 
     onSliderChange = (value) => {
         this.setState({
@@ -61,34 +60,38 @@ class SuccessMessage extends Component {
     };
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.fontSize !== nextState.opacity) {
-            return true;
-        } /*else if (this.state.color.hex !== nextState.color.hex) {
-            return true;
-        }*/ else if (this.state.color !== nextState.color) {
-            return true;
-        } else if (this.state.displayColorPicker !== nextState.displayColorPicker) {
-            return true;
-        } else if (this.state.textActions !== nextState.textActions) {
-            return true;
-        } else if (this.state.text !== nextState.text) {
-            return true;
-        } else
-            return false;
+        if (this.state.fontSize !== nextState.opacity) return true;
+        else if (this.state.color !== nextState.color) return true;
+        else if (this.state.displayColorPicker !== nextState.displayColorPicker) return true;
+        else if (this.state.textActions !== nextState.textActions) return true;
+        else if (this.state.text !== nextState.text) return true;
+        else if (this.state.redirectURL !== nextState.redirectURL) return true;
+        else return false;
     }
 
     componentDidMount() {
-        let {displayColorPicker, text, color, colorHEX, ...rest} = this.state;
+        this._isMounted = true;
+
+        let {displayColorPicker, text, color, colorHEX, redirectURL, ...rest} = this.state;
         this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
-        this.props.successData({color: {rgba: color, hex: colorHEX}, ...rest});
-        let storage = this.props.successData.styles;
-        document.getElementById((storage ? storage.alignment : 'center')).checked = true;
+        this.props.redirectURLChanger(redirectURL);
+        this.props.successData({color: {rgba: color, hex: colorHEX}, redirectURL, status: this._isMounted, ...rest});
+        document.getElementById((this.storage.successData.styles ? this.storage.successData.styles.alignment : 'center')).checked = true;
     }
 
     componentDidUpdate() {
-        let {displayColorPicker, text, color, colorHEX, ...rest} = this.state;
+        let {displayColorPicker, text, color, colorHEX, redirectURL, ...rest} = this.state;
         this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
-        this.props.successData({color: {rgba: color, hex: colorHEX}, ...rest});
+        this.props.redirectURLChanger(redirectURL);
+        this.props.successData({color: {rgba: color, hex: colorHEX}, redirectURL, status: this._isMounted, ...rest});
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+        let {displayColorPicker, text, color, colorHEX, redirectURL, ...rest} = this.state;
+        this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
+        this.props.redirectURLChanger(redirectURL);
+        this.props.successData({color: {rgba: color, hex: colorHEX}, redirectURL, status: this._isMounted, ...rest});
     }
 
     handleClick = () => {
@@ -100,8 +103,6 @@ class SuccessMessage extends Component {
     };
 
     handleChange = (color) => {
-        const setColor = this.state.color.rgba;
-        const hex = this.state.color.hex;
         this.setState({
             color: color.rgb
         });
@@ -124,15 +125,17 @@ class SuccessMessage extends Component {
         })
     };
 
+    redirectURLChanges = (e) => {
+        this.setState({
+            redirectURL: e.currentTarget.value
+        })
+    };
+
     alignment = (e) => {
         this.setState({
             alignment: e.target.getAttribute('data-id')
         });
     };
-
-    // getText = (e) => {
-    //
-    // };
 
     render() {
         const popover = {
@@ -281,6 +284,15 @@ class SuccessMessage extends Component {
                         </div>
                     </div>
                 </div>
+                <div className="row">
+                    <div className="right">
+                        <div className="innerRow">
+                                <textarea onChange={this.redirectURLChanges}
+                                          defaultValue={this.state.redirectURL}
+                                          placeholder="Enter your redirect URL"></textarea>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
@@ -288,12 +300,15 @@ class SuccessMessage extends Component {
 
 export default connect(
     state => ({
-        successMessage: state.successMessage
-        // footer: stated
+        successMessage: state.successMessage,
+        redirectURL: state.redirectURL
     }),
     dispatch => ({
         textData: (text, styles) => {
             dispatch({type: "SUCCESS_MESSAGE_DESCRIPTION", payload: {text, styles}});
+        },
+        redirectURLChanger: (url) => {
+            dispatch({type: "REDIRECT_URL", payload: url});
         }
     })
-)(SuccessMessage);
+)(SuccessActions);

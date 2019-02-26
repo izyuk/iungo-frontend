@@ -34,6 +34,7 @@ class CaptivePortal extends Component {
         },
         footerContent: this.props.background_and_logo.footer_description || '',
         successData: this.props.background_and_logo.successMessage || '',
+        successMessageComponentStatus: false,
         loader: true,
         portalName: 'Captive Portal Builder'
     };
@@ -92,6 +93,7 @@ class CaptivePortal extends Component {
                 this.props.setBackgroundID(data.background === null ? '' : data.background.id);
                 this.props.addPortalName(data.name);
                 this.props.setCSS(data.externalCss);
+                this.props.redirectURLChanger(data.successRedirectUrl);
                 if (data.externalCss) {
                     const STYLE = document.getElementsByTagName('STYLE')[0];
                     if (STYLE) STYLE.parentNode.removeChild(STYLE);
@@ -186,16 +188,16 @@ class CaptivePortal extends Component {
     };
 
     footerTextData = (data) => {
-
         this.setState({
             footerContent: data
         })
     };
 
-    successData = (data) => {
-
+    successTextData = (data) => {
+        const {status, ...rest} = data;
         this.setState({
-            successData: data
+            successData: rest,
+            successMessageComponentStatus: status
         })
     };
 
@@ -212,31 +214,17 @@ class CaptivePortal extends Component {
         else if (this.state.footerContent !== nextState.footerContent) return true;
         else if (this.props.tabName !== nextProps.tabName) return true;
         else if (this.state.portalName !== nextProps.portalName) return true;
-        else if (this.state.successData !== nextProps.successData) return true;
+        else if (this.state.successData !== nextState.successData) return true;
+        else if (this.state.successMessageComponentStatus !== nextState.successMessageComponentStatus) return true;
         else return true;
     }
 
     componentDidMount() {
         this.props.token.token ? this.findPortal(this.props.token.token) : this.findPortal(localStorage.getItem('token'));
-
-        // let currentDay = function (sp) {
-        //     let today = new Date();
-        //     let dd = today.getDate();
-        //     let mm = today.getMonth() + 1;
-        //     let yyyy = today.getFullYear();
-        //     let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        //
-        //     if (dd < 10) dd = '0' + dd;
-        //     if (mm < 10) mm = '0' + mm;
-        //     return (mm + sp + dd + sp + yyyy + sp + time);
-        // };
-
-        // this.props.addPortalName(`CaptivePortal - ${currentDay('/')}`);
-
     }
 
     componentDidUpdate() {
-
+        console.log(this.state);
     }
 
     nameEditor = (e) => {
@@ -274,7 +262,6 @@ class CaptivePortal extends Component {
                         <div className="container containerFix">
                             <div className="wrap wrapFix2">
                                 <div className="info">
-                                    {/*<h3>Captive Portal Builder</h3>*/}
                                     <input ref={this.portalName}
                                            type="text"
                                            placeholder={'Name'}
@@ -308,6 +295,7 @@ class CaptivePortal extends Component {
                                 <Preview state={this.state}
                                          header={this.props.background_and_logo.header}
                                          footerTextData={this.props.background_and_logo.footer}
+                                         successTextData={this.props.background_and_logo.successMessage}
                                 />
 
                             </div>
@@ -318,7 +306,7 @@ class CaptivePortal extends Component {
                                  textData={this.contentData}
                                  methods={this.loginMethods}
                                  footerTextData={this.footerTextData}
-                                 successData={this.successData}
+                                 successData={this.successTextData}
                                  loaderHandler={this.props.loaderHandler}/>
                     </div>
                 </div>
@@ -374,6 +362,9 @@ export default connect(
         },
         setCSS: (str) => {
             dispatch({type: 'SET_CSS', payload: str})
+        },
+        redirectURLChanger: (url) => {
+            dispatch({type: 'REDIRECT_URL', payload: url})
         }
     })
 )(CaptivePortal);

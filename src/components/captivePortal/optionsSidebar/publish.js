@@ -101,7 +101,8 @@ class Publish extends Component {
             container_border,
             container_size,
             login_methods: {methods},
-            imagesIDs
+            imagesIDs,
+            redirectURL: {url}
         } = this.props.tabName;
         const portalDataToSend = {
             background: background.type === 'COLOR' ? null : background.url,
@@ -147,7 +148,8 @@ class Publish extends Component {
             },
             googleLogin: methods.google,
             facebookLogin: methods.facebook,
-            twitterLogin: methods.twitter
+            twitterLogin: methods.twitter,
+            successRedirectUrl: url
         };
 
         return portalDataToSend;
