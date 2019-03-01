@@ -1436,6 +1436,74 @@ header {
   grid-column-gap: 20px;
   align-items: flex-start;
   justify-content: space-between;
+  .cpSelector {
+    display: flex;
+    justify-content: center;
+    width: 330px;
+    border: 1px solid @soft-blue;
+    border-radius: 16px;
+    background: @soft-blue;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    &:hover {
+      background: @cornflower-blue;
+    }
+    &:active:hover {
+      background: @cornflower-blue;
+      box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, .5);
+    }
+    p {
+      width: 100%;
+      height: 34px;
+      color: @w;
+      text-align: center;
+      line-height: 2.1;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+    .list {
+      width: calc(100% + 2px);
+      position: absolute;
+      top: 32px;
+      left: 0;
+      height: 0;
+      overflow: hidden;
+
+    }
+    &.active {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      &:hover {
+        background: @soft-blue;
+      }
+      &:active:hover {
+        background: @soft-blue;
+        box-shadow: none;
+      }
+      & > p {
+        border-bottom: 1px solid @pale-grey-three;
+      }
+      .list {
+        height: auto;
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid @soft-blue;
+        background: @soft-blue;
+        margin-left: -1px;
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+        p {
+          &:not(:last-child) {
+            border-bottom: 1px solid @pale-grey-three;
+          }
+          text-align: center;
+          cursor: pointer;
+        }
+      }
+    }
+  }
   .hotspotForm {
     flex: 1;
     flex-basis: 450px;
@@ -1502,71 +1570,6 @@ header {
           font-weight: bold;
           line-height: 2;
           text-align: center;
-        }
-      }
-      .cpSelector {
-        display: flex;
-        justify-content: center;
-        width: 330px;
-        border: 1px solid @soft-blue;
-        border-radius: 16px;
-        background: @soft-blue;
-        align-items: center;
-        position: relative;
-        cursor: pointer;
-        &:hover {
-          background: @cornflower-blue;
-        }
-        &:active:hover {
-          background: @cornflower-blue;
-          box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, .5);
-        }
-        p {
-          width: 100%;
-          height: 34px;
-          color: @w;
-          text-align: center;
-          line-height: 2.1;
-        }
-        .list {
-          width: calc(100% + 2px);
-          position: absolute;
-          top: 32px;
-          left: 0;
-          height: 0;
-          overflow: hidden;
-
-        }
-        &.active {
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 0;
-          &:hover {
-            background: @soft-blue;
-          }
-          &:active:hover {
-            background: @soft-blue;
-            box-shadow: none;
-          }
-          & > p {
-            border-bottom: 1px solid @pale-grey-three;
-          }
-          .list {
-            height: auto;
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid @soft-blue;
-            background: @soft-blue;
-            margin-left: -1px;
-            border-bottom-left-radius: 16px;
-            border-bottom-right-radius: 16px;
-            p {
-              &:not(:last-child) {
-                border-bottom: 1px solid @pale-grey-three;
-              }
-              text-align: center;
-              cursor: pointer;
-            }
-          }
         }
       }
     }
@@ -1684,6 +1687,7 @@ table {
   width: 100%;
   border: 1px solid @pale-grey-three;
   box-shadow: 0 1px 2px 0 rgba(191, 197, 210, 0.15);
+  background: @w;
   tbody {
     tr {
       &:not(:last-child) {
@@ -1908,6 +1912,10 @@ table {
   }
 }
 
+/*
+    Notifications
+*/
+
 .notification {
   position: absolute;
   top: -100px;
@@ -1933,5 +1941,123 @@ table {
     border: 1px solid #4d4d4d;
     background: rgba(77, 77, 77, .5);
     color: #fff;
+  }
+}
+
+/*
+    Reports
+*/
+
+.tabsLine{
+  width: 100%;
+  margin-bottom: 24px;
+  .line{
+    border-bottom: 1px solid @pale-grey-three;
+    a{
+      display: inline-block;
+      padding-bottom: 6px;
+      border-bottom: 2px solid @trans;
+      .font(@avenir-medium, 14);
+      color: @steel;
+      line-height: 1.71;
+      &.active{
+        border-bottom: 2px solid @soft-blue;
+        color: @soft-blue;
+      }
+    }
+  }
+}
+.setInfoLine{
+  display: flex;
+  margin-bottom: 24px;
+  justify-content: space-between;
+  align-items: center;
+  .hsSelector {
+    display: flex;
+    justify-content: center;
+    min-width: 165px;
+    border: 1px solid @soft-blue;
+    border-radius: 16px;
+    background: @soft-blue;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    &:hover {
+      background: @cornflower-blue;
+    }
+    &:active:hover {
+      background: @cornflower-blue;
+      box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, .5);
+    }
+    p {
+      width: 100%;
+      height: 34px;
+      color: @w;
+      text-align: center;
+      //line-height: 2.1;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      span{
+
+      }
+    }
+    .list {
+      width: calc(100% + 2px);
+      position: absolute;
+      top: 32px;
+      left: 0;
+      height: 0;
+      overflow: hidden;
+
+    }
+    &.active {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      &:hover {
+        background: @soft-blue;
+      }
+      &:active:hover {
+        background: @soft-blue;
+        box-shadow: none;
+      }
+      & > p {
+        border-bottom: 1px solid @pale-grey-three;
+      }
+      .list {
+        height: auto;
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid @soft-blue;
+        background: @soft-blue;
+        margin-left: -1px;
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+        p {
+          &:not(:last-child) {
+            border-bottom: 1px solid @pale-grey-three;
+          }
+          text-align: center;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .exportCSV{
+    button{
+      width: 144px;
+      height: 32px;
+      border: 1px solid @light-blue-grey;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding-left: 5px;
+      span{
+        .font(@avenir-medium, 12);
+        color: @dark-indigo;
+        font-weight: bold;
+      }
+    }
   }
 }

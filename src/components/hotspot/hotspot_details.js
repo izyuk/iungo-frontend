@@ -5,7 +5,7 @@ import HotspotTable from './hotspotTable';
 import Notification from '../additional/notification';
 
 import {createHotspot, getHotspots, updateHotspotById, getAllPortals} from '../../api/API';
-import connect from "react-redux/es/connect/connect";
+import {connect} from "react-redux";
 
 class HotspotDetails extends Component {
     state = {

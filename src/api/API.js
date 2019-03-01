@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const AUTH_API = 'https://marketing-auth.iungo.network';
 const BACKEND_API = 'https://marketing-backend.iungo.network';
+const ANALYTICS_API = 'https://marketing-analytics.iungo.network';
 
 
 function authChecker(response){
@@ -222,6 +223,36 @@ export const previewPortal = (string, info) => {
         url: `${BACKEND_API}/portal/preview`,
         mode: 'no-cors',
         data: info
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
+
+export const getHotspotUsers = (string, hotSpotUUID) => {
+    return axios({
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${ANALYTICS_API}/login/statistic/${hotSpotUUID}`,
+        mode: 'no-cors'
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
+
+export const exportHotspotUsersCSV = (string, hotSpotUUID) => {
+    return axios({
+        method: 'get',
+        headers: {
+            'Content-Type': 'text/csv',
+            'Accept': 'text/csv',
+            'Authorization': `${string}`
+        },
+        url: `${ANALYTICS_API}/login/statistic/export/${hotSpotUUID}`,
+        mode: 'no-cors'
     })
         .then(res => res)
         .catch(err => authChecker(err.response));

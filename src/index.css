@@ -1630,6 +1630,73 @@ header .container {
   align-items: flex-start;
   justify-content: space-between;
 }
+.hotspotDetailsWrap .cpSelector {
+  display: flex;
+  justify-content: center;
+  width: 330px;
+  border: 1px solid #5585ed;
+  border-radius: 16px;
+  background: #5585ed;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+.hotspotDetailsWrap .cpSelector:hover {
+  background: #4372d6;
+}
+.hotspotDetailsWrap .cpSelector:active:hover {
+  background: #4372d6;
+  box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+.hotspotDetailsWrap .cpSelector p {
+  width: 100%;
+  height: 34px;
+  color: #fff;
+  text-align: center;
+  line-height: 2.1;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.hotspotDetailsWrap .cpSelector .list {
+  width: calc(100% + 2px);
+  position: absolute;
+  top: 32px;
+  left: 0;
+  height: 0;
+  overflow: hidden;
+}
+.hotspotDetailsWrap .cpSelector.active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.hotspotDetailsWrap .cpSelector.active:hover {
+  background: #5585ed;
+}
+.hotspotDetailsWrap .cpSelector.active:active:hover {
+  background: #5585ed;
+  box-shadow: none;
+}
+.hotspotDetailsWrap .cpSelector.active > p {
+  border-bottom: 1px solid #e5e9f2;
+}
+.hotspotDetailsWrap .cpSelector.active .list {
+  height: auto;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #5585ed;
+  background: #5585ed;
+  margin-left: -1px;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+.hotspotDetailsWrap .cpSelector.active .list p {
+  text-align: center;
+  cursor: pointer;
+}
+.hotspotDetailsWrap .cpSelector.active .list p:not(:last-child) {
+  border-bottom: 1px solid #e5e9f2;
+}
 .hotspotDetailsWrap .hotspotForm {
   flex: 1;
   flex-basis: 450px;
@@ -1709,70 +1776,6 @@ header .container {
   font-weight: bold;
   line-height: 2;
   text-align: center;
-}
-.hotspotDetailsWrap .hotspotForm > div .cpSelector {
-  display: flex;
-  justify-content: center;
-  width: 330px;
-  border: 1px solid #5585ed;
-  border-radius: 16px;
-  background: #5585ed;
-  align-items: center;
-  position: relative;
-  cursor: pointer;
-}
-.hotspotDetailsWrap .hotspotForm > div .cpSelector:hover {
-  background: #4372d6;
-}
-.hotspotDetailsWrap .hotspotForm > div .cpSelector:active:hover {
-  background: #4372d6;
-  box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.5);
-}
-.hotspotDetailsWrap .hotspotForm > div .cpSelector p {
-  width: 100%;
-  height: 34px;
-  color: #fff;
-  text-align: center;
-  line-height: 2.1;
-}
-.hotspotDetailsWrap .hotspotForm > div .cpSelector .list {
-  width: calc(100% + 2px);
-  position: absolute;
-  top: 32px;
-  left: 0;
-  height: 0;
-  overflow: hidden;
-}
-.hotspotDetailsWrap .hotspotForm > div .cpSelector.active {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-.hotspotDetailsWrap .hotspotForm > div .cpSelector.active:hover {
-  background: #5585ed;
-}
-.hotspotDetailsWrap .hotspotForm > div .cpSelector.active:active:hover {
-  background: #5585ed;
-  box-shadow: none;
-}
-.hotspotDetailsWrap .hotspotForm > div .cpSelector.active > p {
-  border-bottom: 1px solid #e5e9f2;
-}
-.hotspotDetailsWrap .hotspotForm > div .cpSelector.active .list {
-  height: auto;
-  max-height: 200px;
-  overflow-y: auto;
-  border: 1px solid #5585ed;
-  background: #5585ed;
-  margin-left: -1px;
-  border-bottom-left-radius: 16px;
-  border-bottom-right-radius: 16px;
-}
-.hotspotDetailsWrap .hotspotForm > div .cpSelector.active .list p {
-  text-align: center;
-  cursor: pointer;
-}
-.hotspotDetailsWrap .hotspotForm > div .cpSelector.active .list p:not(:last-child) {
-  border-bottom: 1px solid #e5e9f2;
 }
 .hotspotDetailsWrap .hotspotForm > div.cpSelectorHead {
   justify-content: center;
@@ -1876,6 +1879,7 @@ table {
   width: 100%;
   border: 1px solid #e5e9f2;
   box-shadow: 0 1px 2px 0 rgba(191, 197, 210, 0.15);
+  background: #fff;
 }
 table tr {
   padding: 0 16px;
@@ -2085,6 +2089,9 @@ table tr th {
   background: #5585ed;
   width: 50%;
 }
+/*
+    Notifications
+*/
 .notification {
   position: absolute;
   top: -100px;
@@ -2111,5 +2118,118 @@ table tr th {
   border: 1px solid #4d4d4d;
   background: rgba(77, 77, 77, 0.5);
   color: #fff;
+}
+/*
+    Reports
+*/
+.tabsLine {
+  width: 100%;
+  margin-bottom: 24px;
+}
+.tabsLine .line {
+  border-bottom: 1px solid #e5e9f2;
+}
+.tabsLine .line a {
+  display: inline-block;
+  padding-bottom: 6px;
+  border-bottom: 2px solid transparent;
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 14px;
+  font-size: 0.875rem;
+  color: #768198;
+  line-height: 1.71;
+}
+.tabsLine .line a.active {
+  border-bottom: 2px solid #5585ed;
+  color: #5585ed;
+}
+.setInfoLine {
+  display: flex;
+  margin-bottom: 24px;
+  justify-content: space-between;
+  align-items: center;
+}
+.setInfoLine .hsSelector {
+  display: flex;
+  justify-content: center;
+  min-width: 165px;
+  border: 1px solid #5585ed;
+  border-radius: 16px;
+  background: #5585ed;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+.setInfoLine .hsSelector:hover {
+  background: #4372d6;
+}
+.setInfoLine .hsSelector:active:hover {
+  background: #4372d6;
+  box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+.setInfoLine .hsSelector p {
+  width: 100%;
+  height: 34px;
+  color: #fff;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.setInfoLine .hsSelector .list {
+  width: calc(100% + 2px);
+  position: absolute;
+  top: 32px;
+  left: 0;
+  height: 0;
+  overflow: hidden;
+}
+.setInfoLine .hsSelector.active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.setInfoLine .hsSelector.active:hover {
+  background: #5585ed;
+}
+.setInfoLine .hsSelector.active:active:hover {
+  background: #5585ed;
+  box-shadow: none;
+}
+.setInfoLine .hsSelector.active > p {
+  border-bottom: 1px solid #e5e9f2;
+}
+.setInfoLine .hsSelector.active .list {
+  height: auto;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #5585ed;
+  background: #5585ed;
+  margin-left: -1px;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+.setInfoLine .hsSelector.active .list p {
+  text-align: center;
+  cursor: pointer;
+}
+.setInfoLine .hsSelector.active .list p:not(:last-child) {
+  border-bottom: 1px solid #e5e9f2;
+}
+.setInfoLine .exportCSV button {
+  width: 144px;
+  height: 32px;
+  border: 1px solid #dee5f3;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-left: 5px;
+}
+.setInfoLine .exportCSV button span {
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  color: #071031;
+  font-weight: bold;
 }
 /*# sourceMappingURL=index.css.map */
