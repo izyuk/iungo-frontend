@@ -18,10 +18,10 @@ class ContainerSize extends Component {
             this.setState({
                 width: 1920
             });
-        } else if (e.target.value <= 720) {
-            e.target.value = 720;
+        } else if (e.target.value <= 320) {
+            e.target.value = 320;
             this.setState({
-                width: 720
+                width: 320
             })
         } else {
             this.setState({
@@ -31,10 +31,10 @@ class ContainerSize extends Component {
     }
 
     valuePadding(e) {
-        if (e.target.value >= 20) {
-            e.target.value = 20;
+        if (e.target.value >= 40) {
+            e.target.value = 40;
             this.setState({
-                padding: 20
+                padding: 40
             });
         } else if (e.target.value <= 0) {
             e.target.value = 0;
@@ -83,7 +83,7 @@ class ContainerSize extends Component {
                         <div className="inputSelect">
                             <input type="number" onBlur={this.valueWidth} defaultValue={this.state.width}/>
                             <select name="" id="" disabled>
-                                <option value="px" selected>px</option>
+                                <option value="px">px</option>
                                 <option value="%">%</option>
                                 <option value="rem">rem</option>
                             </select>
@@ -103,7 +103,7 @@ class ContainerSize extends Component {
                         <div className="inputSelect">
                             <input type="number" onBlur={this.valuePadding} defaultValue={this.state.padding}/>
                             <select name="" id="" disabled>
-                                <option value="px" selected>px</option>
+                                <option value="px">px</option>
                                 <option value="%">%</option>
                                 <option value="rem">rem</option>
                             </select>

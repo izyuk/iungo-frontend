@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {SketchPicker} from 'react-color';
-import {BACKEND_API, getAllImages} from '../../../api/API';
+import {getAllImages} from '../../../api/API';
 
 import Modal from '../../additional/modal';
 import axios from "axios";
+
+const BACKEND_API = 'https://marketing-backend.iungo.network';
 
 class ImageUploader extends Component {
     state = {
@@ -52,6 +54,7 @@ class ImageUploader extends Component {
     };
 
     uploadImage = (string, name, base64) => {
+        console.log(BACKEND_API);
         return axios({
             method: 'post',
             headers: {

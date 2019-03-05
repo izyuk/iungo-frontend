@@ -3,6 +3,7 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 
 import Index from './components';
 import Tool from './components/tool/tool';
+import Restore from './components/login/restore';
 
 class MainRouter extends Component {
     state = {
@@ -25,7 +26,7 @@ class MainRouter extends Component {
         return (
             <Switch>
                 {this.state.unauthorized && <Redirect to={'/'}/>}
-                <Route exact path="/(|register)" component={Index}/>
+                <Route exact path="/(|register|restore)" component={Index}/>
                 <Route component={Tool}/>
             </Switch>
         )

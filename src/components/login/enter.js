@@ -155,14 +155,20 @@ class Enter extends Component {
                     onClick={this.sendData}>{login ? 'Login' : 'Register'}</span>
                 {
                     login ?
-                        <p className="question">Not a member?&nbsp;
-                            <button
-                            onClick={this.changeOption}
-                            type="button"
-                            dataurl="register">Sign up now
-                            </button>
+                        <div className={'question'}>
+                            <p className={''}>
+                                <Link to={'/restore'}>Forgot your password ?</Link>
+                            </p>
+                            <p className="">Not a member?&nbsp;
+                                <button
+                                    onClick={this.changeOption}
+                                    type="button"
+                                    dataurl="register">Sign up now
+                                </button>
 
-                        </p> :
+                            </p>
+                        </div>
+                        :
                         <p className="question"> Have account?&nbsp;
                             <button
                             onClick={this.changeOption}

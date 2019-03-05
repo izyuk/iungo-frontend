@@ -398,12 +398,21 @@ body {
   background: #5585ed;
 }
 .formWrap .question {
+  margin-top: 50px;
+}
+.formWrap .question a,
+.formWrap .question p {
   font-family: 'AvenirLTStd-Medium', sans-serif;
   font-size: 14px;
   font-size: 0.875rem;
   color: #768198;
   line-height: unset;
-  margin-top: 50px;
+}
+.formWrap .question a {
+  text-decoration: underline;
+}
+.formWrap .question p {
+  margin-top: 10px;
 }
 .formWrap .question button {
   border: none;
@@ -411,7 +420,7 @@ body {
   font-size: 14px;
   font-size: 0.875rem;
   color: #768198;
-  border-bottom: 1px solid #768198;
+  text-decoration: underline;
 }
 .fieldsWrap {
   width: 100%;

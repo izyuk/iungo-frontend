@@ -7,6 +7,8 @@ import {upload_file} from "../../reducers/background_and_logo";
 import {getPortal, createPortal} from "../../api/API";
 import Loader from "../../loader";
 
+import Publish from './optionsSidebar/publish';
+
 
 class CaptivePortal extends Component {
     // constructor(props) {
@@ -233,7 +235,6 @@ class CaptivePortal extends Component {
     };
 
     setName = (e) => {
-
         if (e.currentTarget.value.length > 3) {
             e.currentTarget.classList.remove('active');
             e.currentTarget.classList.remove('error');
@@ -245,6 +246,7 @@ class CaptivePortal extends Component {
         } else {
             e.currentTarget.classList.add('error');
         }
+        Publish.prototype.publishPortalMethodHandler();
     };
 
     render() {

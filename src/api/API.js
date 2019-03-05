@@ -257,3 +257,20 @@ export const exportHotspotUsersCSV = (string, hotSpotUUID) => {
         .then(res => res)
         .catch(err => authChecker(err.response));
 };
+
+export const restorePasswordSendUsername = (string) => {
+    return axios({
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        url: `${AUTH_API}/restore`,
+        mode: 'no-cors',
+        data: {
+            "username": string
+        }
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};

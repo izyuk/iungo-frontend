@@ -62,6 +62,7 @@ class People extends Component {
             this.setState({UUIDChecker: false});
             const query = exportHotspotUsersCSV(this.token, this.state.uuid);
             await query.then(res => {
+                console.log(res.headers);
                 let {data} = res;
                 let filename, link;
                 if (data == '' || data == null) {

@@ -15,14 +15,6 @@ class Login extends Component {
         this.setState({
             [type]: e.target.value
         });
-        // const {email, password} = this.state;
-        // const expEmail = /[\w_.-]+@[0-9a-z_-]+\.[a-z]{2,5}/i.test(email);
-        // const expPassword = (password.length >= 8 && password.length <= 32);
-        // if (expEmail || expPassword) {
-        //     this.setState({
-        //         [type]: e.target.value
-        //     });
-        // }
     };
 
     shouldComponentUpdate(nextProps, nextState) {

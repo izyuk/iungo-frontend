@@ -190,15 +190,23 @@
     }
   }
   .question {
-    .font(@avenir-medium, 14);
-    color: @steel;
-    line-height: unset;
+    a, p{
+      .font(@avenir-medium, 14);
+      color: @steel;
+      line-height: unset;
+    }
+    a{
+      text-decoration: underline;
+    }
+    p{
+      margin-top: 10px;
+    }
     margin-top: 50px;
     button {
       border: none;
       .font(@avenir-medium, 14);
       color: @steel;
-      border-bottom: 1px solid @steel;
+      text-decoration: underline;
     }
   }
 }
