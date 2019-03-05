@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {restorePasswordSendUsername} from "../../api/API";
+import {restorePasswordSendUsername, restorePasswordSendConfirmedPassword} from "../../api/API";
 
 
 class Restore extends Component {
@@ -17,6 +17,9 @@ class Restore extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.login !== nextState.login) return true;
+        else if (this.state.toPasswordFields !== nextState.toPasswordFields) return true;
+        else if (this.state.password !== nextState.password) return true;
+        else if (this.state.confirmedPassword !== nextState.confirmedPassword) return true;
         else return false;
     }
 
@@ -24,10 +27,15 @@ class Restore extends Component {
         const url_string = window.location.href;
         const url = new URL(url_string);
         const token = url.searchParams.get("token");
-        if (token !== '' || token !== null) {
+
+        if ((token !== null) || (token === 'failed')) {
             this.setState({
                 toPasswordFields: true
-            })
+            });
+            const field = e.target.getAttribute('datatype');
+            this.setState({
+                [field]: e.target.value
+            });
         } else {
             this.setState({
                 email: e.target.value
@@ -37,20 +45,41 @@ class Restore extends Component {
     };
 
     sendData = async () => {
-        if (this.state.email !== '') {
-            const {email} = this.state;
-            let query = restorePasswordSendUsername(email);
-            query.then(res => {
-                console.log(res)
-            })
+        const url_string = window.location.href;
+        const url = new URL(url_string);
+        const token = url.searchParams.get("token");
+
+        const {
+            email,
+            password,
+            confirmedPassword
+        } = this.state;
+
+        if ((token !== null) || (token === 'failed')) {
+            if (confirmedPassword === password) {
+                let query = restorePasswordSendConfirmedPassword(token, password);
+                query.then(res => {
+                    console.log(res)
+                })
+            }
+        } else {
+            if (email !== '') {
+                let query = restorePasswordSendUsername(email);
+                query.then(res => {
+                    console.log(res)
+                })
+            }
         }
+
     };
 
     componentDidMount() {
         const url_string = window.location.href;
         const url = new URL(url_string);
         const token = url.searchParams.get("token");
-        if (token !== '' || token !== null) {
+        console.log(token);
+        console.log((token !== null) || (token === 'failed'));
+        if ((token !== null) || (token === 'failed')) {
             this.setState({
                 toPasswordFields: true
             })
@@ -63,7 +92,7 @@ class Restore extends Component {
             <div className="formWrap">
                 <p>Restore your password</p>
                 {
-                    toPasswordFields ?
+                    !toPasswordFields ?
                         <div className="inputsWrap">
                             <div className={'email'}>
                                 <span>
@@ -92,6 +121,7 @@ class Restore extends Component {
                                     </svg>
                                 </span>
                                 <input type="password"
+                                       datatype={'password'}
                                        ref={this.password}
                                        onBlur={this.fieldsHandler}
                                        placeholder="Your Password"/>
@@ -106,6 +136,7 @@ class Restore extends Component {
                                     </svg>
                                 </span>
                                 <input type="password"
+                                       datatype={'confirmedPassword'}
                                        ref={this.confirmedPassword}
                                        onBlur={this.fieldsHandler}
                                        placeholder="Your Password"/>

@@ -274,3 +274,20 @@ export const restorePasswordSendUsername = (string) => {
         .then(res => res)
         .catch(err => authChecker(err.response));
 };
+
+export const restorePasswordSendConfirmedPassword = (string, password) => {
+    return axios({
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        url: `${AUTH_API}/restore/change/${string}`,
+        mode: 'no-cors',
+        data: {
+            "password": password
+        }
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
