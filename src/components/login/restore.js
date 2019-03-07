@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {restorePasswordSendUsername, restorePasswordSendConfirmedPassword} from "../../api/API";
+import Notification from "../additional/notification";
 
 
 class Restore extends Component {
@@ -8,7 +9,10 @@ class Restore extends Component {
         email: '',
         toPasswordFields: false,
         password: '',
-        confirmedPassword: ''
+        confirmedPassword: '',
+        notification: false,
+        notificationText: '',
+        failed: false,
     };
 
     email = React.createRef();
@@ -20,6 +24,9 @@ class Restore extends Component {
         else if (this.state.toPasswordFields !== nextState.toPasswordFields) return true;
         else if (this.state.password !== nextState.password) return true;
         else if (this.state.confirmedPassword !== nextState.confirmedPassword) return true;
+        else if (this.state.notification !== nextState.notification) return true;
+        else if (this.state.notificationText !== nextState.notificationText) return true;
+        else if (this.state.failed !== nextState.failed) return true;
         else return false;
     }
 
@@ -59,17 +66,50 @@ class Restore extends Component {
             if (confirmedPassword === password) {
                 let query = restorePasswordSendConfirmedPassword(token, password);
                 query.then(res => {
-                    console.log(res)
-                })
+                    console.log(res);
+                    this.setState({
+                        notification: true,
+                        notificationText: 'Your password was changed successfully',
+                        failed: false
+                    });
+                    setTimeout(() => {
+                        this.setState({notification: false, failed: false, notificationText: ''});
+                        location.href = '/';
+                    }, 3000)
+                }).catch(e => {
+                    this.setState({
+                        notification: true,
+                        notificationText: e,
+                        failed: true
+                    })
+                });
             }
         } else {
             if (email !== '') {
                 let query = restorePasswordSendUsername(email);
                 query.then(res => {
-                    console.log(res)
-                })
+                    console.log(res);
+                    this.setState({
+                        notification: true,
+                        notificationText: 'Please check your mail-box for confirmation letter',
+                        failed: false
+                    });
+                    setTimeout(() => {
+                        this.setState({notification: false, failed: false, notificationText: ''});
+                        location.href = '/';
+                    }, 3000)
+                }).catch(e => {
+                    this.setState({
+                        notification: true,
+                        notificationText: e,
+                        failed: true
+                    })
+                });
+
             }
         }
+
+
 
     };
 
@@ -77,8 +117,6 @@ class Restore extends Component {
         const url_string = window.location.href;
         const url = new URL(url_string);
         const token = url.searchParams.get("token");
-        console.log(token);
-        console.log((token !== null) || (token === 'failed'));
         if ((token !== null) || (token === 'failed')) {
             console.log('TOKEN EXISTS');
             this.setState({
@@ -127,7 +165,7 @@ class Restore extends Component {
                                        onBlur={this.fieldsHandler}
                                        placeholder="Your Password"/>
                             </div>
-                            <div className={'password'}>
+                            <div className={'password confirmField'}>
                                 <span>
                                     <svg enableBackground="new 0 0 128 128" height="16" id="Layer_1" version="1.1"
                                          viewBox="0 0 128 128" width="16"
@@ -147,6 +185,9 @@ class Restore extends Component {
                 <span
                     className={"login"}
                     onClick={this.sendData}>Restore</span>
+                {this.state.notification &&
+                <Notification type={this.state.failed ? 'fail' : 'info'}
+                              text={this.state.notificationText}/>}
             </div>
         )
     }

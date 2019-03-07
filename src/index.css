@@ -536,6 +536,10 @@ body {
   font-weight: bold;
   line-height: 2;
 }
+.inputsWrap > div.confirmField,
+.socialsWrap > div.confirmField {
+  margin-top: 10px;
+}
 .inputsWrap.validationFail:after,
 .socialsWrap.validationFail:after {
   margin-top: 20px;

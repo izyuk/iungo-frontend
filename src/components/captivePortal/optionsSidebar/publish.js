@@ -12,7 +12,7 @@ class Publish extends Component {
         id: localStorage.getItem('cpID'),
         notification: false,
         publishedType: '',
-        failed: false
+        failed: false,
     };
     // this.getBuilderParams = this.getBuilderParams.bind(this);
     // }
