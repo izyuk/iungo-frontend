@@ -249,7 +249,7 @@ class CaptivePortal extends Component {
         } else {
             e.currentTarget.classList.add('error');
         }
-
+        //TODO integrate GetBuilderParams PublishPortalMethodHandler onBlur and on Enter key
         // this.loaderHandler();
         // const portalDataToSend = GetBuilderParams(this.props.tabName);
         // const data = await PublishPortalMethodHandler(portalDataToSend, this.state.id);
