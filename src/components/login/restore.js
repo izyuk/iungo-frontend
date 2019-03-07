@@ -80,6 +80,7 @@ class Restore extends Component {
         console.log(token);
         console.log((token !== null) || (token === 'failed'));
         if ((token !== null) || (token === 'failed')) {
+            console.log('TOKEN EXISTS');
             this.setState({
                 toPasswordFields: true
             })

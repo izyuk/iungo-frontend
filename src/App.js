@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 
 import Index from './components';
-import Tool from './components/tool/tool';
-import Restore from './components/login/restore';
+import Tool from './components/tool/tool'
 
 class MainRouter extends Component {
     state = {
