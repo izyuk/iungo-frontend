@@ -12,7 +12,7 @@ class MainRouter extends Component {
 
     componentDidMount() {
         console.log(!localStorage.getItem('token'));
-        if (window.location.pathname !== '/' && !localStorage.getItem('token')) {
+        if ((window.location.pathname !== '/' || window.location.pathname !== '/restore') && !localStorage.getItem('token')) {
             this.setState({
                 unauthorized: true
             })

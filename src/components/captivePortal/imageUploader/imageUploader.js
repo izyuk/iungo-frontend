@@ -71,7 +71,9 @@ class ImageUploader extends Component {
                 })
             }
         })
-            .then(res => res)
+            .then(res =>
+                console.log(res)
+            )
             // .then()
             .catch(err => console.warn('In uploadImage API method\n', err));
 
