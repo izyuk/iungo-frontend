@@ -8,6 +8,9 @@ import {getPortal, createPortal} from "../../api/API";
 import Loader from "../../loader";
 
 import Publish from './optionsSidebar/publish';
+import {GetBuilderParams} from "./optionsSidebar/getBuilderParams";
+import {PublishPortalMethodHandler} from "./optionsSidebar/publishPortalMethodHandler";
+import Notification from "../additional/notification";
 
 
 class CaptivePortal extends Component {
@@ -234,7 +237,7 @@ class CaptivePortal extends Component {
         e.currentTarget.removeAttribute('disabled');
     };
 
-    setName = (e) => {
+    setName = async (e) => {
         if (e.currentTarget.value.length > 3) {
             e.currentTarget.classList.remove('active');
             e.currentTarget.classList.remove('error');
@@ -246,6 +249,15 @@ class CaptivePortal extends Component {
         } else {
             e.currentTarget.classList.add('error');
         }
+
+        // this.loaderHandler();
+        // const portalDataToSend = GetBuilderParams(this.props.tabName);
+        // const data = await PublishPortalMethodHandler(portalDataToSend, this.state.id);
+        // this.setState(data);
+        // this.loaderHandler();
+        // setTimeout(() => {
+        //     this.setState({notification: false, failed: false});
+        // }, 2000)
     };
 
     render() {
@@ -310,6 +322,9 @@ class CaptivePortal extends Component {
                                  successData={this.successTextData}
                                  loaderHandler={this.props.loaderHandler}/>
                     </div>
+                    {this.state.notification &&
+                    <Notification type={this.state.failed ? 'fail' : 'info'}
+                                  text={!this.state.failed ? `Your Captive Portal was ${this.state.publishedType}` : this.state.publishedType}/>}
                 </div>
             )
         }
