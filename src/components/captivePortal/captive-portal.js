@@ -246,7 +246,6 @@ class CaptivePortal extends Component {
         } else {
             e.currentTarget.classList.add('error');
         }
-        Publish.prototype.publishPortalMethodHandler();
     };
 
     render() {
