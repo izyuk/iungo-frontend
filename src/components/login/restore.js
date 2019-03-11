@@ -85,6 +85,15 @@ class Restore extends Component {
                             failed: true
                         })
                     });
+                } else {
+                    this.setState({
+                        failed: true,
+                        notification: true,
+                        notificationText: 'Password doesn\'t match'
+                    });
+                    setTimeout(() => {
+                        this.setState({notification: false, failed: false, notificationText: ''});
+                    }, 2000)
                 }
             } else {
                 this.setState({
@@ -92,6 +101,9 @@ class Restore extends Component {
                     notification: true,
                     notificationText: 'Password should not be less than 8 characters'
                 });
+                setTimeout(() => {
+                    this.setState({notification: false, failed: false, notificationText: ''});
+                }, 2000)
             }
 
         } else {
