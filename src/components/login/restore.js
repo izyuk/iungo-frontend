@@ -63,27 +63,38 @@ class Restore extends Component {
         } = this.state;
 
         if ((token !== null) || (token === 'failed')) {
-            if (confirmedPassword === password) {
-                let query = restorePasswordSendConfirmedPassword(token, password);
-                query.then(res => {
-                    console.log(res);
-                    this.setState({
-                        notification: true,
-                        notificationText: 'Your password was changed successfully',
-                        failed: false
+            if(confirmedPassword.length >= 8){
+                if (confirmedPassword === password) {
+                    let query = restorePasswordSendConfirmedPassword(token, password);
+                    query.then(res => {
+                        console.log(res);
+                        this.setState({
+                            notification: true,
+                            notificationText: 'Your password was changed successfully',
+                            failed: false
+                        });
+                        setTimeout(() => {
+                            this.setState({notification: false, failed: false, notificationText: ''});
+                            location.href = '/';
+                        }, 3000)
+                    }).catch(e => {
+                        this.setState({
+                            notification: true,
+                            notificationText: e,
+                            failed: true
+                        })
                     });
-                    setTimeout(() => {
-                        this.setState({notification: false, failed: false, notificationText: ''});
-                        location.href = '/';
-                    }, 3000)
-                }).catch(e => {
-                    this.setState({
-                        notification: true,
-                        notificationText: e,
-                        failed: true
-                    })
+                }
+            } else {
+                this.setState({
+                    auth: false,
+                    loader: false,
+                    showNotification: true,
+                    notificationType: 'fail',
+                    notificationText: 'Password should not be less than 8 characters'
                 });
             }
+
         } else {
             if (email !== '') {
                 let query = restorePasswordSendUsername(email);
@@ -150,7 +161,7 @@ class Restore extends Component {
                             </div>
                         </div> :
                         <div className="inputsWrap">
-                            <div className={'password'}>
+                            <div className={this.props.notificationType === 'fail' ? 'password validationFail' :'password'}>
                                 <span>
                                     <svg enableBackground="new 0 0 128 128" height="16" id="Layer_1" version="1.1"
                                          viewBox="0 0 128 128" width="16"
@@ -165,7 +176,7 @@ class Restore extends Component {
                                        onBlur={this.fieldsHandler}
                                        placeholder="Your Password"/>
                             </div>
-                            <div className={'password confirmField'}>
+                            <div className={this.props.notificationType === 'fail' ? 'password confirmField validationFail' : 'password confirmField'}>
                                 <span>
                                     <svg enableBackground="new 0 0 128 128" height="16" id="Layer_1" version="1.1"
                                          viewBox="0 0 128 128" width="16"
