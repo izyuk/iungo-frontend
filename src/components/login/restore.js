@@ -136,11 +136,19 @@ class Restore extends Component {
     };
 
     componentDidMount() {
+        // this.setState({
+        //     email: '',
+        //     toPasswordFields: false,
+        //     password: '',
+        //     confirmedPassword: '',
+        //     notification: false,
+        //     notificationText: '',
+        //     failed: false
+        // });
         const url_string = window.location.href;
         const url = new URL(url_string);
         const token = url.searchParams.get("token");
         if ((token !== null) || (token === 'failed')) {
-            console.log('TOKEN EXISTS');
             this.setState({
                 toPasswordFields: true
             })
