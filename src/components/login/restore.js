@@ -35,7 +35,7 @@ class Restore extends Component {
         const url = new URL(url_string);
         const token = url.searchParams.get("token");
 
-        if ((token !== null) || (token === 'failed')) {
+        if (token !== null) {
             this.setState({
                 toPasswordFields: true
             });
@@ -62,7 +62,7 @@ class Restore extends Component {
             confirmedPassword
         } = this.state;
 
-        if ((token !== null) || (token === 'failed')) {
+        if (token !== null) {
             if(confirmedPassword.length >= 8){
                 if (confirmedPassword === password) {
                     let query = restorePasswordSendConfirmedPassword(token, password);
@@ -147,7 +147,7 @@ class Restore extends Component {
         const url_string = window.location.href;
         const url = new URL(url_string);
         const token = url.searchParams.get("token");
-        if ((token !== null) || (token === 'failed')) {
+        if (token !== null) {
             this.setState({
                 toPasswordFields: true
             })

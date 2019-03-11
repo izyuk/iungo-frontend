@@ -6,7 +6,7 @@ import Enter from './login/enter';
 import Restore from './login/restore';
 
 
-import {Switch, Route, Redirect} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 
 class Index extends Component {
   constructor(props) {
@@ -18,11 +18,6 @@ class Index extends Component {
   render() {
     return (
       <div className="loginPage">
-
-        {/*<div className={style.list}>*/}
-          {/*{(!this.state.data && !this.state.status && this.state.click) ? <Loader/> : this.state.data}*/}
-            {/*<Loader/>*/}
-        {/*</div>*/}
         <div className="loginWrap">
             <div className="logo">
                 <img src={require('../static/images/logo.png')} alt=""/>
@@ -31,8 +26,6 @@ class Index extends Component {
                 <Route exact path={'/(|register)'} component={Enter}/>
                 <Route exact path={'/restore'} component={Restore}/>
             </Switch>
-            {/*<Enter/>*/}
-            {/*<Restore/>*/}
         </div>
       </div>
     );

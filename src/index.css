@@ -483,8 +483,14 @@ body {
 .socialsWrap > div.validationFail input:-moz-placeholder {
   color: #ff4d5d;
 }
-.inputsWrap > div.validationFail svg g,
-.socialsWrap > div.validationFail svg g {
+.inputsWrap > div.validationFail span,
+.socialsWrap > div.validationFail span {
+  background-color: #ff6976;
+}
+.inputsWrap > div.validationFail span svg g,
+.socialsWrap > div.validationFail span svg g,
+.inputsWrap > div.validationFail span svg path,
+.socialsWrap > div.validationFail span svg path {
   fill: #fff;
 }
 .inputsWrap > div input,
