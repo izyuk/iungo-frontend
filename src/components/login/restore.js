@@ -88,10 +88,8 @@ class Restore extends Component {
                 }
             } else {
                 this.setState({
-                    auth: false,
-                    loader: false,
-                    showNotification: true,
-                    notificationType: 'fail',
+                    failed: true,
+                    notification: true,
                     notificationText: 'Password should not be less than 8 characters'
                 });
             }
@@ -162,7 +160,7 @@ class Restore extends Component {
                             </div>
                         </div> :
                         <div className="inputsWrap">
-                            <div className={this.props.notificationType === 'fail' ? 'password validationFail' :'password'}>
+                            <div className={this.state.failed ? 'password validationFail' :'password'}>
                                 <span>
                                     <svg enableBackground="new 0 0 128 128" height="16" id="Layer_1" version="1.1"
                                          viewBox="0 0 128 128" width="16"
@@ -177,7 +175,7 @@ class Restore extends Component {
                                        onBlur={this.fieldsHandler}
                                        placeholder="Your Password"/>
                             </div>
-                            <div className={this.props.notificationType === 'fail' ? 'password confirmField validationFail' : 'password confirmField'}>
+                            <div className={this.state.failed ? 'password confirmField validationFail' : 'password confirmField'}>
                                 <span>
                                     <svg enableBackground="new 0 0 128 128" height="16" id="Layer_1" version="1.1"
                                          viewBox="0 0 128 128" width="16"
