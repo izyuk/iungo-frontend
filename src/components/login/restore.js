@@ -26,7 +26,6 @@ class Restore extends Component {
         else if (this.state.confirmedPassword !== nextState.confirmedPassword) return true;
         else if (this.state.notification !== nextState.notification) return true;
         else if (this.state.notificationText !== nextState.notificationText) return true;
-        else if (this.state.notificationType !== nextState.notificationType) return true;
         else if (this.state.failed !== nextState.failed) return true;
         else return false;
     }
