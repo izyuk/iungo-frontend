@@ -60,6 +60,12 @@ class Preview extends Component {
         else if (this.props.state.methods !== nextProps.state.methods) return true;
         else if (this.props.state.footerContent !== nextProps.state.footerContent) return true;
         else if (this.props.state.successData !== nextProps.state.successData) return true;
+        else if (this.props.state.acceptButton !== nextProps.state.acceptButton) return true;
+        // else if (this.props.state.acceptButtonText !== nextProps.acceptButtonText) return true;
+        // else if (this.props.state.acceptButtonBorder !== nextProps.acceptButtonBorder) return true;
+        // else if (this.props.state.acceptButtonColor !== nextProps.acceptButtonColor) return true;
+        // else if (this.props.state.acceptButtonFont !== nextProps.acceptButtonFont) return true;
+        // else if (this.props.state.acceptButtonSize !== nextProps.acceptButtonSize) return true;
         else if (this.props.state.successMessageComponentStatus !== nextProps.state.successMessageComponentStatus) return true;
         else return false;
     }
@@ -69,7 +75,9 @@ class Preview extends Component {
         let descriptionData = this.props.header.description;
         let footerData = this.props.footerTextData;
         let successData = this.props.successTextData;
-        let {methods, successMessageComponentStatus} = this.props.state;
+        let {methods, successMessageComponentStatus, acceptButton} = this.props.state;
+        console.log(acceptButton);
+        console.log(methods);
         return (
             <div className="previewWrap">
                 <div className={this.props.state.mobile ? "previewMain mobile" : "previewMain"}
@@ -111,7 +119,7 @@ class Preview extends Component {
                                         {descriptionData && descriptionData.text}
                                     </p>
                                 </div>
-                                <Methods methods={methods}/>
+                                <Methods methods={methods} button={acceptButton}/>
                                 <div className="inputsWrap">
                                     <div className="email">
                                 <span>

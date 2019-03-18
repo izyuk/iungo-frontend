@@ -1,17 +1,21 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
+import AgreementButton from './agreementButton';
+
 class LoginMethods extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            facebook: true,
-            google: true,
-            twitter: true
+            facebook: false,
+            google: false,
+            twitter: false,
+            button: false
         };
     }
 
     componentDidMount() {
+        console.log(this.state);
         if (this.props.login_methods.methods !== undefined) {
             let obj = this.props.login_methods.methods, key;
             for (key in obj) {
@@ -27,7 +31,9 @@ class LoginMethods extends Component {
     }
 
     checkBoxHandler = (e) => {
+        console.log(e.currentTarget.tagName);
         let id = e.currentTarget.id;
+        console.log(id);
         this.setState({
             [id]: !this.state[id]
         });
@@ -40,25 +46,31 @@ class LoginMethods extends Component {
             return true
         } else if (this.state.twitter !== nextState.twitter) {
             return true
+        } else if (this.state.button !== nextState.button) {
+            return true
+        } else if (this.state.buttonData !== nextState.buttonData) {
+            return true
         } else {
             return false
         }
     }
 
     componentDidUpdate() {
+        console.log(this.state);
+        console.log('LoginMethods UPDATED', this.state);
         this.props.loginMethods(this.state);
         this.props.methods(this.state);
     }
 
     render() {
         return (
-            <div className="container">
+            <div className="container methodList">
                 <div className="row">
-                    <div className="logoLeft">
-                        <span className="">Methods list</span>
-                    </div>
-                    <div className="right">
-                        <div className="innerCol">
+                    {/*<div className="logoLeft">*/}
+                        {/*<span className="">Methods list</span>*/}
+                    {/*</div>*/}
+                    {/*<div className="right">*/}
+                        {/*<div className="innerCol">*/}
                             <div className="socialsWrap">
                                 <label htmlFor="facebook">
                                     <span className="checkBoxPlace">
@@ -105,9 +117,20 @@ class LoginMethods extends Component {
                                         </span>
                                     </div>
                                 </label>
+
+                                <label htmlFor="button">
+                                    <span className="checkBoxPlace">
+                                        <input type="checkbox" id="button" onChange={this.checkBoxHandler}/>
+                                        <span></span>
+                                        <p>Agreement button</p>
+                                    </span>
+                                </label>
+                                {this.state.button && <AgreementButton acceptButton={this.props.acceptButton}/>}
+                                {/*<AgreementButton acceptButton={this.props.acceptButton}/>*/}
+
                             </div>
-                        </div>
-                    </div>
+                        {/*</div>*/}
+                    {/*</div>*/}
                 </div>
             </div>
         )

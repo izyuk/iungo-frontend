@@ -68,6 +68,7 @@ class ContentTab extends Component {
                     {this.state.visible === 'Login Methods' ?
                         <LoginMethods handler={this.props.handler}
                                       methods={this.props.methods}
+                                      acceptButton={this.props.acceptButton}
                         /> :
                         false}
                 </div>

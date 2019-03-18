@@ -33,9 +33,58 @@ class CaptivePortal extends Component {
             descr: this.props.background_and_logo.header_description_text_data
         } : '',
         methods: {
-            facebook: true,
-            google: true,
-            twitter: true
+            facebook: false,
+            google: false,
+            twitter: false,
+            button: false
+        } || this.props.login_methods.methods,
+        acceptButton: {
+            acceptButtonText: this.props.loginAgreeButton.acceptButtonText || 'Default name',
+            acceptButtonBorder: this.props.loginAgreeButton.acceptButtonBorder || {
+                color: {
+                    rgba: {
+                        r: 85,
+                        g: 133,
+                        b: 237,
+                        a: 1,
+                    },
+                    hex: '#5585ed'
+                },
+                width: 1,
+                type: 'solid',
+                radius: 5,
+            },
+            acceptButtonColor: this.props.loginAgreeButton.acceptButtonColor || {
+                rgba: {
+                    r: 255,
+                    g: 255,
+                    b: 255,
+                    a: 1,
+                },
+                hex: '#ffffff'
+            },
+            acceptButtonFont: this.props.loginAgreeButton.acceptButtonFont || {
+                fontSize: 18,
+                color: {
+                    rgba: {
+                        r: 85,
+                        g: 133,
+                        b: 237,
+                        a: 1,
+                    },
+                    hex: '#5585ed'
+                },
+                alignment:'center',
+                textActions: {
+                    bold: false,
+                    italic: false,
+                    underline: false
+                }
+            },
+            acceptButtonSize: this.props.loginAgreeButton.acceptButtonSize || {
+                width: 145,
+                padding: 10,
+            },
         },
         footerContent: this.props.background_and_logo.footer_description || '',
         successData: this.props.background_and_logo.successMessage || '',
@@ -78,9 +127,12 @@ class CaptivePortal extends Component {
             let query = getPortal(data, id);
 
             this.props.loaderHandler();
+            console.log('findPortal');
             await query.then(res => {
                 const {data} = res;
                 console.log(data);
+                console.log(data.style);
+
                 this.props.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.background.color, data.style.background_and_logo.background.backgroundType);
                 this.props.setLogo(data.logo !== null ? data.logo.externalUrl : '', data.style.background_and_logo.logo.position);
                 this.props.setBorderStyle(data.style.container_border);
@@ -91,7 +143,8 @@ class CaptivePortal extends Component {
                 this.props.setLoginMethods({
                     facebook: data.facebookLogin,
                     google: data.googleLogin,
-                    twitter: data.twitterLogin
+                    twitter: data.twitterLogin,
+                    button: data.acceptTermsLogin
                 });
                 this.props.setFooterData(data.footer, data.style.footer);
                 this.props.setLogoID(data.logo === null ? '' : data.logo.id);
@@ -99,6 +152,19 @@ class CaptivePortal extends Component {
                 this.props.addPortalName(data.name);
                 this.props.setCSS(data.externalCss);
                 this.props.redirectURLChanger(data.successRedirectUrl);
+                this.props.loginAgreeButton(data.acceptButtonText, {
+                    width: data.style.accept_button_size.width,
+                    padding: data.style.accept_button_size.padding,
+                    color: data.style.accept_button_font.color,
+                    backgroundColor: data.style.accept_button_color,
+                    borderColor: data.style.accept_button_border.color,
+                    borderWidth: data.style.accept_button_border.thickness,
+                    borderType: data.style.accept_button_border.type,
+                    borderRadius: data.style.accept_button_border.radius,
+                    fontSize: data.style.accept_button_font.fontSize,
+                    textActions: data.style.accept_button_font.textActions,
+                    alignment: data.style.accept_button_font.alignment
+                });
                 if (data.externalCss) {
                     const STYLE = document.getElementsByTagName('STYLE')[0];
                     if (STYLE) STYLE.parentNode.removeChild(STYLE);
@@ -108,6 +174,12 @@ class CaptivePortal extends Component {
 
                     HEAD.appendChild(style);
                 }
+                const button = {};
+                    button.acceptButtonText = data.acceptButtonText,
+                    button.acceptButtonBorder = data.style.accept_button_border,
+                    button.acceptButtonColor = data.style.accept_button_color,
+                    button.acceptButtonFont = data.style.accept_button_font,
+                    button.acceptButtonSize = data.style.accept_button_size,
                 this.setState({
                     type: 'background',
                     backgroundType: data.style.background_and_logo.background.backgroundType,
@@ -119,12 +191,16 @@ class CaptivePortal extends Component {
                         background: data.style.container_background,
                         size: data.style.container_size
                     },
+                    button: button,
                     headerText: {
                         top: data.header,
                         descr: data.description
                     },
                     methods: {
-                        facebook: data.facebookLogin, google: data.googleLogin, twitter: data.twitterLogin
+                        facebook: data.facebookLogin,
+                        google: data.googleLogin,
+                        twitter: data.twitterLogin,
+                        button: data.acceptTermsLogin
                     },
                     footerContent: data.footer,
                     loader: false,
@@ -187,9 +263,10 @@ class CaptivePortal extends Component {
     };
 
     loginMethods = (data) => {
+        console.log('CP loginMethods', data);
         this.setState({
             methods: data
-        })
+        });
     };
 
     footerTextData = (data) => {
@@ -204,6 +281,13 @@ class CaptivePortal extends Component {
             successData: rest,
             successMessageComponentStatus: status
         })
+    };
+
+    acceptButton = (data) => {
+        this.setState({
+            acceptButton: data
+        });
+        console.log('CP button', data);
     };
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -221,15 +305,22 @@ class CaptivePortal extends Component {
         else if (this.state.portalName !== nextProps.portalName) return true;
         else if (this.state.successData !== nextState.successData) return true;
         else if (this.state.successMessageComponentStatus !== nextState.successMessageComponentStatus) return true;
+        else if (this.state.acceptButton !== nextState.acceptButton) return true;
+        // else if (this.state.acceptButtonText !== nextState.acceptButtonText) return true;
+        // else if (this.state.acceptButtonBorder !== nextState.acceptButtonBorder) return true;
+        // else if (this.state.acceptButtonColor !== nextState.acceptButtonColor) return true;
+        // else if (this.state.acceptButtonFont !== nextState.acceptButtonFont) return true;
+        // else if (this.state.acceptButtonSize !== nextState.acceptButtonSize) return true;
         else return true;
     }
 
     componentDidMount() {
+        console.log(this.props.login_methods);
         this.props.token.token ? this.findPortal(this.props.token.token) : this.findPortal(localStorage.getItem('token'));
     }
 
     componentDidUpdate() {
-        console.log(this.state);
+        console.log('CP updated', this.state);
     }
 
     nameEditor = (e) => {
@@ -245,7 +336,35 @@ class CaptivePortal extends Component {
             this.setState({
                 portalName: e.currentTarget.value
             });
+            this.loaderHandler();
             this.props.addPortalName(e.currentTarget.value);
+            const portalDataToSend = GetBuilderParams(this.props.tabName);
+            await PublishPortalMethodHandler(portalDataToSend, localStorage.getItem('cpID'));
+            console.log(portalDataToSend);
+            // const {type, backgroundType, portalName, footerContent, googleLogin, facebookLogin, twitterLogin, header, description, style:{container_border, container_size, container_background}, alignment, logoName, backgrName} = portalDataToSend;
+            // console.log(type, backgroundType, portalName, footerContent, facebookLogin, googleLogin, twitterLogin, alignment, logoName, backgrName);
+            // this.setState({
+            //     type: type,
+            //     backgroundType: backgroundType,
+            //     backgrName: backgrName,
+            //     logoName: logoName,
+            //     alignment: alignment,
+            //     container: {
+            //         border: container_border,
+            //         background: container_background,
+            //         size: container_size
+            //     },
+            //     headerText: {
+            //         top: header,
+            //         descr: description
+            //     },
+            //     methods: {
+            //         facebook: facebookLogin, google: googleLogin, twitter: twitterLogin
+            //     },
+            //     footerContent: footerContent,
+            //     portalName: portalName
+            // });
+            this.loaderHandler();
         } else {
             e.currentTarget.classList.add('error');
         }
@@ -318,6 +437,7 @@ class CaptivePortal extends Component {
                                  containerHandler={this.containerHandler}
                                  textData={this.contentData}
                                  methods={this.loginMethods}
+                                 acceptButton={this.acceptButton}
                                  footerTextData={this.footerTextData}
                                  successData={this.successTextData}
                                  loaderHandler={this.props.loaderHandler}/>
@@ -337,7 +457,9 @@ export default connect(
         background_and_logo: state,
         token: state.token,
         name: state.name,
-        tabName: state
+        tabName: state,
+        login_methods: state.login_methods,
+        loginAgreeButton: state.loginAgreeButton
     }),
     dispatch => ({
         addPortalName: (name) => {
@@ -381,6 +503,9 @@ export default connect(
         },
         redirectURLChanger: (url) => {
             dispatch({type: 'REDIRECT_URL', payload: url})
+        },
+        loginAgreeButton: (text, styles) => {
+            dispatch({type: 'LOGIN_AGREE_BUTTON', payload: {text, styles}})
         }
     })
 )(CaptivePortal);

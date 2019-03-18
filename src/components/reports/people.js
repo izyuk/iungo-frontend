@@ -87,11 +87,13 @@ class People extends Component {
                     }
                     data = encodeURI(csv);
 
+                    console.log(data);
                     link = document.createElement('a');
                     link.setAttribute('href', data);
                     link.setAttribute('download', filename);
-                    link.click();
+                    console.log(link);
                 }
+                link.click();
             });
         } else {
             this.setState({
