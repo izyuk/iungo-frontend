@@ -2,7 +2,8 @@ const INITIAL = {
     methods: {
         google: false,
         facebook: false,
-        twitter: false
+        twitter: false,
+        button: false
     }
 };
 

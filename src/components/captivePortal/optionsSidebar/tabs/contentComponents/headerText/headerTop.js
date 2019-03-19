@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
-import connect from "react-redux/es/connect/connect";
+import {connect} from "react-redux";
 import Tooltip from 'rc-tooltip';
 import Slider from 'rc-slider';
 

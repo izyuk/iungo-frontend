@@ -10,6 +10,7 @@ export default class CaptivePortalWrap extends Component {
         // currentId: '',
         currentId: '',
         loader: false,
+        // storageCleared: false
         storageCleared: false
     };
 

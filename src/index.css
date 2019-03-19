@@ -425,17 +425,10 @@ body {
 .fieldsWrap {
   width: 100%;
 }
-.inputsWrap,
-.socialsWrap {
-  width: 100%;
-  margin: 24px 0;
-}
-.inputsWrap .email,
-.socialsWrap .email {
+.loginPage .inputsWrap {
   margin-bottom: 16px;
 }
-.inputsWrap > div,
-.socialsWrap > div {
+.contentPlace .inputsWrap > div {
   width: 100%;
   height: 42px;
   border-radius: 2px;
@@ -444,8 +437,7 @@ body {
   position: relative;
   display: flex;
 }
-.inputsWrap > div span,
-.socialsWrap > div span {
+.contentPlace .inputsWrap > div span {
   position: relative;
   display: flex;
   justify-content: center;
@@ -454,6 +446,36 @@ body {
   height: 40px;
   border-radius: 2px;
   background: #dde1ec;
+}
+.socialsWrap .agreement {
+  width: 100%;
+  height: 42px;
+  border-radius: 2px;
+  background-color: #f1f3f8;
+  position: relative;
+  display: flex;
+}
+.socialsWrap .agreement .row > div:first-child {
+  margin-bottom: 16px !important;
+}
+.socialsWrap .agreement .row > span {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 2px;
+  background: #dde1ec;
+}
+.inputsWrap,
+.socialsWrap {
+  width: 100%;
+  margin: 15px 0 0 0;
+}
+.inputsWrap .email,
+.socialsWrap .email {
+  margin-bottom: 16px;
 }
 .inputsWrap > div.validationFail,
 .socialsWrap > div.validationFail {
@@ -555,12 +577,12 @@ body {
   color: #ff4d5d;
   text-align: center;
 }
-.socialsWrap div {
+.previewContainer .socialsWrap div {
   cursor: pointer;
   border: 1px solid transparent;
   border-radius: 2px;
 }
-.socialsWrap div input {
+.previewContainer .socialsWrap div input {
   color: #fff;
   font-family: 'AvenirLTStd-Heavy', sans-serif;
   font-size: 12px;
@@ -568,19 +590,19 @@ body {
   justify-content: center;
   align-items: center;
 }
-.socialsWrap div:first-child {
+.previewContainer .socialsWrap div:first-child {
   margin-bottom: 16px;
 }
-.socialsWrap div.fb {
+.previewContainer .socialsWrap div.fb {
   background-color: #4166b2;
 }
-.socialsWrap div.fb span {
+.previewContainer .socialsWrap div.fb span {
   background: #345497;
 }
-.socialsWrap div.google {
+.previewContainer .socialsWrap div.google {
   background-color: #4285f4;
 }
-.socialsWrap div.google span {
+.previewContainer .socialsWrap div.google span {
   background: #3675de;
 }
 .logoPlace {
@@ -902,6 +924,181 @@ header .container {
   padding: 24px;
   border-bottom: 1px solid #e7e9ef;
   max-width: 100%;
+}
+.options .wrap .dropdown .container.methodList > p {
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  line-height: 2.67;
+  color: #768198;
+  align-self: flex-start;
+}
+.options .wrap .dropdown .container.methodList > p.header {
+  font-weight: bold;
+  color: #071031;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label {
+  flex-direction: row;
+  text-indent: 0;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label div {
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label div input {
+  border-radius: 2px;
+  width: 60px;
+  height: 100%;
+  border: none;
+  display: inline-block;
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  color: #768198;
+  font-weight: unset;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label div:not(:last-child) {
+  margin-bottom: 16px;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label div.fb {
+  background-color: #4166b2;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label div.fb span {
+  background: #345497;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label div.google {
+  background-color: #4285f4;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label div.google span {
+  background: #3675de;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label div.tw {
+  background-color: #1ca1f2;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label div.tw span {
+  background: #1494e1;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label:not(:last-child) {
+  margin-bottom: 15px;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label:not([for=button]) {
+  display: flex;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label .checkBoxPlace {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label .checkBoxPlace input[type=checkbox] {
+  margin-right: 10px;
+  width: 15px;
+  height: 15px;
+  position: relative;
+  opacity: 0;
+  z-index: 1;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label .checkBoxPlace span {
+  display: flex;
+  position: absolute;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #e5e9f2;
+  border-radius: 2px;
+  justify-content: center;
+  align-items: center;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label .checkBoxPlace input:checked + span:before {
+  content: '';
+  display: block;
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border: 1px solid #5585ed;
+  border-radius: 2px;
+  background: #5585ed;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label .checkBoxPlace span + p {
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 14px;
+  font-size: 0.875rem;
+  color: #768198;
+  align-self: flex-start;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label > div > span {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 2px;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap .agreement {
+  flex-direction: column;
+  text-indent: 0;
+  height: auto;
+  background: none;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap .agreement span {
+  background: none;
+  width: auto;
+  justify-content: unset;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap .agreement .colorWrap input {
+  width: 60px;
+  height: 100%;
+  border: none;
+  display: inline-block;
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  color: #768198;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap .agreement input {
+  color: #fff;
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  justify-content: center;
+  align-items: center;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap .agreement > span {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 2px;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap .agreement .row {
+  margin-bottom: 0;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap .agreement button {
+  line-height: 1;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap .agreement > .row .right,
+.options .wrap .dropdown .container.methodList .socialsWrap .agreement > .row .logoLeft,
+.options .wrap .dropdown .container.methodList .socialsWrap .agreement > .row .innerRow,
+.options .wrap .dropdown .container.methodList .socialsWrap .agreement > .row .colorWrap {
+  margin-bottom: 0;
+}
+.options .wrap .dropdown .container.methodList .row .right .innerCol.toRow {
+  display: flex;
+  align-items: center;
+}
+.options .wrap .dropdown .container.methodList .row .right .innerCol.toRow label {
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+}
+.options .wrap .dropdown .container.methodList .row .right .innerCol.toRow label span {
+  width: auto;
+  text-align: right;
+}
+.options .wrap .dropdown .container.methodList .row .right .innerCol.toRow label .inputRadioWrap {
+  margin: 0 0 0 6px;
 }
 .options .wrap .dropdown .container.active {
   display: flex;
@@ -1301,87 +1498,6 @@ header .container {
 .options .wrap .dropdown .container .row .right .innerCol.toRow label .inputRadioWrap {
   margin-left: 10px;
 }
-.options .wrap .dropdown .container .row .right .innerCol .socialsWrap label {
-  flex-direction: row;
-  text-indent: 0;
-}
-.options .wrap .dropdown .container .row .right .innerCol .socialsWrap label .checkBoxPlace {
-  margin-right: 10px;
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-.options .wrap .dropdown .container .row .right .innerCol .socialsWrap label .checkBoxPlace input[type=checkbox] {
-  width: 15px;
-  height: 15px;
-  position: relative;
-  opacity: 0;
-  z-index: 1;
-}
-.options .wrap .dropdown .container .row .right .innerCol .socialsWrap label .checkBoxPlace span {
-  display: flex;
-  position: absolute;
-  left: 0;
-  width: 15px;
-  height: 15px;
-  border: 1px solid #e5e9f2;
-  border-radius: 2px;
-  justify-content: center;
-  align-items: center;
-}
-.options .wrap .dropdown .container .row .right .innerCol .socialsWrap label .checkBoxPlace input:checked + span:before {
-  content: '';
-  display: block;
-  position: relative;
-  width: 7px;
-  height: 7px;
-  border: 1px solid #5585ed;
-  border-radius: 2px;
-  background: #5585ed;
-}
-.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div {
-  cursor: pointer;
-  border: 1px solid transparent;
-  border-radius: 2px;
-}
-.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div input {
-  color: #fff;
-  font-family: 'AvenirLTStd-Heavy', sans-serif;
-  font-size: 12px;
-  font-size: 0.75rem;
-  justify-content: center;
-  align-items: center;
-}
-.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div span {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 2px;
-}
-.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div:not(:last-child) {
-  margin-bottom: 16px;
-}
-.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div.fb {
-  background-color: #4166b2;
-}
-.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div.fb span {
-  background: #345497;
-}
-.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div.google {
-  background-color: #4285f4;
-}
-.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div.google span {
-  background: #3675de;
-}
-.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div.tw {
-  background-color: #1ca1f2;
-}
-.options .wrap .dropdown .container .row .right .innerCol .socialsWrap div.tw span {
-  background: #1494e1;
-}
 .options .wrap .dropdown .hr {
   margin: 20px 0;
   width: 100%;
@@ -1596,12 +1712,12 @@ header .container {
   line-height: 2;
   color: #768198;
 }
-.socialsWrap div {
+.previewContainer .socialsWrap div {
   cursor: pointer;
   border: 1px solid transparent;
   border-radius: 2px;
 }
-.socialsWrap div input {
+.previewContainer .socialsWrap div input {
   color: #fff;
   font-family: 'AvenirLTStd-Heavy', sans-serif;
   font-size: 12px;
@@ -1609,32 +1725,39 @@ header .container {
   justify-content: center;
   align-items: center;
 }
-.socialsWrap div:not(:last-child) {
+.previewContainer .socialsWrap div:not(:last-child) {
   margin-bottom: 16px;
 }
-.socialsWrap div.hidden {
+.previewContainer .socialsWrap div.hidden {
   height: 0;
   overflow: hidden;
   border: 0;
   display: none;
 }
-.socialsWrap div.fb {
+.previewContainer .socialsWrap div.fb {
   background-color: #4166b2;
 }
-.socialsWrap div.fb span {
+.previewContainer .socialsWrap div.fb span {
   background: #345497;
 }
-.socialsWrap div.google {
+.previewContainer .socialsWrap div.google {
   background-color: #4285f4;
 }
-.socialsWrap div.google span {
+.previewContainer .socialsWrap div.google span {
   background: #3675de;
 }
-.socialsWrap div.tw {
+.previewContainer .socialsWrap div.tw {
   background-color: #1ca1f2;
 }
-.socialsWrap div.tw span {
+.previewContainer .socialsWrap div.tw span {
   background: #1494e1;
+}
+.previewContainer .socialsWrap div.accept {
+  background: unset;
+  align-self: center;
+  margin: 0 auto;
+  height: auto;
+  justify-content: center;
 }
 .hotspotDetailsWrap {
   width: 100%;

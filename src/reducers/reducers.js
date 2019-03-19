@@ -14,6 +14,7 @@ import portalName from './portalName';
 import css from './css';
 import redirectURL from './redirectURL';
 import imagesIDs from './imagesIDs';
+import loginAgreeButton from './loginAgreeButton';
 
 
 const allReducers = combineReducers({
@@ -30,7 +31,8 @@ const allReducers = combineReducers({
     name: portalName,
     css: css,
     redirectURL: redirectURL,
-    imagesIDs: imagesIDs
+    imagesIDs: imagesIDs,
+    loginAgreeButton: loginAgreeButton
 });
 
 const rootReducer = (state, action) => {

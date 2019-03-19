@@ -77,7 +77,7 @@ class ContainerSize extends Component {
                 </div>
                 <div className="row">
                     <div className="logoLeft">
-                        <span className="">width</span>
+                        <span className="">Width</span>
                     </div>
                     <div className="right">
                         <div className="inputSelect">

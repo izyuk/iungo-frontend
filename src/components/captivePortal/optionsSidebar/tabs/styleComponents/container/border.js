@@ -17,8 +17,8 @@ class ContentBorder extends Component {
                 hex: '#ffffff'
             },
             type: this.props.container_border.type || 'none',
-            thickness: this.props.container_border.thickness || '1',
-            radius: this.props.container_border.radius || '0'
+            thickness: this.props.container_border.thickness || 1,
+            radius: this.props.container_border.radius || 0
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
