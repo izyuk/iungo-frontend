@@ -7,7 +7,7 @@ module.exports = {
     entry: ['babel-polyfill', __dirname + '/src/index.js'],
     output: {
         path: __dirname + "/build/",
-        filename: "[name].[hash].js",
+        filename: "index.js",
         publicPath: "/"
     },
     module: {
@@ -87,7 +87,6 @@ module.exports = {
             favicon: 'src/static/images/favicon.ico',
             template: "./public/index.html",
             filename: "./index.html",
-            title: 'Caching',
             minify: {
                 collapseWhitespace: true
             }
