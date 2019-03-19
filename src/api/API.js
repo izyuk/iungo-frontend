@@ -1,9 +1,9 @@
 // import sha1 from 'sha1';
 import axios from 'axios';
 
-const AUTH_API = 'https://marketing-auth.iungo.network';
-const BACKEND_API = 'https://marketing-backend.iungo.network';
-const ANALYTICS_API = 'https://marketing-analytics.iungo.network';
+const AUTH_API = 'https://auth.bravofy.com';
+const BACKEND_API = 'https://backend.bravofy.com';
+const ANALYTICS_API = 'https://analytics.bravofy.com';
 
 
 function authChecker(response){
