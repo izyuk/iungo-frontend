@@ -67,7 +67,6 @@ class Restore extends Component {
                 if (confirmedPassword === password) {
                     let query = restorePasswordSendConfirmedPassword(token, password);
                     query.then(res => {
-                        console.log(res);
                         this.setState({
                             notification: true,
                             notificationText: 'Your password was changed successfully',
@@ -109,7 +108,6 @@ class Restore extends Component {
             if (email !== '') {
                 let query = restorePasswordSendUsername(email);
                 query.then(res => {
-                    console.log(res);
                     this.setState({
                         notification: true,
                         notificationText: 'Please check your mail-box for confirmation letter',

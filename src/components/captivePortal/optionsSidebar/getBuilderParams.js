@@ -1,5 +1,6 @@
 export const GetBuilderParams = (storage) => {
     console.log(storage);
+    // debugger;
     const {
         name: {name},
         css: {path},
@@ -12,7 +13,8 @@ export const GetBuilderParams = (storage) => {
         container_size,
         login_methods: {methods},
         imagesIDs,
-        redirectURL: {url}
+        redirectURL: {url},
+        loginAgreeButton: {acceptButtonBorder, acceptButtonColor, acceptButtonFont, acceptButtonSize, acceptButtonText}
     } = storage;
     const portalDataToSend = {
         background: background.type === 'COLOR' ? null : background.url,
@@ -54,12 +56,18 @@ export const GetBuilderParams = (storage) => {
             container_size: {
                 width: container_size.width,
                 padding: container_size.padding
-            }
+            },
+            accept_button_font: acceptButtonFont,
+            accept_button_color: acceptButtonColor,
+            accept_button_size: acceptButtonSize,
+            accept_button_border: acceptButtonBorder
         },
         googleLogin: methods.google,
         facebookLogin: methods.facebook,
         twitterLogin: methods.twitter,
-        successRedirectUrl: url
+        acceptTermsLogin: methods.button,
+        successRedirectUrl: url,
+        acceptButtonText: acceptButtonText
     };
 
     return portalDataToSend;

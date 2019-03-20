@@ -8,9 +8,6 @@ class Palette extends Component{
         this.palette = new React.createRef();
     }
     componentDidMount(){
-        // picker.constructor(this.palette.current, 250, 220);
-
-        console.log(document.querySelector('canvas'));
         let picker = new Picker(document.querySelector('canvas'), 250, 220);
 
         setInterval(() => picker.draw(), 1)

@@ -76,8 +76,6 @@ class Preview extends Component {
         let footerData = this.props.footerTextData;
         let successData = this.props.successTextData;
         let {methods, successMessageComponentStatus, acceptButton} = this.props.state;
-        console.log(acceptButton);
-        console.log(methods);
         return (
             <div className="previewWrap">
                 <div className={this.props.state.mobile ? "previewMain mobile" : "previewMain"}

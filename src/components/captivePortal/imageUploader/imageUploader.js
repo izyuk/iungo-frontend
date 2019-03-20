@@ -54,7 +54,6 @@ class ImageUploader extends Component {
     };
 
     uploadImage = (string, name, base64) => {
-        console.log(BACKEND_API);
         return axios({
             method: 'post',
             headers: {

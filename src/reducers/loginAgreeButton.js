@@ -28,17 +28,14 @@ const INITIAL = {
         },
         radius: 5,
         type: "solid",
-        width: 1
+        thickness: 1
     }
 };
 
 export default function (state = INITIAL, action) {
     switch (action.type) {
         case "LOGIN_AGREE_BUTTON":
-            return Object.assign(state, {
-                text: action.payload.text,
-                styles: action.payload.styles
-            });
+            return Object.assign(state, action.payload);
         default:
             return state
     }

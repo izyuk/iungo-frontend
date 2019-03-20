@@ -1,7 +1,6 @@
 import {createPortal, publishPortal, updatePortal} from "../../../api/API";
 
 export const PublishPortalMethodHandler = async (portalDataToSend, cpID) => {
-    console.log(portalDataToSend);
     const token = localStorage.getItem('token');
     let collectData = {};
     if (cpID) {

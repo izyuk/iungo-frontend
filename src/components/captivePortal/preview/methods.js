@@ -9,15 +9,17 @@ class Methods extends Component {
             button: this.props.button || this.props.loginAgreeButton
         };
         this.socials = React.createRef();
+        this.facebook = React.createRef();
+        this.google = React.createRef();
+        this.twitter = React.createRef();
+        this.button = React.createRef();
     }
 
     methodsHandler = (data) => {
-        console.log('Methods.js => methodsHandler', this.props.methods);
         let obj = data,
             key;
         for (key in obj) {
-            console.log(key);
-            obj[key] ? document.querySelector(`[data-id=${key}]`).classList.remove("hidden") : document.querySelector(`[data-id=${key}]`).classList.add("hidden")
+            obj[key] ? this[key].current.classList.remove("hidden") : this[key].current.classList.add("hidden")
         }
     };
 
@@ -41,15 +43,13 @@ class Methods extends Component {
     }
 
     render() {
-        console.log('button', this.props.button);
         let {
             acceptButtonBorder, acceptButtonColor, acceptButtonFont, acceptButtonSize, acceptButtonText
         } = this.props.button;
         // console.log('button', button);
-        console.log('button', JSON.stringify(this.props.button));
         return (
             <div className="socialsWrap" ref={this.socials}>
-                <div className="fb" data-id="facebook">
+                <div className="fb" ref={this.facebook}>
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                             <path fill="#FFF" fillRule="nonzero"
@@ -57,7 +57,7 @@ class Methods extends Component {
                         </svg>
                     </span>
                     <input type="button" value="Continue with Facebook"/></div>
-                <div className="google" data-id="google">
+                <div className="google" ref={this.google}>
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
                             <path fill="#FFF" fillRule="nonzero"
@@ -65,7 +65,7 @@ class Methods extends Component {
                         </svg>
                     </span>
                     <input type="button" value="Continue with Google"/></div>
-                <div className="tw" data-id="twitter">
+                <div className="tw" ref={this.twitter}>
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14">
                             <path fill="#FFF" fillRule="nonzero"
@@ -73,9 +73,9 @@ class Methods extends Component {
                         </svg>
                     </span>
                     <input type="button" value="Continue with Twitter"/></div>
-                <div className="accept" data-id="button">
+                <div className="accept" ref={this.button}>
                     <button style={{
-                        border: `${acceptButtonBorder.width}px ${acceptButtonBorder.type} rgba(${acceptButtonBorder.color.rgba.r}, ${acceptButtonBorder.color.rgba.g}, ${acceptButtonBorder.color.rgba.b}, ${acceptButtonBorder.color.rgba.a})`,
+                        border: `${acceptButtonBorder.thickness}px ${acceptButtonBorder.type} rgba(${acceptButtonBorder.color.rgba.r}, ${acceptButtonBorder.color.rgba.g}, ${acceptButtonBorder.color.rgba.b}, ${acceptButtonBorder.color.rgba.a})`,
                         borderRadius: acceptButtonBorder.radius,
                         backgroundColor: `rgba(${acceptButtonColor.rgba.r}, ${acceptButtonColor.rgba.g}, ${acceptButtonColor.rgba.b}, ${acceptButtonColor.rgba.a})`,
                         color: `rgba(${acceptButtonFont.color.rgba.r}, ${acceptButtonFont.color.rgba.g}, ${acceptButtonFont.color.rgba.b}, ${acceptButtonFont.color.rgba.a})`,

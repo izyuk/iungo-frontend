@@ -64,7 +64,7 @@ class AgreementButton extends Component {
                 },
                 radius: 5,
                 type: "solid",
-                width: 1
+                thickness: 1
             },
             displayTextColorPicker: false,
             displayBackgroundColorPicker: false,
@@ -75,7 +75,6 @@ class AgreementButton extends Component {
     onSliderChange = (value) => {
         let acceptButtonFont = {...this.state.acceptButtonFont};
         acceptButtonFont.fontSize = value;
-        console.log(acceptButtonFont);
         this.setState({acceptButtonFont});
     };
 
@@ -99,7 +98,7 @@ class AgreementButton extends Component {
         for (let i = 0; i < select.length; i++) {
             let svg = select[i].nextSibling.children[0];
             select[0].value = this.state.acceptButtonBorder.type;
-            select[1].value = this.state.acceptButtonBorder.width;
+            select[1].value = this.state.acceptButtonBorder.thickness;
             select[2].value = this.state.acceptButtonBorder.radius;
             let span = document.createElement('span');
             span.innerText = select[i].options[select[i].selectedIndex].value;
@@ -112,6 +111,8 @@ class AgreementButton extends Component {
     componentDidUpdate() {
         const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, ...rest} = this.state;
         this.props.acceptButton(rest);
+        this.props.buttonInfo(rest);
+        console.log(rest);
     }
 
     handleTextColorClick = () => {
@@ -165,7 +166,6 @@ class AgreementButton extends Component {
         span.innerText = data;
         let state = e.currentTarget.getAttribute('data-select');
         let acceptButtonBorder = {...this.state.acceptButtonBorder};
-        console.log(acceptButtonBorder);
         acceptButtonBorder[state] = state !== 'type' ? parseInt(data) : data;
         console.log(acceptButtonBorder);
         this.setState({acceptButtonBorder});
@@ -500,7 +500,7 @@ class AgreementButton extends Component {
                         <div className="innerRow">
                             <select className="tin"
                                     data-component="ContentBorder"
-                                    data-select="width"
+                                    data-select="thickness"
                                     onChange={this.select}>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -596,6 +596,11 @@ class AgreementButton extends Component {
 export default connect(
     state => ({
         loginAgreeButton: state.loginAgreeButton
+    }),
+    dispatch => ({
+        buttonInfo: (data) => {
+            dispatch({type: 'LOGIN_AGREE_BUTTON', payload: data})
+        }
     })
 )
 (AgreementButton);

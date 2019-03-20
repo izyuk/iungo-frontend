@@ -6,34 +6,34 @@ import AgreementButton from './agreementButton';
 class LoginMethods extends Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.state = this.props.login_methods.methods || {
             facebook: false,
             google: false,
             twitter: false,
             button: false
         };
+        this.facebook = React.createRef();
+        this.google = React.createRef();
+        this.twitter = React.createRef();
+        this.button = React.createRef();
     }
 
     componentDidMount() {
-        console.log(this.state);
         if (this.props.login_methods.methods !== undefined) {
             let obj = this.props.login_methods.methods, key;
             for (key in obj) {
                 this.state[key] = obj[key]
-
             }
         }
         let obj = this.state,
             key;
         for (key in obj) {
-            obj[key] ? document.getElementById(key).checked = true : false
+            obj[key] ? this[key].current.checked = true : false
         }
     }
 
     checkBoxHandler = (e) => {
-        console.log(e.currentTarget.tagName);
         let id = e.currentTarget.id;
-        console.log(id);
         this.setState({
             [id]: !this.state[id]
         });
@@ -47,8 +47,6 @@ class LoginMethods extends Component {
         } else if (this.state.twitter !== nextState.twitter) {
             return true
         } else if (this.state.button !== nextState.button) {
-            return true
-        } else if (this.state.buttonData !== nextState.buttonData) {
             return true
         } else {
             return false
@@ -74,7 +72,7 @@ class LoginMethods extends Component {
                             <div className="socialsWrap">
                                 <label htmlFor="facebook">
                                     <span className="checkBoxPlace">
-                                        <input type="checkbox" id="facebook" onChange={this.checkBoxHandler}/>
+                                        <input ref={this.facebook} type="checkbox" id="facebook" onChange={this.checkBoxHandler}/>
                                         <span></span>
                                     </span>
                                     <div className="fb">
@@ -89,7 +87,7 @@ class LoginMethods extends Component {
                                 </label>
                                 <label htmlFor="google">
                                     <span className="checkBoxPlace">
-                                        <input type="checkbox" id="google" onChange={this.checkBoxHandler}/>
+                                        <input ref={this.google} type="checkbox" id="google" onChange={this.checkBoxHandler}/>
                                         <span></span>
                                     </span>
                                     <div className="google">
@@ -104,7 +102,7 @@ class LoginMethods extends Component {
                                 </label>
                                 <label htmlFor="twitter">
                                     <span className="checkBoxPlace">
-                                        <input type="checkbox" id="twitter" onChange={this.checkBoxHandler}/>
+                                        <input ref={this.twitter} type="checkbox" id="twitter" onChange={this.checkBoxHandler}/>
                                         <span></span>
                                     </span>
                                     <div className="tw">
@@ -120,7 +118,7 @@ class LoginMethods extends Component {
 
                                 <label htmlFor="button">
                                     <span className="checkBoxPlace">
-                                        <input type="checkbox" id="button" onChange={this.checkBoxHandler}/>
+                                        <input ref={this.button} type="checkbox" id="button" onChange={this.checkBoxHandler}/>
                                         <span></span>
                                         <p>Agreement button</p>
                                     </span>
