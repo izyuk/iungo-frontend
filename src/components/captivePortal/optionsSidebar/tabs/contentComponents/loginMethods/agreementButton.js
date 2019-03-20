@@ -403,7 +403,7 @@ class AgreementButton extends Component {
                                     this.state.displayTextColorPicker ?
                                         <div style={popover}>
                                             <div style={cover} onClick={this.handleTextColorClose}/>
-                                            <SketchPicker color={acceptButtonFont.color} onChange={this.handleTextColorChange}/>
+                                            <SketchPicker color={acceptButtonFont.color.rgba} onChange={this.handleTextColorChange}/>
                                         </div>
                                         : null
                                 }
@@ -432,7 +432,7 @@ class AgreementButton extends Component {
                                     this.state.displayBackgroundColorPicker ?
                                         <div style={popover}>
                                             <div style={cover} onClick={this.handleBackgroundColorClose}/>
-                                            <SketchPicker color={acceptButtonColor} onChange={this.handleBackgroundColorChange}/>
+                                            <SketchPicker color={acceptButtonColor.rgba} onChange={this.handleBackgroundColorChange}/>
                                         </div>
                                         : null
                                 }
@@ -484,7 +484,7 @@ class AgreementButton extends Component {
                                     this.state.displayBorderColorPicker ?
                                         <div style={popover}>
                                             <div style={cover} onClick={this.handleBorderColorClose}/>
-                                            <SketchPicker color={acceptButtonBorder.color} onChange={this.handleBorderColorChange}/>
+                                            <SketchPicker color={acceptButtonBorder.color.rgba} onChange={this.handleBorderColorChange}/>
                                         </div>
                                         : null
                                 }

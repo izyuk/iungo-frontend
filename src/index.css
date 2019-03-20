@@ -428,7 +428,8 @@ body {
 .loginPage .inputsWrap {
   margin-bottom: 16px;
 }
-.contentPlace .inputsWrap > div {
+.contentPlace .inputsWrap > div,
+.formWrap .inputsWrap > div {
   width: 100%;
   height: 42px;
   border-radius: 2px;
@@ -437,7 +438,8 @@ body {
   position: relative;
   display: flex;
 }
-.contentPlace .inputsWrap > div span {
+.contentPlace .inputsWrap > div span,
+.formWrap .inputsWrap > div span {
   position: relative;
   display: flex;
   justify-content: center;
@@ -1758,6 +1760,7 @@ header .container {
   margin: 0 auto;
   height: auto;
   justify-content: center;
+  display: flex;
 }
 .hotspotDetailsWrap {
   width: 100%;

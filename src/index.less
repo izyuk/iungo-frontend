@@ -221,7 +221,7 @@
   }
 }
 
-.contentPlace {
+.contentPlace, .formWrap {
   .inputsWrap {
     & > div {
       width: 100%;
@@ -255,8 +255,8 @@
     position: relative;
     display: flex;
     .row {
-      &>div{
-        &:first-child{
+      & > div {
+        &:first-child {
           margin-bottom: 16px !important;
         }
       }
@@ -1588,6 +1588,7 @@ header {
         margin: 0 auto;
         height: auto;
         justify-content: center;
+        display: flex;
       }
     }
   }
