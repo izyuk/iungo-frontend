@@ -27,7 +27,7 @@ class Publish extends Component {
 
     previewPortalMethodHandler = async () => {
         this.props.loaderHandler();
-        const portalDataToSend = GetBuilderParams();
+        const portalDataToSend = GetBuilderParams(this.props.tabName);
         const token = localStorage.getItem('token');
         const query = previewPortal(token, portalDataToSend);
         await query.then(res => {
