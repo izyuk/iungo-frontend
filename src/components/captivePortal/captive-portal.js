@@ -11,90 +11,91 @@ import Publish from './optionsSidebar/publish';
 import {GetBuilderParams} from "./optionsSidebar/getBuilderParams";
 import {PublishPortalMethodHandler} from "./optionsSidebar/publishPortalMethodHandler";
 import Notification from "../additional/notification";
+import portalName from "../../reducers/portalName";
 
 
 class CaptivePortal extends Component {
-    // constructor(props) {
-    //     super(props);
-    state = {
-        mobile: false,
-        backgrName: '',
-        logoName: '',
-        type: '',
-        backgroundType: 'COLOR',
-        alignment: 'center',
-        container: '' || {
-            border: this.props.background_and_logo.container_border,
-            background: this.props.background_and_logo.container_background,
-            size: this.props.background_and_logo.container_size
-        },
-        headerText: (this.props.background_and_logo.header_top_text_data && this.props.background_and_logo.header_description_text_data) ? {
-            top: this.props.background_and_logo.header_top_text_data,
-            descr: this.props.background_and_logo.header_description_text_data
-        } : '',
-        methods: this.props.login_methods.methods || {
-            facebook: false,
-            google: false,
-            twitter: false,
-            button: false
-        },
-        acceptButton: {
-            acceptButtonText: this.props.loginAgreeButton.acceptButtonText || 'Default name',
-            acceptButtonBorder: this.props.loginAgreeButton.acceptButtonBorder || {
-                color: {
+    constructor(props) {
+        super(props);
+        this.state = {
+            mobile: false,
+            backgrName: '',
+            logoName: '',
+            type: '',
+            backgroundType: 'COLOR',
+            alignment: 'center',
+            container: '' || {
+                border: this.props.background_and_logo.container_border,
+                background: this.props.background_and_logo.container_background,
+                size: this.props.background_and_logo.container_size
+            },
+            headerText: (this.props.background_and_logo.header_top_text_data && this.props.background_and_logo.header_description_text_data) ? {
+                top: this.props.background_and_logo.header_top_text_data,
+                descr: this.props.background_and_logo.header_description_text_data
+            } : '',
+            methods: this.props.login_methods.methods || {
+                facebook: false,
+                google: false,
+                twitter: false,
+                button: false
+            },
+            acceptButton: {
+                acceptButtonText: this.props.loginAgreeButton.acceptButtonText || 'Default name',
+                acceptButtonBorder: this.props.loginAgreeButton.acceptButtonBorder || {
+                    color: {
+                        rgba: {
+                            r: 85,
+                            g: 133,
+                            b: 237,
+                            a: 1,
+                        },
+                        hex: '#5585ed'
+                    },
+                    thickness: 1,
+                    type: 'solid',
+                    radius: 5,
+                },
+                acceptButtonColor: this.props.loginAgreeButton.acceptButtonColor || {
                     rgba: {
-                        r: 85,
-                        g: 133,
-                        b: 237,
+                        r: 255,
+                        g: 255,
+                        b: 255,
                         a: 1,
                     },
-                    hex: '#5585ed'
+                    hex: '#ffffff'
                 },
-                thickness: 1,
-                type: 'solid',
-                radius: 5,
-            },
-            acceptButtonColor: this.props.loginAgreeButton.acceptButtonColor || {
-                rgba: {
-                    r: 255,
-                    g: 255,
-                    b: 255,
-                    a: 1,
-                },
-                hex: '#ffffff'
-            },
-            acceptButtonFont: this.props.loginAgreeButton.acceptButtonFont || {
-                fontSize: 18,
-                color: {
-                    rgba: {
-                        r: 85,
-                        g: 133,
-                        b: 237,
-                        a: 1,
+                acceptButtonFont: this.props.loginAgreeButton.acceptButtonFont || {
+                    fontSize: 18,
+                    color: {
+                        rgba: {
+                            r: 85,
+                            g: 133,
+                            b: 237,
+                            a: 1,
+                        },
+                        hex: '#5585ed'
                     },
-                    hex: '#5585ed'
+                    alignment: 'center',
+                    textActions: {
+                        bold: false,
+                        italic: false,
+                        underline: false
+                    }
                 },
-                alignment: 'center',
-                textActions: {
-                    bold: false,
-                    italic: false,
-                    underline: false
-                }
+                acceptButtonSize: this.props.loginAgreeButton.acceptButtonSize || {
+                    width: 145,
+                    padding: 10,
+                },
             },
-            acceptButtonSize: this.props.loginAgreeButton.acceptButtonSize || {
-                width: 145,
-                padding: 10,
-            },
-        },
-        footerContent: this.props.background_and_logo.footer_description || '',
-        successData: this.props.background_and_logo.successMessage || '',
-        successMessageComponentStatus: false,
-        loader: true,
-        portalName: 'Captive Portal Builder'
-    };
+            footerContent: this.props.background_and_logo.footer_description || '',
+            successData: this.props.background_and_logo.successMessage || '',
+            successMessageComponentStatus: false,
+            loader: true,
+            portalName: 'Captive Portal Builder'
+        };
 
-    portalName = React.createRef();
-    // }
+        this.portalName = React.createRef();
+    }
 
     eventHandler = (name, type, backgroundType) => {
         if (type === 'background') {
@@ -129,7 +130,7 @@ class CaptivePortal extends Component {
             this.props.loaderHandler();
             await query.then(res => {
                 const {data} = res;
-
+                console.log(data);
                 this.props.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.background.color, data.style.background_and_logo.background.backgroundType);
                 this.props.setLogo(data.logo !== null ? data.logo.externalUrl : '', data.style.background_and_logo.logo.position);
                 this.props.setBorderStyle(data.style.container_border);
@@ -197,6 +198,7 @@ class CaptivePortal extends Component {
                     loader: false,
                     portalName: data.name
                 });
+                console.log(this.portalName);
                 this.portalName.current.value = data.name;
                 this.props.loaderHandler();
             });
@@ -294,20 +296,12 @@ class CaptivePortal extends Component {
         else if (this.state.successData !== nextState.successData) return true;
         else if (this.state.successMessageComponentStatus !== nextState.successMessageComponentStatus) return true;
         else if (this.state.acceptButton !== nextState.acceptButton) return true;
-        // else if (this.state.acceptButtonText !== nextState.acceptButtonText) return true;
-        // else if (this.state.acceptButtonBorder !== nextState.acceptButtonBorder) return true;
-        // else if (this.state.acceptButtonColor !== nextState.acceptButtonColor) return true;
-        // else if (this.state.acceptButtonFont !== nextState.acceptButtonFont) return true;
-        // else if (this.state.acceptButtonSize !== nextState.acceptButtonSize) return true;
         else return true;
     }
 
     componentDidMount() {
         console.log(this.props.login_methods);
         this.props.token.token ? this.findPortal(this.props.token.token) : this.findPortal(localStorage.getItem('token'));
-    }
-
-    componentDidUpdate() {
     }
 
     nameEditor = (e) => {
@@ -320,60 +314,65 @@ class CaptivePortal extends Component {
             e.currentTarget.classList.remove('active');
             e.currentTarget.classList.remove('error');
             e.currentTarget.setAttribute('disabled', true);
-            this.setState({
-                portalName: e.currentTarget.value
-            });
-            this.loaderHandler();
-            this.props.addPortalName(e.currentTarget.value);
-            const portalDataToSend = GetBuilderParams(this.props.tabName);
-            await PublishPortalMethodHandler(portalDataToSend, localStorage.getItem('cpID'));
-            // const {type, backgroundType, portalName, footerContent, googleLogin, facebookLogin, twitterLogin, header, description, style:{container_border, container_size, container_background}, alignment, logoName, backgrName} = portalDataToSend;
-            // console.log(type, backgroundType, portalName, footerContent, facebookLogin, googleLogin, twitterLogin, alignment, logoName, backgrName);
-            // this.setState({
-            //     type: type,
-            //     backgroundType: backgroundType,
-            //     backgrName: backgrName,
-            //     logoName: logoName,
-            //     alignment: alignment,
-            //     container: {
-            //         border: container_border,
-            //         background: container_background,
-            //         size: container_size
-            //     },
-            //     headerText: {
-            //         top: header,
-            //         descr: description
-            //     },
-            //     methods: {
-            //         facebook: facebookLogin, google: googleLogin, twitter: twitterLogin
-            //     },
-            //     footerContent: footerContent,
-            //     portalName: portalName
-            // });
-            this.loaderHandler();
+            console.log(e.type);
+            if((e.type === 'keydown' && e.keyCode === 13) || e.type === 'blur'){
+                this.props.addPortalName(e.currentTarget.value);
+                const portalDataToSend = GetBuilderParams(this.props.tabName);
+                this.loaderHandler();
+                await PublishPortalMethodHandler(portalDataToSend, localStorage.getItem('cpID'));
+                console.log(portalDataToSend.name);
+                const button = {};
+                button.acceptButtonText = portalDataToSend.acceptButtonText;
+                button.acceptButtonBorder = portalDataToSend.style.accept_button_border;
+                button.acceptButtonColor = portalDataToSend.style.accept_button_color;
+                button.acceptButtonFont = portalDataToSend.style.accept_button_font;
+                button.acceptButtonSize = portalDataToSend.style.accept_button_size;
+                this.setState({
+                    type: 'background',
+                    backgroundType: portalDataToSend.style.background_and_logo.background.backgroundType,
+                    backgrName: (portalDataToSend.background && portalDataToSend.background.externalUrl) ? portalDataToSend.background.externalUrl : portalDataToSend.style.background_and_logo.background.color,
+                    logoName: (portalDataToSend.logo && portalDataToSend.logo.externalUrl) ? portalDataToSend.logo.externalUrl : '',
+                    alignment: portalDataToSend.style.background_and_logo.logo.position,
+                    container: {
+                        border: portalDataToSend.style.container_border,
+                        background: portalDataToSend.style.container_background,
+                        size: portalDataToSend.style.container_size
+                    },
+                    acceptButton: button,
+                    headerText: {
+                        top: portalDataToSend.header,
+                        descr: portalDataToSend.description
+                    },
+                    methods: {
+                        facebook: portalDataToSend.facebookLogin,
+                        google: portalDataToSend.googleLogin,
+                        twitter: portalDataToSend.twitterLogin,
+                        button: portalDataToSend.acceptTermsLogin
+                    },
+                    footerContent: portalDataToSend.footer,
+                    portalName: portalDataToSend.name
+                });
+            }
+            setTimeout(() => {
+                this.setState({
+                    loader: false
+                });
+            }, 2000);
+
         } else {
             e.currentTarget.classList.add('error');
         }
-        //TODO integrate GetBuilderParams PublishPortalMethodHandler onBlur and on Enter key
-        // this.loaderHandler();
-        // const portalDataToSend = GetBuilderParams(this.props.tabName);
-        // const data = await PublishPortalMethodHandler(portalDataToSend, this.state.id);
-        // this.setState(data);
-        // this.loaderHandler();
-        // setTimeout(() => {
-        //     this.setState({notification: false, failed: false});
-        // }, 2000)
     };
 
     render() {
-        if (this.state.loader) {
-            return (
-                <div className="container">
-                    <Loader/>
-                </div>
-            )
-        }
-        else {
+        // if (this.state.loader) {
+        //     return (
+        //         <div className="container">
+        //
+        //         </div>
+        //     )
+        // }
+        // else {
             return (
                 <div className="container">
                     <div className="wrap wrapFix">
@@ -381,11 +380,13 @@ class CaptivePortal extends Component {
                             <div className="wrap wrapFix2">
                                 <div className="info">
                                     <input ref={this.portalName}
+                                           id={'portalName'}
                                            type="text"
                                            placeholder={'Name'}
                                            disabled={false}
                                            onDoubleClick={this.nameEditor}
                                            onBlur={this.setName}
+                                           onKeyDown={this.setName}
                                            className={'active'}/>
                                     <span></span>
                                     <div className="toggles">
@@ -431,9 +432,10 @@ class CaptivePortal extends Component {
                     {this.state.notification &&
                     <Notification type={this.state.failed ? 'fail' : 'info'}
                                   text={!this.state.failed ? `Your Captive Portal was ${this.state.publishedType}` : this.state.publishedType}/>}
+                    {this.state.loader && <Loader/>}
                 </div>
             )
-        }
+        // }
 
     }
 }
