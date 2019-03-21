@@ -310,17 +310,19 @@ class CaptivePortal extends Component {
     };
 
     setName = async (e) => {
-        if (e.currentTarget.value.length > 3) {
-            e.currentTarget.classList.remove('active');
-            e.currentTarget.classList.remove('error');
-            e.currentTarget.setAttribute('disabled', true);
-            console.log(e.type);
-            if ((e.type === 'keydown' && e.keyCode === 13) || e.type === 'blur') {
+        if (e.keyCode === 13 || e.type === 'blur') {
+            if (e.currentTarget.value.length > 3) {
+                e.currentTarget.classList.remove('active');
+                e.currentTarget.classList.remove('error');
+                e.currentTarget.setAttribute('disabled', true);
+                console.log(e.type);
+
                 this.props.addPortalName(e.currentTarget.value);
                 const portalDataToSend = GetBuilderParams(this.props.tabName);
                 this.loaderHandler();
-                await PublishPortalMethodHandler(portalDataToSend, localStorage.getItem('cpID'));
-                console.log(portalDataToSend.name);
+                let data = await PublishPortalMethodHandler(portalDataToSend, localStorage.getItem('cpID'));
+                console.log(data);
+                localStorage.setItem('cpID', data.id);
                 const button = {};
                 button.acceptButtonText = portalDataToSend.acceptButtonText;
                 button.acceptButtonBorder = portalDataToSend.style.accept_button_border;
@@ -352,15 +354,16 @@ class CaptivePortal extends Component {
                     footerContent: portalDataToSend.footer,
                     portalName: portalDataToSend.name
                 });
+                setTimeout(() => {
+                    this.setState({
+                        loader: false
+                    });
+                }, 2000);
             }
-            setTimeout(() => {
-                this.setState({
-                    loader: false
-                });
-            }, 2000);
+            else {
+                e.currentTarget.classList.add('error');
+            }
 
-        } else {
-            e.currentTarget.classList.add('error');
         }
     };
 
