@@ -30,4 +30,6 @@ deploy-to-s3:
   - export AWS_SECRET_ACCESS_KEY=8TJofN7ObIem9tKKw9Cb8MvILs6GZzak1D1bE9ap
   - export AWS_DEFAULT_REGION=eu-west-1
   - aws s3 cp build/ s3://app.bravofy.com/ --recursive
+  - aws s3 cp build/index.js s3://app.bravofy.com/index.js --cache-control 'no-cache'
+  - aws s3 cp build/index.html s3://app.bravofy.com/index.html --cache-control 'no-cache'
 
