@@ -17,7 +17,6 @@ class Enter extends Component {
     state = {
         login: true,
         userData: null,
-        // isValid: false,
         auth: false,
         loader: false,
         showNotification: false,
@@ -83,14 +82,26 @@ class Enter extends Component {
         this.setState({
             login: !this.state.login,
         });
-        // history.pushState({page: e.target.getAttribute('dataurl')}, null, e.target.getAttribute('dataurl'));
-        // history.pushState({page: str}, null, str)
     };
 
     setLoginData = (data) => {
-        this.setState({
-            userData: data
-        });
+        if(data){
+            const emailMask = /[\w_.-]+@[0-9a-z_-]+\.[a-z]{2,5}/i;
+            if(emailMask.test(data.email)){
+                console.log(data);
+                this.setState({
+                    userData: data
+                });
+            } else {
+                this.setState({
+                    auth: false,
+                    showNotification: true,
+                    notificationType: 'fail',
+                    notificationText: 'Please enter a valid email'
+                });
+            }
+        }
+
     };
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -152,7 +163,7 @@ class Enter extends Component {
 
                 <span
                     className={"login"}
-                    onClick={this.sendData}>{login ? 'Login' : 'Register'}</span>
+                    onClick={this.sendData}>{login ? 'Login' : 'Sign up'}</span>
                 {
                     login ?
                         <div className={'question'}>
@@ -169,11 +180,11 @@ class Enter extends Component {
                             </p>
                         </div>
                         :
-                        <p className="question"> Have account?&nbsp;
+                        <p className="question">
                             <button
                             onClick={this.changeOption}
                             type="button"
-                            dataurl="">Log in
+                            dataurl="">Back to login
                             </button>
                         </p>
 

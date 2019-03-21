@@ -26,7 +26,7 @@ class Login extends Component {
 
     componentDidUpdate() {
         let {email, password} = this.state;
-        if (email.length > 0 && password.length > 0) {
+        if (email.length > 0 && password.length >= 8) {
             this.props.setLoginData(this.state)
         } else {
             this.props.setLoginData(null)
@@ -34,12 +34,8 @@ class Login extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            email: this.email.current.value,
-            password: this.password.current.value
-        });
         const {email, password} = this.state;
-        if (email.length > 0 && password.length > 0) {
+        if (email.length > 0 && password.length >= 8) {
             this.props.setLoginData(this.state)
         }
     }
