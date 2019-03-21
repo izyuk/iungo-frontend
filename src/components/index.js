@@ -24,7 +24,7 @@ class Index extends Component {
             </div>
             <Switch>
                 <Route exact path={'/(|register)'} component={Enter}/>
-                <Route exact path={'/restore'} component={Restore}/>
+                <Route exact path={'/reset'} component={Restore}/>
             </Switch>
         </div>
       </div>

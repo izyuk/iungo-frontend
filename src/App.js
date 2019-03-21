@@ -26,7 +26,7 @@ class MainRouter extends Component {
         return (
             <Switch>
                 {this.state.unauthorized && <Redirect to={'/'}/>}
-                <Route exact path="/(|register|restore)" component={Index}/>
+                <Route exact path="/(|register|reset)" component={Index}/>
                 <Route component={Tool}/>
             </Switch>
         )

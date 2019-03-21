@@ -176,7 +176,7 @@ class Restore extends Component {
         const {toPasswordFields} = this.state;
         return (
             <div className="formWrap">
-                <p>Restore your password</p>
+                <p>Reset your password</p>
                 {
                     !toPasswordFields ?
                         <div className="inputsWrap">
@@ -232,7 +232,7 @@ class Restore extends Component {
                 }
                 <span
                     className={"login"}
-                    onClick={this.sendData}>Restore</span>
+                    onClick={this.sendData}>Reset</span>
                 {this.state.notification &&
                 <Notification type={this.state.failed ? 'fail' : 'info'}
                               text={this.state.notificationText}/>}

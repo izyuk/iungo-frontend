@@ -168,7 +168,7 @@ class Enter extends Component {
                     login ?
                         <div className={'question'}>
                             <p className={''}>
-                                <Link to={'/restore'}>Forgot your password?</Link>
+                                <Link to={'/reset'}>Forgot your password?</Link>
                             </p>
                             <p className="">Don't have an account?&nbsp;
                                 <button
