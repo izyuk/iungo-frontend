@@ -15,9 +15,9 @@ import portalName from "../../reducers/portalName";
 
 
 class CaptivePortal extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+    // constructor(props) {
+    //     super(props);
+        state = {
             mobile: false,
             backgrName: '',
             logoName: '',
@@ -94,8 +94,8 @@ class CaptivePortal extends Component {
             portalName: 'Captive Portal Builder'
         };
 
-        this.portalName = React.createRef();
-    }
+        portalName = React.createRef();
+    // }
 
     eventHandler = (name, type, backgroundType) => {
         if (type === 'background') {
@@ -300,8 +300,10 @@ class CaptivePortal extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.login_methods);
         this.props.token.token ? this.findPortal(this.props.token.token) : this.findPortal(localStorage.getItem('token'));
+        if(!localStorage.getItem('cpID')){
+            this.portalName.current.focus();
+        }
     }
 
     nameEditor = (e) => {
