@@ -63,7 +63,7 @@ class Restore extends Component {
         } = this.state;
 
         if (token !== null) {
-            if(confirmedPassword.length >= 8){
+            if (confirmedPassword.length >= 8) {
                 if (confirmedPassword === password) {
                     let query = restorePasswordSendConfirmedPassword(token, password);
                     query.then(res => {
@@ -106,42 +106,62 @@ class Restore extends Component {
 
         } else {
             if (email !== '') {
-                let query = restorePasswordSendUsername(email);
-                query.then(res => {
+                const emailMask = /[\w_.-]+@[0-9a-z_-]+\.[a-z]{2,5}/i;
+                if (emailMask.test(email)) {
+                    let query = restorePasswordSendUsername(email);
+                    query.then(res => {
+                        this.setState({
+                            failed: false,
+                            notification: true,
+                            notificationText: 'If this email address matched a registered account, a password restore email has been sent'
+                        });
+                        setTimeout(() => {
+                            this.setState({notification: false, failed: false, notificationText: ''});
+                            location.href = '/';
+                        }, 3000)
+                    }).catch(e => {
+                        this.setState({
+                            notification: true,
+                            notificationText: e,
+                            failed: true
+                        })
+                    });
+                } else {
                     this.setState({
+                        failed: true,
                         notification: true,
-                        notificationText: 'Please check your mail-box for confirmation letter',
-                        failed: false
+                        notificationText: 'Wrong email format',
                     });
                     setTimeout(() => {
-                        this.setState({notification: false, failed: false, notificationText: ''});
-                        location.href = '/';
-                    }, 3000)
-                }).catch(e => {
-                    this.setState({
-                        notification: true,
-                        notificationText: e,
-                        failed: true
-                    })
-                });
+                        this.setState({notification: false, failed: true, notificationText: ''});
+                    }, 2000)
+                }
+                // let query = restorePasswordSendUsername(email);
+                // query.then(res => {
+                //     this.setState({
+                //         notification: true,
+                //         notificationText: 'If this email address matched a registered account, a password restore email has been sent',
+                //         failed: false
+                //     });
+                //     setTimeout(() => {
+                //         this.setState({notification: false, failed: false, notificationText: ''});
+                //         location.href = '/';
+                //     }, 3000)
+                // }).catch(e => {
+                //     this.setState({
+                //         notification: true,
+                //         notificationText: e,
+                //         failed: true
+                //     })
+                // });
 
             }
         }
 
 
-
     };
 
     componentDidMount() {
-        // this.setState({
-        //     email: '',
-        //     toPasswordFields: false,
-        //     password: '',
-        //     confirmedPassword: '',
-        //     notification: false,
-        //     notificationText: '',
-        //     failed: false
-        // });
         const url_string = window.location.href;
         const url = new URL(url_string);
         const token = url.searchParams.get("token");
@@ -160,7 +180,7 @@ class Restore extends Component {
                 {
                     !toPasswordFields ?
                         <div className="inputsWrap">
-                            <div className={'email'}>
+                            <div className={this.state.failed ? 'email validationFail' : 'email'}>
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14">
                                         <g fill="#8D98B0" fillRule="nonzero">
@@ -177,7 +197,7 @@ class Restore extends Component {
                             </div>
                         </div> :
                         <div className="inputsWrap">
-                            <div className={this.state.failed ? 'password validationFail' :'password'}>
+                            <div className={this.state.failed ? 'password validationFail' : 'password'}>
                                 <span>
                                     <svg enableBackground="new 0 0 128 128" height="16" id="Layer_1" version="1.1"
                                          viewBox="0 0 128 128" width="16"
@@ -192,7 +212,8 @@ class Restore extends Component {
                                        onBlur={this.fieldsHandler}
                                        placeholder="Your Password"/>
                             </div>
-                            <div className={this.state.failed ? 'password confirmField validationFail' : 'password confirmField'}>
+                            <div
+                                className={this.state.failed ? 'password confirmField validationFail' : 'password confirmField'}>
                                 <span>
                                     <svg enableBackground="new 0 0 128 128" height="16" id="Layer_1" version="1.1"
                                          viewBox="0 0 128 128" width="16"

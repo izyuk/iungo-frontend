@@ -18,7 +18,7 @@ class Notification extends Component {
         const {text} = this.props;
         return ReactDOM.createPortal(
             <div ref={this.notification} className={'notification'}>
-                <p>{text}</p>
+                <p style={{textAlign: 'center'}}>{text}</p>
             </div>,
             place
         )
