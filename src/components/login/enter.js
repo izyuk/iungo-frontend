@@ -144,7 +144,7 @@ class Enter extends Component {
             <div className="formWrap">
 
                 {loader && <Loader/>}
-                <p>{login ? 'Welcome to IUNGO Network' : 'Create your account now'}</p>
+                <p>{login ? 'Login' : 'Create your account now'}</p>
                 {login ? <Login setLoginData={this.setLoginData}
                                 notificationType={notificationType}>{this.props.children}</Login> :
                     <Register setLoginData={this.setLoginData}>{this.props.children}</Register>}
@@ -157,13 +157,13 @@ class Enter extends Component {
                     login ?
                         <div className={'question'}>
                             <p className={''}>
-                                <Link to={'/restore'}>Forgot your password ?</Link>
+                                <Link to={'/restore'}>Forgot your password?</Link>
                             </p>
-                            <p className="">Not a member?&nbsp;
+                            <p className="">Don't have an account?&nbsp;
                                 <button
                                     onClick={this.changeOption}
                                     type="button"
-                                    dataurl="register">Sign up now
+                                    dataurl="register">Start Now!
                                 </button>
 
                             </p>
