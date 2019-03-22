@@ -136,24 +136,6 @@ class Restore extends Component {
                         this.setState({notification: false, failed: true, notificationText: ''});
                     }, 2000)
                 }
-                // let query = restorePasswordSendUsername(email);
-                // query.then(res => {
-                //     this.setState({
-                //         notification: true,
-                //         notificationText: 'If this email address matched a registered account, a password restore email has been sent',
-                //         failed: false
-                //     });
-                //     setTimeout(() => {
-                //         this.setState({notification: false, failed: false, notificationText: ''});
-                //         location.href = '/';
-                //     }, 3000)
-                // }).catch(e => {
-                //     this.setState({
-                //         notification: true,
-                //         notificationText: e,
-                //         failed: true
-                //     })
-                // });
 
             }
         }

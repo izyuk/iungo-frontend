@@ -58,7 +58,7 @@ class People extends Component {
         });
     };
     exportCSV = async () => {
-        if(this.state.uuid) {
+        if (this.state.uuid) {
             this.setState({UUIDChecker: false});
             const query = exportHotspotUsersCSV(this.token, this.state.uuid);
             await query.then(res => {
@@ -109,6 +109,12 @@ class People extends Component {
 
     };
 
+    convertingDate = (ISO) => {
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const date = new Date(ISO);
+        return monthNames[date.getMonth()]+' '+date.getDate()+', '+date.getFullYear()+' '+date.getHours()+':'+date.getMinutes()
+    };
+
     render() {
         return (
             <div className={'container'}>
@@ -137,7 +143,8 @@ class People extends Component {
                     <div className="exportCSV">
                         <button type='button' onClick={this.exportCSV}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path fill="#BFC5D2" fillRule="nonzero" d="M17 11.1V11c0-2.8-2.2-5-5-5-2.5 0-4.6 1.8-4.9 4.3-1.8.6-3.1 2.2-3.1 4.2C4 17 6 19 8.5 19H16c2.2 0 4-1.8 4-4 0-1.9-1.3-3.4-3-3.9zM11 13v-3h2v3h3l-4 4-4-4h3z"/>
+                                <path fill="#BFC5D2" fillRule="nonzero"
+                                      d="M17 11.1V11c0-2.8-2.2-5-5-5-2.5 0-4.6 1.8-4.9 4.3-1.8.6-3.1 2.2-3.1 4.2C4 17 6 19 8.5 19H16c2.2 0 4-1.8 4-4 0-1.9-1.3-3.4-3-3.9zM11 13v-3h2v3h3l-4 4-4-4h3z"/>
                             </svg>
                             <span>Export to CSV</span>
                         </button>
@@ -160,8 +167,8 @@ class People extends Component {
                                 <tr key={i}>
                                     {/*<td><input type="checkbox"/></td>*/}
                                     <td>{item.email}</td>
-                                    <td>{item.firstVisit}</td>
-                                    <td>{item.latestVisit}</td>
+                                    <td>{this.convertingDate(item.firstVisit)}</td>
+                                    <td>{this.convertingDate(item.latestVisit)}</td>
                                     <td>{item.totalVisit}</td>
                                 </tr>
                             )
