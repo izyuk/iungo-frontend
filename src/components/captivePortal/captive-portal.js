@@ -313,7 +313,7 @@ class CaptivePortal extends Component {
 
     setName = async (e) => {
         if (e.keyCode === 13 || e.type === 'blur') {
-            if (e.currentTarget.value.length > 3) {
+            if (e.currentTarget.value.length > 0) {
                 e.currentTarget.classList.remove('active');
                 e.currentTarget.classList.remove('error');
                 e.currentTarget.setAttribute('disabled', true);
