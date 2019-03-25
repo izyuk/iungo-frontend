@@ -40,7 +40,7 @@ class CaptivePortal extends Component {
                 button: false
             },
             acceptButton: {
-                acceptButtonText: this.props.loginAgreeButton.acceptButtonText || 'Default name',
+                acceptButtonText: this.props.loginAgreeButton.acceptButtonText || 'Connect',
                 acceptButtonBorder: this.props.loginAgreeButton.acceptButtonBorder || {
                     color: {
                         rgba: {

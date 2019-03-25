@@ -35,7 +35,7 @@ class AgreementButton extends Component {
 
         let storage = this.props.loginAgreeButton;
         this.state = {
-            acceptButtonText: storage.acceptButtonText || 'Default text',
+            acceptButtonText: storage.acceptButtonText || 'Connect',
             acceptButtonColor: storage.acceptButtonColor || {
                 hex: '#ffffff',
                 rgba: {r: 255, g: 255, b: 255, a: 1}
@@ -79,14 +79,6 @@ class AgreementButton extends Component {
     };
 
     shouldComponentUpdate(nextProps, nextState) {
-        // if (this.state.fontSize !== nextState.opacity) {
-        //     return true;
-        // }
-
-        /*else if (this.state.color.hex !== nextState.color.hex) {
-            return true;
-        }*/
-
         if (this.state !== nextState) {
             return true;
         } else
@@ -181,8 +173,8 @@ class AgreementButton extends Component {
 
     emptyFieldCheck = (e) => {
         if(e.currentTarget.value === ''){
-            this.setState({acceptButtonText: 'Default name'});
-            e.currentTarget.value = 'Default name'
+            this.setState({acceptButtonText: 'Connect'});
+            e.currentTarget.value = 'Connect'
         }
     };
 
@@ -251,23 +243,6 @@ class AgreementButton extends Component {
         } = this.state;
         return (
             <div className={'agreement'}>
-                <div className="row">
-                    {/*<button type={'button'} style={{*/}
-                        {/*width: acceptButtonSize.width,*/}
-                        {/*padding: acceptButtonSize.padding,*/}
-                        {/*color: `rgba(${ acceptButtonFont.color.rgba.r }, ${ acceptButtonFont.color.rgba.g }, ${ acceptButtonFont.color.rgba.b }, ${ acceptButtonFont.color.rgba.a })`,*/}
-                        {/*backgroundColor: `rgba(${ acceptButtonColor.rgba.r }, ${ acceptButtonColor.rgba.g }, ${ acceptButtonColor.rgba.b }, ${ acceptButtonColor.rgba.a })`,*/}
-                        {/*border: `${acceptButtonBorder.width}px ${acceptButtonBorder.type} rgba(${acceptButtonBorder.color.rgba.r}, ${acceptButtonBorder.color.rgba.g}, ${acceptButtonBorder.color.rgba.b}, ${acceptButtonBorder.color.rgba.a})`,*/}
-                        {/*borderRadius: acceptButtonBorder.radius,*/}
-                        {/*fontSize: acceptButtonFont.fontSize,*/}
-                        {/*textAlign: acceptButtonFont.alignment,*/}
-                        {/*fontWeight: acceptButtonFont.textActions.bold ? ' bold' : 100,*/}
-                        {/*fontStyle: acceptButtonFont.textActions.italic ? 'italic' : 'unset',*/}
-                        {/*textDecoration: acceptButtonFont.textActions.underline ? 'underline' : 'unset'*/}
-                    {/*}}>*/}
-                        {/*{acceptButtonText}*/}
-                    {/*</button>*/}
-                </div>
                 <div className="row">
                     <div className="logoLeft">
                         <span className="header">Font</span>

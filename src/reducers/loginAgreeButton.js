@@ -1,5 +1,5 @@
 const INITIAL = {
-    acceptButtonText: 'Default name',
+    acceptButtonText: 'Connect',
     acceptButtonColor: {
         hex: "#ffffff",
         rgba: {r: 255, g: 255, b: 255, a: 1}
