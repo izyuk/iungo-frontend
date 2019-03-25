@@ -1271,6 +1271,15 @@ header .container {
 .options .wrap .dropdown .container .row .right .innerRow > span {
   width: 100px;
 }
+.options .wrap .dropdown .container .row .right .innerRow .styleFileName {
+  display: flex;
+  width: 100%;
+}
+.options .wrap .dropdown .container .row .right .innerRow .styleFileName span {
+  color: #768198;
+  text-decoration: underline;
+  cursor: pointer;
+}
 .options .wrap .dropdown .container .row .right .innerRow > input {
   width: 100%;
 }

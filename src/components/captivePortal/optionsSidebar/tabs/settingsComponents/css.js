@@ -4,17 +4,21 @@ import {connect} from 'react-redux';
 class CSS extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
-        this.addStyles = this.addStyles.bind(this);
+        this.state = {
+            isUsed: false
+        };
         this.link = React.createRef();
     }
 
-    addStyles(e) {
+    addStyles = (e) => {
         const STYLE = document.getElementsByTagName('STYLE')[0];
         if (STYLE) STYLE.parentNode.removeChild(STYLE);
         const HEAD = document.getElementsByTagName('HEAD')[0];
         let file = e.currentTarget.files[0];
-
+        console.log(file.name);
+        this.setState({
+            isUsed: true
+        });
         if (file) {
             let style = document.createElement('style');
             let reader = new FileReader();
@@ -31,11 +35,30 @@ class CSS extends Component {
             HEAD.appendChild(style);
 
         }
-    }
+    };
+
+    removeStyles = () => {
+        const STYLE = document.getElementsByTagName('STYLE')[0];
+        if (STYLE) STYLE.parentNode.removeChild(STYLE);
+        this.setState({
+            isUsed: false
+        })
+    };
 
     render() {
         return (
             <div className="container">
+                {this.state.isUsed&&
+                <div className="row">
+                    <div className="right">
+                        <span className="innerRow">
+                            <span className={'styleFileName'}>
+                                External CSS is used. &nbsp;&nbsp; <span onClick={this.removeStyles}>Remove</span>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                }
                 <div className="row">
                     <div className="right">
                         <span className="innerRow">Use your external CSS code</span>
@@ -58,6 +81,7 @@ class CSS extends Component {
                         </span>
                     </div>
                 </div>
+
             </div>
         )
     }
