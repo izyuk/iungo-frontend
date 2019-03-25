@@ -34,6 +34,7 @@ class Login extends Component {
     }
 
     componentDidMount() {
+        this.email.current.focus();
         const {email, password} = this.state;
         if (email.length > 0 && password.length >= 8) {
             this.props.setLoginData(this.state)
