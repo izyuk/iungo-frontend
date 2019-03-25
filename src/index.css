@@ -470,6 +470,9 @@ body {
   border-radius: 2px;
   background: #dde1ec;
 }
+.inputsWrap > div input {
+  padding: 0 10px;
+}
 .inputsWrap,
 .socialsWrap {
   width: 100%;
@@ -532,7 +535,6 @@ body {
   font-weight: bold;
   line-height: 2;
   color: #7a859b;
-  padding: 0 10px;
 }
 .inputsWrap > div input::-webkit-input-placeholder,
 .socialsWrap > div input::-webkit-input-placeholder {
@@ -946,6 +948,7 @@ header .container {
 .options .wrap .dropdown .container.methodList .socialsWrap label {
   flex-direction: row;
   text-indent: 0;
+  display: flex;
 }
 .options .wrap .dropdown .container.methodList .socialsWrap label div {
   cursor: pointer;
@@ -986,9 +989,6 @@ header .container {
 }
 .options .wrap .dropdown .container.methodList .socialsWrap label:not(:last-child) {
   margin-bottom: 15px;
-}
-.options .wrap .dropdown .container.methodList .socialsWrap label:not([for=button]) {
-  display: flex;
 }
 .options .wrap .dropdown .container.methodList .socialsWrap label .checkBoxPlace {
   position: relative;

@@ -274,6 +274,14 @@
   }
 }
 
+.inputsWrap {
+  & > div {
+    input {
+      padding: 0 10px;
+    }
+  }
+}
+
 .inputsWrap,
 .socialsWrap {
   width: 100%;
@@ -327,7 +335,6 @@
       font-weight: bold;
       line-height: 2;
       color: @steel-three;
-      padding: 0 10px;
       &::-webkit-input-placeholder {
         color: @steel-three;
         .font(@avenir-heavy, 12);
@@ -749,6 +756,7 @@ header {
             label {
               flex-direction: row;
               text-indent: 0;
+              display: flex;
               div {
                 cursor: pointer;
                 border: 1px solid @trans;
@@ -786,9 +794,6 @@ header {
               }
               &:not(:last-child) {
                 margin-bottom: 15px;
-              }
-              &:not([for=button]) {
-                display: flex;
               }
               .checkBoxPlace {
                 position: relative;
