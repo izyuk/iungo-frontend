@@ -54,8 +54,6 @@ class LoginMethods extends Component {
     }
 
     componentDidUpdate() {
-        console.log(this.state);
-        console.log('LoginMethods UPDATED', this.state);
         this.props.loginMethods(this.state);
         this.props.methods(this.state);
     }
@@ -64,11 +62,6 @@ class LoginMethods extends Component {
         return (
             <div className="container methodList">
                 <div className="row">
-                    {/*<div className="logoLeft">*/}
-                        {/*<span className="">Methods list</span>*/}
-                    {/*</div>*/}
-                    {/*<div className="right">*/}
-                        {/*<div className="innerCol">*/}
                             <div className="socialsWrap">
                                 <label htmlFor="facebook">
                                     <span className="checkBoxPlace">
@@ -130,11 +123,8 @@ class LoginMethods extends Component {
                                     </div>
                                 </label>
                                 {this.state.button && <AgreementButton acceptButton={this.props.acceptButton}/>}
-                                {/*<AgreementButton acceptButton={this.props.acceptButton}/>*/}
 
                             </div>
-                        {/*</div>*/}
-                    {/*</div>*/}
                 </div>
             </div>
         )

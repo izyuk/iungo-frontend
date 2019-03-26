@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getAllPortals} from "../../api/API";
 import Loader from "../../loader";
-import {Redirect} from "react-router-dom";
+import {Redirect, Link} from "react-router-dom";
 
 class CaptivePortalList extends Component {
     state = {
@@ -11,7 +11,11 @@ class CaptivePortalList extends Component {
     };
 
     getId = (e) => {
-        this.props.setId(e.currentTarget.getAttribute('dataid'))
+        this.props.setId(e.currentTarget.getAttribute('dataid'));
+        console.log(`/captive-portals/${e.currentTarget.getAttribute('datauuid')}`);
+        // return (
+        {/*<Redirect to={`/captive-portals/${e.currentTarget.getAttribute('datauuid')}`}/>*/}
+
     };
 
     findAllPortals = async (data) => {
@@ -21,9 +25,10 @@ class CaptivePortalList extends Component {
             let {data} = res;
             data.map((item, i) => {
                 listArray.push(
-                    <tr key={i} dataid={item.id} onClick={this.getId}>
-                        <td className={"CaptivePortalItem"}>{item.name}</td>
-                        <td>{item.externalStylesUrl}</td>
+                    <tr key={i} dataid={item.id} datauuid={item.uuid} onClick={this.getId}>
+                        <td className={"CaptivePortalItem"}><Link to={`/captive-portals/${item.uuid}`}>{item.name}</Link></td>
+                        <td>----</td>
+                        <td>----</td>
                     </tr>
                 )
 
@@ -227,7 +232,8 @@ class CaptivePortalList extends Component {
                         <thead>
                         <tr>
                             <th>Name</th>
-                            <th>External Styles</th>
+                            <th>Created</th>
+                            <th>Modified</th>
                         </tr>
                         </thead>
                         <tbody>{this.state.list !== '' && this.state.list}</tbody>

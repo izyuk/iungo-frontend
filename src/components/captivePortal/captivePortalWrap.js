@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-
+import {Switch, Route} from 'react-router-dom';
 import CaptivePortal from './captive-portal';
 import CaptivePortalList from './captivePortalList';
 import Loader from "../../loader";
@@ -19,6 +19,7 @@ export default class CaptivePortalWrap extends Component {
             currentId: id
         });
         localStorage.setItem('cpID', id);
+        console.log(id);
     };
 
 
@@ -36,7 +37,7 @@ export default class CaptivePortalWrap extends Component {
         });
     };
 
-    componentDidMount(){
+    componentDidMount() {
         this.setState({
             storageCleared: false
         });
@@ -44,15 +45,23 @@ export default class CaptivePortalWrap extends Component {
 
     render() {
         return (
-            <div className={this.state.currentId !== '' ? "container" : "container"}>
-                {
-                    (this.state.currentId !== '' || this.state.storageCleared) ?
-                        <CaptivePortal settedId={this.state.currentId}
-                                       loaderHandler={this.loaderHandler}/>:
-                        <CaptivePortalList setId={this.idHandler}
-                                           clearing={this.storageCleaningHandler}/>
+            <div className={"container"}>
+                <Switch>
+                    <Route path='/captive-portals/:uuid' render={() => (
+                        <CaptivePortal settedId={this.state.currentId} loaderHandler={this.loaderHandler}/>
+                    )}/>
+                    <Route exact path='/captive-portals' render={() => (
+                        <CaptivePortalList setId={this.idHandler} clearing={this.storageCleaningHandler}/>
+                    )}/>
+                </Switch>
+                {/*{*/}
+                {/*// (this.state.currentId !== '' || this.state.storageCleared) ?*/}
+                {/*<CaptivePortal settedId={this.state.currentId}*/}
+                {/*loaderHandler={this.loaderHandler}/>:*/}
+                {/*<CaptivePortalList setId={this.idHandler}*/}
+                                   {/*clearing={this.storageCleaningHandler}/>*/}
 
-                }
+                {/*}*/}
                 {this.state.loader && <Loader/>}
             </div>
         )

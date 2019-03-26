@@ -6,6 +6,8 @@ import CaptivePortalWrap from '../captivePortal/captivePortalWrap';
 import Hotspot from '../hotspot/hotspot';
 import Reports from '../reports/reports';
 import People from "../reports/people";
+import CaptivePortal from "../captivePortal/captive-portal";
+import CaptivePortalList from "../captivePortal/captivePortalList";
 
 // import createBrowserHistory from "history/createBrowserHistory";
 //
@@ -23,7 +25,6 @@ class MainSide extends Component {
                     <Route exact path="/captive-portals" component={CaptivePortalWrap}/>
                     <Route exact path="/hotspot" component={Hotspot}/>
                     <Route exact path="/reports/people" component={Reports}/>
-                    {/*<Route exact path="/reports/people" component={Reports}/>*/}
                 </Switch>
             </div>
         )
