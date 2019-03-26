@@ -4,7 +4,7 @@ export const PublishPortalMethodHandler = async (portalDataToSend, cpID) => {
     const token = localStorage.getItem('token');
     let collectData = {};
     if (cpID) {
-        const query = (publishPortal(token, portalDataToSend, cpID), updatePortal(token, portalDataToSend, cpID));
+        const query = updatePortal(token, portalDataToSend, cpID);
         await query.then(res => {
             collectData.notification = true;
             collectData.publishedType = 'updated and published';
