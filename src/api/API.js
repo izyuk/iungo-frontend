@@ -182,22 +182,6 @@ export const createPortal = (string, info) => {
 
 export const updatePortal = (string, info, id) => {
     return axios({
-        method: 'post',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `${string}`
-        },
-        url: `${BACKEND_API}/portal/publish/${id}`,
-        mode: 'no-cors',
-        data: info
-    })
-        .then(res => res)
-        .catch(err => authChecker(err.response));
-};
-
-export const publishPortal = (string, info, id) => {
-    return axios({
         method: 'put',
         headers: {
             'Content-Type': 'application/json',

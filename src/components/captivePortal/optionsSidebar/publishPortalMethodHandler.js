@@ -1,4 +1,4 @@
-import {createPortal, publishPortal, updatePortal} from "../../../api/API";
+import {createPortal, updatePortal} from "../../../api/API";
 
 export const PublishPortalMethodHandler = async (portalDataToSend, cpID) => {
     const token = localStorage.getItem('token');
@@ -14,7 +14,7 @@ export const PublishPortalMethodHandler = async (portalDataToSend, cpID) => {
         await createPortal(token, portalDataToSend)
             .then(res => {
                 if (res.status !== 400) {
-                    publishPortal(token, portalDataToSend, res.data.id);
+                    updatePortal(token, portalDataToSend, res.data.id);
                     collectData.id = res.data.id;
                     collectData.notification = true;
                     collectData.publishedType = 'created and published';
