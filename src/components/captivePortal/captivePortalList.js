@@ -140,7 +140,8 @@ class CaptivePortalList extends Component {
                 methods: {
                     google: false,
                     facebook: false,
-                    twitter: false
+                    twitter: false,
+                    button: false
                 }
             },
             footer: {
