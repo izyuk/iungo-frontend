@@ -757,6 +757,10 @@ header {
               flex-direction: row;
               text-indent: 0;
               display: flex;
+              align-items: center;
+              &:not(:last-child) {
+                margin-bottom: 16px;
+              }
               &[for=button]{
                 div{
                   background: @super-dark-blue;
@@ -778,9 +782,7 @@ header {
                   color: @steel;
                   font-weight: unset;
                 }
-                &:not(:last-child) {
-                  margin-bottom: 16px;
-                }
+
                 &.fb {
                   background-color: @french-blue;
                   span {
@@ -799,6 +801,11 @@ header {
                     background: @water-blue;
                   }
                 }
+              }
+              &>span:last-child{
+                margin-left: 10px;
+                .font(@avenir-medium, 12);
+                color: @steel;
               }
               &:not(:last-child) {
                 margin-bottom: 15px;

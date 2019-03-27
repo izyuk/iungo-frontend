@@ -949,6 +949,10 @@ header .container {
   flex-direction: row;
   text-indent: 0;
   display: flex;
+  align-items: center;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label:not(:last-child) {
+  margin-bottom: 16px;
 }
 .options .wrap .dropdown .container.methodList .socialsWrap label[for=button] div {
   background: #092463;
@@ -972,9 +976,6 @@ header .container {
   color: #768198;
   font-weight: unset;
 }
-.options .wrap .dropdown .container.methodList .socialsWrap label div:not(:last-child) {
-  margin-bottom: 16px;
-}
 .options .wrap .dropdown .container.methodList .socialsWrap label div.fb {
   background-color: #4166b2;
 }
@@ -992,6 +993,13 @@ header .container {
 }
 .options .wrap .dropdown .container.methodList .socialsWrap label div.tw span {
   background: #1494e1;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label > span:last-child {
+  margin-left: 10px;
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  color: #768198;
 }
 .options .wrap .dropdown .container.methodList .socialsWrap label:not(:last-child) {
   margin-bottom: 15px;
