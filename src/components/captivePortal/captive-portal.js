@@ -309,17 +309,11 @@ class CaptivePortal extends Component {
     setName = async (e) => {
         if (e.keyCode === 13 || e.type === 'blur') {
             if (e.currentTarget.value.length > 0) {
-                e.currentTarget.classList.remove('active');
-                e.currentTarget.classList.remove('error');
-                e.currentTarget.setAttribute('disabled', true);
-                console.log(e.type);
-
                 this.props.addPortalName(e.currentTarget.value);
                 const portalDataToSend = GetBuilderParams(this.props.tabName);
                 this.loaderHandler();
                 let data = await PublishPortalMethodHandler(portalDataToSend, localStorage.getItem('cpID'));
                 console.log(data);
-                // localStorage.setItem('cpID', data.id);
                 const button = {};
                 button.acceptButtonText = portalDataToSend.acceptButtonText;
                 button.acceptButtonBorder = portalDataToSend.style.accept_button_border;
