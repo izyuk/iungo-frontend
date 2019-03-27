@@ -47,12 +47,12 @@ export default class CaptivePortalWrap extends Component {
         return (
             <div className={"container"}>
                 <Switch>
-                    <Route path='/captive-portals/:uuid' render={() => (
-                        <CaptivePortal settedId={this.state.currentId} loaderHandler={this.loaderHandler}/>
-                    )}/>
-                    <Route exact path='/captive-portals' render={() => (
-                        <CaptivePortalList setId={this.idHandler} clearing={this.storageCleaningHandler}/>
-                    )}/>
+                    {/*<Route exact path='/captive-portals' render={() => (*/}
+                        {/*<CaptivePortalList setId={this.idHandler} clearing={this.storageCleaningHandler}/>*/}
+                    {/*)}/>*/}
+                    {/*<Route path='/captive-portals/:uuid' render={() => (*/}
+                        {/*<CaptivePortal settedId={this.state.currentId} loaderHandler={this.loaderHandler}/>*/}
+                    {/*)}/>*/}
                 </Switch>
                 {/*{*/}
                 {/*// (this.state.currentId !== '' || this.state.storageCleared) ?*/}
