@@ -1918,10 +1918,8 @@ table {
       &.url {
         color: @soft-blue;
       }
-      &:last-child {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      &:not(:first-child) {
+        text-align: center;
       }
     }
     th {

@@ -2079,10 +2079,8 @@ table tr td {
 table tr td.url {
   color: #5585ed;
 }
-table tr td:last-child {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+table tr td:not(:first-child) {
+  text-align: center;
 }
 table tr th {
   font-family: 'AvenirLTStd-Medium', sans-serif;
