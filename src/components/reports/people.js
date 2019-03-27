@@ -63,7 +63,6 @@ class People extends Component {
             this.setState({UUIDChecker: false});
             const query = exportHotspotUsersCSV(this.token, this.state.uuid);
             await query.then(res => {
-                console.log(res.headers);
                 let {data} = res;
                 let filename, link;
                 if (data == '' || data == null) {
@@ -81,18 +80,15 @@ class People extends Component {
                     let csv = data;
                     if (csv == null) return;
 
-                    filename = 'export.csv';
+                    filename = res.request.getResponseHeader('Filename') ? res.request.getResponseHeader('Filename') : 'export.csv';
 
                     if (!csv.match(/^data:text\/csv/i)) {
                         csv = 'data:text/csv;charset=utf-8,' + csv;
                     }
                     data = encodeURI(csv);
-
-                    console.log(data);
                     link = document.createElement('a');
                     link.setAttribute('href', data);
                     link.setAttribute('download', filename);
-                    console.log(link);
                 }
                 link.click();
             });
