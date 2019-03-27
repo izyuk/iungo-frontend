@@ -13,7 +13,6 @@ class CaptivePortalList extends Component {
 
     getId = (e) => {
         this.props.setId(e.currentTarget.getAttribute('dataid'));
-        console.log(`/captive-portals/${e.currentTarget.getAttribute('datauuid')}`);
 
     };
 
@@ -215,6 +214,7 @@ class CaptivePortalList extends Component {
         const STYLE = document.getElementsByTagName('STYLE')[0];
         if (STYLE) STYLE.parentNode.removeChild(STYLE);
         this.props.token.token ? this.findAllPortals(this.props.token.token) : this.findAllPortals(localStorage.getItem('token'));
+        this.addNewCP();
     }
 
     render() {

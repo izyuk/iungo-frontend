@@ -26,7 +26,6 @@ class MainSide extends Component {
             currentId: id
         });
         localStorage.setItem('cpID', id);
-        console.log(id);
     };
 
 

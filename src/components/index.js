@@ -12,7 +12,6 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    // this.loadData = this.loadData.bind(this);s
   }
 
   render() {
