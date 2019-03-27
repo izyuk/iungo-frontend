@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getAllPortals} from "../../api/API";
+import {dateISO} from '../../modules/dateISO'
 import Loader from "../../loader";
 import {Redirect, Link} from "react-router-dom";
 
@@ -27,8 +28,8 @@ class CaptivePortalList extends Component {
                 listArray.push(
                     <tr key={i} dataid={item.id} datauuid={item.uuid} onClick={this.getId}>
                         <td className={"CaptivePortalItem"}><Link to={`/captive-portals/${item.uuid}`}>{item.name}</Link></td>
-                        <td>----</td>
-                        <td>----</td>
+                        <td>{dateISO(item.createdAt)}</td>
+                        <td>{dateISO(item.updatedAt)}</td>
                     </tr>
                 )
 
@@ -233,7 +234,7 @@ class CaptivePortalList extends Component {
                         <tr>
                             <th>Name</th>
                             <th>Created</th>
-                            <th>Modified</th>
+                            <th>Updated</th>
                         </tr>
                         </thead>
                         <tbody>{this.state.list !== '' && this.state.list}</tbody>
