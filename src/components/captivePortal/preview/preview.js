@@ -28,6 +28,7 @@ class Preview extends Component {
         } else if (this.props.state.type === 'logo') {
             this.PreviewMain.current.style.background = this.state.backgroundColor;
         }
+        rest.type === 'none' ? this.ContainerMain.current.style.boxShadow = 'none' : this.ContainerMain.current.style.boxShadow = '0 1px 9px 0 rgba(191, 197, 210, 0.25)';
         this.ContainerMain.current.style.borderWidth = rest.thickness ? `${rest.thickness}px` : false;
         this.ContainerMain.current.style.borderStyle = rest.type ? `${rest.type}` : false;
         this.ContainerMain.current.style.borderColor = color ? `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})` : false;
