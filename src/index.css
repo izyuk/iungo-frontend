@@ -950,6 +950,12 @@ header .container {
   text-indent: 0;
   display: flex;
 }
+.options .wrap .dropdown .container.methodList .socialsWrap label[for=button] div {
+  background: #092463;
+}
+.options .wrap .dropdown .container.methodList .socialsWrap label[for=button] div svg {
+  margin-left: 2px;
+}
 .options .wrap .dropdown .container.methodList .socialsWrap label div {
   cursor: pointer;
   border: 1px solid transparent;

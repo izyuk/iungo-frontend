@@ -757,6 +757,14 @@ header {
               flex-direction: row;
               text-indent: 0;
               display: flex;
+              &[for=button]{
+                div{
+                  background: @super-dark-blue;
+                  svg{
+                    margin-left: 2px;
+                  }
+                }
+              }
               div {
                 cursor: pointer;
                 border: 1px solid @trans;
