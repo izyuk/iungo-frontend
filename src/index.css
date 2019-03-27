@@ -2026,12 +2026,7 @@ header .container {
   height: 14px;
   display: inline-block;
   overflow: hidden;
-}
-.hotspotDetailsWrap .hotspotTable tbody tr td a span {
-  width: auto;
-  height: auto;
-  display: inline-block;
-  overflow: visible;
+  word-break: break-all;
 }
 /*
   Table styles

@@ -33,7 +33,7 @@ class HotspotTable extends Component {
         range.selectNodeContents(NODE);
         selection.removeAllRanges();
         selection.addRange(range);
-
+        console.log(selection.addRange(range));
         try {
             let successful = document.execCommand('copy');
             this.setState({
@@ -77,7 +77,6 @@ class HotspotTable extends Component {
                                     <a href={`${virtualUrl}`}
                                        onClick={this.copyToClipboard}
                                     >
-                                        <span>{`${virtualUrl.slice(0, 20)}...`}</span>
                                         {virtualUrl}
                                     </a>
                                     : ''
