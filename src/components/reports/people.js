@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Notification from "../additional/notification";
 import {getHotspots, getHotspotUsers, exportHotspotUsersCSV} from "../../api/API";
 import {connect} from "react-redux";
+import {dateISO} from '../../modules/dateISO';
 
 class People extends Component {
     state = {
@@ -109,12 +110,6 @@ class People extends Component {
 
     };
 
-    convertingDate = (ISO) => {
-        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        const date = new Date(ISO);
-        return monthNames[date.getMonth()]+' '+date.getDate()+', '+date.getFullYear()+' '+date.getHours()+':'+ (date.getMinutes()<10?'0':'') + date.getMinutes()
-    };
-
     render() {
         return (
             <div className={'container'}>
@@ -167,8 +162,8 @@ class People extends Component {
                                 <tr key={i}>
                                     {/*<td><input type="checkbox"/></td>*/}
                                     <td>{item.email}</td>
-                                    <td>{this.convertingDate(item.firstVisit)}</td>
-                                    <td>{this.convertingDate(item.latestVisit)}</td>
+                                    <td>{dateISO(item.firstVisit)}</td>
+                                    <td>{dateISO(item.latestVisit)}</td>
                                     <td>{item.totalVisit}</td>
                                 </tr>
                             )

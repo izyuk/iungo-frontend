@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getAllPortals} from "../../api/API";
-import {dateISO} from '../../modules/dateISO'
+import {dateISO} from '../../modules/dateISO';
 import Loader from "../../loader";
 import {Redirect, Link} from "react-router-dom";
 
