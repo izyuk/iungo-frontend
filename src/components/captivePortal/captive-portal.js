@@ -145,6 +145,7 @@ class CaptivePortal extends Component {
                 this.props.addPortalName(data.name);
                 this.props.setCSS(data.externalCss);
                 this.props.redirectURLChanger(data.successRedirectUrl);
+                this.props.setSuccessMessageData(data.successMessage, data.style.success_message);
                 this.props.setButtonStyles({
                     acceptButtonText: data.acceptButtonText,
                     acceptButtonSize: data.style.accept_button_size,
@@ -189,6 +190,7 @@ class CaptivePortal extends Component {
                         twitter: data.twitterLogin,
                         button: data.acceptTermsLogin
                     },
+                    successData: data.successMessage || '',
                     footerContent: data.footer,
                     loader: false,
                     portalName: data.name
@@ -478,6 +480,9 @@ export default connect(
         },
         setButtonStyles: (data) => {
             dispatch({type: 'LOGIN_AGREE_BUTTON', payload: data})
+        },
+        setSuccessMessageData: (text, styles) => {
+            dispatch({type: 'SUCCESS_MESSAGE_DESCRIPTION', payload: {text, styles}})
         }
     })
 )(CaptivePortal);

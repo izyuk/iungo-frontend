@@ -123,7 +123,6 @@ class People extends Component {
 
                             </p>
                             <div className="list">
-                                <p onClick={(e) => this.setCPId(e)}>Set nothing</p>
                                 {this.state.list !== '' && this.state.list.map((item, i) => {
                                     return <p onClick={(e) => this.setCPId(e, item.uuid, item.id)} key={i}
                                               dataid={item.id}>{item.name}</p>
