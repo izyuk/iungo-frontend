@@ -191,7 +191,7 @@ class Enter extends Component {
                 }
                 {
                     auth ?
-                        <Redirect to='/dashboard'/>
+                        <Redirect to='/captive-portals'/>
                         : false
                 }
             </div>
