@@ -7,16 +7,12 @@ import {upload_file} from "../../reducers/background_and_logo";
 import {getPortal, createPortal} from "../../api/API";
 import Loader from "../../loader";
 
-import Publish from './optionsSidebar/publish';
 import {GetBuilderParams} from "./optionsSidebar/getBuilderParams";
 import {PublishPortalMethodHandler} from "./optionsSidebar/publishPortalMethodHandler";
 import Notification from "../additional/notification";
-import portalName from "../../reducers/portalName";
 
 
 class CaptivePortal extends Component {
-    // constructor(props) {
-    //     super(props);
         state = {
             mobile: false,
             backgrName: '',
@@ -95,7 +91,6 @@ class CaptivePortal extends Component {
         };
 
         portalName = React.createRef();
-    // }
 
     eventHandler = (name, type, backgroundType) => {
         if (type === 'background') {
@@ -324,7 +319,7 @@ class CaptivePortal extends Component {
                 this.loaderHandler();
                 let data = await PublishPortalMethodHandler(portalDataToSend, localStorage.getItem('cpID'));
                 console.log(data);
-                localStorage.setItem('cpID', data.id);
+                // localStorage.setItem('cpID', data.id);
                 const button = {};
                 button.acceptButtonText = portalDataToSend.acceptButtonText;
                 button.acceptButtonBorder = portalDataToSend.style.accept_button_border;
