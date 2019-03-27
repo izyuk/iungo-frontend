@@ -1894,7 +1894,11 @@ table {
   }
   thead {
     tr {
-      //border-bottom: 1px solid @pale-grey-three;
+      th {
+        &:not(:first-child) {
+          text-align: center;
+        }
+      }
     }
   }
   tr {
@@ -1925,9 +1929,6 @@ table {
     th {
       .font(@avenir-medium, 16);
       color: @dark-grey-blue;
-      &:not(:first-child) {
-        text-align: center;
-      }
     }
   }
 }
