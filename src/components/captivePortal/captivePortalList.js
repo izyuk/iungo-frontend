@@ -14,8 +14,6 @@ class CaptivePortalList extends Component {
     getId = (e) => {
         this.props.setId(e.currentTarget.getAttribute('dataid'));
         console.log(`/captive-portals/${e.currentTarget.getAttribute('datauuid')}`);
-        // return (
-        {/*<Redirect to={`/captive-portals/${e.currentTarget.getAttribute('datauuid')}`}/>*/}
 
     };
 
@@ -225,9 +223,7 @@ class CaptivePortalList extends Component {
                 <div className="wrap wrapFix2">
                     <div className="info">
                         <h3>Captive Portals List</h3>
-                        <button type="button" className={"addNewCPButton"}
-                                onClick={this.addNewCP}>Add new Captive Portal
-                        </button>
+                        <Link onClick={this.addNewCP} className={"addNewCPButton"} to={`/captive-portals/new`}>Add new Captive Portal</Link>
                     </div>
                     <table className={"captivePortalList"} rules="rows">
                         <thead>
