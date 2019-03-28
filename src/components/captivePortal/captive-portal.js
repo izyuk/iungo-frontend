@@ -110,6 +110,7 @@ class CaptivePortal extends Component {
     };
 
     loaderHandler = () => {
+        console.log('tick');
         this.setState({
             loader: !this.state.loader
         });
@@ -122,7 +123,7 @@ class CaptivePortal extends Component {
         if (id !== null) {
             let query = getPortal(data, id);
 
-            this.props.loaderHandler();
+            this.loaderHandler();
             await query.then(res => {
                 const {data} = res;
                 console.log(data);
@@ -197,7 +198,7 @@ class CaptivePortal extends Component {
                 });
                 console.log(this.portalName);
                 this.portalName.current.value = data.name;
-                this.props.loaderHandler();
+                this.loaderHandler();
             });
         }
 
@@ -293,7 +294,9 @@ class CaptivePortal extends Component {
         else if (this.state.successData !== nextState.successData) return true;
         else if (this.state.successMessageComponentStatus !== nextState.successMessageComponentStatus) return true;
         else if (this.state.acceptButton !== nextState.acceptButton) return true;
+        else if (this.state.loader !== nextState.loader) return true;
         else return true;
+
     }
 
     componentDidMount() {
@@ -311,6 +314,7 @@ class CaptivePortal extends Component {
     setName = async (e) => {
         if (e.keyCode === 13 || e.type === 'blur') {
             if (e.currentTarget.value.length > 0) {
+                e.currentTarget.classList.remove('error');
                 this.props.addPortalName(e.currentTarget.value);
                 const portalDataToSend = GetBuilderParams(this.props.tabName);
                 this.loaderHandler();
@@ -415,7 +419,7 @@ class CaptivePortal extends Component {
                              acceptButton={this.acceptButton}
                              footerTextData={this.footerTextData}
                              successData={this.successTextData}
-                             loaderHandler={this.props.loaderHandler}/>
+                             loaderHandler={this.loaderHandler}/>
                 </div>
                 {this.state.notification &&
                 <Notification type={this.state.failed ? 'fail' : 'info'}

@@ -126,9 +126,18 @@ class SuccessActions extends Component {
     };
 
     redirectURLChanges = (e) => {
-        this.setState({
-            redirectURL: e.currentTarget.value
-        })
+        const url = e.currentTarget.value;
+        if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0) {
+            this.setState({
+                redirectURL: e.currentTarget.value
+            })
+        } else {
+            e.currentTarget.value = 'http://'+e.currentTarget.value;
+            this.setState({
+                redirectURL: 'http://'+e.currentTarget.value
+            });
+
+        }
     };
 
     alignment = (e) => {
@@ -287,7 +296,7 @@ class SuccessActions extends Component {
                 <div className="row">
                     <div className="right">
                         <div className="innerRow">
-                                <textarea onChange={this.redirectURLChanges}
+                                <textarea onBlur={this.redirectURLChanges}
                                           defaultValue={this.state.redirectURL}
                                           placeholder="Enter your redirect URL"></textarea>
                         </div>

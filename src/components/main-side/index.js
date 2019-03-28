@@ -28,13 +28,6 @@ class MainSide extends Component {
         localStorage.setItem('cpID', id);
     };
 
-
-    loaderHandler = () => {
-        this.setState({
-            loader: !this.state.loader
-        });
-    };
-
     storageCleaningHandler = () => {
         localStorage.removeItem('cpID');
         this.setState({
@@ -58,7 +51,7 @@ class MainSide extends Component {
                         <CaptivePortalList setId={this.idHandler} clearing={this.storageCleaningHandler}/>
                     )}/>
                     <Route path='/captive-portals/:uuid' render={() => (
-                        <CaptivePortal settedId={this.state.currentId} loaderHandler={this.loaderHandler}/>
+                        <CaptivePortal settedId={this.state.currentId}/>
                     )}/>
                     <Route exact path="/hotspot" component={Hotspot}/>
                     <Route exact path="/reports/people" component={Reports}/>
