@@ -118,12 +118,12 @@ class CaptivePortal extends Component {
 
 
     findPortal = async (data) => {
-
         const id = this.props.settedId ? this.props.settedId : localStorage.getItem('cpID');
         if (id !== null) {
             let query = getPortal(data, id);
 
             this.loaderHandler();
+            console.log('1');
             await query.then(res => {
                 const {data} = res;
                 console.log(data);
@@ -196,9 +196,7 @@ class CaptivePortal extends Component {
                     loader: false,
                     portalName: data.name
                 });
-                console.log(this.portalName);
                 this.portalName.current.value = data.name;
-                this.loaderHandler();
             });
         }
 
