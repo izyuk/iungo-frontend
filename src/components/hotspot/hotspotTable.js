@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Notification from '../additional/notification';
+import {dateISO} from "../../modules/dateISO";
 
 class HotspotTable extends Component {
     state = {
@@ -61,11 +62,12 @@ class HotspotTable extends Component {
                     <th>Address</th>
                     <th>Description</th>
                     <th>Virtual URL</th>
+                    <th>Updated</th>
                 </tr>
                 </thead>
                 <tbody>
                 {hotspotList && hotspotList.map((item, i) => {
-                    const {id, name, address, description, virtualUrl, portal } = item;
+                    const {id, name, address, description, virtualUrl, portal, updatedAt } = item;
                     return (
                         <tr key={i} onClick={(e) => ::this.getDataToEdit(e, id, portal)}>
                             <td>{name}</td>
@@ -81,6 +83,7 @@ class HotspotTable extends Component {
                                     : ''
                                 }
                             </td>
+                            <td>{dateISO(updatedAt)}</td>
                         </tr>
                     )
                 })}
