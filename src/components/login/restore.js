@@ -147,6 +147,7 @@ class Restore extends Component {
         const url_string = window.location.href;
         const url = new URL(url_string);
         const token = url.searchParams.get("token");
+        console.log(token);
         if (token !== null) {
             this.setState({
                 toPasswordFields: true
