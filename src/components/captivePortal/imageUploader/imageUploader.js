@@ -5,7 +5,7 @@ import {getAllImages} from '../../../api/API';
 import Modal from '../../additional/modal';
 import axios from "axios";
 
-const BACKEND_API = 'https://marketing-backend.iungo.network';
+const BACKEND_API = 'https://backend.bravofy.com';
 
 class ImageUploader extends Component {
     state = {
