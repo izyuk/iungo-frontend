@@ -13,84 +13,84 @@ import Notification from "../additional/notification";
 
 
 class CaptivePortal extends Component {
-        state = {
-            mobile: false,
-            backgrName: '',
-            logoName: '',
-            type: '',
-            backgroundType: 'COLOR',
-            alignment: 'center',
-            container: '' || {
-                border: this.props.background_and_logo.container_border,
-                background: this.props.background_and_logo.container_background,
-                size: this.props.background_and_logo.container_size
-            },
-            headerText: (this.props.background_and_logo.header_top_text_data && this.props.background_and_logo.header_description_text_data) ? {
-                top: this.props.background_and_logo.header_top_text_data,
-                descr: this.props.background_and_logo.header_description_text_data
-            } : '',
-            methods: this.props.login_methods.methods || {
-                facebook: false,
-                google: false,
-                twitter: false,
-                button: false
-            },
-            acceptButton: {
-                acceptButtonText: this.props.loginAgreeButton.acceptButtonText || 'Connect',
-                acceptButtonBorder: this.props.loginAgreeButton.acceptButtonBorder || {
-                    color: {
-                        rgba: {
-                            r: 85,
-                            g: 133,
-                            b: 237,
-                            a: 1,
-                        },
-                        hex: '#5585ed'
-                    },
-                    thickness: 1,
-                    type: 'solid',
-                    radius: 5,
-                },
-                acceptButtonColor: this.props.loginAgreeButton.acceptButtonColor || {
+    state = {
+        mobile: false,
+        backgrName: '',
+        logoName: '',
+        type: '',
+        backgroundType: 'COLOR',
+        alignment: 'center',
+        container: '' || {
+            border: this.props.background_and_logo.container_border,
+            background: this.props.background_and_logo.container_background,
+            size: this.props.background_and_logo.container_size
+        },
+        headerText: (this.props.background_and_logo.header_top_text_data && this.props.background_and_logo.header_description_text_data) ? {
+            top: this.props.background_and_logo.header_top_text_data,
+            descr: this.props.background_and_logo.header_description_text_data
+        } : '',
+        methods: this.props.login_methods.methods || {
+            facebook: false,
+            google: false,
+            twitter: false,
+            button: false
+        },
+        acceptButton: {
+            acceptButtonText: this.props.loginAgreeButton.acceptButtonText || 'Connect',
+            acceptButtonBorder: this.props.loginAgreeButton.acceptButtonBorder || {
+                color: {
                     rgba: {
-                        r: 255,
-                        g: 255,
-                        b: 255,
+                        r: 85,
+                        g: 133,
+                        b: 237,
                         a: 1,
                     },
-                    hex: '#ffffff'
+                    hex: '#5585ed'
                 },
-                acceptButtonFont: this.props.loginAgreeButton.acceptButtonFont || {
-                    fontSize: 18,
-                    color: {
-                        rgba: {
-                            r: 85,
-                            g: 133,
-                            b: 237,
-                            a: 1,
-                        },
-                        hex: '#5585ed'
-                    },
-                    alignment: 'center',
-                    textActions: {
-                        bold: false,
-                        italic: false,
-                        underline: false
-                    }
-                },
-                acceptButtonSize: this.props.loginAgreeButton.acceptButtonSize || {
-                    width: 145,
-                    padding: 10,
-                },
+                thickness: 1,
+                type: 'solid',
+                radius: 5,
             },
-            footerContent: this.props.background_and_logo.footer_description || '',
-            successData: this.props.background_and_logo.successMessage || '',
-            successMessageComponentStatus: false,
-            loader: true,
-            portalName: 'Captive Portal Builder'
-        };
+            acceptButtonColor: this.props.loginAgreeButton.acceptButtonColor || {
+                rgba: {
+                    r: 255,
+                    g: 255,
+                    b: 255,
+                    a: 1,
+                },
+                hex: '#ffffff'
+            },
+            acceptButtonFont: this.props.loginAgreeButton.acceptButtonFont || {
+                fontSize: 18,
+                color: {
+                    rgba: {
+                        r: 85,
+                        g: 133,
+                        b: 237,
+                        a: 1,
+                    },
+                    hex: '#5585ed'
+                },
+                alignment: 'center',
+                textActions: {
+                    bold: false,
+                    italic: false,
+                    underline: false
+                }
+            },
+            acceptButtonSize: this.props.loginAgreeButton.acceptButtonSize || {
+                width: 145,
+                padding: 10,
+            },
+        },
+        footerContent: this.props.background_and_logo.footer_description || '',
+        successData: this.props.background_and_logo.successMessage || '',
+        successMessageComponentStatus: false,
+        loader: true,
+        portalName: 'Captive Portal Builder'
+    };
 
-        portalName = React.createRef();
+    portalName = React.createRef();
 
     eventHandler = (name, type, backgroundType) => {
         if (type === 'background') {
@@ -299,7 +299,7 @@ class CaptivePortal extends Component {
 
     componentDidMount() {
         this.props.token.token ? this.findPortal(this.props.token.token) : this.findPortal(localStorage.getItem('token'));
-        if(!localStorage.getItem('cpID')){
+        if (!localStorage.getItem('cpID')) {
             this.portalName.current.focus();
         }
     }
@@ -318,6 +318,9 @@ class CaptivePortal extends Component {
                 this.loaderHandler();
                 let data = await PublishPortalMethodHandler(portalDataToSend, localStorage.getItem('cpID'));
                 console.log(data);
+                if (data.id) {
+                    localStorage.setItem('cpID', data.id)
+                }
                 const button = {};
                 button.acceptButtonText = portalDataToSend.acceptButtonText;
                 button.acceptButtonBorder = portalDataToSend.style.accept_button_border;
