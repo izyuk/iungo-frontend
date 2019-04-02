@@ -254,7 +254,9 @@ body {
   width: 100%;
   margin-bottom: 29px;
 }
-.logo img {
+.logo img,
+.logo svg {
+  max-width: 103px;
   display: block;
   margin: auto;
 }
@@ -615,7 +617,10 @@ body {
 }
 .logoPlace {
   margin-left: 16px;
-  display: flex;
+}
+.logoPlace img {
+  max-width: 103px;
+  display: block;
 }
 header {
   padding: 16px 0;
