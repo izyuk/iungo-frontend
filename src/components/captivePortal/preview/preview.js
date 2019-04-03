@@ -72,6 +72,7 @@ class Preview extends Component {
         let footerData = this.props.footerTextData;
         let successData = this.props.successTextData;
         let {methods, successMessageComponentStatus, acceptButton} = this.props.state;
+        console.log(this.props.state);
         return (
             <div className="previewWrap">
                 <div className={this.props.state.mobile ? "previewMain mobile" : "previewMain"}
@@ -79,9 +80,8 @@ class Preview extends Component {
                     <div className="previewContainer">
                         <div className="header">
                             <div className="previewLogoPlace" style={{justifyContent: this.props.state.alignment}}>
-                                {this.props.state.logoName === '' ?
-                                    <img src={require('../../../static/images/logo.png')} alt=""/> :
-                                    <img src={`${this.props.state.logoName}`} alt=""/>}
+                                {this.props.state.logoName !== '' ?
+                                    <img src={`${this.props.state.logoName}`} alt=""/> : ''}
                             </div>
                         </div>
                         <div className="section"

@@ -11,10 +11,16 @@ class Login extends Component {
     password = React.createRef();
 
     fieldsHandler = (e) => {
-        let type = e.target.getAttribute('type');
-        this.setState({
-            [type]: e.target.value
-        });
+        const type = e.target.getAttribute('type');
+        if (type === 'password') {
+            this.setState({
+                [type]: e.target.value.length < 8 ? '' : e.target.value
+            });
+        } else {
+            this.setState({
+                [type]: e.target.value
+            });
+        }
     };
 
     shouldComponentUpdate(nextProps, nextState) {

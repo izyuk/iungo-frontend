@@ -15,7 +15,7 @@ import Notification from "../additional/notification";
 class CaptivePortal extends Component {
     state = {
         mobile: false,
-        backgrName: '',
+        backgrName: this.props.background_and_logo.background_and_logo.logo.url || '',
         logoName: '',
         type: '',
         backgroundType: 'COLOR',
