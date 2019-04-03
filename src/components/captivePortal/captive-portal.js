@@ -309,7 +309,7 @@ class CaptivePortal extends Component {
         e.currentTarget.removeAttribute('disabled');
     };
 
-    setName = async (e) => {
+    sendData = async (e) => {
         if (e.keyCode === 13) {
             if (e.currentTarget.value.length > 0) {
                 e.currentTarget.classList.remove('error');
@@ -365,6 +365,13 @@ class CaptivePortal extends Component {
         }
     };
 
+    setName = (e) => {
+        if (e.currentTarget.value.length > 0) {
+            e.currentTarget.classList.remove('error');
+            this.props.addPortalName(e.currentTarget.value);
+        }
+    };
+
     render() {
         return (
             <div className="container">
@@ -377,8 +384,9 @@ class CaptivePortal extends Component {
                                        type="text"
                                        placeholder={'Name'}
                                        disabled={false}
+                                       onBlur={this.setName}
                                        onDoubleClick={this.nameEditor}
-                                       onKeyDown={this.setName}
+                                       onKeyDown={this.sendData}
                                        className={'active'}/>
                                 <span></span>
                                 <div className="toggles">
