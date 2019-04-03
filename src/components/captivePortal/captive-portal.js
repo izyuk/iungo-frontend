@@ -310,7 +310,7 @@ class CaptivePortal extends Component {
     };
 
     setName = async (e) => {
-        if (e.keyCode === 13 || e.type === 'blur') {
+        if (e.keyCode === 13) {
             if (e.currentTarget.value.length > 0) {
                 e.currentTarget.classList.remove('error');
                 this.props.addPortalName(e.currentTarget.value);
@@ -378,7 +378,6 @@ class CaptivePortal extends Component {
                                        placeholder={'Name'}
                                        disabled={false}
                                        onDoubleClick={this.nameEditor}
-                                       onBlur={this.setName}
                                        onKeyDown={this.setName}
                                        className={'active'}/>
                                 <span></span>
