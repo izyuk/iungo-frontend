@@ -274,13 +274,6 @@ class HeaderDescription extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="logoLeft">
-                        <span className="descr position">
-                            Alignment
-                        </span>
-                    </div>
-                </div>
             </div>
         )
     }
