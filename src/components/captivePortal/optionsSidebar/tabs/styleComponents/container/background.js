@@ -147,7 +147,8 @@ class ContentBackground extends Component {
                                 <input type="text" value={this.state.color.hex} disabled/>
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${ this.state.color.rgba.r }, ${ this.state.color.rgba.g }, ${ this.state.color.rgba.b }, ${ this.state.color.rgba.a })`}}
-                                        onClick={this.handleClick}></button>
+                                        onClick={this.handleClick}
+                                data-cy="containerBackground"></button>
                                 {this.state.displayColorPicker ? <div style={popover}>
                                     <div style={cover} onClick={this.handleClose}/>
                                     <SketchPicker color={this.state.color.rgba} onChange={this.handleChange}/>

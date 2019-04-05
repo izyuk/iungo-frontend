@@ -81,7 +81,7 @@ class ContainerSize extends Component {
                     </div>
                     <div className="right">
                         <div className="inputSelect">
-                            <input type="number" onBlur={this.valueWidth} defaultValue={this.state.width}/>
+                            <input type="number" data-cy="containerWidth" onBlur={this.valueWidth} defaultValue={this.state.width}/>
                             <select name="" id="" disabled>
                                 <option value="px">px</option>
                                 <option value="%">%</option>

@@ -314,10 +314,12 @@ class CaptivePortal extends Component {
             if (e.currentTarget.value.length > 0) {
                 e.currentTarget.classList.remove('error');
                 this.props.addPortalName(e.currentTarget.value);
+                console.log(this.props.tabName);
                 const portalDataToSend = GetBuilderParams(this.props.tabName);
                 this.loaderHandler();
                 let data = await PublishPortalMethodHandler(portalDataToSend, localStorage.getItem('cpID'));
-                console.log(data);
+                console.log('data', data);
+                console.log('portalDataToSend', portalDataToSend);
                 if (data.id) {
                     localStorage.setItem('cpID', data.id)
                 }
@@ -330,8 +332,8 @@ class CaptivePortal extends Component {
                 this.setState({
                     type: 'background',
                     backgroundType: portalDataToSend.style.background_and_logo.background.backgroundType,
-                    backgrName: (portalDataToSend.background && portalDataToSend.background.externalUrl) ? portalDataToSend.background.externalUrl : portalDataToSend.style.background_and_logo.background.color,
-                    logoName: (portalDataToSend.logo && portalDataToSend.logo.externalUrl) ? portalDataToSend.logo.externalUrl : '',
+                    backgrName: portalDataToSend.background !== null ? portalDataToSend.background.externalUrl : portalDataToSend.style.background_and_logo.background.color,
+                    logoName: portalDataToSend.style.background_and_logo.logo.url !== null ? portalDataToSend.style.background_and_logo.logo.url : '',
                     alignment: portalDataToSend.style.background_and_logo.logo.position,
                     container: {
                         border: portalDataToSend.style.container_border,

@@ -42,6 +42,7 @@ class StyleTab extends Component {
                 <div className="wrap">
                     <div
                         className="head"
+                        data-cy="backgroundDropDown"
                         onClick={this.dropDownHandler}
                         ref={this.Background}>
                         <span>Background</span>
@@ -56,6 +57,7 @@ class StyleTab extends Component {
                 </div>
                 <div className="wrap">
                     <div className="head"
+                         data-cy="logoDropDown"
                          onClick={this.dropDownHandler}>
                         <span>Logo</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -71,6 +73,7 @@ class StyleTab extends Component {
                 <div className="wrap">
                     <div
                         className="head"
+                        data-cy="containerDropDown"
                         onClick={this.dropDownHandler}>
                         <span>Container</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
