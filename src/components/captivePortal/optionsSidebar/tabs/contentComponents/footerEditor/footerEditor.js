@@ -36,6 +36,7 @@ class FooterEditor extends Component {
 
         this.state = {
             displayColorPicker: false,
+            fontInputData: storage.styles.fontSize || 18,
             color: storage.styles.color.rgba || {
                 r: 85,
                 g: 133,
@@ -55,13 +56,27 @@ class FooterEditor extends Component {
     }
 
     onSliderChange = (value) => {
+        if (value < 8) {
+            value = 8;
+        } else if (value > 52) {
+            value = 52
+        } else if (value === '') {
+            value = 8
+        }
         this.setState({
-            fontSize: value
+            fontSize: parseInt(value),
+            fontInputData: parseInt(value)
+        });
+    };
+
+    fontInputHandler = (value) => {
+        this.setState({
+            fontInputData: parseInt(value)
         });
     };
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.fontSize !== nextState.opacity) {
+        if (this.state.fontSize !== nextState.fontSize) {
             return true;
         } /*else if (this.state.color.hex !== nextState.color.hex) {
             return true;
@@ -78,15 +93,15 @@ class FooterEditor extends Component {
     }
 
     componentDidMount() {
-        let {displayColorPicker, text, color, colorHEX, ...rest} = this.state;
+        const {displayColorPicker, fontInputData, text, colorHEX, color, ...rest} = this.state;
         this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
         this.props.footerTextData({color: {rgba: color, hex: colorHEX}, ...rest});
-        let storage = this.props.footer.styles;
+        const storage = this.props.footer.styles;
         document.getElementById((storage ? storage.alignment : 'center')).checked = true;
     }
 
     componentDidUpdate() {
-        let {displayColorPicker, text, color, colorHEX, ...rest} = this.state;
+        const {displayColorPicker, fontInputData, text, colorHEX, color, ...rest} = this.state;
         this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
         this.props.footerTextData({color: {rgba: color, hex: colorHEX}, ...rest});
     }
@@ -237,23 +252,16 @@ class FooterEditor extends Component {
                                         onChange={this.onSliderChange}
                                 />
                             </div>
-                            <div>
-                                <select className="medium" disabled
-                                        onChange={this.select}>
-                                    <option value="10%">10%</option>
-                                    <option value="20%">20%</option>
-                                    <option value="30%">30%</option>
-                                    <option value="40%">40%</option>
-                                    <option value="50%">50%</option>
-                                    <option value="60%">60%</option>
-                                    <option value="70%">70%</option>
-                                    <option value="80%">80%</option>
-                                    <option value="90%">90%</option>
-                                    <option value="100%">100%</option>
-                                </select>
-                                <p className="select medium">
-                                    {`${this.state.fontSize}px`}
-                                </p>
+                            <div className={'select medium'}>
+                                <input className="medium" type={'number'} min={8} max={52} maxLength={2} size={2}
+                                       onChange={(e) => this.fontInputHandler(e.target.value)}
+                                       onBlur={(e) => this.onSliderChange(e.target.value)}
+                                       defaultValue={this.state.fontSize}
+                                       value={this.state.fontInputData}
+                                       data-cy="footerFontSize"/>
+                                <span>
+                                    px
+                                </span>
                             </div>
                         </div>
                     </div>

@@ -54,10 +54,13 @@ class Options extends Component {
                     <ul className="buttonsWrap">
                         <li className="active"
                             onClick={this.tabHandler}
+                            data-cy={'styleTab'}
                             ref={this.Style}>Style
                         </li>
-                        <li onClick={this.tabHandler}>Content</li>
-                        <li onClick={this.tabHandler}>Settings</li>
+                        <li onClick={this.tabHandler}
+                            data-cy={'contentTab'}>Content</li>
+                        <li onClick={this.tabHandler}
+                            data-cy={'settingsTab'}>Settings</li>
                     </ul>
 
                     {this.state.tab === 'Style' ?

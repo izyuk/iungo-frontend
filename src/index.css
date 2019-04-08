@@ -1259,6 +1259,15 @@ header .container {
 .options .wrap .dropdown .container .row .right .innerRow select::-ms-expand {
   display: none;
 }
+.options .wrap .dropdown .container .row .right .innerRow div input,
+.options .wrap .dropdown .container .row .right .innerRow p input {
+  border: none;
+  font-family: 'AvenirLTStd-Medium', sans-serif;
+  font-size: 12px;
+  font-size: 0.75rem;
+  color: #768198;
+}
+.options .wrap .dropdown .container .row .right .innerRow div.select,
 .options .wrap .dropdown .container .row .right .innerRow p.select {
   width: 100%;
   max-width: 105px;
@@ -1276,13 +1285,16 @@ header .container {
   height: 34px;
   user-select: none;
 }
+.options .wrap .dropdown .container .row .right .innerRow div.select.tin,
 .options .wrap .dropdown .container .row .right .innerRow p.select.tin {
   max-width: 60px;
 }
+.options .wrap .dropdown .container .row .right .innerRow div.select.medium,
 .options .wrap .dropdown .container .row .right .innerRow p.select.medium {
   max-width: 76px;
   min-width: 76px;
 }
+.options .wrap .dropdown .container .row .right .innerRow div.select svg,
 .options .wrap .dropdown .container .row .right .innerRow p.select svg {
   position: absolute;
   right: 0;

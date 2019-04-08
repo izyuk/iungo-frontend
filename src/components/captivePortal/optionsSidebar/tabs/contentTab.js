@@ -43,6 +43,7 @@ class ContentTab extends Component {
                 <div className="wrap">
                     <div
                         className="head"
+                        data-cy="dropDownHeader"
                         onClick={this.dropDownHandler}
                         ref={this.Header}>
                         <span>Header</span>
@@ -58,6 +59,7 @@ class ContentTab extends Component {
                 </div>
                 <div className="wrap">
                     <div className="head"
+                         data-cy="dropDownLoginMethods"
                          onClick={this.dropDownHandler}>
                         <span>Login Methods</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -75,6 +77,7 @@ class ContentTab extends Component {
                 <div className="wrap">
                     <div
                         className="head"
+                        data-cy="dropDownFooter"
                         onClick={this.dropDownHandler}>
                         <span>Footer</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -91,6 +94,7 @@ class ContentTab extends Component {
                 <div className="wrap">
                     <div
                         className="head"
+                        data-cy="dropDownSuccessActions"
                         onClick={this.dropDownHandler}>
                         <span>Success Actions</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">

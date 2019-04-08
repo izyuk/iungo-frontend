@@ -35,6 +35,7 @@ class HeaderTop extends Component {
         let storage = this.props.header.top;
         this.state = {
             displayColorPicker: false,
+            fontInputData: storage.styles.fontSize || 18,
             colorHEX: storage.styles.color.hex || '#5585ed',
             color: storage.styles.color.rgba || {
                 r: 85,
@@ -54,14 +55,28 @@ class HeaderTop extends Component {
 
     }
 
-    onSliderChange = (value) =>{
+    onSliderChange = (value) => {
+        if (value < 8) {
+            value = 8;
+        } else if (value > 52) {
+            value = 52
+        } else if (value === '') {
+            value = 8
+        }
         this.setState({
-            fontSize: value
+            fontSize: parseInt(value),
+            fontInputData: parseInt(value)
+        });
+    };
+
+    fontInputHandler = (value) => {
+        this.setState({
+            fontInputData: parseInt(value)
         });
     };
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.fontSize !== nextState.opacity) {
+        if (this.state.fontSize !== nextState.fontSize) {
             return true;
         } else if (this.state.colorHEX !== nextState.colorHEX) {
             return true;
@@ -78,15 +93,15 @@ class HeaderTop extends Component {
     }
 
     componentDidMount() {
-        let {displayColorPicker, text, colorHEX, color, ...rest} = this.state;
+        const {displayColorPicker, fontInputData, text, colorHEX, color, ...rest} = this.state;
         this.props.textData(text, {color:  {rgba: color, hex: colorHEX}, ...rest});
         this.props.handler({color:  {rgba: color, hex: colorHEX}, ...rest});
-        let storage = this.props.header.top;
+        const storage = this.props.header.top;
         document.getElementById((storage ? storage.styles.alignment : 'center')+'2').checked = true;
     }
 
     componentDidUpdate() {
-        let {displayColorPicker, text, colorHEX, color, ...rest} = this.state;
+        const {displayColorPicker, fontInputData, text, colorHEX, color, ...rest} = this.state;
         this.props.textData(text, {color:  {rgba: color, hex: colorHEX}, ...rest});
         this.props.handler({color:  {rgba: color, hex: colorHEX}, ...rest});
     }
@@ -158,16 +173,19 @@ class HeaderTop extends Component {
                             <div className="textActions">
                                 <button onClick={this.textActionsHandler}
                                         className={this.state.textActions.bold ? "active" : ''}
+                                        data-cy="headerTopBold"
                                         type="button"
                                         data-type="bold">B
                                 </button>
                                 <button onClick={this.textActionsHandler}
                                         className={this.state.textActions.italic ? "active" : ''}
+                                        data-cy="headerTopItalic"
                                         type="button"
                                         data-type="italic">i
                                 </button>
                                 <button onClick={this.textActionsHandler}
                                         className={this.state.textActions.underline ? "active" : ''}
+                                        data-cy="headerTopUnderline"
                                         type="button"
                                         data-type="underline">U
                                 </button>
@@ -175,26 +193,26 @@ class HeaderTop extends Component {
                             <div className="innerCol toRow">
                                 <label htmlFor="left2">Left
                                     <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='left2' data-id='left' type="radio" name='alignment2'/>
+                                        <input onChange={this.alignment} id='left2' data-id='left' type="radio" name='alignment2' data-cy="headerTopLeft"/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
                                 <label htmlFor="center2">Center
                                     <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='center2' data-id='center' type="radio" name='alignment2'/>
+                                        <input onChange={this.alignment} id='center2' data-id='center' type="radio" name='alignment2' data-cy="headerTopCenter"/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
                                 <label htmlFor="right2">Right
                                     <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='right2' data-id='right' type="radio" name='alignment2'/>
+                                        <input onChange={this.alignment} id='right2' data-id='right' type="radio" name='alignment2' data-cy="headerTopRight"/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
                             </div>
                         </div>
                         <div className="innerRow">
-                            <textarea onChange={this.textChanges} defaultValue={this.state.text}></textarea>
+                            <textarea onChange={this.textChanges} data-cy="headerTopText" defaultValue={this.state.text}></textarea>
                         </div>
                     </div>
                 </div>
@@ -235,23 +253,16 @@ class HeaderTop extends Component {
                                         onChange={this.onSliderChange}
                                 />
                             </div>
-                            <div>
-                                <select className="medium" disabled
-                                        onChange={this.select}>
-                                    <option value="10%">10%</option>
-                                    <option value="20%">20%</option>
-                                    <option value="30%">30%</option>
-                                    <option value="40%">40%</option>
-                                    <option value="50%">50%</option>
-                                    <option value="60%">60%</option>
-                                    <option value="70%">70%</option>
-                                    <option value="80%">80%</option>
-                                    <option value="90%">90%</option>
-                                    <option value="100%">100%</option>
-                                </select>
-                                <p className="select medium">
-                                    {`${this.state.fontSize}px`}
-                                </p>
+                            <div className={'select medium'}>
+                                <input className="medium" type={'number'} min={8} max={52} maxLength={2} size={2}
+                                       onChange={(e) => this.fontInputHandler(e.target.value)}
+                                       onBlur={(e) => this.onSliderChange(e.target.value)}
+                                       defaultValue={this.state.fontSize}
+                                       value={this.state.fontInputData}
+                                       data-cy="headerTopFontSize"/>
+                                <span>
+                                    px
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -266,7 +277,8 @@ class HeaderTop extends Component {
                                 <input type="text" value={this.state.colorHEX} disabled/>
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
-                                        onClick={this.handleClick}></button>
+                                        onClick={this.handleClick}
+                                data-cy="headerTopColor"></button>
                                 {this.state.displayColorPicker ? <div style={popover}>
                                     <div style={cover} onClick={this.handleClose}/>
                                     <SketchPicker color={this.state.color} onChange={this.handleChange}/>
