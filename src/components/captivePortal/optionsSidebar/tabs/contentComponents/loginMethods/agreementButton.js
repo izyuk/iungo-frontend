@@ -35,6 +35,7 @@ class AgreementButton extends Component {
 
         let storage = this.props.loginAgreeButton;
         this.state = {
+            fontInputData: storage.acceptButtonFont.fontSize || 18,
             acceptButtonText: storage.acceptButtonText || 'Connect',
             acceptButtonColor: storage.acceptButtonColor || {
                 hex: '#ffffff',
@@ -73,13 +74,33 @@ class AgreementButton extends Component {
     }
 
     onSliderChange = (value) => {
+        if (value < 8) {
+            value = 8;
+        } else if (value > 52) {
+            value = 52
+        } else if (value === '') {
+            value = 8
+        }
         let acceptButtonFont = {...this.state.acceptButtonFont};
-        acceptButtonFont.fontSize = value;
+        acceptButtonFont.fontSize = parseInt(value);
+
         this.setState({acceptButtonFont});
+
+        this.setState({
+            fontInputData: parseInt(value)
+        });
+    };
+
+    fontInputHandler = (value) => {
+        this.setState({
+            fontInputData: parseInt(value)
+        });
     };
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state !== nextState) {
+            return true;
+        } else if (this.state.fontInputData !== nextState.fontInputData) {
             return true;
         } else
             return false;
@@ -96,12 +117,12 @@ class AgreementButton extends Component {
             span.innerText = select[i].options[select[i].selectedIndex].value;
             select[i].nextSibling.insertBefore(span, svg);
         }
-        const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, ...rest} = this.state;
+        const {fontInputData, displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, ...rest} = this.state;
         this.props.acceptButton(rest);
     }
 
     componentDidUpdate() {
-        const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, ...rest} = this.state;
+        const {fontInputData, displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, ...rest} = this.state;
         this.props.acceptButton(rest);
         this.props.buttonInfo(rest);
         console.log(rest);
@@ -172,7 +193,7 @@ class AgreementButton extends Component {
     };
 
     emptyFieldCheck = (e) => {
-        if(e.currentTarget.value === ''){
+        if (e.currentTarget.value === '') {
             this.setState({acceptButtonText: 'Connect'});
             e.currentTarget.value = 'Connect'
         }
@@ -254,16 +275,19 @@ class AgreementButton extends Component {
                             <div className="textActions">
                                 <button onClick={this.textActionsHandler}
                                         className={acceptButtonFont.textActions.bold ? "active" : ''}
+                                        data-cy="connectButtonBold"
                                         type="button"
                                         data-type="bold">B
                                 </button>
                                 <button onClick={this.textActionsHandler}
                                         className={acceptButtonFont.textActions.italic ? "active" : ''}
+                                        data-cy="connectButtonItalic"
                                         type="button"
                                         data-type="italic">i
                                 </button>
                                 <button onClick={this.textActionsHandler}
                                         className={acceptButtonFont.textActions.underline ? "active" : ''}
+                                        data-cy="connectButtonUnderline"
                                         type="button"
                                         data-type="underline">U
                                 </button>
@@ -273,7 +297,7 @@ class AgreementButton extends Component {
                                     <span>Left</span>
                                     <div className="inputRadioWrap">
                                         <input onChange={this.alignment} id='left' data-id='left' type="radio"
-                                               name='alignment'/>
+                                               name='alignment' data-cy="connectButtonLeft"/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
@@ -281,7 +305,7 @@ class AgreementButton extends Component {
                                     <span>Center</span>
                                     <div className="inputRadioWrap">
                                         <input onChange={this.alignment} id='center' data-id='center' type="radio"
-                                               name='alignment'/>
+                                               name='alignment' data-cy="connectButtonCenter"/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
@@ -289,7 +313,7 @@ class AgreementButton extends Component {
                                     <span>Right</span>
                                     <div className="inputRadioWrap">
                                         <input onChange={this.alignment} id='right' data-id='right' type="radio"
-                                               name='alignment'/>
+                                               name='alignment' data-cy="connectButtonRight"/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
@@ -298,9 +322,10 @@ class AgreementButton extends Component {
                         <div className="innerRow">
                             <input type={'text'}
                                    style={{maxWidth: '100%'}}
-                                      onChange={this.textChanges}
-                                      onBlur={this.emptyFieldCheck}
-                                      defaultValue={acceptButtonText} />
+                                   onChange={this.textChanges}
+                                   onBlur={this.emptyFieldCheck}
+                                   defaultValue={acceptButtonText}
+                                   data-cy="connectButtonText"/>
                         </div>
                     </div>
                 </div>
@@ -314,6 +339,7 @@ class AgreementButton extends Component {
                                 <Slider min={8}
                                         max={52}
                                         defaultValue={parseInt(acceptButtonFont.fontSize)}
+                                        value={parseInt(acceptButtonFont.fontSize)}
                                         handle={handle}
                                         trackStyle={{
                                             backgroundColor: '#5585ED',
@@ -341,23 +367,16 @@ class AgreementButton extends Component {
                                         onChange={this.onSliderChange}
                                 />
                             </div>
-                            <div>
-                                <select className="medium" disabled
-                                        onChange={this.select}>
-                                    <option value="10%">10%</option>
-                                    <option value="20%">20%</option>
-                                    <option value="30%">30%</option>
-                                    <option value="40%">40%</option>
-                                    <option value="50%">50%</option>
-                                    <option value="60%">60%</option>
-                                    <option value="70%">70%</option>
-                                    <option value="80%">80%</option>
-                                    <option value="90%">90%</option>
-                                    <option value="100%">100%</option>
-                                </select>
-                                <p className="select medium">
-                                    {`${acceptButtonFont.fontSize}px`}
-                                </p>
+                            <div className={'select medium'}>
+                                <input className="medium" type={'number'} min={8} max={52}
+                                       onChange={(e) => this.fontInputHandler(e.target.value)}
+                                       onBlur={(e) => this.onSliderChange(e.target.value)}
+                                       defaultValue={acceptButtonFont.fontSize}
+                                       value={this.state.fontInputData}
+                                       data-cy="connectButtonFontSize"/>
+                                <span>
+                                    px
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -372,13 +391,15 @@ class AgreementButton extends Component {
                                 <input type="text" value={acceptButtonFont.color.hex} disabled/>
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${ acceptButtonFont.color.rgba.r }, ${ acceptButtonFont.color.rgba.g }, ${ acceptButtonFont.color.rgba.b }, ${ acceptButtonFont.color.rgba.a })`}}
-                                        onClick={this.handleTextColorClick}>
+                                        onClick={this.handleTextColorClick}
+                                        data-cy="connectButtonTextColor">
                                 </button>
                                 {
                                     this.state.displayTextColorPicker ?
                                         <div style={popover}>
                                             <div style={cover} onClick={this.handleTextColorClose}/>
-                                            <SketchPicker color={acceptButtonFont.color.rgba} onChange={this.handleTextColorChange}/>
+                                            <SketchPicker color={acceptButtonFont.color.rgba}
+                                                          onChange={this.handleTextColorChange}/>
                                         </div>
                                         : null
                                 }
@@ -401,13 +422,14 @@ class AgreementButton extends Component {
                                 <input type="text" value={acceptButtonColor.hex} disabled/>
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${ acceptButtonColor.rgba.r }, ${ acceptButtonColor.rgba.g }, ${ acceptButtonColor.rgba.b }, ${ acceptButtonColor.rgba.a })`}}
-                                        onClick={this.handleBackgroundColorClick}>
+                                        onClick={this.handleBackgroundColorClick} data-cy="connectButtonBackgroundColor">
                                 </button>
                                 {
                                     this.state.displayBackgroundColorPicker ?
                                         <div style={popover}>
                                             <div style={cover} onClick={this.handleBackgroundColorClose}/>
-                                            <SketchPicker color={acceptButtonColor.rgba} onChange={this.handleBackgroundColorChange}/>
+                                            <SketchPicker color={acceptButtonColor.rgba}
+                                                          onChange={this.handleBackgroundColorChange}/>
                                         </div>
                                         : null
                                 }
@@ -428,7 +450,8 @@ class AgreementButton extends Component {
                         <div className="innerRow">
                             <select data-component="ContentBorder"
                                     data-select="type"
-                                    onChange={this.select}>
+                                    onChange={this.select}
+                                    data-cy="connectButtonBorderType">
                                 <option value="none">None</option>
                                 <option value="solid">Solid</option>
                                 <option value="dotted">Dotted</option>
@@ -453,13 +476,14 @@ class AgreementButton extends Component {
                                 <input type="text" value={acceptButtonBorder.color.hex} disabled/>
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${ acceptButtonBorder.color.rgba.r }, ${ acceptButtonBorder.color.rgba.g }, ${ acceptButtonBorder.color.rgba.b }, ${ acceptButtonBorder.color.rgba.a })`}}
-                                        onClick={this.handleBorderColorClick}>
+                                        onClick={this.handleBorderColorClick} data-cy="connectButtonBorderColor">
                                 </button>
                                 {
                                     this.state.displayBorderColorPicker ?
                                         <div style={popover}>
                                             <div style={cover} onClick={this.handleBorderColorClose}/>
-                                            <SketchPicker color={acceptButtonBorder.color.rgba} onChange={this.handleBorderColorChange}/>
+                                            <SketchPicker color={acceptButtonBorder.color.rgba}
+                                                          onChange={this.handleBorderColorChange}/>
                                         </div>
                                         : null
                                 }
@@ -476,7 +500,8 @@ class AgreementButton extends Component {
                             <select className="tin"
                                     data-component="ContentBorder"
                                     data-select="thickness"
-                                    onChange={this.select}>
+                                    onChange={this.select}
+                                    data-cy="connectButtonBorderThickness">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -501,7 +526,8 @@ class AgreementButton extends Component {
                             <select className="tin"
                                     data-component="ContentBorder"
                                     data-select="radius"
-                                    onChange={this.select}>
+                                    onChange={this.select}
+                                    data-cy="connectButtonBorderRadius">
                                 <option value="0">0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -529,16 +555,12 @@ class AgreementButton extends Component {
                     </div>
                     <div className="right">
                         <div className="inputSelect">
-                            <input type="number" onBlur={this.valueWidth} defaultValue={acceptButtonSize.width}/>
+                            <input type="number" onBlur={this.valueWidth} data-cy="connectButtonWidth" defaultValue={acceptButtonSize.width}/>
                             <select name="" id="" disabled>
                                 <option value="px">px</option>
                                 <option value="%">%</option>
                                 <option value="rem">rem</option>
                             </select>
-                            {/*<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">*/}
-                            {/*<path fill="#BFC5D2" fillRule="nonzero"*/}
-                            {/*d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>*/}
-                            {/*</svg>*/}
                         </div>
                     </div>
                 </div>
@@ -549,16 +571,12 @@ class AgreementButton extends Component {
                     <div className="right">
 
                         <div className="inputSelect">
-                            <input type="number" onBlur={this.valuePadding} defaultValue={acceptButtonSize.padding}/>
+                            <input type="number" onBlur={this.valuePadding} data-cy="connectButtonPadding" defaultValue={acceptButtonSize.padding}/>
                             <select name="" id="" disabled>
                                 <option value="px">px</option>
                                 <option value="%">%</option>
                                 <option value="rem">rem</option>
                             </select>
-                            {/*<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">*/}
-                            {/*<path fill="#BFC5D2" fillRule="nonzero"*/}
-                            {/*d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>*/}
-                            {/*</svg>*/}
                         </div>
                     </div>
                 </div>

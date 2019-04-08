@@ -171,16 +171,19 @@ class FooterEditor extends Component {
                             <div className="textActions">
                                 <button onClick={this.textActionsHandler}
                                         className={this.state.textActions.bold ? "active" : ''}
+                                        data-cy="footerTopBold"
                                         type="button"
                                         data-type="bold">B
                                 </button>
                                 <button onClick={this.textActionsHandler}
                                         className={this.state.textActions.italic ? "active" : ''}
+                                        data-cy="footerTopItalic"
                                         type="button"
                                         data-type="italic">i
                                 </button>
                                 <button onClick={this.textActionsHandler}
                                         className={this.state.textActions.underline ? "active" : ''}
+                                        data-cy="footerTopUnderline"
                                         type="button"
                                         data-type="underline">U
                                 </button>
@@ -189,28 +192,28 @@ class FooterEditor extends Component {
                                 <label htmlFor="left">Left
                                     <div className="inputRadioWrap">
                                         <input onChange={this.alignment} id='left' data-id='left' type="radio"
-                                               name='alignment'/>
+                                               name='alignment' data-cy="footerTopLeft"/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
                                 <label htmlFor="center">Center
                                     <div className="inputRadioWrap">
                                         <input onChange={this.alignment} id='center' data-id='center' type="radio"
-                                               name='alignment'/>
+                                               name='alignment' data-cy="footerTopCenter"/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
                                 <label htmlFor="right">Right
                                     <div className="inputRadioWrap">
                                         <input onChange={this.alignment} id='right' data-id='right' type="radio"
-                                               name='alignment'/>
+                                               name='alignment' data-cy="footerTopRight"/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
                             </div>
                         </div>
                         <div className="innerRow">
-                            <textarea onChange={this.textChanges} onMouseUp={this.getText}
+                            <textarea onChange={this.textChanges} data-cy="footerText" onMouseUp={this.getText}
                                       defaultValue={this.state.text}></textarea>
                         </div>
                     </div>
@@ -276,7 +279,7 @@ class FooterEditor extends Component {
                                 <input type="text" value={this.state.colorHEX} disabled/>
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
-                                        onClick={this.handleClick}></button>
+                                        onClick={this.handleClick} data-cy="footerTextColor"></button>
                                 {
                                     this.state.displayColorPicker ?
                                         <div style={popover}>

@@ -35,6 +35,7 @@ class SuccessActions extends Component {
 
     state = {
         displayColorPicker: false,
+        fontInputData: this.storage.successMessage.styles.fontSize || 18,
         color: this.storage.successMessage.styles.color.rgba || {
             r: 85,
             g: 133,
@@ -54,8 +55,22 @@ class SuccessActions extends Component {
     };
 
     onSliderChange = (value) => {
+        if (value < 8) {
+            value = 8;
+        } else if (value > 52) {
+            value = 52
+        } else if (value === '') {
+            value = 8
+        }
         this.setState({
-            fontSize: value
+            fontSize: parseInt(value),
+            fontInputData: parseInt(value)
+        });
+    };
+
+    fontInputHandler = (value) => {
+        this.setState({
+            fontInputData: parseInt(value)
         });
     };
 
@@ -72,7 +87,7 @@ class SuccessActions extends Component {
     componentDidMount() {
         this._isMounted = true;
 
-        let {displayColorPicker, text, color, colorHEX, redirectURL, ...rest} = this.state;
+        const {displayColorPicker, fontInputData, text, color, colorHEX, redirectURL, ...rest} = this.state;
         this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
         this.props.redirectURLChanger(redirectURL);
         this.props.successData({color: {rgba: color, hex: colorHEX}, redirectURL, status: this._isMounted, ...rest});
@@ -80,7 +95,7 @@ class SuccessActions extends Component {
     }
 
     componentDidUpdate() {
-        let {displayColorPicker, text, color, colorHEX, redirectURL, ...rest} = this.state;
+        const {displayColorPicker, fontInputData, text, color, colorHEX, redirectURL, ...rest} = this.state;
         this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
         this.props.redirectURLChanger(redirectURL);
         this.props.successData({color: {rgba: color, hex: colorHEX}, redirectURL, status: this._isMounted, ...rest});
@@ -88,7 +103,7 @@ class SuccessActions extends Component {
 
     componentWillUnmount() {
         this._isMounted = false;
-        let {displayColorPicker, text, color, colorHEX, redirectURL, ...rest} = this.state;
+        const {displayColorPicker, fontInputData, text, color, colorHEX, redirectURL, ...rest} = this.state;
         this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
         this.props.redirectURLChanger(redirectURL);
         this.props.successData({color: {rgba: color, hex: colorHEX}, redirectURL, status: this._isMounted, ...rest});
@@ -168,16 +183,19 @@ class SuccessActions extends Component {
                             <div className="textActions">
                                 <button onClick={this.textActionsHandler}
                                         className={this.state.textActions.bold ? "active" : ''}
+                                        data-cy="successTextBold"
                                         type="button"
                                         data-type="bold">B
                                 </button>
                                 <button onClick={this.textActionsHandler}
                                         className={this.state.textActions.italic ? "active" : ''}
+                                        data-cy="successTextItalic"
                                         type="button"
                                         data-type="italic">i
                                 </button>
                                 <button onClick={this.textActionsHandler}
                                         className={this.state.textActions.underline ? "active" : ''}
+                                        data-cy="successTextUnderline"
                                         type="button"
                                         data-type="underline">U
                                 </button>
@@ -186,28 +204,28 @@ class SuccessActions extends Component {
                                 <label htmlFor="left">Left
                                     <div className="inputRadioWrap">
                                         <input onChange={this.alignment} id='left' data-id='left' type="radio"
-                                               name='alignment'/>
+                                               name='alignment' data-cy="successTextLeft"/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
                                 <label htmlFor="center">Center
                                     <div className="inputRadioWrap">
                                         <input onChange={this.alignment} id='center' data-id='center' type="radio"
-                                               name='alignment'/>
+                                               name='alignment' data-cy="successTextCenter"/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
                                 <label htmlFor="right">Right
                                     <div className="inputRadioWrap">
                                         <input onChange={this.alignment} id='right' data-id='right' type="radio"
-                                               name='alignment'/>
+                                               name='alignment' data-cy="successTextRight"/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
                             </div>
                         </div>
                         <div className="innerRow">
-                            <textarea onChange={this.textChanges} onMouseUp={this.getText}
+                            <textarea onChange={this.textChanges} data-cy="successText" onMouseUp={this.getText}
                                       defaultValue={this.state.text}></textarea>
                         </div>
                     </div>
@@ -249,23 +267,16 @@ class SuccessActions extends Component {
                                         onChange={this.onSliderChange}
                                 />
                             </div>
-                            <div>
-                                <select className="medium" disabled
-                                        onChange={this.select}>
-                                    <option value="10%">10%</option>
-                                    <option value="20%">20%</option>
-                                    <option value="30%">30%</option>
-                                    <option value="40%">40%</option>
-                                    <option value="50%">50%</option>
-                                    <option value="60%">60%</option>
-                                    <option value="70%">70%</option>
-                                    <option value="80%">80%</option>
-                                    <option value="90%">90%</option>
-                                    <option value="100%">100%</option>
-                                </select>
-                                <p className="select medium">
-                                    {`${this.state.fontSize}px`}
-                                </p>
+                            <div className={'select medium'}>
+                                <input className="medium" type={'number'} min={8} max={52} maxLength={2} size={2}
+                                       onChange={(e) => this.fontInputHandler(e.target.value)}
+                                       onBlur={(e) => this.onSliderChange(e.target.value)}
+                                       defaultValue={this.state.fontSize}
+                                       value={this.state.fontInputData}
+                                       data-cy="successTextFontSize"/>
+                                <span>
+                                    px
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -280,7 +291,7 @@ class SuccessActions extends Component {
                                 <input type="text" value={this.state.colorHEX} disabled/>
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
-                                        onClick={this.handleClick}></button>
+                                        onClick={this.handleClick} data-cy="successTextColor"></button>
                                 {
                                     this.state.displayColorPicker ?
                                         <div style={popover}>
@@ -296,7 +307,7 @@ class SuccessActions extends Component {
                 <div className="row">
                     <div className="right">
                         <div className="innerRow">
-                                <textarea onBlur={this.redirectURLChanges}
+                                <textarea onBlur={this.redirectURLChanges} data-cy="successPageRedirect"
                                           defaultValue={this.state.redirectURL}
                                           placeholder="Enter your redirect URL"></textarea>
                         </div>
