@@ -53,6 +53,14 @@ context('Start and going to CP', function () {
                 .click()
         });
 
+        it('Setting name', () => {
+            cy.get('[data-cy="captivePortalName"]')
+                .focus()
+                .clear()
+                .type('CP TEST NAME')
+                .blur
+        });
+
         it('Device toggle', () => {
             cy.get('[data-id="mobile"] span')
                 .click();
@@ -592,12 +600,7 @@ context('Starting comparing collected data', function () {
         it('Has expected state on CP building finish', () => {
             cy.url().should('include', '/captive-portals/new').then(() => {
                 cy.window().then(win => {
-
                     const store = Object.assign({}, win.__store__);
-                    store.token = false;
-
-                    const _temp_ = JSON.stringify(win.__store__);
-                    console.log(_temp_);
                     expect(store).to.deep.equal(
                         {
                             background_and_logo: {
@@ -663,8 +666,8 @@ context('Starting comparing collected data', function () {
                                     textActions: {bold: false, italic: false, underline: false}
                                 }
                             },
-                            token: false,
-                            name: {},
+                            token: {token: store.token.token},
+                            name: {name: "CP TEST NAME"},
                             css: {path: ""},
                             redirectURL: {url: "http://google.com"},
                             imagesIDs: {logoID: "203", backgroundID: ""},

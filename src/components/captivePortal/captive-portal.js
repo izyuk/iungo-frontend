@@ -389,7 +389,7 @@ class CaptivePortal extends Component {
                                        onBlur={this.setName}
                                        onDoubleClick={this.nameEditor}
                                        onKeyDown={this.sendData}
-                                       className={'active'}/>
+                                       className={'active'} data-cy="captivePortalName"/>
                                 <span></span>
                                 <div className="toggles">
                                     <a href="javascript:void(0)" data-id="desktop"
