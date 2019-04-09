@@ -29,7 +29,9 @@ ReactDOM.render(
 );
 
 if (window.Cypress) {
-    window.__store__ = store
+    console.log(window.Cypress);
+    window.__store__ = store.getState()
+    console.log(window.__store__);
 }
 
 

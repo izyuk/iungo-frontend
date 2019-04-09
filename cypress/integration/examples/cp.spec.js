@@ -242,16 +242,16 @@ context('Content tab', function () {
 
         it('Check all description text alignments', () => {
             cy.get('[data-cy="headerDescriptionLeft"]')
-                .check({force: true });
+                .check({force: true});
             cy.get('[data-cy="headerDescriptionCenter"]')
-                .check({force: true });
+                .check({force: true});
             cy.get('[data-cy="headerDescriptionRight"]')
-                .check({force: true });
+                .check({force: true});
         });
 
         it('Choose alignment we need', () => {
             cy.get('[data-cy="headerDescriptionCenter"]')
-                .check({force: true });
+                .check({force: true});
         });
 
         it('Enter description text', () => {
@@ -575,7 +575,7 @@ context('Tests finished', function () {
         cy.viewport('macbook-11')
     });
 
-    describe('Going back to the style tab', ()=> {
+    describe('Going back to the style tab', () => {
         it('Style tab', () => {
             cy.get('[data-cy="styleTab"]')
                 .click();
@@ -588,100 +588,107 @@ context('Starting comparing collected data', function () {
         cy.viewport('macbook-11')
     });
 
-    describe('Taking data fron Redux storage', ()=> {
+    describe('Unit test for data collecting', function () {
+        it('Has expected state on CP building finish', () => {
+            cy.url().should('include', '/captive-portals/new').then(() => {
+                cy.window().then(win => {
 
-    })
+                    const store = Object.assign({}, win.__store__);
+                    store.token = false;
+
+                    const _temp_ = JSON.stringify(win.__store__);
+                    console.log(_temp_);
+                    expect(store).to.deep.equal(
+                        {
+                            background_and_logo: {
+                                logo: {
+                                    url: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/4.jpg",
+                                    position: "center"
+                                },
+                                backgroundType: "COLOR",
+                                background: {
+                                    url: "",
+                                    color: {rgba: {r: 48, g: 51, b: 56, a: 1}, hex: "#303338"},
+                                    type: "COLOR"
+                                }
+                            },
+                            tabName: [],
+                            container_border: {
+                                color: {rgba: {r: 255, g: 105, b: 0, a: 1}, hex: "#ff6900"},
+                                type: "solid",
+                                thickness: "3",
+                                radius: "2"
+                            },
+                            container_background: {
+                                color: {rgba: {r: 92, g: 64, b: 64, a: 0}, hex: "#5c4040"},
+                                opacity: 100
+                            },
+                            container_size: {width: 1920, padding: 20},
+                            header: {
+                                top: {
+                                    text: "CP TEST HEADER TEXT",
+                                    styles: {
+                                        color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
+                                        alignment: "center",
+                                        fontSize: 18,
+                                        textActions: {bold: false, italic: false, underline: false}
+                                    }
+                                },
+                                description: {
+                                    text: "CP TEST DESCRIPTION TEXT",
+                                    styles: {
+                                        color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
+                                        alignment: "center",
+                                        fontSize: 23,
+                                        textActions: {bold: false, italic: false, underline: false}
+                                    }
+                                }
+                            },
+                            login_methods: {methods: {facebook: true, google: true, twitter: false, button: true}},
+                            footer: {
+                                text: "TEST FOOTER TEXT",
+                                styles: {
+                                    color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
+                                    alignment: "center",
+                                    fontSize: 18,
+                                    textActions: {bold: false, italic: false, underline: false}
+                                }
+                            },
+                            successMessage: {
+                                text: "CP TEST SOME SUCCESS MESSAGE TEXT",
+                                styles: {
+                                    color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
+                                    alignment: "center",
+                                    fontSize: 18,
+                                    textActions: {bold: false, italic: false, underline: false}
+                                }
+                            },
+                            token: false,
+                            name: {},
+                            css: {path: ""},
+                            redirectURL: {url: "http://google.com"},
+                            imagesIDs: {logoID: "203", backgroundID: ""},
+                            loginAgreeButton: {
+                                acceptButtonText: "Connect FOR FREE",
+                                acceptButtonColor: {rgba: {r: 255, g: 255, b: 255, a: 0}, hex: "#ffffff"},
+                                acceptButtonFont: {
+                                    color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
+                                    alignment: "center",
+                                    fontSize: 18,
+                                    textActions: {bold: false, italic: false, underline: false}
+                                },
+                                acceptButtonSize: {padding: 10, width: 320},
+                                acceptButtonBorder: {
+                                    color: {rgba: {r: 85, g: 133, b: 237, a: 1}, hex: "#5585ed"},
+                                    radius: 5,
+                                    thickness: 1,
+                                    type: "solid"
+                                }
+                            }
+                        }
+                    )
+                })
+            });
+        })
+    });
 });
-
-
-// describe('Unit test for data collecting', function () {
-//     it('has expected state on CP building finish', () => {
-//         cy.visit('http://localhost:9000/captive-portals');
-//         cy.window().its('store').invoke('getState').should('deep.equal', {
-//             background_and_logo: {
-//                 logo: {
-//                     url: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/4.jpg",
-//                     position: "center"
-//                 },
-//                 background: {
-//                     url: "",
-//                     color: {rgba: {r: 48, g: 51, b: 56, a: 1}, hex: "#303338"},
-//                     type: "color"
-//                 }
-//             },
-//             tabName: [],
-//             container_border: {
-//                 color: {rgba: {r: 255, g: 105, b: 0, a: 1}, hex: "#ff6900"},
-//                 type: "solid",
-//                 thickness: 3,
-//                 radius: 2
-//             },
-//             container_background: {
-//                 color: {rgba: {r: 92, g: 64, b: 64, a: 0}, hex: "#5c4040"},
-//                 opacity: 100
-//             },
-//             container_size: {width: 1920, padding: 20},
-//             header: {
-//                 top: {
-//                     text: "CP TEST HEADER TEXT",
-//                     styles: {
-//                         color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
-//                         alignment: "center",
-//                         fontSize: 18,
-//                         textActions: {bold: false, italic: false, underline: false}
-//                     }
-//                 },
-//                 description: {
-//                     text: "CP TEST DESCRIPTION TEXT",
-//                     styles: {
-//                         color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
-//                         alignment: "center",
-//                         fontSize: 23,
-//                         textActions: {bold: false, italic: false, underline: false}
-//                     }
-//                 }
-//             },
-//             login_methods: {methods: {facebook: true, google: true, twitter: false, button: true}},
-//             footer: {
-//                 text: "TEST FOOTER TEXT",
-//                 styles: {
-//                     color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
-//                     alignment: "center",
-//                     fontSize: 18,
-//                     textActions: {bold: false, italic: false, underline: false}
-//                 }
-//             },
-//             successMessage: {
-//                 text: "CP TEST SOME SUCCESS MESSAGE TEXT",
-//                 styles: {
-//                     color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
-//                     alignment: "center",
-//                     fontSize: 18,
-//                     textActions: {bold: false, italic: false, underline: false}
-//                 }
-//             },
-//             token: {},
-//             name: {"name": "CP FOR TESTING"},
-//             css: {"path": ""},
-//             redirectURL: {url: "http://google.com"},
-//             imagesIDs: {logoID: 203, backgroundID: ""},
-//             loginAgreeButton: {
-//                 acceptButtonText: "Connect FOR FREE",
-//                 acceptButtonColor: {rgba: {r: 255, g: 255, b: 255, a: 0}, hex: "#ffffff"},
-//                 acceptButtonFont: {
-//                     color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
-//                     alignment: "center",
-//                     fontSize: 18,
-//                     textActions: {bold: false, italic: false, underline: false}
-//                 },
-//                 acceptButtonSize: {padding: 10, width: 320},
-//                 acceptButtonBorder: {
-//                     color: {rgba: {r: 85, g: 133, b: 237, a: 1}, hex: "#5585ed"},
-//                     radius: 5,
-//                     thickness: 1,
-//                     type: "solid"
-//                 }
-//             }
-//         })
-//     })
-// });
