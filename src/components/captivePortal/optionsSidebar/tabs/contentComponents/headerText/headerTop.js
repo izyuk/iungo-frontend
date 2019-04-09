@@ -226,6 +226,7 @@ class HeaderTop extends Component {
                                 <Slider min={8}
                                         max={52}
                                         defaultValue={parseInt(this.state.fontSize)}
+                                        value={this.state.fontSize}
                                         handle={handle}
                                         trackStyle={{
                                             backgroundColor: '#5585ED',
@@ -258,7 +259,6 @@ class HeaderTop extends Component {
                                        onChange={(e) => this.fontInputHandler(e.target.value)}
                                        onBlur={(e) => this.onSliderChange(e.target.value)}
                                        defaultValue={this.state.fontSize}
-                                       value={this.state.fontInputData}
                                        data-cy="headerTopFontSize"/>
                                 <span>
                                     px

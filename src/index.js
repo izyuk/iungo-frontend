@@ -29,7 +29,7 @@ ReactDOM.render(
 );
 
 if (window.Cypress) {
-    window.store = store
+    window.__store__ = store
 }
 
 
