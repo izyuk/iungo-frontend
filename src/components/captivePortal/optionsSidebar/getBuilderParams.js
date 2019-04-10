@@ -1,7 +1,4 @@
 export const GetBuilderParams = (storage) => {
-    console.log(storage);
-    console.log(JSON.stringify(storage));
-    // debugger;
     const {
         name: {name},
         css: {path},

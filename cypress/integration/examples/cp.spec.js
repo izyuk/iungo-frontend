@@ -1,3 +1,80 @@
+import {GetBuilderParams} from '../../../src/components/captivePortal/optionsSidebar/getBuilderParams';
+
+function fillingFields(selector, text) {
+    cy.get(selector)
+        .focus()
+        .clear()
+        .type(text)
+        .blur();
+}
+
+function fillingFieldsWithFindOption(selector, whatToFind, text) {
+    cy.get(selector)
+        .find(whatToFind)
+        .focus()
+        .type(text);
+}
+
+function fillColorHEX(selector, hex) {
+    cy.get(selector)
+        .click();
+    cy.get('.flexbox-fix:nth-child(3) > div').first()
+        .find('input')
+        .focus()
+        .clear()
+        .type(hex)
+        .blur();
+    cy.get('.colorWrap > div > div').first()
+        .click();
+}
+
+function fillColorHEXWithOpacity(selector, hex, opacity) {
+    cy.get(selector)
+        .click();
+    cy.get('.flexbox-fix:nth-child(3) > div').first()
+        .find('input')
+        .focus()
+        .clear()
+        .type(hex)
+        .blur();
+    cy.get('.flexbox-fix:nth-child(3) > div').last()
+        .find('input')
+        .focus()
+        .clear()
+        .type(opacity)
+        .blur();
+    cy.get('.colorWrap > div > div').first()
+        .click();
+}
+
+function fontStylingActions(selector1, selector2, selector3) {
+    cy.get(selector1)
+        .click();
+    cy.get(selector2)
+        .click();
+    cy.get(selector3)
+        .click();
+}
+
+function alignmentsActions(selector1, selector2, selector3) {
+    cy.get(selector1)
+        .check({force: true});
+    cy.get(selector2)
+        .check({force: true});
+    cy.get(selector3)
+        .check({force: true});
+}
+
+function setSomeSize(selector, value) {
+    cy.get(selector)
+        .focus()
+        .clear()
+        .type(value)
+        .blur();
+}
+
+
+
 context('Start and going to CP', function () {
     beforeEach(function () {
         cy.viewport('macbook-11')
@@ -13,26 +90,16 @@ context('Start and going to CP', function () {
 
     describe('Login form', () => {
         it('Filling login inputs with not valid data', () => {
-            cy.get('.email')
-                .find('input')
-                .focus()
-                .type('dummy.email@gmail.com');
-            cy.get('.password')
-                .find('input')
-                .focus()
-                .type('12345678');
+            fillingFieldsWithFindOption('.email', 'input', 'dummy.email@gmail.com');
+            fillingFieldsWithFindOption('.password', 'input', '12345678');
             cy.get('.login')
                 .click();
         });
 
         it('Filling login inputs with correct data', () => {
             cy.visit('http://localhost:9000');
-            cy.get('.email > input')
-                .focus()
-                .type('dmitriy.izyuk@gmail.com');
-            cy.get('.password > input')
-                .focus()
-                .type('Izyuk8968');
+            fillingFieldsWithFindOption('.email', 'input', 'dmitriy.izyuk@gmail.com');
+            fillingFieldsWithFindOption('.password', 'input', 'Izyuk8968');
             cy.get('.login')
                 .click();
         });
@@ -54,11 +121,7 @@ context('Start and going to CP', function () {
         });
 
         it('Setting name', () => {
-            cy.get('[data-cy="captivePortalName"]')
-                .focus()
-                .clear()
-                .type('CP TEST NAME')
-                .blur();
+            fillingFields('[data-cy="captivePortalName"]', 'CP TEST NAME');
         });
 
         it('Device toggle', () => {
@@ -77,16 +140,7 @@ context('Style tab', function () {
     });
     describe('Changing background', function () {
         it('Setting color', () => {
-            cy.get('[data-cy="openColorPicker"]')
-                .click();
-            cy.get('.flexbox-fix:nth-child(3) > div').first()
-                .find('input')
-                .focus()
-                .clear()
-                .type('303338')
-                .blur();
-            cy.get('.colorWrap > div > div').first()
-                .click();
+            fillColorHEX('[data-cy="openColorPicker"]', '303338');
         });
     });
 
@@ -125,38 +179,16 @@ context('Style tab', function () {
         it('Border', () => {
             cy.get('[data-cy="containerDropDown"]')
                 .click();
-            cy.get('[ data-cy="borderColor"]')
-                .click();
-            cy.get('.flexbox-fix:nth-child(3) > div').first()
-                .find('input')
-                .focus()
-                .clear()
-                .type('ff6900')
-                .blur();
-            cy.get('.colorWrap > div > div').first()
-                .click();
+
+            fillColorHEX('[data-cy="borderColor"]', 'ff6900');
+
             cy.get('[data-cy="thickness"]')
                 .select('3');
             cy.get('[data-cy="radius"]')
                 .select('2');
         });
         it('Background', () => {
-            cy.get('[data-cy="containerBackground"')
-                .click();
-            cy.get('.flexbox-fix:nth-child(3) > div').first()
-                .find('input')
-                .focus()
-                .clear()
-                .type('5c4040')
-                .blur();
-            cy.get('.flexbox-fix:nth-child(3) > div').last()
-                .find('input')
-                .focus()
-                .clear()
-                .type('0')
-                .blur();
-            cy.get('.colorWrap > div > div').first()
-                .click();
+            fillColorHEXWithOpacity('[data-cy="containerBackground"', '5c4040', '0');
         });
         it('Size', () => {
             cy.get('[data-cy="containerWidth"]')
@@ -178,30 +210,15 @@ context('Content tab', function () {
         });
 
         it('Add all top text font styles', () => {
-            cy.get('[data-cy="headerTopBold"]')
-                .click();
-            cy.get('[data-cy="headerTopItalic"]')
-                .click();
-            cy.get('[data-cy="headerTopUnderline"]')
-                .click();
+            fontStylingActions('[data-cy="headerTopBold"]', '[data-cy="headerTopItalic"]', '[data-cy="headerTopUnderline"]');
         });
 
         it('Remove all top text font styles', () => {
-            cy.get('[data-cy="headerTopBold"]')
-                .click();
-            cy.get('[data-cy="headerTopItalic"]')
-                .click();
-            cy.get('[data-cy="headerTopUnderline"]')
-                .click();
+            fontStylingActions('[data-cy="headerTopBold"]', '[data-cy="headerTopItalic"]', '[data-cy="headerTopUnderline"]');
         });
 
         it('Check all top text alignments', () => {
-            cy.get('[data-cy="headerTopLeft"]')
-                .check({force: true});
-            cy.get('[data-cy="headerTopCenter"]')
-                .check({force: true});
-            cy.get('[data-cy="headerTopRight"]')
-                .check({force: true});
+            alignmentsActions('[data-cy="headerTopLeft"]', '[data-cy="headerTopCenter"]', '[data-cy="headerTopRight"]');
         });
 
         it('Choose alignment we need', () => {
@@ -210,51 +227,23 @@ context('Content tab', function () {
         });
 
         it('Enter top text', () => {
-            cy.get('[data-cy="headerTopText"]')
-                .focus()
-                .clear()
-                .type('CP TEST HEADER TEXT')
-                .blur();
+            fillingFields('[data-cy="headerTopText"]', 'CP TEST HEADER TEXT');
         });
 
         it('Set top text color', () => {
-            cy.get('[ data-cy="headerTopColor"]')
-                .click();
-            cy.get('.flexbox-fix:nth-child(3) > div').first()
-                .find('input')
-                .focus()
-                .clear()
-                .type('edaa55')
-                .blur();
-            cy.get('.colorWrap > div > div').first()
-                .click();
+            fillColorHEX('[ data-cy="headerTopColor"]', 'edaa55');
         });
 
         it('Add all description text font styles', () => {
-            cy.get('[data-cy="headerDescriptionBold"]')
-                .click();
-            cy.get('[data-cy="headerDescriptionItalic"]')
-                .click();
-            cy.get('[data-cy="headerDescriptionUnderline"]')
-                .click();
+            fontStylingActions('[data-cy="headerDescriptionBold"]', '[data-cy="headerDescriptionItalic"]', '[data-cy="headerDescriptionUnderline"]');
         });
 
         it('Remove all description text font styles', () => {
-            cy.get('[data-cy="headerDescriptionBold"]')
-                .click();
-            cy.get('[data-cy="headerDescriptionItalic"]')
-                .click();
-            cy.get('[data-cy="headerDescriptionUnderline"]')
-                .click();
+            fontStylingActions('[data-cy="headerDescriptionBold"]', '[data-cy="headerDescriptionItalic"]', '[data-cy="headerDescriptionUnderline"]');
         });
 
         it('Check all description text alignments', () => {
-            cy.get('[data-cy="headerDescriptionLeft"]')
-                .check({force: true});
-            cy.get('[data-cy="headerDescriptionCenter"]')
-                .check({force: true});
-            cy.get('[data-cy="headerDescriptionRight"]')
-                .check({force: true});
+            alignmentsActions('[data-cy="headerDescriptionLeft"]', '[data-cy="headerDescriptionCenter"]', '[data-cy="headerDescriptionRight"]');
         });
 
         it('Choose alignment we need', () => {
@@ -263,32 +252,15 @@ context('Content tab', function () {
         });
 
         it('Enter description text', () => {
-            cy.get('[data-cy="headerDescriptionText"]')
-                .focus()
-                .clear()
-                .type('CP TEST DESCRIPTION TEXT')
-                .blur();
+            fillingFields('[data-cy="headerDescriptionText"]', 'CP TEST DESCRIPTION TEXT');
         });
 
         it('Set description text color', () => {
-            cy.get('[data-cy="headerDescriptionColor"]')
-                .click();
-            cy.get('.flexbox-fix:nth-child(3) > div').first()
-                .find('input')
-                .focus()
-                .clear()
-                .type('edaa55')
-                .blur();
-            cy.get('.colorWrap > div > div').first()
-                .click();
+            fillColorHEX('[ data-cy="headerDescriptionColor"]', 'edaa55');
         });
 
         it('Set description text font size', () => {
-            cy.get('[data-cy="headerDescriptionFontSize"]')
-                .focus()
-                .clear()
-                .type(23)
-                .blur();
+            setSomeSize('[data-cy="headerDescriptionFontSize"]', 23);
         })
     });
 
@@ -328,30 +300,15 @@ context('Content tab', function () {
 
     describe('Connect button settings', () => {
         it('Add all connect button font styles', () => {
-            cy.get('[data-cy="connectButtonBold"]')
-                .click();
-            cy.get('[data-cy="connectButtonItalic"]')
-                .click();
-            cy.get('[data-cy="connectButtonUnderline"]')
-                .click();
+            fontStylingActions('[data-cy="connectButtonBold"]', '[data-cy="connectButtonItalic"]', '[data-cy="connectButtonUnderline"]');
         });
 
         it('Remove all connect button font styles', () => {
-            cy.get('[data-cy="connectButtonBold"]')
-                .click();
-            cy.get('[data-cy="connectButtonItalic"]')
-                .click();
-            cy.get('[data-cy="connectButtonUnderline"]')
-                .click();
+            fontStylingActions('[data-cy="connectButtonBold"]', '[data-cy="connectButtonItalic"]', '[data-cy="connectButtonUnderline"]');
         });
 
         it('Check all connect button alignments', () => {
-            cy.get('[data-cy="connectButtonLeft"]')
-                .check({force: true});
-            cy.get('[data-cy="connectButtonCenter"]')
-                .check({force: true});
-            cy.get('[data-cy="connectButtonRight"]')
-                .check({force: true});
+            alignmentsActions('[data-cy="connectButtonLeft"]', '[data-cy="connectButtonCenter"]', '[data-cy="connectButtonRight"]');
         });
 
         it('Choose alignment we need', () => {
@@ -360,56 +317,19 @@ context('Content tab', function () {
         });
 
         it('Enter connect button text', () => {
-            cy.get('[data-cy="connectButtonText"]')
-                .focus()
-                .clear()
-                .type('Connect FOR FREE')
-                .blur();
+            fillingFields('[data-cy="connectButtonText"]', 'Connect FOR FREE');
         });
 
         it('Set connect button text color', () => {
-            cy.get('[ data-cy="connectButtonTextColor"]')
-                .click();
-            cy.get('.flexbox-fix:nth-child(3) > div').first()
-                .find('input')
-                .focus()
-                .clear()
-                .type('edaa55')
-                .blur();
-            cy.get('.colorWrap > div > div').first()
-                .click();
+            fillColorHEX('[ data-cy="connectButtonTextColor"]', 'edaa55');
         });
 
         it('Set connect button background color', () => {
-            cy.get('[data-cy="connectButtonBackgroundColor"]')
-                .click();
-            cy.get('.flexbox-fix:nth-child(3) > div').first()
-                .find('input')
-                .focus()
-                .clear()
-                .type('ffffff')
-                .blur();
-            cy.get('.flexbox-fix:nth-child(3) > div').last()
-                .find('input')
-                .focus()
-                .clear()
-                .type('0')
-                .blur();
-            cy.get('.colorWrap > div > div').first()
-                .click();
+            fillColorHEXWithOpacity('[data-cy="connectButtonBackgroundColor"]', 'ffffff', '0');
         });
 
         it('Set connect button border color', () => {
-            cy.get('[data-cy="connectButtonBorderColor"]')
-                .click();
-            cy.get('.flexbox-fix:nth-child(3) > div').first()
-                .find('input')
-                .focus()
-                .clear()
-                .type('5585ed')
-                .blur();
-            cy.get('.colorWrap > div > div').first()
-                .click();
+            fillColorHEX('[ data-cy="connectButtonBorderColor"]', '5585ed');
         });
 
         it('Set connect button border thickness', () => {
@@ -423,16 +343,8 @@ context('Content tab', function () {
         });
 
         it('Set connect button size', () => {
-            cy.get('[data-cy="connectButtonWidth"]')
-                .focus()
-                .clear()
-                .type(320)
-                .blur();
-            cy.get('[data-cy="connectButtonPadding"]')
-                .focus()
-                .clear()
-                .type(10)
-                .blur();
+            setSomeSize('[data-cy="connectButtonWidth"]', 320);
+            setSomeSize('[data-cy="connectButtonPadding"]', 10);
         });
     });
 
@@ -443,30 +355,15 @@ context('Content tab', function () {
         });
 
         it('Add all footer text font styles', () => {
-            cy.get('[data-cy="footerTopBold"]')
-                .click();
-            cy.get('[data-cy="footerTopBold"]')
-                .click();
-            cy.get('[data-cy="footerTopBold"]')
-                .click();
+            fontStylingActions('[data-cy="footerTopBold"]', '[data-cy="footerTopItalic"]', '[data-cy="footerTopUnderline"]');
         });
 
         it('Remove all footer text font styles', () => {
-            cy.get('[data-cy="footerTopBold"]')
-                .click();
-            cy.get('[data-cy="footerTopBold"]')
-                .click();
-            cy.get('[data-cy="footerTopBold"]')
-                .click();
+            fontStylingActions('[data-cy="footerTopBold"]', '[data-cy="footerTopItalic"]', '[data-cy="footerTopUnderline"]');
         });
 
         it('Check all footer text alignments', () => {
-            cy.get('[data-cy="footerTopLeft"]')
-                .check({force: true});
-            cy.get('[data-cy="footerTopCenter"]')
-                .check({force: true});
-            cy.get('[data-cy="footerTopRight"]')
-                .check({force: true});
+            alignmentsActions('[data-cy="footerTopLeft"]', '[data-cy="footerTopCenter"]', '[data-cy="footerTopRight"]');
         });
 
         it('Choose alignment we need', () => {
@@ -475,24 +372,11 @@ context('Content tab', function () {
         });
 
         it('Enter footer text', () => {
-            cy.get('[data-cy="footerText"]')
-                .focus()
-                .clear()
-                .type('TEST FOOTER TEXT')
-                .blur();
+            fillingFields('[data-cy="footerText"]', 'TEST FOOTER TEXT');
         });
 
         it('Set footer text color', () => {
-            cy.get('[ data-cy="footerTextColor"]')
-                .click();
-            cy.get('.flexbox-fix:nth-child(3) > div').first()
-                .find('input')
-                .focus()
-                .clear()
-                .type('edaa55')
-                .blur();
-            cy.get('.colorWrap > div > div').first()
-                .click();
+            fillColorHEX('[ data-cy="footerTextColor"]', 'edaa55');
         });
     });
 
@@ -503,30 +387,15 @@ context('Content tab', function () {
         });
 
         it('Add all success text font styles', () => {
-            cy.get('[data-cy="successTextBold"]')
-                .click();
-            cy.get('[data-cy="successTextItalic"]')
-                .click();
-            cy.get('[data-cy="successTextUnderline"]')
-                .click();
+            fontStylingActions('[data-cy="successTextBold"]', '[data-cy="successTextItalic"]', '[data-cy="successTextUnderline"]');
         });
 
         it('Remove all success text font styles', () => {
-            cy.get('[data-cy="successTextBold"]')
-                .click();
-            cy.get('[data-cy="successTextItalic"]')
-                .click();
-            cy.get('[data-cy="successTextUnderline"]')
-                .click();
+            fontStylingActions('[data-cy="successTextBold"]', '[data-cy="successTextItalic"]', '[data-cy="successTextUnderline"]');
         });
 
         it('Check all success text alignments', () => {
-            cy.get('[data-cy="successTextLeft"]')
-                .check({force: true});
-            cy.get('[data-cy="successTextCenter"]')
-                .check({force: true});
-            cy.get('[data-cy="successTextRight"]')
-                .check({force: true});
+            alignmentsActions('[data-cy="successTextLeft"]', '[data-cy="successTextCenter"]', '[data-cy="successTextRight"]');
         });
 
         it('Choose alignment we need', () => {
@@ -535,32 +404,15 @@ context('Content tab', function () {
         });
 
         it('Enter success text', () => {
-            cy.get('[data-cy="successText"]')
-                .focus()
-                .clear()
-                .type('CP TEST SOME SUCCESS MESSAGE TEXT')
-                .blur();
+            fillingFields('[data-cy="successText"]', 'CP TEST SOME SUCCESS MESSAGE TEXT');
         });
 
         it('Set success text color', () => {
-            cy.get('[ data-cy="successTextColor"]')
-                .click();
-            cy.get('.flexbox-fix:nth-child(3) > div').first()
-                .find('input')
-                .focus()
-                .clear()
-                .type('edaa55')
-                .blur();
-            cy.get('.colorWrap > div > div').first()
-                .click();
+            fillColorHEX('[ data-cy="successTextColor"]', 'edaa55');
         });
 
         it('Enter success page redurect URL', () => {
-            cy.get('[data-cy="successPageRedirect"]')
-                .focus()
-                .clear()
-                .type('http://google.com')
-                .blur();
+            fillingFields('[data-cy="successPageRedirect"]', 'http://google.com');
         });
     });
 
@@ -688,6 +540,201 @@ context('Starting comparing collected data', function () {
                                     type: "solid"
                                 }
                             }
+                        }
+                    )
+                })
+            });
+        })
+        it('Testing object for sending', () => {
+            cy.url().should('include', '/captive-portals/new').then(() => {
+                cy.window().then(win => {
+                    const store = GetBuilderParams(Object.assign({}, win.__store__));
+                    expect(store).to.deep.equal(
+                        {
+                            background: null,
+                            name: "CP TEST NAME",
+                            externalCss: "",
+                            logoId: "203",
+                            backgroundId: null,
+                            header: "CP TEST HEADER TEXT",
+                            description: "CP TEST DESCRIPTION TEXT",
+                            footer: "TEST FOOTER TEXT",
+                            successMessage: "CP TEST SOME SUCCESS MESSAGE TEXT",
+                            style: {
+                                header: {
+                                    top: {
+                                        color: {
+                                            rgba: {
+                                                r: 237,
+                                                g: 170,
+                                                b: 85,
+                                                a: 1
+                                            },
+                                            hex: "#edaa55"
+                                        },
+                                        fontSize: 18,
+                                        textActions: {
+                                            bold: false,
+                                            italic: false,
+                                            underline: false
+                                        },
+                                        alignment: "center"
+                                    },
+                                    description: {
+                                        color: {
+                                            rgba: {
+                                                r: 237,
+                                                g: 170,
+                                                b: 85,
+                                                a: 1
+                                            },
+                                            hex: "#edaa55"
+                                        },
+                                        fontSize: 23,
+                                        textActions: {
+                                            bold: false,
+                                            italic: false,
+                                            underline: false
+                                        },
+                                        alignment: "center"
+                                    }
+                                },
+                                footer: {
+                                    color: {
+                                        rgba: {
+                                            r: 237,
+                                            g: 170,
+                                            b: 85,
+                                            a: 1
+                                        },
+                                        hex: "#edaa55"
+                                    },
+                                    fontSize: 18,
+                                    textActions: {
+                                        bold: false,
+                                        italic: false,
+                                        underline: false
+                                    },
+                                    alignment: "center"
+                                },
+                                success_message: {
+                                    color: {
+                                        rgba: {
+                                            r: 237,
+                                            g: 170,
+                                            b: 85,
+                                            a: 1
+                                        },
+                                        hex: "#edaa55"
+                                    },
+                                    fontSize: 18,
+                                    textActions: {
+                                        bold: false,
+                                        italic: false,
+                                        underline: false
+                                    },
+                                    alignment: "center"
+                                },
+                                background_and_logo: {
+                                    background: {
+                                        url: "",
+                                        color: {
+                                            hex: "#303338",
+                                            rgba: {
+                                                r: 48,
+                                                g: 51,
+                                                b: 56,
+                                                a: 1
+                                            }
+                                        }
+                                    },
+                                    logo: {
+                                        url: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/4.jpg",
+                                        position: "center"
+                                    }
+                                },
+                                container_background: {
+                                    color: {
+                                        rgba: {
+                                            r: 92,
+                                            g: 64,
+                                            b: 64,
+                                            a: 0
+                                        },
+                                        hex: "#5c4040"
+                                    },
+                                    opacity: 100
+                                },
+                                container_border: {
+                                    color: {
+                                        rgba: {
+                                            r: 255,
+                                            g: 105,
+                                            b: 0,
+                                            a: 1
+                                        },
+                                        hex: "#ff6900"
+                                    },
+                                    type: "solid",
+                                    thickness: "3",
+                                    radius: "2"
+                                },
+                                container_size: {
+                                    width: 1920,
+                                    padding: 20
+                                },
+                                accept_button_font: {
+                                    alignment: "center",
+                                    color: {
+                                        hex: "#edaa55",
+                                        rgba: {
+                                            r: 237,
+                                            g: 170,
+                                            b: 85,
+                                            a: 1
+                                        }
+                                    },
+                                    fontSize: 18,
+                                    textActions: {
+                                        bold: false,
+                                        italic: false,
+                                        underline: false
+                                    }
+                                },
+                                accept_button_color: {
+                                    hex: "#ffffff",
+                                    rgba: {
+                                        r: 255,
+                                        g: 255,
+                                        b: 255,
+                                        a: 0
+                                    }
+                                },
+                                accept_button_size: {
+                                    width: 320,
+                                    padding: 10
+                                },
+                                accept_button_border: {
+                                    color: {
+                                        hex: "#5585ed",
+                                        rgba: {
+                                            r: 85,
+                                            g: 133,
+                                            b: 237,
+                                            a: 1
+                                        }
+                                    },
+                                    radius: 5,
+                                    type: "solid",
+                                    thickness: 1
+                                }
+                            },
+                            googleLogin: true,
+                            facebookLogin: true,
+                            twitterLogin: false,
+                            acceptTermsLogin: true,
+                            successRedirectUrl: "http://google.com",
+                            acceptButtonText: "Connect FOR FREE"
                         }
                     )
                 })
