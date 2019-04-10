@@ -58,7 +58,7 @@ context('Start and going to CP', function () {
                 .focus()
                 .clear()
                 .type('CP TEST NAME')
-                .blur
+                .blur();
         });
 
         it('Device toggle', () => {
