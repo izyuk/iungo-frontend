@@ -17,6 +17,7 @@ class Publish extends Component {
         this.props.loaderHandler();
         const portalDataToSend = GetBuilderParams(this.props.tabName);
         const data = await PublishPortalMethodHandler(portalDataToSend, this.state.id === null ? localStorage.getItem('cpID') : this.state.id);
+        console.log(data);
         this.setState(data);
         this.props.loaderHandler();
         setTimeout(() => {
