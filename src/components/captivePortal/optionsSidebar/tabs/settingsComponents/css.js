@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
+
+
 class CSS extends Component {
 
     state = {
@@ -27,6 +29,7 @@ class CSS extends Component {
             reader.onload = (evt) => {
                 style.innerText = evt.target.result;
                 this.props.setCSS(evt.target.result);
+                document.querySelectorAll('[style]').removeAttribute('style');
             };
             reader.onerror = (evt) => {
                 style.innerText = "error reading file";

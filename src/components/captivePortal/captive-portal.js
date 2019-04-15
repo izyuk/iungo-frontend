@@ -162,6 +162,8 @@ class CaptivePortal extends Component {
                     style.innerText = data.externalCss;
 
                     HEAD.appendChild(style);
+
+                    document.querySelectorAll('[style]').removeAttribute('style');
                 }
                 const button = {};
                 button.acceptButtonText = data.acceptButtonText;
