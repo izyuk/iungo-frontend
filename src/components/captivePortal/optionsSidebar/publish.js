@@ -16,9 +16,12 @@ class Publish extends Component {
     callPublishMethod = async () => {
         this.props.loaderHandler();
         const portalDataToSend = GetBuilderParams(this.props.tabName);
+        console.log(localStorage.getItem('cpID'), this.state.id);
         const data = await PublishPortalMethodHandler(portalDataToSend, this.state.id === null ? localStorage.getItem('cpID') : this.state.id);
-        console.log(data);
         this.setState(data);
+        if(data.id){
+            localStorage.setItem('cpID', data.id);
+        }
         this.props.loaderHandler();
         setTimeout(() => {
             this.setState({notification: false, failed: false});
@@ -57,7 +60,7 @@ class Publish extends Component {
                 </button>
                 {this.state.notification &&
                 <Notification type={this.state.failed ? 'fail' : 'info'}
-                              text={!this.state.failed ? `Your Captive Portal was ${this.state.publishedType}` : this.state.publishedType}/>}
+                              text={this.state.publishedType}/>}
             </div>
         )
     }

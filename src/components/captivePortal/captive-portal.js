@@ -87,7 +87,10 @@ class CaptivePortal extends Component {
         successData: this.props.background_and_logo.successMessage || '',
         successMessageComponentStatus: false,
         loader: true,
-        portalName: 'Captive Portal Builder'
+        portalName: 'Captive Portal Builder',
+        publishedType: '',
+        failed: false,
+        notification: false
     };
 
     portalName = React.createRef();
@@ -295,6 +298,9 @@ class CaptivePortal extends Component {
         else if (this.state.successMessageComponentStatus !== nextState.successMessageComponentStatus) return true;
         else if (this.state.acceptButton !== nextState.acceptButton) return true;
         else if (this.state.loader !== nextState.loader) return true;
+        else if (this.state.publishedType !== nextState.loader) return true;
+        else if (this.state.notification !== nextState.loader) return true;
+        else if (this.state.failed !== nextState.loader) return true;
         else return true;
 
     }
@@ -319,6 +325,7 @@ class CaptivePortal extends Component {
                 console.log(this.props.tabName);
                 const portalDataToSend = GetBuilderParams(this.props.tabName);
                 this.loaderHandler();
+                console.log(localStorage.getItem('cpID'));
                 let data = await PublishPortalMethodHandler(portalDataToSend, localStorage.getItem('cpID'));
                 console.log('data', data);
                 console.log('portalDataToSend', portalDataToSend);
@@ -358,9 +365,19 @@ class CaptivePortal extends Component {
                 });
                 setTimeout(() => {
                     this.setState({
-                        loader: false
+                        loader: false,
+                        publishedType: data.publishedType,
+                        notification: true,
+                        failed: false
                     });
                 }, 2000);
+                setTimeout(() => {
+                    this.setState({
+                        publishedType: '',
+                        notification: false,
+                        failed: false
+                    });
+                }, 4000);
             }
             else {
                 e.currentTarget.classList.add('error');
@@ -435,7 +452,7 @@ class CaptivePortal extends Component {
                 </div>
                 {this.state.notification &&
                 <Notification type={this.state.failed ? 'fail' : 'info'}
-                              text={!this.state.failed ? `Your Captive Portal was ${this.state.publishedType}` : this.state.publishedType}/>}
+                              text={this.state.publishedType}/>}
                 {this.state.loader && <Loader/>}
             </div>
         )
