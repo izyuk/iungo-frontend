@@ -322,13 +322,9 @@ class CaptivePortal extends Component {
             if (e.currentTarget.value.length > 0) {
                 e.currentTarget.classList.remove('error');
                 this.props.addPortalName(e.currentTarget.value);
-                console.log(this.props.tabName);
                 const portalDataToSend = GetBuilderParams(this.props.tabName);
                 this.loaderHandler();
-                console.log(localStorage.getItem('cpID'));
                 let data = await PublishPortalMethodHandler(portalDataToSend, localStorage.getItem('cpID'));
-                console.log('data', data);
-                console.log('portalDataToSend', portalDataToSend);
                 if (data.id) {
                     localStorage.setItem('cpID', data.id)
                 }
@@ -387,10 +383,8 @@ class CaptivePortal extends Component {
     };
 
     setName = (e) => {
-        if (e.currentTarget.value.length > 0) {
             e.currentTarget.classList.remove('error');
             this.props.addPortalName(e.currentTarget.value);
-        }
     };
 
     render() {

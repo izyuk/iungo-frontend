@@ -14,19 +14,21 @@ class Publish extends Component {
     };
 
     callPublishMethod = async () => {
-        this.props.loaderHandler();
-        const portalDataToSend = GetBuilderParams(this.props.tabName);
-        console.log(localStorage.getItem('cpID'), this.state.id);
-        const data = await PublishPortalMethodHandler(portalDataToSend, this.state.id === null ? localStorage.getItem('cpID') : this.state.id);
-        this.setState(data);
-        if(data.id){
-            localStorage.setItem('cpID', data.id);
+        document.getElementById('portalName').classList.add('error');
+        this.props.addPortalName('');
+        if(this.props.tabName.name.name.length > 0){
+            this.props.loaderHandler();
+            const portalDataToSend = GetBuilderParams(this.props.tabName);
+            const data = await PublishPortalMethodHandler(portalDataToSend, this.state.id === null ? localStorage.getItem('cpID') : this.state.id);
+            this.setState(data);
+            if(data.id){
+                localStorage.setItem('cpID', data.id);
+            }
+            this.props.loaderHandler();
+            setTimeout(() => {
+                this.setState({notification: false, failed: false});
+            }, 2000)
         }
-        this.props.loaderHandler();
-        setTimeout(() => {
-            this.setState({notification: false, failed: false});
-        }, 2000)
-
     };
 
     previewPortalMethodHandler = async () => {
@@ -69,5 +71,10 @@ class Publish extends Component {
 export default connect(
     state => ({
         tabName: state
+    }),
+    dispatch => ({
+        addPortalName: (name) => {
+            dispatch({type: "PORTAL_NAME", payload: name})
+        },
     })
 )(Publish);
