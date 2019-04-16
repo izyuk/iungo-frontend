@@ -1,19 +1,19 @@
 import {GetBuilderParams} from '../../../src/components/captivePortal/optionsSidebar/getBuilderParams';
 
-// function fillingFields(selector, text) {
-//     cy.get(selector)
-//         .focus()
-//         .clear()
-//         .type(text)
-//         .blur();
-// }
+function fillingFields(selector, text) {
+    cy.get(selector)
+        .focus()
+        .clear()
+        .type(text)
+        .blur();
+}
 
-// function fillingFieldsWithFindOption(selector, whatToFind, text) {
-//     cy.get(selector)
-//         .find(whatToFind)
-//         .focus()
-//         .type(text);
-// }
+function fillingFieldsWithFindOption(selector, whatToFind, text) {
+    cy.get(selector)
+        .find(whatToFind)
+        .focus()
+        .type(text);
+}
 
 function fillColorHEX(selector, hex) {
     cy.get(selector)
