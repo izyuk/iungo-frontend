@@ -8,6 +8,7 @@ $ cat .gitignore
 
 # testing
 /coverage
+/cypress/integration/examples/cp_apply.spec.js
 
 # production
 /build
