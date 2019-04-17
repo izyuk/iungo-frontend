@@ -14,8 +14,6 @@ class Publish extends Component {
     };
 
     callPublishMethod = async () => {
-        document.getElementById('portalName').classList.add('error');
-        this.props.addPortalName('');
         if(this.props.tabName.name.name.length > 0){
             this.props.loaderHandler();
             const portalDataToSend = GetBuilderParams(this.props.tabName);
@@ -28,6 +26,9 @@ class Publish extends Component {
             setTimeout(() => {
                 this.setState({notification: false, failed: false});
             }, 2000)
+        } else {
+            this.props.addPortalName('');
+            document.getElementById('portalName').classList.add('error');
         }
     };
 
