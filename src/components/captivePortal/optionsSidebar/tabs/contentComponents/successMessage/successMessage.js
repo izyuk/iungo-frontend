@@ -99,6 +99,7 @@ class SuccessActions extends Component {
         this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
         this.props.redirectURLChanger(redirectURL);
         this.props.successData({color: {rgba: color, hex: colorHEX}, redirectURL, status: this._isMounted, ...rest});
+        console.log(this.state);
     }
 
     componentWillUnmount() {
@@ -142,16 +143,22 @@ class SuccessActions extends Component {
 
     redirectURLChanges = (e) => {
         const url = e.currentTarget.value;
-        if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0) {
+        if(url.length > 0){
+            if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0) {
+                this.setState({
+                    redirectURL: url
+                })
+            } else {
+                e.currentTarget.value = 'http://'+e.currentTarget.value;
+                this.setState({
+                    redirectURL: e.currentTarget.value
+                });
+
+            }
+        } else {
             this.setState({
                 redirectURL: e.currentTarget.value
-            })
-        } else {
-            e.currentTarget.value = 'http://'+e.currentTarget.value;
-            this.setState({
-                redirectURL: 'http://'+e.currentTarget.value
             });
-
         }
     };
 
