@@ -84,8 +84,10 @@ class Methods extends Component {
                         fontWeight: acceptButtonFont.textActions.bold ? ' bold' : 100,
                         fontStyle: acceptButtonFont.textActions.italic ? 'italic' : 'unset',
                         textDecoration: acceptButtonFont.textActions.underline ? 'underline' : 'unset',
-                        width: acceptButtonSize.width,
-                        padding: acceptButtonSize.padding
+                        minWidth: acceptButtonSize.width,
+                        width: 'auto',
+                        padding: acceptButtonSize.padding,
+                        wordBreak: 'break-all'
                     }}>
                         {acceptButtonText}
                     </button>
