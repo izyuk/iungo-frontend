@@ -14,7 +14,7 @@ class ImageUploader extends Component {
         selectedFile: null,
         displayColorPicker: false,
         alignment: true,
-        color: this.props.background_and_logo.background.color || {
+        color: this.props.background_and_logo.background !== undefined ? this.props.background_and_logo.background.color : {
             rgba: {
                 r: 249,
                 g: 249,
@@ -35,6 +35,7 @@ class ImageUploader extends Component {
         imagesList: '',
         progress: ''
     };
+
 
     cpbButton = React.createRef();
 
@@ -191,34 +192,34 @@ class ImageUploader extends Component {
     };
 
     handleChange = (color) => {
-        this.setState({
-            color: {
-                rgba: {
-                    r: color.rgb.r,
-                    g: color.rgb.g,
-                    b: color.rgb.b,
-                    a: color.rgb.a
-                },
-                hex: color.hex
-            }
-        });
+        const currentState = this.state;
+        currentState.color = {
+            rgba: {
+                r: color.rgb.r,
+                g: color.rgb.g,
+                b: color.rgb.b,
+                a: color.rgb.a
+            },
+            hex: color.hex
+        };
+        this.setState(currentState);
         this.state.backgroundColor = true;
         this.props.background_and_logo.backgroundType = 'COLOR';
         const type = this.props.type;
         this.props.handler(this.state.color, type, 'COLOR');
-        this.props.uploadFile(this.state.background, {
-            hex: color.hex,
-            rgba: {r: color.rgb.r, g: color.rgb.g, b: color.rgb.b, a: color.rgb.a}
-        }, 'COLOR');
+        console.log(this.state.color);
+        this.props.uploadFile(this.state.background, this.state.color, 'COLOR');
+        console.log(this.props.background_and_logo);
     };
 
     componentDidUpdate(prevProps, prevState) {
-        console.log(this.props.background_and_logo.background.color);
+        if (prevProps.background_and_logo !== this.props.background_and_logo) {
+
+        }
     }
 
     componentDidMount() {
         if (this.props.type === "background") {
-            console.log(this.props.background_and_logo.background.color);
             if (this.props.background_and_logo.background) {
                 let currentState = this.state;
                 currentState.color = this.props.background_and_logo.background.color;
@@ -228,7 +229,7 @@ class ImageUploader extends Component {
                     blue = this.state.color.rgba.b,
                     alpha = this.state.color.rgba.a;
                 this.cpbButton.current.removeAttribute('style');
-                this.cpbButton.current.setAttribute('style', `background-color: rgba(${ red }, ${ green }, ${ blue }, ${ alpha })`);
+                this.cpbButton.current.setAttribute('style', `background-color: rgba(${red}, ${green}, ${blue}, ${alpha})`);
             }
         }
         if (this.props.type === 'logo') {
@@ -291,9 +292,9 @@ class ImageUploader extends Component {
                                 <div className="colorWrap">
                                     <input type="text" value={this.state.color.hex} disabled/>
                                     <button ref={this.cpbButton}
-                                            style={{backgroundColor: `rgba(${ this.state.color.rgba.r }, ${ this.state.color.rgba.g }, ${ this.state.color.rgba.b }, ${ this.state.color.rgba.a })`}}
+                                            style={{backgroundColor: `rgba(${this.state.color.rgba.r}, ${this.state.color.rgba.g}, ${this.state.color.rgba.b}, ${this.state.color.rgba.a})`}}
                                             onClick={this.handleClick}
-                                    data-cy="openColorPicker"> </button>
+                                            data-cy="openColorPicker"></button>
                                     {this.state.displayColorPicker ? <div style={popover}>
                                         <div style={cover} onClick={this.handleClose}/>
                                         <SketchPicker color={this.state.color.rgba} onChange={this.handleChange}/>

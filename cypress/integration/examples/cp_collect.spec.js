@@ -5,7 +5,7 @@ function fillingFields(selector, text) {
         .focus()
         .clear()
         .type(text)
-        .blur();
+        .blur({ force: true });
 }
 
 function fillingFieldsWithFindOption(selector, whatToFind, text) {
@@ -17,43 +17,43 @@ function fillingFieldsWithFindOption(selector, whatToFind, text) {
 
 function fillColorHEX(selector, hex) {
     cy.get(selector)
-        .click();
+        .click({ force: true });
     cy.get('.flexbox-fix:nth-child(3) > div').first()
         .find('input')
         .focus()
         .clear()
         .type(hex)
-        .blur();
+        .blur({ force: true });
     cy.get('.colorWrap > div > div').first()
-        .click();
+        .click({ force: true });
 }
 
 function fillColorHEXWithOpacity(selector, hex, opacity) {
     cy.get(selector)
-        .click();
+        .click({ force: true });
     cy.get('.flexbox-fix:nth-child(3) > div').first()
         .find('input')
         .focus()
         .clear()
         .type(hex)
-        .blur();
+        .blur({ force: true });
     cy.get('.flexbox-fix:nth-child(3) > div').last()
         .find('input')
         .focus()
         .clear()
         .type(opacity)
-        .blur();
+        .blur({ force: true });
     cy.get('.colorWrap > div > div').first()
-        .click();
+        .click({ force: true });
 }
 
 function fontStylingActions(selector1, selector2, selector3) {
     cy.get(selector1)
-        .click();
+        .click({ force: true });
     cy.get(selector2)
-        .click();
+        .click({ force: true });
     cy.get(selector3)
-        .click();
+        .click({ force: true });
 }
 
 function alignmentsActions(selector1, selector2, selector3) {
@@ -70,7 +70,7 @@ function setSomeSize(selector, value) {
         .focus()
         .clear()
         .type(value)
-        .blur();
+        .blur({ force: true });
 }
 
 
@@ -93,7 +93,7 @@ context('Start and going to CP', function () {
             fillingFieldsWithFindOption('.email', 'input', 'dummy.email@gmail.com');
             fillingFieldsWithFindOption('.password', 'input', '12345678');
             cy.get('.login')
-                .click();
+                .click({ force: true });
         });
 
         it('Filling login inputs with correct data', () => {
@@ -101,7 +101,7 @@ context('Start and going to CP', function () {
             fillingFieldsWithFindOption('.email', 'input', 'dmitriy.izyuk@gmail.com');
             fillingFieldsWithFindOption('.password', 'input', 'Izyuk8968');
             cy.get('.login')
-                .click();
+                .click({ force: true });
         });
     });
 
@@ -117,7 +117,7 @@ context('Start and going to CP', function () {
     describe('NEW CP', function () {
         it('Creating', () => {
             cy.get('.addNewCPButton')
-                .click()
+                .click({ force: true })
         });
 
         it('Setting name', () => {
@@ -126,9 +126,9 @@ context('Start and going to CP', function () {
 
         it('Device toggle', () => {
             cy.get('[data-id="mobile"] span')
-                .click();
+                .click({ force: true });
             cy.get('[data-id="desktop"] span')
-                .click()
+                .click({ force: true })
         });
 
     });
@@ -148,37 +148,37 @@ context('Style tab', function () {
     describe('Changing logo', function () {
         it('Setting color', () => {
             cy.get('[data-cy="logoDropDown"]')
-                .click();
+                .click({ force: true });
         });
 
         it('Choosing and applying image', () => {
             cy.get('.upload')
-                .click();
+                .click({ force: true });
             cy.get('[dataid=203]')
-                .click();
+                .click({ force: true });
             cy.get('.close')
-                .click();
+                .click({ force: true });
         });
 
         it('Checking workability of all alignment options', () => {
             cy.get('[for=left]')
-                .click();
+                .click({ force: true });
             cy.get('[for=center]')
-                .click();
+                .click({ force: true });
             cy.get('[for=right]')
-                .click();
+                .click({ force: true });
         });
 
         it('Choosing alignment which wee need', () => {
             cy.get('[for=center]')
-                .click();
+                .click({ force: true });
         })
     });
 
     describe('Container', function () {
         it('Border', () => {
             cy.get('[data-cy="containerDropDown"]')
-                .click();
+                .click({ force: true });
 
             fillColorHEX('[data-cy="borderColor"]', 'ff6900');
 
@@ -194,7 +194,7 @@ context('Style tab', function () {
             cy.get('[data-cy="containerWidth"]')
                 .focus()
                 .type('1920')
-                .blur();
+                .blur({ force: true });
         });
     });
 });
@@ -206,7 +206,7 @@ context('Content tab', function () {
     describe('Header drop-down', () => {
         it('Top text test', () => {
             cy.get('[data-cy="contentTab"]')
-                .click();
+                .click({ force: true });
         });
 
         it('Add all top text font styles', () => {
@@ -267,34 +267,34 @@ context('Content tab', function () {
     describe('Login methods drop-down', () => {
         it('Choosing needed method(s)', () => {
             cy.get('[data-cy="dropDownLoginMethods"]')
-                .click();
+                .click({ force: true });
         });
 
         it('Select all', () => {
             cy.get('[data-cy="loginMethodFacebook"]')
-                .click();
+                .click({ force: true });
             cy.get('[data-cy="loginMethodGoogle"]')
-                .click();
+                .click({ force: true });
             cy.get('[data-cy="loginMethodConnectButton"]')
-                .click();
+                .click({ force: true });
         });
 
         it('Remove all', () => {
             cy.get('[data-cy="loginMethodFacebook"]')
-                .click();
+                .click({ force: true });
             cy.get('[data-cy="loginMethodGoogle"]')
-                .click();
+                .click({ force: true });
             cy.get('[data-cy="loginMethodConnectButton"]')
-                .click();
+                .click({ force: true });
         });
 
         it('Selecting needed methods', () => {
             cy.get('[data-cy="loginMethodFacebook"]')
-                .click();
+                .click({ force: true });
             cy.get('[data-cy="loginMethodGoogle"]')
-                .click();
+                .click({ force: true });
             cy.get('[data-cy="loginMethodConnectButton"]')
-                .click();
+                .click({ force: true });
         });
     });
 
@@ -351,7 +351,7 @@ context('Content tab', function () {
     describe('Footer drop-down', () => {
         it('Open drop-down', () => {
             cy.get('[data-cy="dropDownFooter"]')
-                .click()
+                .click({ force: true })
         });
 
         it('Add all footer text font styles', () => {
@@ -383,7 +383,7 @@ context('Content tab', function () {
     describe('Success actions drop-down', () => {
         it('Open drop-down', () => {
             cy.get('[data-cy="dropDownSuccessActions"]')
-                .click()
+                .click({ force: true })
         });
 
         it('Add all success text font styles', () => {
@@ -425,7 +425,7 @@ context('Settings tab', function () {
     describe('Style tab', () => {
         it('Style tab', () => {
             cy.get('[data-cy="settingsTab"]')
-                .click();
+                .click({ force: true });
         })
     })
 });
@@ -438,7 +438,7 @@ context('Tests finished', function () {
     describe('Going back to the style tab', () => {
         it('Style tab', () => {
             cy.get('[data-cy="styleTab"]')
-                .click();
+                .click({ force: true });
         })
     })
 });

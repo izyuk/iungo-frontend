@@ -98,6 +98,7 @@ class CaptivePortal extends Component {
 
     eventHandler = (name, type, backgroundType) => {
         if (type === 'background') {
+            console.log(type, name);
             this.setState({
                 backgrName: name
             })
@@ -311,13 +312,15 @@ class CaptivePortal extends Component {
 
     componentDidMount() {
         this.props.token.token ? this.findPortal(this.props.token.token) : this.findPortal(localStorage.getItem('token'));
-        console.log(this.props.background_and_logo);
+        console.log('CP mounted: ',this.props.background_and_logo);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (!localStorage.getItem('cpID')) {
             this.portalName.current.focus();
         }
+        console.log('CP updated Redux storage: ',this.props.background_and_logo);
+        console.log('CP updated React component state: ',this.state);
     }
 
     nameEditor = (e) => {
