@@ -49,7 +49,7 @@ class HeaderTop extends Component {
                 italic: false,
                 underline: false,
             },
-            text: storage.text || 'Venue name',
+            text: storage.text !== undefined ? storage.text : 'Venue name',
             alignment: storage.styles.alignment || 'center'
         };
 
@@ -94,6 +94,7 @@ class HeaderTop extends Component {
 
     componentDidMount() {
         const {displayColorPicker, fontInputData, text, colorHEX, color, ...rest} = this.state;
+        console.log('mounted venue name: ', text);
         this.props.textData(text, {color:  {rgba: color, hex: colorHEX}, ...rest});
         this.props.handler({color:  {rgba: color, hex: colorHEX}, ...rest});
         const storage = this.props.header.top;
@@ -102,6 +103,7 @@ class HeaderTop extends Component {
 
     componentDidUpdate() {
         const {displayColorPicker, fontInputData, text, colorHEX, color, ...rest} = this.state;
+        console.log('updated venue name: ', text);
         this.props.textData(text, {color:  {rgba: color, hex: colorHEX}, ...rest});
         this.props.handler({color:  {rgba: color, hex: colorHEX}, ...rest});
     }

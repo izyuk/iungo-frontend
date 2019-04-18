@@ -49,7 +49,7 @@ class HeaderDescription extends Component {
                 italic: false,
                 underline: false,
             },
-            text: storage.text || 'Venue description',
+            text: storage.text !== undefined ? storage.text : 'Venue description',
             alignment: storage.styles.alignment || 'center'
         };
     }
