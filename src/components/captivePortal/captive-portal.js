@@ -14,6 +14,7 @@ import Notification from "../additional/notification";
 
 class CaptivePortal extends Component {
     state = {
+        readyToWork: false,
         mobile: false,
         backgrName: this.props.background_and_logo.background_and_logo.logo.url || '',
         logoName: '',
@@ -199,15 +200,18 @@ class CaptivePortal extends Component {
                     successData: data.successMessage || '',
                     footerContent: data.footer,
                     loader: false,
-                    portalName: data.name
+                    portalName: data.name,
+                    readyToWork: true
                 });
                 this.portalName.current.value = data.name;
+
             });
         }
 
         else {
             this.setState({
-                loader: false
+                loader: false,
+                readyToWork: true
             });
         }
 
@@ -307,6 +311,10 @@ class CaptivePortal extends Component {
 
     componentDidMount() {
         this.props.token.token ? this.findPortal(this.props.token.token) : this.findPortal(localStorage.getItem('token'));
+        console.log(this.props.background_and_logo);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
         if (!localStorage.getItem('cpID')) {
             this.portalName.current.focus();
         }
@@ -388,68 +396,74 @@ class CaptivePortal extends Component {
     };
 
     render() {
-        return (
-            <div className="container">
-                <div className="wrap wrapFix">
-                    <div className="container containerFix">
-                        <div className="wrap wrapFix2">
-                            <div className="info">
-                                <input ref={this.portalName}
-                                       id={'portalName'}
-                                       type="text"
-                                       placeholder={'Name'}
-                                       disabled={false}
-                                       onBlur={this.setName}
-                                       onDoubleClick={this.nameEditor}
-                                       onKeyDown={this.sendData}
-                                       className={'active'} data-cy="captivePortalName"/>
-                                <span></span>
-                                <div className="toggles">
-                                    <a href="javascript:void(0)" data-id="desktop"
-                                       className="active" onClick={(data) => this.trigger(data)}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24">
-                                            <path fill="#BFC6D3" fillRule="nonzero"
-                                                  d="M17.25 6H6.75C6.3 6 6 6.3 6 6.75V14c0 .45.3 1 .75 1H11v2H9v1h6v-1h-2v-2h4.25c.45 0 .75-.55.75-1V6.75c0-.45-.3-.75-.75-.75zM16 8v5H8V8h8z"/>
-                                        </svg>
-                                        <span>Desktop</span>
-                                    </a>
-                                    <a href="javascript:void(0)" data-id="mobile"
-                                       onClick={(data) => this.trigger(data)}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24">
-                                            <path fill="#AFB7C8" fillRule="nonzero"
-                                                  d="M15.5 6h-6C8.673 6 8 6.673 8 7.5v9c0 .827.673 1.5 1.5 1.5h6c.827 0 1.5-.673 1.5-1.5v-9c0-.827-.673-1.5-1.5-1.5zm-3 10.375a.625.625 0 1 1 0-1.25.625.625 0 0 1 0 1.25zM15 14h-5V8h5v6z"
-                                                  opacity=".8"/>
-                                        </svg>
-                                        <span>Mobile</span>
-                                    </a>
+        if(this.state.readyToWork) {
+            return (
+                <div className="container">
+                    <div className="wrap wrapFix">
+                        <div className="container containerFix">
+                            <div className="wrap wrapFix2">
+                                <div className="info">
+                                    <input ref={this.portalName}
+                                           id={'portalName'}
+                                           type="text"
+                                           placeholder={'Name'}
+                                           disabled={false}
+                                           onBlur={this.setName}
+                                           onDoubleClick={this.nameEditor}
+                                           onKeyDown={this.sendData}
+                                           className={'active'} data-cy="captivePortalName"/>
+                                    <span></span>
+                                    <div className="toggles">
+                                        <a href="javascript:void(0)" data-id="desktop"
+                                           className="active" onClick={(data) => this.trigger(data)}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24">
+                                                <path fill="#BFC6D3" fillRule="nonzero"
+                                                      d="M17.25 6H6.75C6.3 6 6 6.3 6 6.75V14c0 .45.3 1 .75 1H11v2H9v1h6v-1h-2v-2h4.25c.45 0 .75-.55.75-1V6.75c0-.45-.3-.75-.75-.75zM16 8v5H8V8h8z"/>
+                                            </svg>
+                                            <span>Desktop</span>
+                                        </a>
+                                        <a href="javascript:void(0)" data-id="mobile"
+                                           onClick={(data) => this.trigger(data)}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24">
+                                                <path fill="#AFB7C8" fillRule="nonzero"
+                                                      d="M15.5 6h-6C8.673 6 8 6.673 8 7.5v9c0 .827.673 1.5 1.5 1.5h6c.827 0 1.5-.673 1.5-1.5v-9c0-.827-.673-1.5-1.5-1.5zm-3 10.375a.625.625 0 1 1 0-1.25.625.625 0 0 1 0 1.25zM15 14h-5V8h5v6z"
+                                                      opacity=".8"/>
+                                            </svg>
+                                            <span>Mobile</span>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                            <Preview state={this.state}
-                                     header={this.props.background_and_logo.header}
-                                     footerTextData={this.props.background_and_logo.footer}
-                                     successTextData={this.props.background_and_logo.successMessage}
-                            />
+                                <Preview state={this.state}
+                                         header={this.props.background_and_logo.header}
+                                         footerTextData={this.props.background_and_logo.footer}
+                                         successTextData={this.props.background_and_logo.successMessage}
+                                />
 
+                            </div>
                         </div>
+                        <Options alignment={this.alignment}
+                                 handler={this.eventHandler}
+                                 containerHandler={this.containerHandler}
+                                 textData={this.contentData}
+                                 methods={this.loginMethods}
+                                 acceptButton={this.acceptButton}
+                                 footerTextData={this.footerTextData}
+                                 successData={this.successTextData}
+                                 loaderHandler={this.loaderHandler}/>
                     </div>
-                    <Options alignment={this.alignment}
-                             handler={this.eventHandler}
-                             containerHandler={this.containerHandler}
-                             textData={this.contentData}
-                             methods={this.loginMethods}
-                             acceptButton={this.acceptButton}
-                             footerTextData={this.footerTextData}
-                             successData={this.successTextData}
-                             loaderHandler={this.loaderHandler}/>
+                    {this.state.notification &&
+                    <Notification type={this.state.failed ? 'fail' : 'info'}
+                                  text={this.state.publishedType}/>}
+                    {this.state.loader && <Loader/>}
                 </div>
-                {this.state.notification &&
-                <Notification type={this.state.failed ? 'fail' : 'info'}
-                              text={this.state.publishedType}/>}
-                {this.state.loader && <Loader/>}
-            </div>
-        )
+            )
+        }
+        else {
+            return <Loader/>
+        }
+
     }
 }
 

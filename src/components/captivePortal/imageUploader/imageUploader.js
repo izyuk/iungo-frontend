@@ -14,7 +14,7 @@ class ImageUploader extends Component {
         selectedFile: null,
         displayColorPicker: false,
         alignment: true,
-        color: {
+        color: this.props.background_and_logo.background.color || {
             rgba: {
                 r: 249,
                 g: 249,
@@ -213,28 +213,22 @@ class ImageUploader extends Component {
     };
 
     componentDidUpdate(prevProps, prevState) {
+        console.log(this.props.background_and_logo.background.color);
     }
 
     componentDidMount() {
         if (this.props.type === "background") {
+            console.log(this.props.background_and_logo.background.color);
             if (this.props.background_and_logo.background) {
-                let red = this.props.background_and_logo.background.color.rgba.r,
-                    green = this.props.background_and_logo.background.color.rgba.g,
-                    blue = this.props.background_and_logo.background.color.rgba.b,
-                    alpha = this.props.background_and_logo.background.color.rgba.a;
-                this.setState({
-                    color: {
-                        rgba: {
-                            r: red,
-                            g: green,
-                            b: blue,
-                            a: alpha
-                        },
-                        hex: this.props.background_and_logo.background.color.hex
-                    }
-                });
+                let currentState = this.state;
+                currentState.color = this.props.background_and_logo.background.color;
+                this.setState(currentState);
+                let red = this.state.color.rgba.r,
+                    green = this.state.color.rgba.g,
+                    blue = this.state.color.rgba.b,
+                    alpha = this.state.color.rgba.a;
                 this.cpbButton.current.removeAttribute('style');
-                this.cpbButton.current.setAttribute('style', `background: rgba(${ red }, ${ green }, ${ blue }, ${ alpha })`);
+                this.cpbButton.current.setAttribute('style', `background-color: rgba(${ red }, ${ green }, ${ blue }, ${ alpha })`);
             }
         }
         if (this.props.type === 'logo') {
@@ -244,7 +238,8 @@ class ImageUploader extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.imagesList !== nextState.imagesList) return true;
+        let currentState = this.state;
+        if (currentState !== nextState) return true;
         else return true;
     }
 
@@ -298,7 +293,7 @@ class ImageUploader extends Component {
                                     <button ref={this.cpbButton}
                                             style={{backgroundColor: `rgba(${ this.state.color.rgba.r }, ${ this.state.color.rgba.g }, ${ this.state.color.rgba.b }, ${ this.state.color.rgba.a })`}}
                                             onClick={this.handleClick}
-                                    data-cy="openColorPicker"></button>
+                                    data-cy="openColorPicker"> </button>
                                     {this.state.displayColorPicker ? <div style={popover}>
                                         <div style={cover} onClick={this.handleClose}/>
                                         <SketchPicker color={this.state.color.rgba} onChange={this.handleChange}/>
