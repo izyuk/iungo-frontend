@@ -59,7 +59,7 @@ class Publish extends Component {
                     </button>
                     <span>Please allow new windows opening</span>
                 </p>
-                <button type="button" onClick={this.callPublishMethod} className="publishBtn">Publish
+                <button type="button" onClick={this.callPublishMethod} className="publishBtn">Save
                 </button>
                 {this.state.notification &&
                 <Notification type={this.state.failed ? 'fail' : 'info'}
