@@ -13,6 +13,9 @@ $ cat .gitignore
 # production
 /build
 
+#project files
+__.gitlab-ci.yml
+
 # misc
 .DS_Store
 .env.local
