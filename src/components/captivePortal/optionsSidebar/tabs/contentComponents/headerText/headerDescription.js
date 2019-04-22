@@ -264,7 +264,6 @@ class HeaderDescription extends Component {
                                        onChange={(e) => this.fontInputHandler(e.target.value)}
                                        onBlur={(e) => this.onSliderChange(e.target.value)}
                                        defaultValue={this.state.fontSize}
-                                       value={this.state.fontInputData}
                                        data-cy="headerDescriptionFontSize"/>
                                 <span>
                                     px

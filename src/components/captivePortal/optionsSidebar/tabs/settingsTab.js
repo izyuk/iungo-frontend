@@ -49,7 +49,7 @@ class SettingsTab extends Component {
                         </svg>
                     </div>
                     {this.state.visible === 'CSS' ?
-                        <CSS/> :
+                        <CSS findPortal={this.props.findPortal} clearExternalCss={this.props.clearExternalCss}/> :
                         false}
                 </div>
             </div>

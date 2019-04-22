@@ -14,6 +14,9 @@ class Preview extends Component {
     PreviewMain = React.createRef();
     ContainerMain = React.createRef();
     FooterText = React.createRef();
+    SuccessText = React.createRef();
+    TopText = React.createRef();
+    DescriptionText = React.createRef();
 
     container = ({border: {color, ...rest}, background, size: {width, padding}}) => {
         if (this.props.state.type === 'background') {
@@ -39,17 +42,42 @@ class Preview extends Component {
         this.ContainerMain.current.style.padding = `${padding}px`;
     };
 
+    textStyling = (ref, stylesObj) => {
+        console.log(ref.current);
+        ref.current.style.color = `rgba(${stylesObj && stylesObj.styles.color.rgba.r}, ${stylesObj && stylesObj.styles.color.rgba.g}, ${stylesObj && stylesObj.styles.color.rgba.b}, ${stylesObj && stylesObj.styles.color.rgba.a})`;
+        ref.current.style.fontSize = stylesObj && stylesObj.styles.fontSize;
+        ref.current.style.fontWeight = stylesObj && stylesObj.styles.textActions.bold ? 'bold' : '100';
+        ref.current.style.fontStyle = stylesObj && stylesObj.styles.textActions.italic === true ? 'italic' : 'normal';
+        ref.current.style.textDecoration = stylesObj && stylesObj.styles.textActions.underline ? 'underline' : 'none';
+        ref.current.style.textAlign = stylesObj && stylesObj.styles.alignment;
+    };
+
     componentDidUpdate() {
         this.container(this.props.state.container);
+        if(!this.props.state.successMessageComponentStatus){
+            this.textStyling(this.TopText, this.props.header.top);
+            this.textStyling(this.DescriptionText, this.props.header.top);
+            this.textStyling(this.FooterText, this.props.footer);
+        } else {
+            this.textStyling(this.SuccessText, this.props.success);
+        }
     }
 
     componentDidMount() {
         this.container(this.props.state.container);
+        if(!this.props.state.successMessageComponentStatus){
+            this.textStyling(this.TopText, this.props.header.top);
+            this.textStyling(this.DescriptionText, this.props.header.top);
+            this.textStyling(this.FooterText, this.props.footer);
+        } else {
+            this.textStyling(this.SuccessText, this.props.success);
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.logoName !== nextState.logoName) return true;
         else if (this.state.backgroundColor !== nextState.backgroundColor) return true;
+        else if (this.props.state !== nextProps.state) return true;
         else if (this.props.state.logoName !== nextProps.state.logoName) return true;
         else if (this.props.state.backgrName !== nextProps.state.backgrName) return true;
         else if (this.props.state.backgroundType !== nextProps.state.backgroundType) return true;
@@ -63,14 +91,16 @@ class Preview extends Component {
         else if (this.props.state.successData !== nextProps.state.successData) return true;
         else if (this.props.state.acceptButton !== nextProps.state.acceptButton) return true;
         else if (this.props.state.successMessageComponentStatus !== nextProps.state.successMessageComponentStatus) return true;
+        else if (this.props.header.top !== nextProps.header.top) return true;
+        else if (this.props.header.description !== nextProps.header.description) return true;
         else return false;
     }
 
     render() {
         let topData = this.props.header.top;
         let descriptionData = this.props.header.description;
-        let footerData = this.props.footerTextData;
-        let successData = this.props.successTextData;
+        let footerData = this.props.footer;
+        let successData = this.props.success;
         let {methods, successMessageComponentStatus, acceptButton} = this.props.state;
         console.log(this.props.state);
         return (
@@ -89,27 +119,11 @@ class Preview extends Component {
                             {!successMessageComponentStatus ?
                                 <div className="contentPlace">
                                     <div className="textPlace">
-                                        <p className="head"
-                                           style={{
-                                               color: `rgba(${topData && topData.styles.color.rgba.r}, ${topData && topData.styles.color.rgba.g}, ${topData && topData.styles.color.rgba.b}, ${topData && topData.styles.color.rgba.a})`,
-                                               fontSize: topData && topData.styles.fontSize,
-                                               fontWeight: topData && topData.styles.textActions.bold ? 'bold' : '100',
-                                               fontStyle: topData && topData.styles.textActions.italic === true ? 'italic' : 'normal',
-                                               textDecoration: topData && topData.styles.textActions.underline ? 'underline' : 'none',
-                                               textAlign: topData && topData.styles.alignment
-                                           }}>
+                                        <p className="head" ref={this.TopText}>
                                             {topData && topData.text}
                                         </p>
 
-                                        <p className="description"
-                                           style={{
-                                               color: `rgba(${descriptionData && descriptionData.styles.color.rgba.r}, ${descriptionData && descriptionData.styles.color.rgba.g}, ${descriptionData && descriptionData.styles.color.rgba.b}, ${descriptionData && descriptionData.styles.color.rgba.a})`,
-                                               fontSize: descriptionData && descriptionData.styles.fontSize,
-                                               fontWeight: descriptionData && descriptionData.styles.textActions.bold ? 'bold' : '100',
-                                               fontStyle: descriptionData && descriptionData.styles.textActions.italic ? 'italic' : 'normal',
-                                               textDecoration: descriptionData && descriptionData.styles.textActions.underline ? 'underline' : 'none',
-                                               textAlign: descriptionData && descriptionData.styles.alignment
-                                           }}>
+                                        <p className="description" ref={this.DescriptionText}>
                                             {descriptionData && descriptionData.text}
                                         </p>
                                     </div>
@@ -117,15 +131,7 @@ class Preview extends Component {
                                 </div>
                                 :
                                 <div className="contentPlace">
-                                    <p className="text" ref={this.FooterText}
-                                       style={{
-                                           color: `rgba(${successData.styles && successData.styles.color.rgba.r}, ${successData.styles && successData.styles.color.rgba.g}, ${successData.styles && successData.styles.color.rgba.b}, ${successData.styles && successData.styles.color.rgba.a})`,
-                                           fontSize: successData.styles && successData.styles.fontSize,
-                                           fontWeight: successData.styles && successData.styles.textActions.bold ? 'bold' : '100',
-                                           fontStyle: successData.styles && successData.styles.textActions.italic ? 'italic' : 'normal',
-                                           textDecoration: successData.styles && successData.styles.textActions.underline ? 'underline' : 'none',
-                                           textAlign: successData.styles && successData.styles.alignment
-                                       }}>
+                                    <p className="text" ref={this.SuccessText}>
                                         {successData && successData.text}
                                     </p>
                                 </div>
@@ -134,15 +140,7 @@ class Preview extends Component {
                     </div>
                     <div className="footer">
                         <div className="contentPlace">
-                            <p className="text" ref={this.FooterText}
-                               style={{
-                                   color: `rgba(${footerData.styles && footerData.styles.color.rgba.r}, ${footerData.styles && footerData.styles.color.rgba.g}, ${footerData.styles && footerData.styles.color.rgba.b}, ${footerData.styles && footerData.styles.color.rgba.a})`,
-                                   fontSize: footerData.styles && footerData.styles.fontSize,
-                                   fontWeight: footerData.styles && footerData.styles.textActions.bold ? 'bold' : '100',
-                                   fontStyle: footerData.styles && footerData.styles.textActions.italic ? 'italic' : 'normal',
-                                   textDecoration: footerData.styles && footerData.styles.textActions.underline ? 'underline' : 'none',
-                                   textAlign: footerData.styles && footerData.styles.alignment
-                               }}>
+                            <p className="text" ref={this.FooterText}>
                                 {footerData && footerData.text}
                             </p>
                         </div>

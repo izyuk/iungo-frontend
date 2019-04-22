@@ -9,6 +9,7 @@ import Loader from "../../loader";
 
 import {GetBuilderParams} from "./optionsSidebar/getBuilderParams";
 import {PublishPortalMethodHandler} from "./optionsSidebar/publishPortalMethodHandler";
+import {ApplyIncomingData} from "../../modules/applyIncomingData";
 import Notification from "../additional/notification";
 
 
@@ -91,7 +92,9 @@ class CaptivePortal extends Component {
         portalName: 'Captive Portal Builder',
         publishedType: '',
         failed: false,
-        notification: false
+        notification: false,
+        externalCss: '',
+        stylesRemovedManually: false
     };
 
     portalName = React.createRef();
@@ -125,9 +128,10 @@ class CaptivePortal extends Component {
     findPortal = async (data) => {
         const id = this.props.settedId ? this.props.settedId : localStorage.getItem('cpID');
         if (id !== null) {
+            // await ApplyIncomingData(data, id, this.props);
             let query = getPortal(data, id);
-
             this.loaderHandler();
+
             console.log('1');
             await query.then(res => {
                 const {data} = res;
@@ -149,7 +153,7 @@ class CaptivePortal extends Component {
                 this.props.setLogoID(data.logo === null ? '' : data.logo.id);
                 this.props.setBackgroundID(data.background === null ? '' : data.background.id);
                 this.props.addPortalName(data.name);
-                this.props.setCSS(data.externalCss);
+                this.props.setCSS(this.state.stylesRemovedManually ? '' : data.externalCss);
                 this.props.redirectURLChanger(data.successRedirectUrl);
                 this.props.setSuccessMessageData(data.successMessage, data.style.success_message);
                 this.props.setButtonStyles({
@@ -159,17 +163,6 @@ class CaptivePortal extends Component {
                     acceptButtonFont: data.style.accept_button_font,
                     acceptButtonBorder: data.style.accept_button_border
                 });
-                if (data.externalCss) {
-                    const STYLE = document.getElementsByTagName('STYLE')[0];
-                    if (STYLE) STYLE.parentNode.removeChild(STYLE);
-                    const HEAD = document.getElementsByTagName('HEAD')[0];
-                    let style = document.createElement('style');
-                    style.innerText = data.externalCss;
-
-                    HEAD.appendChild(style);
-
-                    document.querySelectorAll('[style]').removeAttribute('style');
-                }
                 const button = {};
                 button.acceptButtonText = data.acceptButtonText;
                 button.acceptButtonBorder = data.style.accept_button_border;
@@ -202,14 +195,12 @@ class CaptivePortal extends Component {
                     footerContent: data.footer,
                     loader: false,
                     portalName: data.name,
-                    readyToWork: true
+                    readyToWork: true,
+                    externalCss: this.state.stylesRemovedManually ? '' : data.externalCss
                 });
                 this.portalName.current.value = data.name;
-
             });
-        }
-
-        else {
+        } else {
             this.setState({
                 loader: false,
                 readyToWork: true
@@ -238,8 +229,7 @@ class CaptivePortal extends Component {
 
         if (data.target.nodeName === 'A') {
             data.target.classList.add('active');
-        }
-        else if (data.target.closest('a').getAttribute('data-id')) {
+        } else if (data.target.closest('a').getAttribute('data-id')) {
             data.target.closest('a').classList.add('active');
         }
 
@@ -286,6 +276,17 @@ class CaptivePortal extends Component {
         });
     };
 
+    clearExternalCss = () => {
+        this.setState({
+            externalCss: '',
+            stylesRemovedManually: true
+        });
+
+        console.log('external css length', this.state.externalCss);
+        const STYLE = document.getElementsByTagName('STYLE')[0];
+        if (STYLE) STYLE.parentNode.removeChild(STYLE);
+    };
+
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.backgrName !== nextState.backgrName) return true;
         else if (this.state.logoName !== nextState.logoName) return true;
@@ -303,24 +304,40 @@ class CaptivePortal extends Component {
         else if (this.state.successMessageComponentStatus !== nextState.successMessageComponentStatus) return true;
         else if (this.state.acceptButton !== nextState.acceptButton) return true;
         else if (this.state.loader !== nextState.loader) return true;
-        else if (this.state.publishedType !== nextState.loader) return true;
-        else if (this.state.notification !== nextState.loader) return true;
-        else if (this.state.failed !== nextState.loader) return true;
+        else if (this.state.publishedType !== nextState.publishedType) return true;
+        else if (this.state.notification !== nextState.notification) return true;
+        else if (this.state.failed !== nextState.failed) return true;
+        else if (this.state.externalCss !== nextState.externalCss) return true;
+        else if (this.state.stylesRemovedManually !== nextState.stylesRemovedManually) return true;
         else return true;
-
     }
 
     componentDidMount() {
         this.props.token.token ? this.findPortal(this.props.token.token) : this.findPortal(localStorage.getItem('token'));
-        console.log('CP mounted: ',this.props.background_and_logo);
+        console.log('CP mounted: ', this.props.background_and_logo);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (!localStorage.getItem('cpID')) {
+        if (!localStorage.getItem('cpID')) {                                                
             this.portalName.current.focus();
         }
-        console.log('CP updated Redux storage: ',this.props.background_and_logo);
-        console.log('CP updated React component state: ',this.state);
+        console.log('CP updated Redux storage: ', this.props.background_and_logo);
+        console.log('CP updated React component state: ', this.state);
+
+        if (this.state.externalCss !== '') {
+            const HEAD = document.getElementsByTagName('HEAD')[0];
+            const style = document.getElementsByTagName('STYLE')[0] ? document.getElementsByTagName('STYLE')[0] : document.createElement('style');
+            style.type = 'text/css';
+            style.innerText = this.state.externalCss;
+
+            HEAD.appendChild(style);
+
+            const styledElements = document.querySelectorAll('.previewWrap [style]');
+            Object.keys(styledElements).map((item, i) => {
+                styledElements[item].removeAttribute('style');
+            });
+            console.log(document.querySelectorAll('.previewWrap [style]'));
+        }
     }
 
     nameEditor = (e) => {
@@ -385,8 +402,7 @@ class CaptivePortal extends Component {
                         failed: false
                     });
                 }, 4000);
-            }
-            else {
+            } else {
                 e.currentTarget.classList.add('error');
             }
 
@@ -394,12 +410,12 @@ class CaptivePortal extends Component {
     };
 
     setName = (e) => {
-            e.currentTarget.classList.remove('error');
-            this.props.addPortalName(e.currentTarget.value);
+        e.currentTarget.classList.remove('error');
+        this.props.addPortalName(e.currentTarget.value);
     };
 
     render() {
-        if(this.state.readyToWork) {
+        if (this.state.readyToWork) {
             return (
                 <div className="container">
                     <div className="wrap wrapFix">
@@ -440,8 +456,8 @@ class CaptivePortal extends Component {
                                 </div>
                                 <Preview state={this.state}
                                          header={this.props.background_and_logo.header}
-                                         footerTextData={this.props.background_and_logo.footer}
-                                         successTextData={this.props.background_and_logo.successMessage}
+                                         footer={this.props.background_and_logo.footer}
+                                         success={this.props.background_and_logo.successMessage}
                                 />
 
                             </div>
@@ -454,7 +470,9 @@ class CaptivePortal extends Component {
                                  acceptButton={this.acceptButton}
                                  footerTextData={this.footerTextData}
                                  successData={this.successTextData}
-                                 loaderHandler={this.loaderHandler}/>
+                                 loaderHandler={this.loaderHandler}
+                                 findPortal={this.findPortal}
+                                 clearExternalCss={this.clearExternalCss}/>
                     </div>
                     {this.state.notification &&
                     <Notification type={this.state.failed ? 'fail' : 'info'}
@@ -462,8 +480,7 @@ class CaptivePortal extends Component {
                     {this.state.loader && <Loader/>}
                 </div>
             )
-        }
-        else {
+        } else {
             return <Loader/>
         }
 

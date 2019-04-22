@@ -76,7 +76,8 @@ class Options extends Component {
                                 footerTextData={this.props.footerTextData}
                                 successData={this.props.successData}/>
                             : (this.state.tab === 'Settings') ?
-                                <SettingsTab/>
+                                <SettingsTab findPortal={this.props.findPortal}
+                                             clearExternalCss={this.props.clearExternalCss}/>
                                 : ''}
                     <Publish loaderHandler={this.props.loaderHandler}/>
                 </div>

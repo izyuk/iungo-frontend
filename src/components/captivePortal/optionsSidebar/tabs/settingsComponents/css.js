@@ -6,15 +6,20 @@ import {connect} from 'react-redux';
 class CSS extends Component {
 
     state = {
-        isUsed: false
+        isUsed: false,
+        styledElements: '',
+        stylesArray: ''
     };
 
     input = React.createRef();
+    // STYLE = document.getElementsByTagName('STYLE')[0];
+
 
     addStyles = (e) => {
-        console.log(e.target.value);
         const STYLE = document.getElementsByTagName('STYLE')[0];
-        if (STYLE) STYLE.parentNode.removeChild(STYLE);
+        if (!!STYLE) {
+            STYLE.parentNode.removeChild(STYLE);
+        }
         const HEAD = document.getElementsByTagName('HEAD')[0];
         let file = e.currentTarget.files[0];
         console.log(file.name);
@@ -23,13 +28,28 @@ class CSS extends Component {
         });
         if (file) {
             let style = document.createElement('style');
+            style.type = 'text/css';
             let reader = new FileReader();
             reader.readAsText(file, "UTF-8");
 
             reader.onload = (evt) => {
-                style.innerText = evt.target.result;
+                style.innerHTML = evt.target.result;
                 this.props.setCSS(evt.target.result);
-                document.querySelectorAll('[style]').removeAttribute('style');
+                const styledElements = document.querySelectorAll('.previewWrap [style]');
+                console.log(styledElements);
+                let stylesArray = [];
+                Object.keys(styledElements).map((item, i) => {
+                    stylesArray.push(styledElements[item].getAttribute('style'));
+                });
+                this.setState({
+                    styledElements: styledElements,
+                    stylesArray: stylesArray
+                });
+                console.log(this.state);
+                Object.keys(styledElements).map((item, i) => {
+                    styledElements[item].removeAttribute('style');
+                });
+                console.log(this.state);
             };
             reader.onerror = (evt) => {
                 style.innerText = "error reading file";
@@ -41,26 +61,61 @@ class CSS extends Component {
     };
 
     removeStyles = () => {
+        this.props.clearExternalCss();
+        this.props.findPortal(localStorage.getItem('token'));
+        this.props.setCSS('');
+        console.log(this.props.background_and_logo.css.path);
         this.input.current.value = '';
         const STYLE = document.getElementsByTagName('STYLE')[0];
-        if (STYLE) STYLE.parentNode.removeChild(STYLE);
+
+        STYLE ? STYLE.parentNode.removeChild(STYLE) : true;
         this.setState({
             isUsed: false
-        })
+        });
+        if(this.state.stylesArray){
+            const styles = this.state.stylesArray;
+            const nodes = this.state.styledElements;
+            Object.keys(nodes).map((item, i) => {
+                nodes[item].setAttribute('style', styles[item])
+            })
+        }
 
     };
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         if (this.state.isUsed !== nextState.isUsed) return true;
+        else if (this.state.styledElements !== nextState.styledElements) return true;
+        else if (this.state.stylesArray !== nextState.stylesArray) return true;
         else return false
     }
 
     componentDidMount() {
         console.log(this.input.current.value);
+        console.log(this.props.background_and_logo.css.path);
+        console.log(this.props.background_and_logo.css.path.length);
+        if(this.props.background_and_logo.css.path.length > 0){
+            this.setState({
+                isUsed: true
+            })
+        } else {
+            this.setState({
+                isUsed: false
+            })
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log(this.input.current.value);
+        console.log(this.props.background_and_logo.css.path.length);
+        if(this.props.background_and_logo.css.path.length > 0){
+            this.setState({
+                isUsed: true
+            })
+        } else {
+            this.setState({
+                isUsed: false
+            })
+        }
     }
 
     render() {
@@ -93,7 +148,6 @@ class CSS extends Component {
                                     </svg>
                                     <span>Upload</span>
                                     <input ref={this.input} type="file" onChange={this.addStyles} accept="text/css"/>
-
                                 </div>
                             </div>
                         </span>

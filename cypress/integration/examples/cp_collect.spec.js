@@ -258,10 +258,10 @@ context('Content tab', function () {
         it('Set description text color', () => {
             fillColorHEX('[ data-cy="headerDescriptionColor"]', 'edaa55');
         });
-
-        it('Set description text font size', () => {
-            setSomeSize('[data-cy="headerDescriptionFontSize"]', 23);
-        })
+        //
+        // it('Set description text font size', () => {
+        //     setSomeSize('[data-cy="headerDescriptionFontSize"]', 23);
+        // })
     });
 
     describe('Login methods drop-down', () => {
@@ -494,7 +494,7 @@ context('Starting comparing collected data', function () {
                                     styles: {
                                         color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
                                         alignment: "center",
-                                        fontSize: 23,
+                                        fontSize: 18,
                                         textActions: {bold: false, italic: false, underline: false}
                                     }
                                 }
@@ -524,7 +524,7 @@ context('Starting comparing collected data', function () {
                             redirectURL: {url: "http://google.com"},
                             imagesIDs: {logoID: "203", backgroundID: ""},
                             loginAgreeButton: {
-                                acceptButtonText: "Connect FOR FREE",
+                                acceptButtonText: "ConnectConnect FOR FREE",
                                 acceptButtonColor: {rgba: {r: 255, g: 255, b: 255, a: 0}, hex: "#ffffff"},
                                 acceptButtonFont: {
                                     color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
@@ -734,7 +734,7 @@ context('Starting comparing collected data', function () {
                             twitterLogin: false,
                             acceptTermsLogin: true,
                             successRedirectUrl: "http://google.com",
-                            acceptButtonText: "Connect FOR FREE"
+                            acceptButtonText: "ConnectConnect FOR FREE"
                         }
                     )
                 })
