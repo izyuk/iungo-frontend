@@ -14,7 +14,7 @@ class Login extends Component {
 
     fieldsHandler = (e) => {
         const type = e.target.getAttribute('datatype');
-        if (type === 'password' || 'confirmedPassword') {
+        if (type === 'password' || type === 'confirmedPassword') {
             this.setState({
                 [type]: e.target.value.length < 8 ? '' : e.target.value
             });
@@ -28,6 +28,7 @@ class Login extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.email !== nextState.email) return true;
         else if (this.state.password !== nextState.password) return true;
+        else if (this.state.confirmedPassword !== nextState.confirmedPassword) return true;
         else if (this.props.notificationType !== nextProps.notificationType) return true;
         else if (this.props.register !== nextProps.register) return true;
         else return false
@@ -36,6 +37,7 @@ class Login extends Component {
     componentDidUpdate() {
         const {register} = this.props;
         let {email, password, confirmedPassword} = this.state;
+        console.log(email, password, confirmedPassword);
         if(register){
             if (email.length > 0 && password.length >= 8 && password === confirmedPassword) {
                 this.props.setLoginData(this.state)

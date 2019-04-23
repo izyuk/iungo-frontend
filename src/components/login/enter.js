@@ -85,7 +85,9 @@ class Enter extends Component {
     };
 
     setLoginData = (data) => {
-        this.setState({email: '', password: ''});
+        this.setState({
+            userData: null
+        });
         if(data){
             const emailMask = /[\w_.-]+@[0-9a-z_-]+\.[a-z]{2,5}/i;
             if(emailMask.test(data.email)){
