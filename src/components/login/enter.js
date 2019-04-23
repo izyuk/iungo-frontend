@@ -85,6 +85,7 @@ class Enter extends Component {
     };
 
     setLoginData = (data) => {
+        this.setState({email: '', password: ''});
         if(data){
             const emailMask = /[\w_.-]+@[0-9a-z_-]+\.[a-z]{2,5}/i;
             if(emailMask.test(data.email)){
@@ -158,7 +159,7 @@ class Enter extends Component {
                 <p>{login ? 'Login' : 'Create your account now'}</p>
                 {login ? <Login setLoginData={this.setLoginData}
                                 notificationType={notificationType}>{this.props.children}</Login> :
-                    <Register setLoginData={this.setLoginData}>{this.props.children}</Register>}
+                    <Register setLoginData={this.setLoginData} register={!this.state.auth}>{this.props.children}</Register>}
                 {showNotification && <p className={notificationType}>{notificationText}</p>}
 
                 <span

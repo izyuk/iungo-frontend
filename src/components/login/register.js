@@ -5,7 +5,7 @@ class Register extends Component{
     render(){
         return(
             <div className="fieldsWrap">
-                <Login setLoginData={this.props.setLoginData}/>
+                <Login setLoginData={this.props.setLoginData} register={this.props.register}/>
             </div>
         )
     }
