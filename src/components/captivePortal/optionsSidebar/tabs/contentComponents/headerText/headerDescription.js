@@ -75,22 +75,15 @@ class HeaderDescription extends Component {
     };
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.fontSize !== nextState.fontSize) {
-            return true;
-        } else if (this.state.fontInputData !== nextState.fontInputData) {
-            return true;
-        } else if (this.state.colorHEX !== nextState.colorHEX) {
-            return true;
-        } else if (this.state.color !== nextState.color) {
-            return true;
-        } else if (this.state.displayColorPicker !== nextState.displayColorPicker) {
-            return true;
-        } else if (this.state.textActions !== nextState.textActions) {
-            return true;
-        } else if (this.state.text !== nextState.text) {
-            return true;
-        } else
-            return false;
+        if (this.state.fontSize !== nextState.fontSize) return true;
+        else if (this.state.fontInputData !== nextState.fontInputData) return true;
+        else if (this.state.colorHEX !== nextState.colorHEX) return true;
+        else if (this.state.color !== nextState.color) return true;
+        else if (this.state.displayColorPicker !== nextState.displayColorPicker) return true;
+        else if (this.state.textActions !== nextState.textActions) return true;
+        else if (this.state.text !== nextState.text) return true;
+        else if (this.state.alignment !== nextState.alignment) return true;
+        else return false;
     }
 
     componentDidMount() {
@@ -133,6 +126,7 @@ class HeaderDescription extends Component {
         currentState.textActions[name] = !this.state.textActions[name];
 
         this.setState(currentState);
+        this.forceUpdate();
     };
 
     textChanges = (e) => {
@@ -264,6 +258,7 @@ class HeaderDescription extends Component {
                                        onChange={(e) => this.fontInputHandler(e.target.value)}
                                        onBlur={(e) => this.onSliderChange(e.target.value)}
                                        defaultValue={this.state.fontSize}
+                                       value={this.state.fontInputData}
                                        data-cy="headerDescriptionFontSize"/>
                                 <span>
                                     px

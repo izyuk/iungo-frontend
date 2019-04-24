@@ -76,20 +76,14 @@ class HeaderTop extends Component {
     };
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.fontSize !== nextState.fontSize) {
-            return true;
-        } else if (this.state.colorHEX !== nextState.colorHEX) {
-            return true;
-        } else if (this.state.color !== nextState.color) {
-            return true;
-        } else if (this.state.displayColorPicker !== nextState.displayColorPicker) {
-            return true;
-        } else if (this.state.textActions !== nextState.textActions) {
-            return true;
-        } else if (this.state.text !== nextState.text) {
-            return true;
-        } else
-            return false;
+        if (this.state.fontSize !== nextState.fontSize) return true;
+        else if (this.state.colorHEX !== nextState.colorHEX) return true;
+        else if (this.state.color !== nextState.color) return true;
+        else if (this.state.displayColorPicker !== nextState.displayColorPicker) return true;
+        else if (this.state.textActions !== nextState.textActions) return true;
+        else if (this.state.text !== nextState.text) return true;
+        else if (this.state.alignment !== nextState.alignment) return true;
+        else return false;
     }
 
     componentDidMount() {
@@ -134,6 +128,7 @@ class HeaderTop extends Component {
         currentState.textActions[name] = !this.state.textActions[name];
 
         this.setState(currentState);
+        this.forceUpdate();
     };
 
     textChanges = (e) => {
@@ -280,7 +275,7 @@ class HeaderTop extends Component {
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
                                         onClick={this.handleClick}
-                                data-cy="headerTopColor"></button>
+                                        data-cy="headerTopColor"></button>
                                 {this.state.displayColorPicker ? <div style={popover}>
                                     <div style={cover} onClick={this.handleClose}/>
                                     <SketchPicker color={this.state.color} onChange={this.handleChange}/>
