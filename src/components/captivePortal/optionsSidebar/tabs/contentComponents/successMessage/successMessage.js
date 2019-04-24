@@ -81,6 +81,7 @@ class SuccessActions extends Component {
         else if (this.state.textActions !== nextState.textActions) return true;
         else if (this.state.text !== nextState.text) return true;
         else if (this.state.redirectURL !== nextState.redirectURL) return true;
+        else if (this.state.alignment !== nextState.alignment) return true;
         else return false;
     }
 
@@ -91,7 +92,9 @@ class SuccessActions extends Component {
         this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
         this.props.redirectURLChanger(redirectURL);
         this.props.successData({color: {rgba: color, hex: colorHEX}, redirectURL, status: this._isMounted, ...rest});
-        document.getElementById((this.storage.successData.styles ? this.storage.successData.styles.alignment : 'center')).checked = true;
+        document.getElementById((this.storage.successMessage.styles ? this.storage.successMessage.styles.alignment : 'center')).checked = true;
+        // console.log(this.storage.successData.styles.alignment);
+        console.log(this.storage.successData.styles);
     }
 
     componentDidUpdate() {
