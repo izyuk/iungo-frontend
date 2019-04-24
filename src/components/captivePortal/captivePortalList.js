@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {getAllPortals} from "../../api/API";
 import {dateISO} from '../../modules/dateISO';
 import Loader from "../../loader";
-import {Redirect, Link} from "react-router-dom";
+import {Redirect, Link, Route} from "react-router-dom";
 
 class CaptivePortalList extends Component {
     state = {
@@ -13,7 +13,6 @@ class CaptivePortalList extends Component {
 
     getId = (e) => {
         this.props.setId(e.currentTarget.getAttribute('dataid'));
-
     };
 
     findAllPortals = async (data) => {
@@ -23,11 +22,13 @@ class CaptivePortalList extends Component {
             let {data} = res;
             data.map((item, i) => {
                 listArray.push(
-                    <tr key={i} dataid={item.id} datauuid={item.uuid} onClick={this.getId}>
-                        <td className={"CaptivePortalItem"}><Link to={`/captive-portals/${item.uuid}`}>{item.name}</Link></td>
-                        <td>{dateISO(item.createdAt)}</td>
-                        <td>{dateISO(item.updatedAt)}</td>
-                    </tr>
+                    <Route key={i} render={ ({history}) => (
+                        <tr dataid={item.id} datauuid={item.uuid} onClick={(e) => {this.getId(e); history.push(`/captive-portals/${item.uuid}`)}}>
+                            <td className={"CaptivePortalItem"}>{item.name}</td>
+                            <td>{dateISO(item.createdAt)}</td>
+                            <td>{dateISO(item.updatedAt)}</td>
+                        </tr>
+                    )}/>
                 )
 
             });
