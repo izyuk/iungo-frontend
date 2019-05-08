@@ -53,8 +53,7 @@ class ContentTab extends Component {
                         </svg>
                     </div>
                     {this.state.visible === 'Header' ?
-                        <HeaderText handler={this.props.handler}
-                                    textData={this.props.textData}/> :
+                        <HeaderText /> :
                         false}
                 </div>
                 <div className="wrap">
@@ -86,9 +85,7 @@ class ContentTab extends Component {
                         </svg>
                     </div>
                     {this.state.visible === 'Footer' ?
-                        <FooterEditor handler={this.props.handler}
-                                      footerTextData={this.props.footerTextData}
-                        /> :
+                        <FooterEditor /> :
                         false}
                 </div>
                 <div className="wrap">
@@ -103,9 +100,7 @@ class ContentTab extends Component {
                         </svg>
                     </div>
                     {this.state.visible === 'Success Actions' ?
-                        <SuccessActions handler={this.props.handler}
-                                      successData={this.props.successData}
-                        /> :
+                        <SuccessActions /> :
                         false}
                 </div>
             </div>

@@ -4,8 +4,12 @@ import { previewPortal } from "../../../api/API";
 import { PublishPortalMethodHandler } from './publishPortalMethodHandler';
 import { GetBuilderParams } from './getBuilderParams';
 import Notification from "../../additional/notification";
+import CaptivePortalContext from "../../../context/captive-portal-context";
 
 class Publish extends Component {
+
+    static contextType = CaptivePortalContext;
+
     state = {
         id: localStorage.getItem('cpID'),
         notification: false,
@@ -14,17 +18,20 @@ class Publish extends Component {
     };
 
     callPublishMethod = async () => {
-        if(this.props.tabName.name.name.length > 0){
-            this.props.loaderHandler();
-            const portalDataToSend = GetBuilderParams(this.props.tabName);
+        if(this.context.name.length > 0){
+
+            this.context.loaderHandler(true);
+            const {dataToExclude, ...rest} = this.context;
+            const portalDataToSend = GetBuilderParams(rest);
             const data = await PublishPortalMethodHandler(portalDataToSend, this.state.id === null ? localStorage.getItem('cpID') : this.state.id);
             this.setState(data);
             if(data.id){
                 localStorage.setItem('cpID', data.id);
             }
-            this.props.loaderHandler();
+            this.context.loaderHandler(false);
+            this.context.setNotification(data.publishedType, false, data.notification);
             setTimeout(() => {
-                this.setState({notification: false, failed: false});
+                this.context.setNotification('', false, false);
             }, 2000)
         } else {
             this.props.addPortalName('');
@@ -33,13 +40,14 @@ class Publish extends Component {
     };
 
     previewPortalMethodHandler = async () => {
-        this.props.loaderHandler();
-        const portalDataToSend = GetBuilderParams(this.props.tabName);
+        this.context.loaderHandler(true);
+        const {dataToExclude, ...rest} = this.context;
+        const portalDataToSend = GetBuilderParams(rest);
         const token = localStorage.getItem('token');
         const query = previewPortal(token, portalDataToSend);
         await query.then(res => {
             const {data} = res;
-            this.props.loaderHandler();
+            this.context.loaderHandler(false);
             window.open(data, '_blank');
         });
     };

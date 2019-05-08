@@ -1,24 +1,25 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import CaptivePortalContext from "../../context/captive-portal-context";
 
 let place = document.getElementById('notification');
 
 class Notification extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            type: this.props.type
-        }
-    }
+
+    static contextType = CaptivePortalContext;
+
+    state = {};
+
     notification = React.createRef();
-    componentDidMount(){
-        this.notification.current.classList.add(this.state.type)
+
+    componentDidMount() {
+        this.notification.current.classList.add(this.context.dataToExclude.failed ? 'fail' : 'info');
     }
+
     render() {
-        const {text} = this.props;
         return ReactDOM.createPortal(
             <div ref={this.notification} className={'notification'}>
-                <p style={{textAlign: 'center'}}>{text}</p>
+                <p style={{textAlign: 'center'}}>{this.context.dataToExclude.publishedType}</p>
             </div>,
             place
         )

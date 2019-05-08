@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
-import connect from "react-redux/es/connect/connect";
 import Tooltip from 'rc-tooltip';
 import Slider from 'rc-slider';
+import CaptivePortalContext from "../../../../../../context/captive-portal-context";
 
 const style = {
     marginRight: 16,
@@ -30,32 +30,19 @@ const handle = (props) => {
 };
 
 class FooterEditor extends Component {
-    constructor(props) {
-        super(props);
-        let storage = this.props.footer;
-
-        this.state = {
-            displayColorPicker: false,
-            fontInputData: storage.styles.fontSize || 18,
-            color: storage.styles.color.rgba || {
-                r: 85,
-                g: 133,
-                b: 237,
-                a: 1,
-            },
-            colorHEX: storage.styles.color.hex || '#5585ed',
-            fontSize: storage.styles.fontSize || 18,
-            textActions: storage.styles.textActions || {
-                bold: false,
-                italic: false,
-                underline: false,
-            },
-            text: storage.text || 'Footer content',
-            alignment: storage.styles.alignment ||'center',
-        };
-    }
+    static contextType = CaptivePortalContext;
+    state = {
+        displayColorPicker: false,
+        fontInputData: this.context.style.footer.fontSize,
+        color: {rgba: this.context.style.footer.color.rgba, hex: this.context.style.footer.color.hex},
+        fontSize: this.context.style.footer.fontSize,
+        textActions: this.context.style.footer.textActions,
+        text: this.context.footer,
+        alignment: this.context.style.footer.alignment
+    };
 
     onSliderChange = (value) => {
+        const currentState = this.state;
         if (value < 8) {
             value = 8;
         } else if (value > 52) {
@@ -67,20 +54,22 @@ class FooterEditor extends Component {
             fontSize: parseInt(value),
             fontInputData: parseInt(value)
         });
+        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
+        this.context.setFooterData(text, rest);
     };
 
     fontInputHandler = (value) => {
-        this.setState({
-            fontInputData: parseInt(value)
-        });
+        const currentState = this.state;
+        currentState.fontInputData = parseInt(value);
+        this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
+        this.context.setFooterData(text, rest);
     };
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.fontSize !== nextState.fontSize) {
             return true;
-        } /*else if (this.state.color.hex !== nextState.color.hex) {
-            return true;
-        }*/ else if (this.state.color !== nextState.color) {
+        } else if (this.state.color !== nextState.color) {
             return true;
         } else if (this.state.displayColorPicker !== nextState.displayColorPicker) {
             return true;
@@ -93,17 +82,7 @@ class FooterEditor extends Component {
     }
 
     componentDidMount() {
-        const {displayColorPicker, fontInputData, text, colorHEX, color, ...rest} = this.state;
-        this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
-        this.props.footerTextData({color: {rgba: color, hex: colorHEX}, ...rest});
-        const storage = this.props.footer.styles;
-        document.getElementById((storage ? storage.alignment : 'center')).checked = true;
-    }
-
-    componentDidUpdate() {
-        const {displayColorPicker, fontInputData, text, colorHEX, color, ...rest} = this.state;
-        this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
-        this.props.footerTextData({color: {rgba: color, hex: colorHEX}, ...rest});
+        document.getElementById(this.context.style.footer.alignment).checked = true;
     }
 
     handleClick = () => {
@@ -115,39 +94,38 @@ class FooterEditor extends Component {
     };
 
     handleChange = (color) => {
-        const setColor = this.state.color.rgba;
-        const hex = this.state.color.hex;
-        this.setState({
-            color: color.rgb
-        });
-        this.setState({
-            colorHEX: color.hex
-        })
+        const currentState = this.state;
+        currentState.color.rgba = color.rgb;
+        currentState.color.hex = color.hex;
+        this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
+        this.context.setFooterData(text, rest);
     };
 
     textActionsHandler = (e) => {
-        let name = e.currentTarget.getAttribute('data-type');
-        let currentState = this.state;
+        const name = e.currentTarget.getAttribute('data-type');
+        const currentState = this.state;
         currentState.textActions[name] = !this.state.textActions[name];
-
         this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
+        this.context.setFooterData(text, rest);
     };
 
     textChanges = (e) => {
-        this.setState({
-            text: e.currentTarget.value
-        })
+        const currentState = this.state;
+        currentState.text = e.currentTarget.value;
+        this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
+        this.context.setFooterData(text, rest);
     };
 
     alignment = (e) => {
-        this.setState({
-            alignment: e.target.getAttribute('data-id')
-        });
+        const currentState = this.state;
+        currentState.alignment = e.target.getAttribute('data-id');
+        this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
+        this.context.setFooterData(text, rest);
     };
-
-    // getText = (e) => {
-    //
-    // };
 
     render() {
         const popover = {
@@ -276,15 +254,15 @@ class FooterEditor extends Component {
                     <div className="right">
                         <div className="innerRow">
                             <div className="colorWrap">
-                                <input type="text" value={this.state.colorHEX} disabled/>
+                                <input type="text" value={this.state.color.hex} disabled/>
                                 <button ref={this.cpbButton}
-                                        style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
+                                        style={{backgroundColor: `rgba(${this.state.color.rgba.r}, ${this.state.color.rgba.g}, ${this.state.color.rgba.b}, ${this.state.color.rgba.a})`}}
                                         onClick={this.handleClick} data-cy="footerTextColor"></button>
                                 {
                                     this.state.displayColorPicker ?
                                         <div style={popover}>
                                             <div style={cover} onClick={this.handleClose}/>
-                                            <SketchPicker color={this.state.color} onChange={this.handleChange}/>
+                                            <SketchPicker color={this.state.color.rgba} onChange={this.handleChange}/>
                                         </div>
                                         : null
                                 }
@@ -297,14 +275,4 @@ class FooterEditor extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        footer: state.footer
-        // footer: stated
-    }),
-    dispatch => ({
-        textData: (text, styles) => {
-            dispatch({type: "FOOTER_DESCRIPTION", payload: {text, styles}});
-        }
-    })
-)(FooterEditor);
+export default FooterEditor;

@@ -1,136 +1,130 @@
 import React, {Component} from 'react';
 
 import Methods from './methods';
+import CaptivePortalContext from "../../../context/captive-portal-context";
 
 
 class Preview extends Component {
-    state = {
-        changes: true,
-        backgroundType: 'COLOR',
-        backgroundColor: this.props.state.logoName.colorHEX,
-        logoName: this.props.state.logoName === '' ? 'logo.png' : this.props.state.logoName,
-        backgrName: this.props.state.backgrName || ''
-    };
+    static contextType = CaptivePortalContext;
+
+    state = {};
+
     PreviewMain = React.createRef();
     ContainerMain = React.createRef();
     FooterText = React.createRef();
 
-    container = ({border: {color, ...rest}, background, size: {width, padding}}) => {
-        if (this.props.state.type === 'background') {
-            if (typeof this.props.state.backgrName === 'string') {
-                this.PreviewMain.current.style.background = `url(${this.props.state.backgrName})`;
-            } else if (typeof this.props.state.backgrName === 'object') {
-                const {rgba} = this.props.state.backgrName;
-                this.PreviewMain.current.style.background = `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
-            } else {
-                this.PreviewMain.current.style.background = this.state.backgroundColor;
-            }
-        } else if (this.props.state.type === 'logo') {
-            this.PreviewMain.current.style.background = this.state.backgroundColor;
+    componentDidMount() {
+        const {style} = this.context;
+        style.container_border.type === 'none' ? this.ContainerMain.current.style.boxShadow = 'none' : this.ContainerMain.current.style.boxShadow = '0 1px 9px 0 rgba(191, 197, 210, 0.25)';
+        if (this.context.externalCss !== '') {
+            console.log(this.context.externalCss);
+            const HEAD = document.getElementsByTagName('HEAD')[0];
+            const style = document.getElementsByTagName('STYLE')[0] ? document.getElementsByTagName('STYLE')[0] : document.createElement('style');
+            style.type = 'text/css';
+            style.innerText = this.context.externalCss;
+
+            HEAD.appendChild(style);
+
+            const styledElements = document.querySelectorAll('.previewWrap [style]');
+            let stylesArray = [];
+            Object.keys(styledElements).map((item, i) => {
+                stylesArray.push(styledElements[item].getAttribute('style'));
+            });
+            Object.keys(styledElements).map((item, i) => {
+                styledElements[item].removeAttribute('style');
+            });
+            this.context.setExternalCssInfo(this.context.externalCss, true, styledElements, stylesArray);
+            console.log(document.querySelectorAll('.previewWrap [style]'));
         }
-        rest.type === 'none' ? this.ContainerMain.current.style.boxShadow = 'none' : this.ContainerMain.current.style.boxShadow = '0 1px 9px 0 rgba(191, 197, 210, 0.25)';
-        this.ContainerMain.current.style.borderWidth = rest.thickness ? `${rest.thickness}px` : false;
-        this.ContainerMain.current.style.borderStyle = rest.type ? `${rest.type}` : false;
-        this.ContainerMain.current.style.borderColor = color ? `rgba(${color.rgba.r},${color.rgba.g},${color.rgba.b},${color.rgba.a})` : false;
-        this.ContainerMain.current.style.borderRadius = rest.radius ? `${rest.radius}px` : false;
-        this.ContainerMain.current.style.background = background.color ? `rgba(${background.color.rgba.r},${background.color.rgba.g},${background.color.rgba.b},${background.color.rgba.a})` : false;
-        this.ContainerMain.current.style.opacity = background.opacity ? background.opacity / 100 : false;
-        this.ContainerMain.current.style.maxWidth = `${width}px`;
-        this.ContainerMain.current.style.padding = `${padding}px`;
-    };
+
+    }
 
     componentDidUpdate() {
-        this.container(this.props.state.container);
+        const {style} = this.context;
+        style.container_border.type === 'none' ? this.ContainerMain.current.style.boxShadow = 'none' : this.ContainerMain.current.style.boxShadow = '0 1px 9px 0 rgba(191, 197, 210, 0.25)';
     }
 
-    componentDidMount() {
-        this.container(this.props.state.container);
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.logoName !== nextState.logoName) return true;
-        else if (this.state.backgroundColor !== nextState.backgroundColor) return true;
-        else if (this.props.state.logoName !== nextProps.state.logoName) return true;
-        else if (this.props.state.backgrName !== nextProps.state.backgrName) return true;
-        else if (this.props.state.backgroundType !== nextProps.state.backgroundType) return true;
-        else if (this.props.state.type !== nextProps.state.type) return true;
-        else if (this.props.state.alignment !== nextProps.state.alignment) return true;
-        else if (this.props.state.mobile !== nextProps.state.mobile) return true;
-        else if (this.props.state.container !== nextProps.state.container) return true;
-        else if (this.props.state.headerText !== nextProps.state.headerText) return true;
-        else if (this.props.state.methods !== nextProps.state.methods) return true;
-        else if (this.props.state.footerContent !== nextProps.state.footerContent) return true;
-        else if (this.props.state.successData !== nextProps.state.successData) return true;
-        else if (this.props.state.acceptButton !== nextProps.state.acceptButton) return true;
-        else if (this.props.header !== nextProps.header) return true;
-        // else if (this.props.header !== nextProps.header.description) return true;
-        else if (this.props.footer !== nextProps.footer) return true;
-        else if (this.props.success !== nextProps.success) return true;
-        else if (this.props.state.successMessageComponentStatus !== nextProps.state.successMessageComponentStatus) return true;
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        if (this.props.state.mobile !== nextProps.state.mobile) return true;
+        else if (this.context !== nextContext) return true;
         else return false;
     }
 
     render() {
-        let topData = this.props.header.top;
-        let descriptionData = this.props.header.description;
-        let footerData = this.props.footer;
-        let successData = this.props.success;
-        let {methods, successMessageComponentStatus, acceptButton} = this.props.state;
-        console.log(this.props.state);
+        const {
+            style: {header: {top, description}, footer, container_background, container_border, container_size, background_and_logo: {background}, success_message}
+        } = this.context;
         return (
             <div className="previewWrap">
                 <div className={this.props.state.mobile ? "previewMain mobile" : "previewMain"}
-                     ref={this.PreviewMain}>
+                     ref={this.PreviewMain}
+                     style={{
+                         background: background.backgroundType === 'COLOR' ?
+                             `rgba(${background.color.rgba.r}, ${background.color.rgba.g}, ${background.color.rgba.b}, ${background.color.rgba.a})` :
+                             `url(${background.url})`
+                     }}
+                >
                     <div className="previewContainer">
                         <div className="header">
-                            <div className="previewLogoPlace" style={{justifyContent: this.props.state.alignment}}>
-                                {this.props.state.logoName !== '' ?
-                                    <img src={`${this.props.state.logoName}`} alt=""/> : ''}
+                            <div className="previewLogoPlace"
+                                 style={{justifyContent: this.context.style.background_and_logo.logo.position}}>
+                                {this.context.style.background_and_logo.logo.url !== '' ?
+                                    <img src={`${this.context.style.background_and_logo.logo.url}`} alt=""/> : ''}
                             </div>
                         </div>
                         <div className="section"
-                             ref={this.ContainerMain}>
-                            {!successMessageComponentStatus ?
+                             ref={this.ContainerMain}
+                             style={{
+                                 borderWidth: `${container_border.thickness}px`,
+                                 borderStyle: container_border.type,
+                                 borderColor: `rgba(${container_border.color.rgba.r},${container_border.color.rgba.g},${container_border.color.rgba.b},${container_border.color.rgba.a})`,
+                                 borderRadius: container_border.radius,
+                                 background: `rgba(${container_background.color.rgba.r},${container_background.color.rgba.g},${container_background.color.rgba.b},${container_background.color.rgba.a})`,
+                                 opacity: container_background.opacity / 100,
+                                 maxWidth: `${container_size.width}px`,
+                                 padding: `${container_size.padding}px`
+                             }}>
+                            {!this.context.dataToExclude.successMessageStatus ?
                                 <div className="contentPlace">
                                     <div className="textPlace">
                                         <p className="head"
                                            style={{
-                                               color: `rgba(${topData && topData.styles.color.rgba.r}, ${topData && topData.styles.color.rgba.g}, ${topData && topData.styles.color.rgba.b}, ${topData && topData.styles.color.rgba.a})`,
-                                               fontSize: topData && topData.styles.fontSize,
-                                               fontWeight: topData && topData.styles.textActions.bold ? 'bold' : '100',
-                                               fontStyle: topData && topData.styles.textActions.italic === true ? 'italic' : 'normal',
-                                               textDecoration: topData && topData.styles.textActions.underline ? 'underline' : 'none',
-                                               textAlign: topData && topData.styles.alignment
+                                               color: `rgba(${top && top.color.rgba.r}, ${top && top.color.rgba.g}, ${top && top.color.rgba.b}, ${top && top.color.rgba.a})`,
+                                               fontSize: top && top.fontSize,
+                                               fontWeight: top && top.textActions.bold ? 'bold' : '100',
+                                               fontStyle: top && top.textActions.italic === true ? 'italic' : 'normal',
+                                               textDecoration: top && top.textActions.underline ? 'underline' : 'none',
+                                               textAlign: top && top.alignment
                                            }}>
-                                            {topData && topData.text}
+                                            {this.context.header && this.context.header}
                                         </p>
 
                                         <p className="description"
                                            style={{
-                                               color: `rgba(${descriptionData && descriptionData.styles.color.rgba.r}, ${descriptionData && descriptionData.styles.color.rgba.g}, ${descriptionData && descriptionData.styles.color.rgba.b}, ${descriptionData && descriptionData.styles.color.rgba.a})`,
-                                               fontSize: descriptionData && descriptionData.styles.fontSize,
-                                               fontWeight: descriptionData && descriptionData.styles.textActions.bold ? 'bold' : '100',
-                                               fontStyle: descriptionData && descriptionData.styles.textActions.italic ? 'italic' : 'normal',
-                                               textDecoration: descriptionData && descriptionData.styles.textActions.underline ? 'underline' : 'none',
-                                               textAlign: descriptionData && descriptionData.styles.alignment
+                                               color: `rgba(${description && description.color.rgba.r}, ${description && description.color.rgba.g}, ${description && description.color.rgba.b}, ${description && description.color.rgba.a})`,
+                                               fontSize: description && description.fontSize,
+                                               fontWeight: description && description.textActions.bold ? 'bold' : '100',
+                                               fontStyle: description && description.textActions.italic ? 'italic' : 'normal',
+                                               textDecoration: description && description.textActions.underline ? 'underline' : 'none',
+                                               textAlign: description && description.alignment
                                            }}>
-                                            {descriptionData && descriptionData.text}
+                                            {this.context.description && this.context.description}
                                         </p>
                                     </div>
-                                    <Methods methods={methods} button={acceptButton}/>
+                                    <Methods/>
                                 </div>
                                 :
                                 <div className="contentPlace">
-                                    <p className="text" ref={this.FooterText}
+                                    <p className="text"
                                        style={{
-                                           color: `rgba(${successData.styles && successData.styles.color.rgba.r}, ${successData.styles && successData.styles.color.rgba.g}, ${successData.styles && successData.styles.color.rgba.b}, ${successData.styles && successData.styles.color.rgba.a})`,
-                                           fontSize: successData.styles && successData.styles.fontSize,
-                                           fontWeight: successData.styles && successData.styles.textActions.bold ? 'bold' : '100',
-                                           fontStyle: successData.styles && successData.styles.textActions.italic ? 'italic' : 'normal',
-                                           textDecoration: successData.styles && successData.styles.textActions.underline ? 'underline' : 'none',
-                                           textAlign: successData.styles && successData.styles.alignment
+                                           color: `rgba(${success_message && success_message.color.rgba.r}, ${success_message && success_message.color.rgba.g}, ${success_message && success_message.color.rgba.b}, ${success_message && success_message.color.rgba.a})`,
+                                           fontSize: success_message && success_message.fontSize,
+                                           fontWeight: success_message && success_message.textActions.bold ? 'bold' : '100',
+                                           fontStyle: success_message && success_message.textActions.italic ? 'italic' : 'normal',
+                                           textDecoration: success_message && success_message.textActions.underline ? 'underline' : 'none',
+                                           textAlign: success_message && success_message.alignment
                                        }}>
-                                        {successData && successData.text}
+                                        {this.context.successMessage && this.context.successMessage}
                                     </p>
                                 </div>
                             }
@@ -140,14 +134,14 @@ class Preview extends Component {
                         <div className="contentPlace">
                             <p className="text" ref={this.FooterText}
                                style={{
-                                   color: `rgba(${footerData.styles && footerData.styles.color.rgba.r}, ${footerData.styles && footerData.styles.color.rgba.g}, ${footerData.styles && footerData.styles.color.rgba.b}, ${footerData.styles && footerData.styles.color.rgba.a})`,
-                                   fontSize: footerData.styles && footerData.styles.fontSize,
-                                   fontWeight: footerData.styles && footerData.styles.textActions.bold ? 'bold' : '100',
-                                   fontStyle: footerData.styles && footerData.styles.textActions.italic ? 'italic' : 'normal',
-                                   textDecoration: footerData.styles && footerData.styles.textActions.underline ? 'underline' : 'none',
-                                   textAlign: footerData.styles && footerData.styles.alignment
+                                   color: `rgba(${footer && footer.color.rgba.r}, ${footer && footer.color.rgba.g}, ${footer && footer.color.rgba.b}, ${footer && footer.color.rgba.a})`,
+                                   fontSize: footer && footer.fontSize,
+                                   fontWeight: footer && footer.textActions.bold ? 'bold' : '100',
+                                   fontStyle: footer && footer.textActions.italic ? 'italic' : 'normal',
+                                   textDecoration: footer && footer.textActions.underline ? 'underline' : 'none',
+                                   textAlign: footer && footer.alignment
                                }}>
-                                {footerData && footerData.text}
+                                {this.context.footer && this.context.footer}
                             </p>
                         </div>
                     </div>

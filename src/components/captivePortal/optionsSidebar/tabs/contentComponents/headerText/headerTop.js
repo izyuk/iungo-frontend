@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
-import {connect} from "react-redux";
 import Tooltip from 'rc-tooltip';
 import Slider from 'rc-slider';
+import CaptivePortalContext from "../../../../../../context/captive-portal-context";
 
 const style = {
     marginRight: 16,
@@ -30,30 +30,16 @@ const handle = (props) => {
 };
 
 class HeaderTop extends Component {
-    constructor(props) {
-        super(props);
-        let storage = this.props.header.top;
-        this.state = {
-            displayColorPicker: false,
-            fontInputData: storage.styles.fontSize || 18,
-            colorHEX: storage.styles.color.hex || '#5585ed',
-            color: storage.styles.color.rgba || {
-                r: 85,
-                g: 133,
-                b: 237,
-                a: 1,
-            },
-            fontSize: storage.styles.fontSize || 18,
-            textActions: storage.styles.textActions || {
-                bold: false,
-                italic: false,
-                underline: false,
-            },
-            text: storage.text !== undefined ? storage.text : 'Venue name',
-            alignment: storage.styles.alignment || 'center'
-        };
-
-    }
+    static contextType = CaptivePortalContext;
+    state = {
+        displayColorPicker: false,
+        fontInputData: this.context.style.header.top.fontSize,
+        color: {rgba:this.context.style.header.top.color.rgba, hex: this.context.style.header.top.color.hex},
+        fontSize: this.context.style.header.top.fontSize,
+        textActions: this.context.style.header.top.textActions,
+        text: this.context.header,
+        alignment: this.context.style.header.top.alignment
+    };
 
     onSliderChange = (value) => {
         if (value < 8) {
@@ -67,12 +53,16 @@ class HeaderTop extends Component {
             fontSize: parseInt(value),
             fontInputData: parseInt(value)
         });
+        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
+        this.context.setHeaderTopData(text, {color: color, ...rest});
     };
 
     fontInputHandler = (value) => {
-        this.setState({
-            fontInputData: parseInt(value)
-        });
+        const currentState = this.state;
+        currentState.fontInputData = value;
+        this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
+        this.context.setHeaderTopData(text, {color: color, ...rest});
     };
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -87,19 +77,9 @@ class HeaderTop extends Component {
     }
 
     componentDidMount() {
-        const {displayColorPicker, fontInputData, text, colorHEX, color, ...rest} = this.state;
-        console.log('mounted venue name: ', text);
-        this.props.textData(text, {color:  {rgba: color, hex: colorHEX}, ...rest});
-        this.props.handler({color:  {rgba: color, hex: colorHEX}, ...rest});
-        const storage = this.props.header.top;
-        document.getElementById((storage ? storage.styles.alignment : 'center')+'2').checked = true;
-    }
-
-    componentDidUpdate() {
-        const {displayColorPicker, fontInputData, text, colorHEX, color, ...rest} = this.state;
-        console.log('updated venue name: ', text);
-        this.props.textData(text, {color:  {rgba: color, hex: colorHEX}, ...rest});
-        this.props.handler({color:  {rgba: color, hex: colorHEX}, ...rest});
+        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
+        this.context.setHeaderTopData(text, {color: color, ...rest});
+        document.getElementById(this.context.style.header.top.alignment + '2').checked = true;
     }
 
     handleClick = () => {
@@ -111,15 +91,13 @@ class HeaderTop extends Component {
     };
 
     handleChange = (color) => {
-        this.setState({
-            color: {
-                r: color.rgb.r,
-                g: color.rgb.g,
-                b: color.rgb.b,
-                a: color.rgb.a
-            }
-        });
-        this.setState({colorHEX: color.hex});
+        const currentState = this.state;
+        currentState.color.rgba = color.rgb;
+        currentState.color.hex = color.hex;
+        console.log(currentState);
+        this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, ...rest} = this.state;
+        this.context.setHeaderTopData(text, {color: this.state.color, ...rest});
     };
 
     textActionsHandler = (e) => {
@@ -128,19 +106,24 @@ class HeaderTop extends Component {
         currentState.textActions[name] = !this.state.textActions[name];
 
         this.setState(currentState);
-        this.forceUpdate();
+        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
+        this.context.setHeaderTopData(text, {color: color, ...rest});
     };
 
     textChanges = (e) => {
-        this.setState({
-            text: e.currentTarget.value
-        })
+        const currentState = this.state;
+        currentState.text = e.currentTarget.value;
+        this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
+        this.context.setHeaderTopData(text, {color: color, ...rest});
     };
 
     alignment = (e) => {
-        this.setState({
-            alignment: e.target.getAttribute('data-id')
-        });
+        const currentState = this.state;
+        currentState.alignment = e.target.getAttribute('data-id');
+        this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
+        this.context.setHeaderTopData(text, {color: color, ...rest});
     };
 
     render() {
@@ -190,26 +173,30 @@ class HeaderTop extends Component {
                             <div className="innerCol toRow">
                                 <label htmlFor="left2">Left
                                     <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='left2' data-id='left' type="radio" name='alignment2' data-cy="headerTopLeft"/>
+                                        <input onChange={this.alignment} id='left2' data-id='left' type="radio"
+                                               name='alignment2' data-cy="headerTopLeft"/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
                                 <label htmlFor="center2">Center
                                     <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='center2' data-id='center' type="radio" name='alignment2' data-cy="headerTopCenter"/>
+                                        <input onChange={this.alignment} id='center2' data-id='center' type="radio"
+                                               name='alignment2' data-cy="headerTopCenter"/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
                                 <label htmlFor="right2">Right
                                     <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='right2' data-id='right' type="radio" name='alignment2' data-cy="headerTopRight"/>
+                                        <input onChange={this.alignment} id='right2' data-id='right' type="radio"
+                                               name='alignment2' data-cy="headerTopRight"/>
                                         <span className="radio"></span>
                                     </div>
                                 </label>
                             </div>
                         </div>
                         <div className="innerRow">
-                            <textarea onChange={this.textChanges} data-cy="headerTopText" defaultValue={this.state.text}></textarea>
+                            <textarea onChange={this.textChanges} data-cy="headerTopText"
+                                      defaultValue={this.state.text}></textarea>
                         </div>
                     </div>
                 </div>
@@ -256,6 +243,7 @@ class HeaderTop extends Component {
                                        onChange={(e) => this.fontInputHandler(e.target.value)}
                                        onBlur={(e) => this.onSliderChange(e.target.value)}
                                        defaultValue={this.state.fontSize}
+                                       value={this.state.fontInputData}
                                        data-cy="headerTopFontSize"/>
                                 <span>
                                     px
@@ -271,14 +259,14 @@ class HeaderTop extends Component {
                     <div className="right">
                         <div className="innerRow">
                             <div className="colorWrap">
-                                <input type="text" value={this.state.colorHEX} disabled/>
+                                <input type="text" value={this.state.color.hex} disabled/>
                                 <button ref={this.cpbButton}
-                                        style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
+                                        style={{backgroundColor: `rgba(${this.state.color.rgba.r}, ${this.state.color.rgba.g}, ${this.state.color.rgba.b}, ${this.state.color.rgba.a})`}}
                                         onClick={this.handleClick}
                                         data-cy="headerTopColor"></button>
                                 {this.state.displayColorPicker ? <div style={popover}>
                                     <div style={cover} onClick={this.handleClose}/>
-                                    <SketchPicker color={this.state.color} onChange={this.handleChange}/>
+                                    <SketchPicker color={this.state.color.rgba} onChange={this.handleChange}/>
                                 </div> : null}
                             </div>
                         </div>
@@ -289,13 +277,4 @@ class HeaderTop extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        header: state.header
-    }),
-    dispatch => ({
-        textData: (text, styles) => {
-            dispatch({type: "HEADER_TOP", payload: {text, styles}});
-        }
-    })
-)(HeaderTop);
+export default HeaderTop;

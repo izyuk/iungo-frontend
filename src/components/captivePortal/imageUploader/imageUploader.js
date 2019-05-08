@@ -4,17 +4,20 @@ import {getAllImages} from '../../../api/API';
 
 import Modal from '../../additional/modal';
 import axios from "axios";
+import CaptivePortalContext from "../../../context/captive-portal-context";
 
 const BACKEND_API = 'https://backend.bravofy.com';
 
 class ImageUploader extends Component {
+
+    static contextType = CaptivePortalContext;
     state = {
         backgroundColor: false,
         uploadedFile: '',
         selectedFile: null,
         displayColorPicker: false,
         alignment: true,
-        color: this.props.background_and_logo.background !== undefined ? this.props.background_and_logo.background.color : {
+        color: {
             rgba: {
                 r: 249,
                 g: 249,
@@ -24,7 +27,7 @@ class ImageUploader extends Component {
             hex: '#f9f9fc'
         },
         background: '',
-        logo: '',
+        logo: this.context.style.background_and_logo.logo.url,
         logoPosition: 'center',
         fileInfo: '',
         fileAdditional: {
@@ -79,9 +82,6 @@ class ImageUploader extends Component {
     };
 
     fileSelectedHandler = async (files) => {
-        this.props.background_and_logo.backgroundType = 'IMAGE';
-
-
         this.state.backgroundColor = false;
         this.state.alignment = true;
 
@@ -101,7 +101,7 @@ class ImageUploader extends Component {
         img.style.zoom = 0.1;
 
 
-        let query = this.uploadImage(this.props.token.token ? this.props.token.token : localStorage.getItem('token'), this.state.fileInfo.name, this.state.fileInfo.base64);
+        let query = this.uploadImage(localStorage.getItem('token'), this.state.fileInfo.name, this.state.fileInfo.base64);
         await query.then(res => {
             this.getImages();
         });
@@ -113,12 +113,27 @@ class ImageUploader extends Component {
             list[i].classList.remove('active');
         }
         e.currentTarget.classList.add('active');
-        this.transferFileData(e.currentTarget.getAttribute('dataurl'), this.props.type, 'IMAGE');
-        this.props.setID(e.currentTarget.getAttribute('dataid'));
+        const {style: {background_and_logo: {background, logo}}} = this.context;
+        switch (this.props.type) {
+            case "logo":
+                this.setState({logo: e.currentTarget.getAttribute('dataurl')});
+                logo.url = e.currentTarget.getAttribute('dataurl');
+                logo.position = this.state.logoPosition;
+                this.context.setLogoID(e.currentTarget.getAttribute('dataid'));
+                break;
+            case "background":
+                this.setState({background: e.currentTarget.getAttribute('dataurl')});
+                const colorData = this.state.color;
+                background.url = e.currentTarget.getAttribute('dataurl');
+                background.color = colorData;
+                background.backgroundType = 'IMAGE';
+                this.context.setBackgroundID(e.currentTarget.getAttribute('dataid'));
+                break;
+        }
     };
 
     getImages = async () => {
-        const token = this.props.token.token ? this.props.token.token : localStorage.getItem('token');
+        const token = localStorage.getItem('token');
 
         let query = getAllImages(token);
         let array = [];
@@ -168,16 +183,6 @@ class ImageUploader extends Component {
     };
 
 
-    transferFileData = (data, type, backgroundType) => {
-        if (type === 'logo') {
-            this.props.uploadFile(data, this.state.logoPosition);
-        } else if (type === 'background') {
-            let colorData = this.state.color;
-            this.props.uploadFile(data, colorData, backgroundType);
-        }
-        this.props.handler(data, type, backgroundType);
-    };
-
     handleClick = () => {
         this.setState({displayColorPicker: !this.state.displayColorPicker})
     };
@@ -187,8 +192,10 @@ class ImageUploader extends Component {
     };
 
     alignment = (e) => {
-        this.props.alignment(e.target.getAttribute('datatype'));
-        this.props.uploadFile(this.props.background_and_logo.background_and_logo.logo.url, e.target.getAttribute('datatype'));
+        this.context.setLogo(this.state.logo, e.target.getAttribute('datatype'));
+        this.setState({
+            logoPosition: e.target.getAttribute('datatype')
+        })
     };
 
     handleChange = (color) => {
@@ -202,27 +209,15 @@ class ImageUploader extends Component {
             },
             hex: color.hex
         };
-        this.setState(currentState);
         this.state.backgroundColor = true;
-        this.props.background_and_logo.backgroundType = 'COLOR';
-        const type = this.props.type;
-        this.props.handler(this.state.color, type, 'COLOR');
-        console.log(this.state.color);
-        this.props.uploadFile(this.state.background, this.state.color, 'COLOR');
-        console.log(this.props.background_and_logo);
+        this.context.setBackground(this.state.background, this.state.color, 'COLOR');
     };
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.background_and_logo !== this.props.background_and_logo) {
-
-        }
-    }
 
     componentDidMount() {
         if (this.props.type === "background") {
-            if (this.props.background_and_logo.background) {
+            if (this.context.style.background_and_logo.background) {
                 let currentState = this.state;
-                currentState.color = this.props.background_and_logo.background.color;
+                currentState.color = this.context.style.background_and_logo.background.color;
                 this.setState(currentState);
                 let red = this.state.color.rgba.r,
                     green = this.state.color.rgba.g,
@@ -233,14 +228,20 @@ class ImageUploader extends Component {
             }
         }
         if (this.props.type === 'logo') {
-            let position = this.props.position;
+            let position = this.context.style.background_and_logo.logo.position;
+            this.setState({
+                logoPosition: position
+            });
             document.getElementById((position ? (position === 'flex-start' ? 'left' : (position === 'flex-end' ? 'right' : 'center')) : this.state.logoPosition)).checked = true;
         }
+        // this.context.setBackground();
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
         let currentState = this.state;
+        let context = this.context;
         if (currentState !== nextState) return true;
+        else if (context !== nextContext) return true;
         else return true;
     }
 
@@ -259,6 +260,7 @@ class ImageUploader extends Component {
             left: '0px',
         };
 
+        const {style: {background_and_logo: {background}}} = this.context;
         return (
             <div
                 className={this.props.type === "background" ? "container active" : "container"}>
@@ -290,14 +292,14 @@ class ImageUploader extends Component {
                         <div className="right">
                             <div className="innerRow">
                                 <div className="colorWrap">
-                                    <input type="text" value={this.state.color.hex} disabled/>
+                                    <input type="text" value={background.color.hex} disabled/>
                                     <button ref={this.cpbButton}
-                                            style={{backgroundColor: `rgba(${this.state.color.rgba.r}, ${this.state.color.rgba.g}, ${this.state.color.rgba.b}, ${this.state.color.rgba.a})`}}
+                                            style={{backgroundColor: `rgba(${background.color.rgba.r}, ${background.color.rgba.g}, ${background.color.rgba.b}, ${background.color.rgba.a})`}}
                                             onClick={this.handleClick}
                                             data-cy="openColorPicker"></button>
                                     {this.state.displayColorPicker ? <div style={popover}>
                                         <div style={cover} onClick={this.handleClose}/>
-                                        <SketchPicker color={this.state.color.rgba} onChange={this.handleChange}/>
+                                        <SketchPicker color={background.color.rgba} onChange={this.handleChange}/>
                                     </div> : null}
                                 </div>
                             </div>

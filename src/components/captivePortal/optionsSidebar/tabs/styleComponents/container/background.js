@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Tooltip from 'rc-tooltip';
 import Slider from 'rc-slider';
 import backgroundColor from "../../../../../../reducers/backgroundColor";
+import CaptivePortalContext from "../../../../../../context/captive-portal-context";
 
 const style = {
     marginRight: 16,
@@ -32,26 +33,12 @@ const handle = (props) => {
 
 
 class ContentBackground extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            displayColorPicker: false,
-            color: this.props.container_background.color || {
-                rgba: {
-                    r: 255,
-                    g: 255,
-                    b: 255,
-                    a: 1,
-                },
-                hex: '#ffffff'
-            },
-            opacity: this.props.container_background.opacity || '100'
-        };
-        this.handleClick = this.handleClick.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.onSliderChange = this.onSliderChange.bind(this);
-    }
+    static contextType = CaptivePortalContext;
+    state = {
+        displayColorPicker: false,
+        color: this.context.style.container_background.color,
+        opacity: this.context.style.container_background.opacity
+    };
 
     handleClick = () => {
         this.setState({displayColorPicker: !this.state.displayColorPicker})
@@ -63,24 +50,28 @@ class ContentBackground extends Component {
     };
 
     handleChange = (color) => {
-        this.setState({
-            color: {
-                rgba: {
-                    r: color.rgb.r,
-                    g: color.rgb.g,
-                    b: color.rgb.b,
-                    a: color.rgb.a
-                },
-                hex: color.hex
-            }
-        });
+        const currentState = this.state;
+        currentState.color = {
+            rgba: {
+                r: color.rgb.r,
+                g: color.rgb.g,
+                b: color.rgb.b,
+                a: color.rgb.a
+            },
+            hex: color.hex
+        };
+        this.setState(currentState);
+        let {displayColorPicker, ...rest} = this.state;
+        this.context.setBackgroundStyle(rest)
     };
 
-    onSliderChange(value) {
+    onSliderChange = (value) => {
         this.setState({
             opacity: value
         });
-    }
+        let {displayColorPicker, ...rest} = this.state;
+        this.context.setBackgroundStyle(rest)
+    };
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.opacity !== nextState.opacity) {
@@ -104,14 +95,7 @@ class ContentBackground extends Component {
             select[i].nextSibling.insertBefore(span, svg);
         }
         let {displayColorPicker, ...rest} = this.state;
-        this.props.backgroundStyle(rest);
-        this.props.handler(rest);
-    }
-
-    componentDidUpdate() {
-        let {displayColorPicker, ...rest} = this.state;
-        this.props.backgroundStyle(rest);
-        this.props.handler(rest);
+        this.context.setBackgroundStyle(rest)
     }
 
     render() {
@@ -146,9 +130,9 @@ class ContentBackground extends Component {
                             <div className="colorWrap">
                                 <input type="text" value={this.state.color.hex} disabled/>
                                 <button ref={this.cpbButton}
-                                        style={{backgroundColor: `rgba(${ this.state.color.rgba.r }, ${ this.state.color.rgba.g }, ${ this.state.color.rgba.b }, ${ this.state.color.rgba.a })`}}
+                                        style={{backgroundColor: `rgba(${this.state.color.rgba.r}, ${this.state.color.rgba.g}, ${this.state.color.rgba.b}, ${this.state.color.rgba.a})`}}
                                         onClick={this.handleClick}
-                                data-cy="containerBackground"></button>
+                                        data-cy="containerBackground"></button>
                                 {this.state.displayColorPicker ? <div style={popover}>
                                     <div style={cover} onClick={this.handleClose}/>
                                     <SketchPicker color={this.state.color.rgba} onChange={this.handleChange}/>
@@ -221,13 +205,4 @@ class ContentBackground extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        container_background: state.container_background
-    }),
-    dispatch => ({
-        backgroundStyle: (data) => {
-            dispatch({type: "container_background", payload: data});
-        }
-    })
-)(ContentBackground);
+export default ContentBackground;

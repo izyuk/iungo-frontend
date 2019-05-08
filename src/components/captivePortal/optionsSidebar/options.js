@@ -5,8 +5,13 @@ import ContentTab from './tabs/contentTab';
 import SettingsTab from './tabs/settingsTab';
 
 import Publish from './publish';
+import CaptivePortalContext from '../../../context/captive-portal-context';
+import OptionsCoverage from '../../additional/optionsCoverage';
 
 class Options extends Component {
+
+    static contextType = CaptivePortalContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -33,6 +38,12 @@ class Options extends Component {
 
     componentDidUpdate() {
         this.state.event.closest(".buttonsWrap li").classList.add("active");
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        if(this.context.stylesApplied !== nextContext.stylesApplied) return true;
+        if(this.state.tab !== nextState.tab) return true;
+        else return false
     }
 
     tabHandler = (e) => {
@@ -64,20 +75,11 @@ class Options extends Component {
                     </ul>
 
                     {this.state.tab === 'Style' ?
-                        <StyleTab tabHandler={this.tabHandler}
-                                  handler={this.props.handler}
-                                  alignment={this.props.alignment}
-                                  containerHandler={this.props.containerHandler}/>
+                        <StyleTab />
                         : (this.state.tab === 'Content') ?
-                            <ContentTab
-                                textData={this.props.textData}
-                                methods={this.props.methods}
-                                acceptButton={this.props.acceptButton}
-                                footerTextData={this.props.footerTextData}
-                                successData={this.props.successData}/>
+                            <ContentTab />
                             : (this.state.tab === 'Settings') ?
-                                <SettingsTab findPortal={this.props.findPortal}
-                                             clearExternalCss={this.props.clearExternalCss}/>
+                                <SettingsTab />
                                 : ''}
                     <Publish loaderHandler={this.props.loaderHandler}/>
                 </div>

@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-
-import {connect} from 'react-redux';
+import CaptivePortalContext from "../../../context/captive-portal-context";
 
 class Methods extends Component {
+    static contextType = CaptivePortalContext;
+
     constructor(props) {
         super(props);
+
         this.state = {
             button: this.props.button || this.props.loginAgreeButton
         };
@@ -24,11 +26,34 @@ class Methods extends Component {
     };
 
     componentDidMount() {
-        this.methodsHandler(this.props.methods)
+        const {
+            googleLogin,
+            facebookLogin,
+            twitterLogin,
+            acceptTermsLogin
+        } = this.context;
+        this.methodsHandler({
+            google: googleLogin,
+            facebook: facebookLogin,
+            twitter: twitterLogin,
+            button: acceptTermsLogin
+        })
     }
 
     componentDidUpdate() {
-        this.methodsHandler(this.props.methods);
+        const {
+            googleLogin,
+            facebookLogin,
+            twitterLogin,
+            acceptTermsLogin
+        } = this.context;
+        this.methodsHandler({
+            google: googleLogin,
+            facebook: facebookLogin,
+            twitter: twitterLogin,
+            button: acceptTermsLogin
+        });
+
         if (document.getElementsByClassName("hidden").length >= this.socials.current.children.length) {
             this.socials.current.style.display = 'none'
         } else {
@@ -36,17 +61,18 @@ class Methods extends Component {
         }
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.props.methods !== nextProps.methods) return true;
-        else if (this.props.button !== nextProps.button) return true;
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        if (this.context.googleLogin !== nextContext.googleLogin) return true;
+        else if (this.context.facebookLogin !== nextContext.facebookLogin) return true;
+        else if (this.context.twitterLogin !== nextContext.twitterLogin) return true;
+        else if (this.context.acceptTermsLogin !== nextContext.acceptTermsLogin) return true;
         else return false
     }
 
     render() {
         let {
-            acceptButtonBorder, acceptButtonColor, acceptButtonFont, acceptButtonSize, acceptButtonText
-        } = this.props.button;
-        // console.log('button', button);
+            style: {accept_button_border, accept_button_color, accept_button_font, accept_button_size}, acceptButtonText
+        } = this.context;
         return (
             <div className="socialsWrap" ref={this.socials}>
                 <div className="fb" ref={this.facebook}>
@@ -75,18 +101,18 @@ class Methods extends Component {
                     <input type="button" value="Continue with Twitter"/></div>
                 <div className="accept" ref={this.button}>
                     <button style={{
-                        border: `${acceptButtonBorder.thickness}px ${acceptButtonBorder.type} rgba(${acceptButtonBorder.color.rgba.r}, ${acceptButtonBorder.color.rgba.g}, ${acceptButtonBorder.color.rgba.b}, ${acceptButtonBorder.color.rgba.a})`,
-                        borderRadius: acceptButtonBorder.radius,
-                        backgroundColor: `rgba(${acceptButtonColor.rgba.r}, ${acceptButtonColor.rgba.g}, ${acceptButtonColor.rgba.b}, ${acceptButtonColor.rgba.a})`,
-                        color: `rgba(${acceptButtonFont.color.rgba.r}, ${acceptButtonFont.color.rgba.g}, ${acceptButtonFont.color.rgba.b}, ${acceptButtonFont.color.rgba.a})`,
-                        fontSize: acceptButtonFont.fontSize,
-                        textAlign: acceptButtonFont.alignment,
-                        fontWeight: acceptButtonFont.textActions.bold ? ' bold' : 100,
-                        fontStyle: acceptButtonFont.textActions.italic ? 'italic' : 'unset',
-                        textDecoration: acceptButtonFont.textActions.underline ? 'underline' : 'unset',
-                        minWidth: acceptButtonSize.width,
+                        border: `${accept_button_border.thickness}px ${accept_button_border.type} rgba(${accept_button_border.color.rgba.r}, ${accept_button_border.color.rgba.g}, ${accept_button_border.color.rgba.b}, ${accept_button_border.color.rgba.a})`,
+                        borderRadius: accept_button_border.radius,
+                        backgroundColor: `rgba(${accept_button_color.rgba.r}, ${accept_button_color.rgba.g}, ${accept_button_color.rgba.b}, ${accept_button_color.rgba.a})`,
+                        color: `rgba(${accept_button_font.color.rgba.r}, ${accept_button_font.color.rgba.g}, ${accept_button_font.color.rgba.b}, ${accept_button_font.color.rgba.a})`,
+                        fontSize: accept_button_font.fontSize,
+                        textAlign: accept_button_font.alignment,
+                        fontWeight: accept_button_font.textActions.bold ? ' bold' : 100,
+                        fontStyle: accept_button_font.textActions.italic ? 'italic' : 'unset',
+                        textDecoration: accept_button_font.textActions.underline ? 'underline' : 'unset',
+                        minWidth: accept_button_size.width,
                         width: 'auto',
-                        padding: acceptButtonSize.padding,
+                        padding: accept_button_size.padding,
                         wordBreak: 'break-all'
                     }}>
                         {acceptButtonText}
@@ -98,9 +124,4 @@ class Methods extends Component {
 }
 
 
-export default connect(
-    state => ({
-        login_methods: state.login_methods,
-        loginAgreeButton: state.loginAgreeButton
-    })
-)(Methods);
+export default Methods;

@@ -1,225 +1,98 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 
 import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
-import {upload_file} from "../../reducers/background_and_logo";
 import {getPortal, createPortal} from "../../api/API";
 import Loader from "../../loader";
 
 import {GetBuilderParams} from "./optionsSidebar/getBuilderParams";
 import {PublishPortalMethodHandler} from "./optionsSidebar/publishPortalMethodHandler";
-import {ApplyIncomingData} from "../../modules/applyIncomingData";
 import Notification from "../additional/notification";
+
+import CaptivePortalContext from '../../context/captive-portal-context';
 
 
 class CaptivePortal extends Component {
+
+    static contextType = CaptivePortalContext;
+
+
     state = {
-        readyToWork: false,
         mobile: false,
-        backgrName: this.props.background_and_logo.background_and_logo.logo.url || '',
-        logoName: '',
-        type: '',
-        backgroundType: 'COLOR',
-        alignment: 'center',
-        container: '' || {
-            border: this.props.background_and_logo.container_border,
-            background: this.props.background_and_logo.container_background,
-            size: this.props.background_and_logo.container_size
-        },
-        headerText: (this.props.background_and_logo.header_top_text_data && this.props.background_and_logo.header_description_text_data) ? {
-            top: this.props.background_and_logo.header_top_text_data,
-            descr: this.props.background_and_logo.header_description_text_data
-        } : '',
-        methods: this.props.login_methods.methods || {
-            facebook: false,
-            google: false,
-            twitter: false,
-            button: false
-        },
-        acceptButton: {
-            acceptButtonText: this.props.loginAgreeButton.acceptButtonText || 'Connect',
-            acceptButtonBorder: this.props.loginAgreeButton.acceptButtonBorder || {
-                color: {
-                    rgba: {
-                        r: 85,
-                        g: 133,
-                        b: 237,
-                        a: 1,
-                    },
-                    hex: '#5585ed'
-                },
-                thickness: 1,
-                type: 'solid',
-                radius: 5,
-            },
-            acceptButtonColor: this.props.loginAgreeButton.acceptButtonColor || {
-                rgba: {
-                    r: 255,
-                    g: 255,
-                    b: 255,
-                    a: 1,
-                },
-                hex: '#ffffff'
-            },
-            acceptButtonFont: this.props.loginAgreeButton.acceptButtonFont || {
-                fontSize: 18,
-                color: {
-                    rgba: {
-                        r: 85,
-                        g: 133,
-                        b: 237,
-                        a: 1,
-                    },
-                    hex: '#5585ed'
-                },
-                alignment: 'center',
-                textActions: {
-                    bold: false,
-                    italic: false,
-                    underline: false
-                }
-            },
-            acceptButtonSize: this.props.loginAgreeButton.acceptButtonSize || {
-                width: 145,
-                padding: 10,
-            },
-        },
-        footerContent: this.props.background_and_logo.footer_description || '',
-        successData: this.props.background_and_logo.successMessage || '',
-        successMessageComponentStatus: false,
-        loader: true,
-        portalName: 'Captive Portal Builder',
         publishedType: '',
         failed: false,
         notification: false,
-        externalCss: '',
-        stylesRemovedManually: false
+        styledElements: '',
+        stylesArray: '',
+        mount: false
     };
 
     portalName = React.createRef();
 
-    eventHandler = (name, type, backgroundType) => {
-        if (type === 'background') {
-            console.log(type, name);
-            this.setState({
-                backgrName: name
-            })
-        }
-        if (type === 'logo') {
-            this.setState({
-                logoName: name
-            })
-        }
-        this.setState({
-            type: type,
-            backgroundType: backgroundType
-        })
-    };
-
-    loaderHandler = () => {
-        console.log('tick');
-        this.setState({
-            loader: !this.state.loader
-        });
-    };
-
-
     findPortal = async (data) => {
-        const id = this.props.settedId ? this.props.settedId : localStorage.getItem('cpID');
+        const id = localStorage.getItem('cpID');
+        console.log(id);
         if (id !== null) {
-            // await ApplyIncomingData(data, id, this.props);
             let query = getPortal(data, id);
-            this.loaderHandler();
-
-            console.log('1');
+            this.context.loaderHandler(true);
             await query.then(res => {
                 const {data} = res;
                 console.log(data);
-                this.props.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.background.color, data.style.background_and_logo.background.backgroundType);
-                this.props.setLogo(data.logo !== null ? data.logo.externalUrl : '', data.style.background_and_logo.logo.position);
-                this.props.setBorderStyle(data.style.container_border);
-                this.props.setBackgroundStyle(data.style.container_background);
-                this.props.setSizeStyle(data.style.container_size);
-                this.props.setHedaerTopData(data.header, data.style.header.top);
-                this.props.setHedaerDescriptionData(data.description, data.style.header.description);
-                this.props.setLoginMethods({
+                this.context.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.background.color, data.style.background_and_logo.background.backgroundType);
+                this.context.setLogo(data.logo !== null ? data.logo.externalUrl : '', data.style.background_and_logo.logo.position);
+                this.context.setBorderStyle(data.style.container_border);
+                this.context.setBackgroundStyle(data.style.container_background);
+                this.context.setSizeStyle(data.style.container_size);
+                this.context.setHeaderTopData(data.header, data.style.header.top);
+                this.context.setHeaderDescriptionData(data.description, data.style.header.description);
+                this.context.setLoginMethods({
                     facebook: data.facebookLogin,
                     google: data.googleLogin,
                     twitter: data.twitterLogin,
                     button: data.acceptTermsLogin
                 });
-                this.props.setFooterData(data.footer, data.style.footer);
-                this.props.setLogoID(data.logo === null ? '' : data.logo.id);
-                this.props.setBackgroundID(data.background === null ? '' : data.background.id);
-                this.props.addPortalName(data.name);
-                this.props.setCSS(this.state.stylesRemovedManually ? '' : data.externalCss);
-                this.props.redirectURLChanger(data.successRedirectUrl);
-                this.props.setSuccessMessageData(data.successMessage, data.style.success_message);
-                this.props.setButtonStyles({
+                this.context.setFooterData(data.footer, data.style.footer);
+                this.context.setLogoID(data.logo === null ? '' : data.logo.id);
+                this.context.setBackgroundID(data.background === null ? '' : data.background.id);
+                this.context.addPortalName(data.name);
+                this.context.redirectURLChanger(data.successRedirectUrl);
+                this.context.setSuccessMessageData(data.successMessage, data.style.success_message);
+                this.context.setButtonStyles({
                     acceptButtonText: data.acceptButtonText,
                     acceptButtonSize: data.style.accept_button_size,
                     acceptButtonColor: data.style.accept_button_color,
                     acceptButtonFont: data.style.accept_button_font,
                     acceptButtonBorder: data.style.accept_button_border
                 });
-                const button = {};
-                button.acceptButtonText = data.acceptButtonText;
-                button.acceptButtonBorder = data.style.accept_button_border;
-                button.acceptButtonColor = data.style.accept_button_color;
-                button.acceptButtonFont = data.style.accept_button_font;
-                button.acceptButtonSize = data.style.accept_button_size;
-                this.setState({
-                    type: 'background',
-                    backgroundType: data.style.background_and_logo.background.backgroundType,
-                    backgrName: data.background !== null ? data.background.externalUrl : data.style.background_and_logo.background.color,
-                    logoName: data.logo !== null ? data.logo.externalUrl : '',
-                    alignment: data.style.background_and_logo.logo.position,
-                    container: {
-                        border: data.style.container_border,
-                        background: data.style.container_background,
-                        size: data.style.container_size
-                    },
-                    acceptButton: button,
-                    headerText: {
-                        top: data.header,
-                        descr: data.description
-                    },
-                    methods: {
-                        facebook: data.facebookLogin,
-                        google: data.googleLogin,
-                        twitter: data.twitterLogin,
-                        button: data.acceptTermsLogin
-                    },
-                    successData: data.successMessage || '',
-                    footerContent: data.footer,
-                    loader: false,
-                    portalName: data.name,
-                    readyToWork: true,
-                    externalCss: this.state.stylesRemovedManually ? '' : data.externalCss
-                });
-                this.portalName.current.value = data.name;
+                this.context.addPortalName(data.name);
+                if (data.externalCss.length > 0) {
+                    const styledElements = document.querySelectorAll('.previewWrap [style]');
+                    let stylesArray = [];
+                    Object.keys(styledElements).map((item) => {
+                        stylesArray.push(styledElements[item].getAttribute('style'));
+                    });
+                    Object.keys(styledElements).map((item) => {
+                        styledElements[item].removeAttribute('style');
+                    });
+                    console.log(styledElements);
+                    this.context.setExternalCssInfo(data.externalCss, true, styledElements, stylesArray);
+                    const STYLE = document.getElementsByTagName('STYLE')[0];
+                    if (!!STYLE) {
+                        STYLE.parentNode.removeChild(STYLE);
+                    }
+                    const HEAD = document.getElementsByTagName('HEAD')[0];
+                    let style = document.createElement('style');
+                    style.type = 'text/css';
+                    HEAD.appendChild(style);
+                }
             });
+            this.context.loaderHandler(false);
         } else {
-            this.setState({
-                loader: false,
-                readyToWork: true
-            });
+            this.context.loaderHandler(true);
+            this.context.resetGlobalState();
+            this.context.loaderHandler(false);
         }
-
-    };
-
-
-    containerHandler = (data) => {
-        this.setState({
-            container: data
-        })
-    };
-
-    alignment = (position = 'center') => {
-        this.setState({
-            alignment: position
-        })
+        console.log(this.context);
     };
 
 
@@ -244,100 +117,27 @@ class CaptivePortal extends Component {
         }
     };
 
-    contentData = (data) => {
-        this.setState({
-            headerText: data
-        })
-    };
 
-    loginMethods = (data) => {
-        this.setState({
-            methods: data
-        });
-    };
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        // if (this.state.mobile !== nextState.mobile) return true;
+        // else if (this.state.loader !== nextState.loader) return true;
+        // else if (this.state.publishedType !== nextState.publishedType) return true;
+        // else if (this.state.failed !== nextState.failed) return true;
+        // else if (this.state.styledElements !== nextState.styledElements) return true;
+        // else if (this.state.stylesArray !== nextState.stylesArray) return true;
+        // else if (this.state.mount !== nextState.mount) return true;
+        // else if (this.context !== nextContext) return true;
+        // else return false;
 
-    footerTextData = (data) => {
-        this.setState({
-            footerContent: data
-        })
-    };
+        return (this.state.mobile !== nextState.mobile)
+            || (this.state.loader !== nextState.loader)
+            || (this.state.publishedType !== nextState.publishedType)
+            || (this.state.failed !== nextState.failed)
+            || (this.state.styledElements !== nextState.styledElements)
+            || (this.state.stylesArray !== nextState.stylesArray)
+            || (this.state.mount !== nextState.mount)
+            || (this.context !== nextContext);
 
-    successTextData = (data) => {
-        const {status, ...rest} = data;
-        this.setState({
-            successData: rest,
-            successMessageComponentStatus: status
-        })
-    };
-
-    acceptButton = (data) => {
-        this.setState({
-            acceptButton: data
-        });
-    };
-
-    clearExternalCss = () => {
-        this.setState({
-            externalCss: '',
-            stylesRemovedManually: true
-        });
-
-        console.log('external css length', this.state.externalCss);
-        const STYLE = document.getElementsByTagName('STYLE')[0];
-        if (STYLE) STYLE.parentNode.removeChild(STYLE);
-    };
-
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.backgrName !== nextState.backgrName) return true;
-        else if (this.state.logoName !== nextState.logoName) return true;
-        else if (this.state.type !== nextState.type) return true;
-        else if (this.state.backgroundType !== nextState.backgroundType) return true;
-        else if (this.state.alignment !== nextState.alignment) return true;
-        else if (this.state.mobile !== nextState.mobile) return true;
-        else if (this.state.container !== nextState.container) return true;
-        else if (this.state.headerText !== nextState.headerText) return true;
-        else if (this.state.methods !== nextState.methods) return true;
-        else if (this.state.footerContent !== nextState.footerContent) return true;
-        else if (this.props.tabName !== nextProps.tabName) return true;
-        else if (this.state.portalName !== nextProps.portalName) return true;
-        else if (this.state.successData !== nextState.successData) return true;
-        else if (this.state.successMessageComponentStatus !== nextState.successMessageComponentStatus) return true;
-        else if (this.state.acceptButton !== nextState.acceptButton) return true;
-        else if (this.state.loader !== nextState.loader) return true;
-        else if (this.state.publishedType !== nextState.publishedType) return true;
-        else if (this.state.notification !== nextState.notification) return true;
-        else if (this.state.failed !== nextState.failed) return true;
-        else if (this.state.externalCss !== nextState.externalCss) return true;
-        else if (this.state.stylesRemovedManually !== nextState.stylesRemovedManually) return true;
-        else return true;
-    }
-
-    componentDidMount() {
-        this.props.token.token ? this.findPortal(this.props.token.token) : this.findPortal(localStorage.getItem('token'));
-        console.log('CP mounted: ', this.props.background_and_logo);
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (!localStorage.getItem('cpID')) {                                                
-            this.portalName.current.focus();
-        }
-        console.log('CP updated Redux storage: ', this.props.background_and_logo);
-        console.log('CP updated React component state: ', this.state);
-
-        if (this.state.externalCss !== '') {
-            const HEAD = document.getElementsByTagName('HEAD')[0];
-            const style = document.getElementsByTagName('STYLE')[0] ? document.getElementsByTagName('STYLE')[0] : document.createElement('style');
-            style.type = 'text/css';
-            style.innerText = this.state.externalCss;
-
-            HEAD.appendChild(style);
-
-            const styledElements = document.querySelectorAll('.previewWrap [style]');
-            Object.keys(styledElements).map((item, i) => {
-                styledElements[item].removeAttribute('style');
-            });
-            console.log(document.querySelectorAll('.previewWrap [style]'));
-        }
     }
 
     nameEditor = (e) => {
@@ -349,58 +149,18 @@ class CaptivePortal extends Component {
         if (e.keyCode === 13) {
             if (e.currentTarget.value.length > 0) {
                 e.currentTarget.classList.remove('error');
-                this.props.addPortalName(e.currentTarget.value);
-                const portalDataToSend = GetBuilderParams(this.props.tabName);
-                this.loaderHandler();
+                await this.context.addPortalName(e.currentTarget.value);
+                const {dataToExclude, ...rest} = this.context;
+                const portalDataToSend = GetBuilderParams(rest);
+                this.context.loaderHandler(true);
                 let data = await PublishPortalMethodHandler(portalDataToSend, localStorage.getItem('cpID'));
                 if (data.id) {
                     localStorage.setItem('cpID', data.id)
                 }
-                const button = {};
-                button.acceptButtonText = portalDataToSend.acceptButtonText;
-                button.acceptButtonBorder = portalDataToSend.style.accept_button_border;
-                button.acceptButtonColor = portalDataToSend.style.accept_button_color;
-                button.acceptButtonFont = portalDataToSend.style.accept_button_font;
-                button.acceptButtonSize = portalDataToSend.style.accept_button_size;
-                this.setState({
-                    type: 'background',
-                    backgroundType: portalDataToSend.style.background_and_logo.background.backgroundType,
-                    backgrName: portalDataToSend.background !== null ? portalDataToSend.background.externalUrl : portalDataToSend.style.background_and_logo.background.color,
-                    logoName: portalDataToSend.style.background_and_logo.logo.url !== null ? portalDataToSend.style.background_and_logo.logo.url : '',
-                    alignment: portalDataToSend.style.background_and_logo.logo.position,
-                    container: {
-                        border: portalDataToSend.style.container_border,
-                        background: portalDataToSend.style.container_background,
-                        size: portalDataToSend.style.container_size
-                    },
-                    acceptButton: button,
-                    headerText: {
-                        top: portalDataToSend.header,
-                        descr: portalDataToSend.description
-                    },
-                    methods: {
-                        facebook: portalDataToSend.facebookLogin,
-                        google: portalDataToSend.googleLogin,
-                        twitter: portalDataToSend.twitterLogin,
-                        button: portalDataToSend.acceptTermsLogin
-                    },
-                    footerContent: portalDataToSend.footer,
-                    portalName: portalDataToSend.name
-                });
-                setTimeout(() => {
-                    this.setState({
-                        loader: false,
-                        publishedType: data.publishedType,
-                        notification: true,
-                        failed: false
-                    });
-                }, 2000);
-                setTimeout(() => {
-                    this.setState({
-                        publishedType: '',
-                        notification: false,
-                        failed: false
-                    });
+                this.context.loaderHandler(false);
+                this.context.setNotification(data.publishedType, false, data.notification);
+                await setTimeout(() => {
+                    this.context.setNotification('', false, false);
                 }, 4000);
             } else {
                 e.currentTarget.classList.add('error');
@@ -411,25 +171,33 @@ class CaptivePortal extends Component {
 
     setName = (e) => {
         e.currentTarget.classList.remove('error');
-        this.props.addPortalName(e.currentTarget.value);
+        this.context.addPortalName(e.currentTarget.value);
     };
 
+    componentDidMount() {
+        this.findPortal(localStorage.getItem('token'));
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+    }
+
     render() {
-        if (this.state.readyToWork) {
+        if (!this.context.dataToExclude.loader) {
             return (
                 <div className="container">
                     <div className="wrap wrapFix">
                         <div className="container containerFix">
                             <div className="wrap wrapFix2">
                                 <div className="info">
-                                    <input ref={this.portalName}
-                                           id={'portalName'}
+                                    <input id={'portalName'}
                                            type="text"
                                            placeholder={'Name'}
                                            disabled={false}
                                            onBlur={this.setName}
                                            onDoubleClick={this.nameEditor}
                                            onKeyDown={this.sendData}
+                                           defaultValue={this.context.name}
+                                           autoFocus={!localStorage.getItem('cpID') ? true : false}
                                            className={'active'} data-cy="captivePortalName"/>
                                     <span></span>
                                     <div className="toggles">
@@ -454,30 +222,16 @@ class CaptivePortal extends Component {
                                         </a>
                                     </div>
                                 </div>
-                                <Preview state={this.state}
-                                         header={this.props.background_and_logo.header}
-                                         footer={this.props.background_and_logo.footer}
-                                         success={this.props.background_and_logo.successMessage}
+                                <Preview
+                                    state={this.state}
                                 />
 
                             </div>
                         </div>
-                        <Options alignment={this.alignment}
-                                 handler={this.eventHandler}
-                                 containerHandler={this.containerHandler}
-                                 textData={this.contentData}
-                                 methods={this.loginMethods}
-                                 acceptButton={this.acceptButton}
-                                 footerTextData={this.footerTextData}
-                                 successData={this.successTextData}
-                                 loaderHandler={this.loaderHandler}
-                                 findPortal={this.findPortal}
-                                 clearExternalCss={this.clearExternalCss}/>
+                        <Options/>
                     </div>
-                    {this.state.notification &&
-                    <Notification type={this.state.failed ? 'fail' : 'info'}
-                                  text={this.state.publishedType}/>}
-                    {this.state.loader && <Loader/>}
+                    {this.context.dataToExclude.notification && <Notification/>}
+                    {this.context.dataToExclude.loader && <Loader/>}
                 </div>
             )
         } else {
@@ -487,63 +241,4 @@ class CaptivePortal extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        background_and_logo: state,
-        token: state.token,
-        name: state.name,
-        tabName: state,
-        login_methods: state.login_methods,
-        loginAgreeButton: state.loginAgreeButton
-    }),
-    dispatch => ({
-        addPortalName: (name) => {
-            dispatch({type: "PORTAL_NAME", payload: name})
-        },
-        setBackground: (path, color, type) => {
-            dispatch({type: "UPLOAD_BACKGROUND", payload: {path, color, type}});
-        },
-        setLogo: (path, position) => {
-            dispatch({type: "UPLOAD_LOGO", payload: {path, position}});
-        },
-        setBorderStyle: (data) => {
-            dispatch({type: "container_border", payload: data});
-        },
-        setBackgroundStyle: (data) => {
-            dispatch({type: "container_background", payload: data});
-        },
-        setSizeStyle: (data) => {
-            dispatch({type: "container_size", payload: data});
-        },
-        setHedaerTopData: (text, styles) => {
-            dispatch({type: "HEADER_TOP", payload: {text, styles}});
-        },
-        setHedaerDescriptionData: (text, styles) => {
-            dispatch({type: "HEADER_DESCRIPTION", payload: {text, styles}});
-        },
-        setLoginMethods: (data) => {
-            dispatch({type: "LOGIN_METHODS", payload: data});
-        },
-        setFooterData: (text, styles) => {
-            dispatch({type: "FOOTER_DESCRIPTION", payload: {text, styles}});
-        },
-        setLogoID: (id) => {
-            dispatch({type: "SET_logoID", payload: id});
-        },
-        setBackgroundID: (id) => {
-            dispatch({type: "SET_backgroundID", payload: id});
-        },
-        setCSS: (str) => {
-            dispatch({type: 'SET_CSS', payload: str})
-        },
-        redirectURLChanger: (url) => {
-            dispatch({type: 'REDIRECT_URL', payload: url})
-        },
-        setButtonStyles: (data) => {
-            dispatch({type: 'LOGIN_AGREE_BUTTON', payload: data})
-        },
-        setSuccessMessageData: (text, styles) => {
-            dispatch({type: 'SUCCESS_MESSAGE_DESCRIPTION', payload: {text, styles}})
-        }
-    })
-)(CaptivePortal);
+export default CaptivePortal;

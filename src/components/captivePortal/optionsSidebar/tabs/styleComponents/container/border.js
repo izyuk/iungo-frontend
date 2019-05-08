@@ -1,30 +1,17 @@
 import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
-import {connect} from 'react-redux';
+import CaptivePortalContext from "../../../../../../context/captive-portal-context";
 
 class ContentBorder extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            displayColorPicker: false,
-            color: this.props.container_border.color || {
-                rgba: {
-                    r: 255,
-                    g: 255,
-                    b: 255,
-                    a: 1,
-                },
-                hex: '#ffffff'
-            },
-            type: this.props.container_border.type || 'none',
-            thickness: this.props.container_border.thickness || 1,
-            radius: this.props.container_border.radius || 0
-        };
-        this.handleClick = this.handleClick.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.select = this.select.bind(this);
-    }
+    static contextType = CaptivePortalContext;
+
+    state = {
+        displayColorPicker: false,
+        color: this.context.style.container_border.color,
+        type: this.context.style.container_border.type,
+        thickness: this.context.style.container_border.thickness,
+        radius: this.context.style.container_border.radius
+    };
 
     handleClick = () => {
         this.setState({displayColorPicker: !this.state.displayColorPicker});
@@ -35,49 +22,41 @@ class ContentBorder extends Component {
     };
 
     handleChange = (color) => {
-        this.setState({
-            color: {
-                rgba: {
-                    r: color.rgb.r,
-                    g: color.rgb.g,
-                    b: color.rgb.b,
-                    a: color.rgb.a
-                },
-                hex: color.hex
-            }
-        });
+        const currentState = this.state;
+        currentState.color = {
+            rgba: {
+                r: color.rgb.r,
+                g: color.rgb.g,
+                b: color.rgb.b,
+                a: color.rgb.a
+            },
+            hex: color.hex
+        };
+        this.setState(currentState);
+        const {displayColorPicker, ...rest} = this.state;
+        this.context.setBorderStyle(rest);
     };
 
     select = (e) => {
-        let data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
-        let span = e.currentTarget.nextSibling.children[0];
+        const data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
+        const span = e.currentTarget.nextSibling.children[0];
         span.innerText = data;
-        let state = e.currentTarget.getAttribute('data-select');
-        this.setState({
-            [state]: data
-        });
-        let {displayColorPicker, ...rest} = this.state;
-        this.props.borderStyle(rest);
-        this.props.handler(rest);
+        const dataSelect = e.currentTarget.getAttribute('data-select');
+        const currentState = this.state;
+        currentState[dataSelect] = dataSelect !== 'type' ? parseInt(data) : data;
+        this.setState(currentState);
+        const {displayColorPicker, ...rest} = this.state;
+        this.context.setBorderStyle(rest);
     };
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.type !== nextState.type) {
-            return true;
-        } else if (this.state.thickness !== nextState.thickness) {
-            return true;
-        } else if (this.state.radius !== nextState.radius) {
-            return true;
-        } else if (this.state.color !== nextState.color) {
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return (this.state.type !== nextState.type) ||
+            (this.state.thickness !== nextState.thickness) ||
+            (this.state.radius !== nextState.radius) ||
+            (this.state.color !== nextState.color) ||
+            (this.state.displayColorPicker !== nextState.displayColorPicker) ||
+            (this.context !== nextContext);
 
-            return true;
-        } /*else if (this.state.color !== nextState.color) {
-            return true;
-        }*/ else if (this.state.displayColorPicker !== nextState.displayColorPicker) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     componentDidMount() {
@@ -92,16 +71,9 @@ class ContentBorder extends Component {
             select[i].nextSibling.insertBefore(span, svg);
         }
         const {displayColorPicker, ...rest} = this.state;
-        this.props.borderStyle(rest);
-        this.props.handler(rest);
-
+        this.context.setBorderStyle(rest);
+        console.log(this.context.style.container_border.color);
     };
-
-    componentDidUpdate() {
-        const {displayColorPicker, ...rest} = this.state;
-        this.props.borderStyle(rest);
-        this.props.handler(rest);
-    }
 
     render() {
         const popover = {
@@ -156,7 +128,7 @@ class ContentBorder extends Component {
                             <div className="colorWrap">
                                 <input type="text" value={this.state.color.hex} disabled/>
                                 <button ref={this.cpbButton}
-                                        style={{backgroundColor: `rgba(${ this.state.color.rgba.r }, ${ this.state.color.rgba.g }, ${ this.state.color.rgba.b }, ${ this.state.color.rgba.a })`}}
+                                        style={{backgroundColor: `rgba(${this.state.color.rgba.r}, ${this.state.color.rgba.g}, ${this.state.color.rgba.b}, ${this.state.color.rgba.a})`}}
                                         onClick={this.handleClick} data-cy="borderColor"></button>
                                 {this.state.displayColorPicker ? <div style={popover}>
                                     <div style={cover} onClick={this.handleClose}/>
@@ -224,14 +196,4 @@ class ContentBorder extends Component {
     }
 }
 
-// export default ContentBorder;
-export default connect(
-    state => ({
-        container_border: state.container_border
-    }),
-    dispatch => ({
-        borderStyle: (data) => {
-            dispatch({type: "container_border", payload: data});
-        }
-    })
-)(ContentBorder);
+export default ContentBorder;

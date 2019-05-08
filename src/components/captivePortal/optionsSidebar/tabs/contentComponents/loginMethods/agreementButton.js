@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 import {SketchPicker} from "react-color";
 import Tooltip from 'rc-tooltip';
 import Slider from 'rc-slider';
+import CaptivePortalContext from "../../../../../../context/captive-portal-context";
 
 const style = {
     marginRight: 16,
@@ -30,48 +30,20 @@ const handle = (props) => {
 };
 
 class AgreementButton extends Component {
-    constructor(props) {
-        super(props);
 
-        let storage = this.props.loginAgreeButton;
-        this.state = {
-            fontInputData: storage.acceptButtonFont.fontSize || 18,
-            acceptButtonText: storage.acceptButtonText || 'Connect',
-            acceptButtonColor: storage.acceptButtonColor || {
-                hex: '#ffffff',
-                rgba: {r: 255, g: 255, b: 255, a: 1}
-            },
-            acceptButtonFont: storage.acceptButtonFont || {
-                alignment: 'center',
-                color: {
-                    hex: '#5585ed',
-                    rgba: {r: 85, g: 133, b: 237, a: 1}
-                },
-                fontSize: 18,
-                textActions: {
-                    bold: false,
-                    italic: false,
-                    underline: false
-                }
-            },
-            acceptButtonSize: storage.acceptButtonSize || {
-                width: 145,
-                padding: 10
-            },
-            acceptButtonBorder: storage.acceptButtonBorder || {
-                color: {
-                    hex: '#5585ed',
-                    rgba: {r: 85, g: 133, b: 237, a: 1}
-                },
-                radius: 5,
-                type: "solid",
-                thickness: 1
-            },
-            displayTextColorPicker: false,
-            displayBackgroundColorPicker: false,
-            displayBorderColorPicker: false,
-        };
-    }
+    static contextType = CaptivePortalContext;
+
+    state = {
+        fontInputData: this.context.style.accept_button_font.fontSize,
+        acceptButtonText: this.context.acceptButtonText,
+        acceptButtonColor: this.context.style.accept_button_color,
+        acceptButtonFont: this.context.style.accept_button_font,
+        acceptButtonSize: this.context.style.accept_button_size,
+        acceptButtonBorder: this.context.style.accept_button_border,
+        displayTextColorPicker: false,
+        displayBackgroundColorPicker: false,
+        displayBorderColorPicker: false,
+    };
 
     onSliderChange = (value) => {
         if (value < 8) {
@@ -81,20 +53,20 @@ class AgreementButton extends Component {
         } else if (value === '') {
             value = 8
         }
-        let acceptButtonFont = {...this.state.acceptButtonFont};
-        acceptButtonFont.fontSize = parseInt(value);
-
-        this.setState({acceptButtonFont});
-
-        this.setState({
-            fontInputData: parseInt(value)
-        });
+        const currentState = this.state;
+        currentState.acceptButtonFont.fontSize = parseInt(value);
+        currentState.fontInputData = parseInt(value);
+        this.setState(currentState);
+        const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, fontInputData, ...rest} = currentState
+        this.context.setButtonStyles(rest);
     };
 
     fontInputHandler = (value) => {
-        this.setState({
-            fontInputData: parseInt(value)
-        });
+        const currentState = this.state;
+        currentState.fontInputData = parseInt(value);
+        this.setState(currentState);
+        const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setButtonStyles(rest);
     };
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -107,7 +79,7 @@ class AgreementButton extends Component {
     }
 
     componentDidMount() {
-        let select = document.querySelectorAll('[data-component="ContentBorder"]');
+        const select = document.querySelectorAll('[data-component="ContentBorder"]');
         for (let i = 0; i < select.length; i++) {
             let svg = select[i].nextSibling.children[0];
             select[0].value = this.state.acceptButtonBorder.type;
@@ -117,15 +89,7 @@ class AgreementButton extends Component {
             span.innerText = select[i].options[select[i].selectedIndex].value;
             select[i].nextSibling.insertBefore(span, svg);
         }
-        const {fontInputData, displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, ...rest} = this.state;
-        this.props.acceptButton(rest);
-    }
-
-    componentDidUpdate() {
-        const {fontInputData, displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, ...rest} = this.state;
-        this.props.acceptButton(rest);
-        this.props.buttonInfo(rest);
-        console.log(rest);
+        document.getElementById(this.context.style.accept_button_font.alignment).checked = true;
     }
 
     handleTextColorClick = () => {
@@ -137,10 +101,12 @@ class AgreementButton extends Component {
     };
 
     handleTextColorChange = (color) => {
-        let acceptButtonFont = {...this.state.acceptButtonFont};
-        acceptButtonFont.color.rgba = color.rgb;
-        acceptButtonFont.color.hex = color.hex;
-        this.setState({acceptButtonFont})
+        const currentState = this.state;
+        currentState.acceptButtonFont.color.rgba = color.rgb;
+        currentState.acceptButtonFont.color.hex = color.hex;
+        this.setState(currentState);
+        const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setButtonStyles(rest);
     };
 
     handleBackgroundColorClick = () => {
@@ -152,10 +118,12 @@ class AgreementButton extends Component {
     };
 
     handleBackgroundColorChange = (color) => {
-        let acceptButtonColor = {...this.state.acceptButtonColor};
-        acceptButtonColor.rgba = color.rgb;
-        acceptButtonColor.hex = color.hex;
-        this.setState({acceptButtonColor})
+        const currentState = this.state;
+        currentState.acceptButtonColor.rgba = color.rgb;
+        currentState.acceptButtonColor.hex = color.hex;
+        this.setState(currentState);
+        const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setButtonStyles(rest);
     };
 
     handleBorderColorClick = () => {
@@ -167,29 +135,33 @@ class AgreementButton extends Component {
     };
 
     handleBorderColorChange = (color) => {
-        let acceptButtonBorder = {...this.state.acceptButtonBorder};
-        acceptButtonBorder.color.rgba = color.rgb;
-        acceptButtonBorder.color.hex = color.hex;
-        this.setState({acceptButtonBorder})
+        const currentState = this.state;
+        currentState.acceptButtonBorder.color.rgba = color.rgb;
+        currentState.acceptButtonBorder.color.hex = color.hex;
+        this.setState(currentState);
+        const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setButtonStyles(rest);
     };
 
     select = (e) => {
-        let data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
-        let span = e.currentTarget.nextSibling.children[0];
+        const data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
+        const span = e.currentTarget.nextSibling.children[0];
         span.innerText = data;
-        let state = e.currentTarget.getAttribute('data-select');
-        let acceptButtonBorder = {...this.state.acceptButtonBorder};
-        acceptButtonBorder[state] = state !== 'type' ? parseInt(data) : data;
-        console.log(acceptButtonBorder);
-        this.setState({acceptButtonBorder});
+        const state = e.currentTarget.getAttribute('data-select');
+        const currentState = this.state;
+        currentState.acceptButtonBorder[state] = state !== 'type' ? parseInt(data) : data;
+        this.setState(currentState);
+        const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setButtonStyles(rest);
     };
 
     textActionsHandler = (e) => {
-        let acceptButtonFont = {...this.state.acceptButtonFont};
-        let name = e.currentTarget.getAttribute('data-type');
-        acceptButtonFont.textActions[name] = !acceptButtonFont.textActions[name];
-
-        this.setState({acceptButtonFont});
+        const currentState = this.state;
+        const name = e.currentTarget.getAttribute('data-type');
+        currentState.acceptButtonFont.textActions[name] = !currentState.acceptButtonFont.textActions[name];
+        this.setState(currentState);
+        const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setButtonStyles(rest);
     };
 
     emptyFieldCheck = (e) => {
@@ -200,45 +172,51 @@ class AgreementButton extends Component {
     };
 
     textChanges = (e) => {
-        this.setState({acceptButtonText: e.currentTarget.value})
+        const currentState = this.state;
+        currentState.acceptButtonText = e.currentTarget.value;
+        this.setState(currentState);
+        const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setButtonStyles(rest);
     };
 
     alignment = (e) => {
-        let acceptButtonFont = {...this.state.acceptButtonFont};
-        acceptButtonFont.alignment = e.target.getAttribute('data-id');
-        this.setState({acceptButtonFont});
+        const currentState = this.state;
+        currentState.acceptButtonFont.alignment = e.target.getAttribute('data-id');
+        this.setState(currentState);
+        const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setButtonStyles(rest);
     };
 
     valueWidth = (e) => {
-        let acceptButtonSize = {...this.state.acceptButtonSize};
+        const currentState = this.state;
         if (e.target.value >= 500) {
             e.target.value = 500;
-            acceptButtonSize.width = 500;
-            this.setState({acceptButtonSize});
+            currentState.acceptButtonSize.width = 500;
         } else if (e.target.value <= 120) {
             e.target.value = 120;
-            acceptButtonSize.width = 120;
-            this.setState({acceptButtonSize})
+            currentState.acceptButtonSize.width = 120;
         } else {
-            acceptButtonSize.width = parseInt(e.target.value);
-            this.setState({acceptButtonSize});
+            currentState.acceptButtonSize.width = parseInt(e.target.value);
         }
+        this.setState(currentState);
+        const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setButtonStyles(rest);
     };
 
     valuePadding = (e) => {
-        let acceptButtonSize = {...this.state.acceptButtonSize};
+        const currentState = this.state;
         if (e.target.value >= 40) {
             e.target.value = 40;
-            acceptButtonSize.padding = 40;
-            this.setState({acceptButtonSize});
+            currentState.acceptButtonSize.padding = 40;
         } else if (e.target.value <= 0) {
             e.target.value = 0;
-            acceptButtonSize.padding = 0;
-            this.setState({acceptButtonSize});
+            currentState.acceptButtonSize.padding = 0;
         } else {
-            acceptButtonSize.padding = parseInt(e.target.value);
-            this.setState({acceptButtonSize});
+            currentState.acceptButtonSize.padding = parseInt(e.target.value);
         }
+        this.setState(currentState);
+        const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setButtonStyles(rest);
     };
 
     render() {
@@ -390,7 +368,7 @@ class AgreementButton extends Component {
                             <div className="colorWrap">
                                 <input type="text" value={acceptButtonFont.color.hex} disabled/>
                                 <button ref={this.cpbButton}
-                                        style={{backgroundColor: `rgba(${ acceptButtonFont.color.rgba.r }, ${ acceptButtonFont.color.rgba.g }, ${ acceptButtonFont.color.rgba.b }, ${ acceptButtonFont.color.rgba.a })`}}
+                                        style={{backgroundColor: `rgba(${acceptButtonFont.color.rgba.r}, ${acceptButtonFont.color.rgba.g}, ${acceptButtonFont.color.rgba.b}, ${acceptButtonFont.color.rgba.a})`}}
                                         onClick={this.handleTextColorClick}
                                         data-cy="connectButtonTextColor">
                                 </button>
@@ -421,8 +399,9 @@ class AgreementButton extends Component {
                             <div className="colorWrap">
                                 <input type="text" value={acceptButtonColor.hex} disabled/>
                                 <button ref={this.cpbButton}
-                                        style={{backgroundColor: `rgba(${ acceptButtonColor.rgba.r }, ${ acceptButtonColor.rgba.g }, ${ acceptButtonColor.rgba.b }, ${ acceptButtonColor.rgba.a })`}}
-                                        onClick={this.handleBackgroundColorClick} data-cy="connectButtonBackgroundColor">
+                                        style={{backgroundColor: `rgba(${acceptButtonColor.rgba.r}, ${acceptButtonColor.rgba.g}, ${acceptButtonColor.rgba.b}, ${acceptButtonColor.rgba.a})`}}
+                                        onClick={this.handleBackgroundColorClick}
+                                        data-cy="connectButtonBackgroundColor">
                                 </button>
                                 {
                                     this.state.displayBackgroundColorPicker ?
@@ -475,7 +454,7 @@ class AgreementButton extends Component {
                             <div className="colorWrap">
                                 <input type="text" value={acceptButtonBorder.color.hex} disabled/>
                                 <button ref={this.cpbButton}
-                                        style={{backgroundColor: `rgba(${ acceptButtonBorder.color.rgba.r }, ${ acceptButtonBorder.color.rgba.g }, ${ acceptButtonBorder.color.rgba.b }, ${ acceptButtonBorder.color.rgba.a })`}}
+                                        style={{backgroundColor: `rgba(${acceptButtonBorder.color.rgba.r}, ${acceptButtonBorder.color.rgba.g}, ${acceptButtonBorder.color.rgba.b}, ${acceptButtonBorder.color.rgba.a})`}}
                                         onClick={this.handleBorderColorClick} data-cy="connectButtonBorderColor">
                                 </button>
                                 {
@@ -555,7 +534,8 @@ class AgreementButton extends Component {
                     </div>
                     <div className="right">
                         <div className="inputSelect">
-                            <input type="number" onBlur={this.valueWidth} data-cy="connectButtonWidth" defaultValue={acceptButtonSize.width}/>
+                            <input type="number" onBlur={this.valueWidth} data-cy="connectButtonWidth"
+                                   defaultValue={acceptButtonSize.width}/>
                             <select name="" id="" disabled>
                                 <option value="px">px</option>
                                 <option value="%">%</option>
@@ -571,7 +551,8 @@ class AgreementButton extends Component {
                     <div className="right">
 
                         <div className="inputSelect">
-                            <input type="number" onBlur={this.valuePadding} data-cy="connectButtonPadding" defaultValue={acceptButtonSize.padding}/>
+                            <input type="number" onBlur={this.valuePadding} data-cy="connectButtonPadding"
+                                   defaultValue={acceptButtonSize.padding}/>
                             <select name="" id="" disabled>
                                 <option value="px">px</option>
                                 <option value="%">%</option>
@@ -586,14 +567,4 @@ class AgreementButton extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        loginAgreeButton: state.loginAgreeButton
-    }),
-    dispatch => ({
-        buttonInfo: (data) => {
-            dispatch({type: 'LOGIN_AGREE_BUTTON', payload: data})
-        }
-    })
-)
-(AgreementButton);
+export default AgreementButton;

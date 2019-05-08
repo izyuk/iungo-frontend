@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
-import connect from "react-redux/es/connect/connect";
 import Tooltip from 'rc-tooltip';
 import Slider from 'rc-slider';
+import CaptivePortalContext from "../../../../../../context/captive-portal-context";
 
 const style = {
     marginRight: 16,
@@ -30,28 +30,18 @@ const handle = (props) => {
 };
 
 class SuccessActions extends Component {
-    storage = this.props;
-    _isMounted = false;
+
+    static contextType = CaptivePortalContext;
 
     state = {
         displayColorPicker: false,
-        fontInputData: this.storage.successMessage.styles.fontSize || 18,
-        color: this.storage.successMessage.styles.color.rgba || {
-            r: 85,
-            g: 133,
-            b: 237,
-            a: 1,
-        },
-        colorHEX: this.storage.successMessage.styles.color.hex || '#5585ed',
-        fontSize: this.storage.successMessage.styles.fontSize || 18,
-        textActions: this.storage.successMessage.styles.textActions || {
-            bold: false,
-            italic: false,
-            underline: false,
-        },
-        text: this.storage.successMessage.text || 'Success message',
-        alignment: this.storage.successMessage.styles.alignment || 'center',
-        redirectURL: this.storage.redirectURL.url || ''
+        fontInputData: this.context.style.success_message.fontSize,
+        color: {rgba: this.context.style.success_message.color.rgba, hex: this.context.style.success_message.color.hex},
+        fontSize: this.context.style.success_message.fontSize,
+        textActions: this.context.style.success_message.textActions,
+        text: this.context.successMessage,
+        alignment: this.context.style.success_message.alignment,
+        redirectURL: this.context.successRedirectUrl
     };
 
     onSliderChange = (value) => {
@@ -66,12 +56,16 @@ class SuccessActions extends Component {
             fontSize: parseInt(value),
             fontInputData: parseInt(value)
         });
+        const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = this.state;
+        this.context.setSuccessMessageData(text, {color: color, ...rest});
     };
 
     fontInputHandler = (value) => {
-        this.setState({
-            fontInputData: parseInt(value)
-        });
+        const currentState = this.state;
+        currentState.fontInputData = parseInt(value);
+        this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = currentState;
+        this.context.setSuccessMessageData(text, {color: color, ...rest});
     };
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -86,31 +80,15 @@ class SuccessActions extends Component {
     }
 
     componentDidMount() {
-        this._isMounted = true;
-
-        const {displayColorPicker, fontInputData, text, color, colorHEX, redirectURL, ...rest} = this.state;
-        this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
-        this.props.redirectURLChanger(redirectURL);
-        this.props.successData({color: {rgba: color, hex: colorHEX}, redirectURL, status: this._isMounted, ...rest});
-        document.getElementById((this.storage.successMessage.styles ? this.storage.successMessage.styles.alignment : 'center')).checked = true;
-        // console.log(this.storage.successData.styles.alignment);
-        console.log(this.storage.successData.styles);
-    }
-
-    componentDidUpdate() {
-        const {displayColorPicker, fontInputData, text, color, colorHEX, redirectURL, ...rest} = this.state;
-        this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
-        this.props.redirectURLChanger(redirectURL);
-        this.props.successData({color: {rgba: color, hex: colorHEX}, redirectURL, status: this._isMounted, ...rest});
-        console.log(this.state);
+        this.context.setSuccessMessageStatus(true);
+        document.getElementById(this.context.style.success_message.alignment).checked = true;
     }
 
     componentWillUnmount() {
-        this._isMounted = false;
-        const {displayColorPicker, fontInputData, text, color, colorHEX, redirectURL, ...rest} = this.state;
-        this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
-        this.props.redirectURLChanger(redirectURL);
-        this.props.successData({color: {rgba: color, hex: colorHEX}, redirectURL, status: this._isMounted, ...rest});
+        this.context.setSuccessMessageStatus(false);
+        const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = this.state;
+        this.context.setSuccessMessageData(text, {color: color, ...rest});
+        this.context.redirectURLChanger(redirectURL);
     }
 
     handleClick = () => {
@@ -122,53 +100,58 @@ class SuccessActions extends Component {
     };
 
     handleChange = (color) => {
-        this.setState({
-            color: color.rgb
-        });
-        this.setState({
-            colorHEX: color.hex
-        })
+        const currentState = this.state;
+        currentState.color.rgba = color.rgb;
+        currentState.color.hex = color.hex;
+        this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, redirectURL, ...rest} = currentState;
+        this.context.setSuccessMessageData(text, {color: this.state.color, ...rest});
     };
 
     textActionsHandler = (e) => {
-        let name = e.currentTarget.getAttribute('data-type');
-        let currentState = this.state;
+        const name = e.currentTarget.getAttribute('data-type');
+        const currentState = this.state;
         currentState.textActions[name] = !this.state.textActions[name];
-
         this.setState(currentState);
-    };
+        const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = currentState;
+        this.context.setSuccessMessageData(text, {color: color, ...rest});
+    }
 
     textChanges = (e) => {
-        this.setState({
-            text: e.currentTarget.value
-        })
+        const currentState = this.state;
+        currentState.text = e.currentTarget.value;
+        this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = currentState;
+        this.context.setSuccessMessageData(text, {color: color, ...rest});
     };
 
     redirectURLChanges = (e) => {
         const url = e.currentTarget.value;
+        const currentState = this.state;
         if(url.length > 0){
             if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0) {
-                this.setState({
-                    redirectURL: url
-                })
+                currentState.redirectURL = url;
+                this.setState(currentState)
             } else {
                 e.currentTarget.value = 'http://'+e.currentTarget.value;
-                this.setState({
-                    redirectURL: e.currentTarget.value
-                });
+                currentState.redirectURL = e.currentTarget.value;
+                this.setState(currentState);
 
             }
         } else {
-            this.setState({
-                redirectURL: e.currentTarget.value
-            });
+            currentState.redirectURL = e.currentTarget.value;
+            this.setState(currentState);
         }
+        const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = currentState;
+        this.context.setSuccessMessageData(text, {color: color, ...rest});
     };
 
     alignment = (e) => {
-        this.setState({
-            alignment: e.target.getAttribute('data-id')
-        });
+        const currentState = this.state;
+        currentState.alignment = e.target.getAttribute('data-id');
+        this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = currentState;
+        this.context.setSuccessMessageData(text, {color: color, ...rest});
     };
 
     render() {
@@ -298,15 +281,15 @@ class SuccessActions extends Component {
                     <div className="right">
                         <div className="innerRow">
                             <div className="colorWrap">
-                                <input type="text" value={this.state.colorHEX} disabled/>
+                                <input type="text" value={this.state.color.hex} disabled/>
                                 <button ref={this.cpbButton}
-                                        style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
+                                        style={{backgroundColor: `rgba(${ this.state.color.rgba.r }, ${ this.state.color.rgba.g }, ${ this.state.color.rgba.b }, ${ this.state.color.rgba.a })`}}
                                         onClick={this.handleClick} data-cy="successTextColor"></button>
                                 {
                                     this.state.displayColorPicker ?
                                         <div style={popover}>
                                             <div style={cover} onClick={this.handleClose}/>
-                                            <SketchPicker color={this.state.color} onChange={this.handleChange}/>
+                                            <SketchPicker color={this.state.color.rgba} onChange={this.handleChange}/>
                                         </div>
                                         : null
                                 }
@@ -328,17 +311,4 @@ class SuccessActions extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        successMessage: state.successMessage,
-        redirectURL: state.redirectURL
-    }),
-    dispatch => ({
-        textData: (text, styles) => {
-            dispatch({type: "SUCCESS_MESSAGE_DESCRIPTION", payload: {text, styles}});
-        },
-        redirectURLChanger: (url) => {
-            dispatch({type: "REDIRECT_URL", payload: url});
-        }
-    })
-)(SuccessActions);
+export default SuccessActions;
