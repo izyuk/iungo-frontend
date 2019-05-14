@@ -3,6 +3,7 @@ import {SketchPicker} from "react-color";
 import {connect} from 'react-redux';
 import Tooltip from 'rc-tooltip';
 import Slider from "rc-slider";
+import CaptivePortalContext from "../../../../../../context/captive-portal-context";
 
 const style = {
     marginRight: 16,
@@ -30,29 +31,16 @@ const handle = (props) => {
 };
 
 class HeaderDescription extends Component {
-    constructor(props) {
-        super(props);
-        let storage = this.props.header.description;
-        this.state = {
-            displayColorPicker: false,
-            fontInputData: storage.styles.fontSize || 18,
-            colorHEX: storage.styles.color.hex || '#5585ed',
-            color: storage.styles.color.rgba || {
-                r: 85,
-                g: 133,
-                b: 237,
-                a: 1,
-            },
-            fontSize: storage.styles.fontSize || 18,
-            textActions: storage.styles.textActions || {
-                bold: false,
-                italic: false,
-                underline: false,
-            },
-            text: storage.text !== undefined ? storage.text : 'Venue description',
-            alignment: storage.styles.alignment || 'center'
-        };
-    }
+    static contextType = CaptivePortalContext;
+    state = {
+        displayColorPicker: false,
+        fontInputData: this.context.style.header.description.fontSize,
+        color: {rgba:this.context.style.header.description.color.rgba, hex: this.context.style.header.description.color.hex},
+        fontSize: this.context.style.header.description.fontSize,
+        textActions: this.context.style.header.description.textActions,
+        text: this.context.description,
+        alignment: this.context.style.header.description.alignment
+    };
 
     onSliderChange = (value) => {
         if (value < 8) {
@@ -66,12 +54,16 @@ class HeaderDescription extends Component {
             fontSize: parseInt(value),
             fontInputData: parseInt(value)
         });
+        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
+        this.context.setHeaderDescriptionData(text, {color: color, ...rest});
     };
 
     fontInputHandler = (value) => {
-        this.setState({
-            fontInputData: parseInt(value)
-        });
+        const currentState = this.state;
+        currentState.fontInputData = value;
+        this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
+        this.context.setHeaderDescriptionData(text, {color: color, ...rest});
     };
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -87,17 +79,9 @@ class HeaderDescription extends Component {
     }
 
     componentDidMount() {
-        const {displayColorPicker, fontInputData, text, colorHEX, color, ...rest} = this.state;
-        this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
-        this.props.handler({color: {rgba: color, hex: colorHEX}, ...rest});
-        const storage = this.props.header.description;
-        document.getElementById(`${storage ? storage.styles.alignment : 'center'}`).checked = true;
-    }
-
-    componentDidUpdate() {
-        const {displayColorPicker, fontInputData, text, colorHEX, color, ...rest} = this.state;
-        this.props.textData(text, {color: {rgba: color, hex: colorHEX}, ...rest});
-        this.props.handler({color: {rgba: color, hex: colorHEX}, ...rest});
+        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
+        this.context.setHeaderDescriptionData(text, {color: color, ...rest});
+        document.getElementById(this.context.style.header.description.alignment).checked = true;
     }
 
     handleClick = () => {
@@ -109,15 +93,12 @@ class HeaderDescription extends Component {
     };
 
     handleChange = (color) => {
-        this.setState({
-            color: {
-                r: color.rgb.r,
-                g: color.rgb.g,
-                b: color.rgb.b,
-                a: color.rgb.a
-            }
-        });
-        this.setState({colorHEX: color.hex});
+        const currentState = this.state;
+        currentState.color.rgba = color.rgb;
+        currentState.colorHEX = color.hex;
+        this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, ...rest} = this.state;
+        this.context.setHeaderDescriptionData(text, {color: this.state.color, ...rest});
     };
 
     textActionsHandler = (e) => {
@@ -126,19 +107,24 @@ class HeaderDescription extends Component {
         currentState.textActions[name] = !this.state.textActions[name];
 
         this.setState(currentState);
-        this.forceUpdate();
+        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
+        this.context.setHeaderDescriptionData(text, {color: color, ...rest});
     };
 
     textChanges = (e) => {
-        this.setState({
-            text: e.currentTarget.value
-        })
+        const currentState = this.state;
+        currentState.text = e.currentTarget.value;
+        this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
+        this.context.setHeaderDescriptionData(text, {color: color, ...rest});
     };
 
     alignment = (e) => {
-        this.setState({
-            alignment: e.target.getAttribute('data-id')
-        });
+        const currentState = this.state;
+        currentState.alignment = e.target.getAttribute('data-id');
+        this.setState(currentState);
+        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
+        this.context.setHeaderDescriptionData(text, {color: color, ...rest});
     };
 
     render() {
@@ -274,13 +260,13 @@ class HeaderDescription extends Component {
                     <div className="right">
                         <div className="innerRow">
                             <div className="colorWrap">
-                                <input type="text" value={this.state.colorHEX} disabled/>
+                                <input type="text" value={this.state.color.hex} disabled/>
                                 <button ref={this.cpbButton}
-                                        style={{backgroundColor: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`}}
+                                        style={{backgroundColor: `rgba(${ this.state.color.rgba.r }, ${ this.state.color.rgba.g }, ${ this.state.color.rgba.b }, ${ this.state.color.rgba.a })`}}
                                         onClick={this.handleClick} data-cy="headerDescriptionColor"></button>
                                 {this.state.displayColorPicker ? <div style={popover}>
                                     <div style={cover} onClick={this.handleClose}/>
-                                    <SketchPicker color={this.state.color} onChange={this.handleChange}/>
+                                    <SketchPicker color={this.state.color.rgba} onChange={this.handleChange}/>
                                 </div> : null}
                             </div>
                         </div>

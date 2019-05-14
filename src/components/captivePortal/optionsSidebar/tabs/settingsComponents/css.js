@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-
+import CaptivePortalContext from "../../../../../context/captive-portal-context";
 
 
 class CSS extends Component {
-
+    static contextType = CaptivePortalContext;
     state = {
         isUsed: false,
         styledElements: '',
@@ -12,8 +11,6 @@ class CSS extends Component {
     };
 
     input = React.createRef();
-    // STYLE = document.getElementsByTagName('STYLE')[0];
-
 
     addStyles = (e) => {
         const STYLE = document.getElementsByTagName('STYLE')[0];
@@ -22,7 +19,6 @@ class CSS extends Component {
         }
         const HEAD = document.getElementsByTagName('HEAD')[0];
         let file = e.currentTarget.files[0];
-        console.log(file.name);
         this.setState({
             isUsed: true
         });
@@ -31,54 +27,51 @@ class CSS extends Component {
             style.type = 'text/css';
             let reader = new FileReader();
             reader.readAsText(file, "UTF-8");
-
             reader.onload = (evt) => {
                 style.innerHTML = evt.target.result;
-                this.props.setCSS(evt.target.result);
+                // this.context.setCSS(evt.target.result);
                 const styledElements = document.querySelectorAll('.previewWrap [style]');
-                console.log(styledElements);
                 let stylesArray = [];
                 Object.keys(styledElements).map((item, i) => {
                     stylesArray.push(styledElements[item].getAttribute('style'));
                 });
+                Object.keys(styledElements).map((item, i) => {
+                    styledElements[item].removeAttribute('style');
+                });
+                this.context.setExternalCssInfo(evt.target.result, true, styledElements, stylesArray);
                 this.setState({
                     styledElements: styledElements,
                     stylesArray: stylesArray
                 });
-                console.log(this.state);
-                Object.keys(styledElements).map((item, i) => {
-                    styledElements[item].removeAttribute('style');
-                });
-                console.log(this.state);
+                this.context.stylesApplied = true;
+
             };
             reader.onerror = (evt) => {
                 style.innerText = "error reading file";
             };
-
             HEAD.appendChild(style);
 
         }
     };
 
-    removeStyles = () => {
-        this.props.clearExternalCss();
-        this.props.findPortal(localStorage.getItem('token'));
-        this.props.setCSS('');
-        console.log(this.props.background_and_logo.css.path);
+    removeStyles = async () => {
+
+        console.log(this.context.dataToExclude.styledElements);
+        console.log(this.context.dataToExclude.stylesArray);
+
+        const elements = this.context.dataToExclude.styledElements;
+        const styles = this.context.dataToExclude.stylesArray;
+
+        Object.keys(elements).map((i) => {
+            console.log(elements[i]);
+            elements[i].setAttribute('style', styles[i]);
+        });
+
+        await this.context.setExternalCssInfo('', false, this.state.styledElements, this.state.stylesArray);
+        // this.props.findPortal(localStorage.getItem('token'));
         this.input.current.value = '';
         const STYLE = document.getElementsByTagName('STYLE')[0];
-
         STYLE ? STYLE.parentNode.removeChild(STYLE) : true;
-        this.setState({
-            isUsed: false
-        });
-        if(this.state.stylesArray){
-            const styles = this.state.stylesArray;
-            const nodes = this.state.styledElements;
-            Object.keys(nodes).map((item, i) => {
-                nodes[item].setAttribute('style', styles[item])
-            })
-        }
 
     };
 
@@ -90,38 +83,13 @@ class CSS extends Component {
     }
 
     componentDidMount() {
-        console.log(this.input.current.value);
-        console.log(this.props.background_and_logo.css.path);
-        console.log(this.props.background_and_logo.css.path.length);
-        if(this.props.background_and_logo.css.path.length > 0){
-            this.setState({
-                isUsed: true
-            })
-        } else {
-            this.setState({
-                isUsed: false
-            })
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(this.input.current.value);
-        console.log(this.props.background_and_logo.css.path.length);
-        if(this.props.background_and_logo.css.path.length > 0){
-            this.setState({
-                isUsed: true
-            })
-        } else {
-            this.setState({
-                isUsed: false
-            })
-        }
+        console.log('CONTEXT:\n', this.context);
     }
 
     render() {
         return (
             <div className="container">
-                {this.state.isUsed &&
+                {this.context.dataToExclude.stylesApplied &&
                 <div className="row">
                     <div className="right">
                         <span className="innerRow">
@@ -159,13 +127,4 @@ class CSS extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        background_and_logo: state
-    }),
-    dispatch => ({
-        setCSS: (path) => {
-            dispatch({type: "SET_CSS", payload: path})
-        }
-    })
-)(CSS);
+export default CSS;

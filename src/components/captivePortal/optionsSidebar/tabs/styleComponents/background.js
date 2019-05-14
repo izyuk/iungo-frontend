@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 import ImageUploader from '../../../imageUploader/imageUploader';
 
 
@@ -16,19 +15,4 @@ class Background extends Component {
     }
 }
 
-// export default Background;
-
-export default connect(
-    state => ({
-        background_and_logo: state.background_and_logo,
-        token: state.token
-    }),
-    dispatch => ({
-        uploadFile: (path, color, type) => {
-            dispatch({type: "UPLOAD_BACKGROUND", payload: {path, color, type}});
-        },
-        setID: (num) => {
-            dispatch({type: "SET_backgroundID", payload: num});
-        }
-    })
-)(ImageUploader);
+export default ImageUploader;
