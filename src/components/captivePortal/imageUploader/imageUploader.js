@@ -133,7 +133,8 @@ class ImageUploader extends Component {
     };
 
     getImages = async () => {
-        const token = localStorage.getItem('token');
+
+        const token = this.context.dataToExclude.token;
 
         let query = getAllImages(token);
         let array = [];
@@ -234,7 +235,8 @@ class ImageUploader extends Component {
             });
             document.getElementById((position ? (position === 'flex-start' ? 'left' : (position === 'flex-end' ? 'right' : 'center')) : this.state.logoPosition)).checked = true;
         }
-        // this.context.setBackground();
+        console.log("TYPE", this.props.type);
+        console.log("IMAGE UPLOADER TOKEN on DID MOUNT", localStorage.getItem('token'));
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {

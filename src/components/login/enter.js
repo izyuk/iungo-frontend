@@ -14,6 +14,7 @@ import Loader from '../../loader';
 import Notification from '../additional/notification';
 
 class Enter extends Component {
+
     state = {
         login: true,
         userData: null,
@@ -38,7 +39,6 @@ class Enter extends Component {
                 if (status === 200) {
                     if (this.state.login) {
                         const {headers: {authorization}} = res;
-                        this.props.setToken(authorization);
                         localStorage.setItem('token', authorization);
                         this.setState({
                             auth: true,

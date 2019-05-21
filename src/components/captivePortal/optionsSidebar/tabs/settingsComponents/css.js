@@ -29,7 +29,6 @@ class CSS extends Component {
             reader.readAsText(file, "UTF-8");
             reader.onload = (evt) => {
                 style.innerHTML = evt.target.result;
-                // this.context.setCSS(evt.target.result);
                 const styledElements = document.querySelectorAll('.previewWrap [style]');
                 let stylesArray = [];
                 Object.keys(styledElements).map((item, i) => {
@@ -84,6 +83,11 @@ class CSS extends Component {
 
     componentDidMount() {
         console.log('CONTEXT:\n', this.context);
+        console.log(JSON.stringify(this.context));
+        const data_to_store = this.context;
+        data_to_store.dataToExclude.token = '';
+        localStorage.setItem('context_state', JSON.stringify(data_to_store));
+        console.log(localStorage.getItem('context_state'));
     }
 
     render() {

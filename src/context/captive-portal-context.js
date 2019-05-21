@@ -192,10 +192,15 @@ export default React.createContext({
         loader: false,
         publishedType: '',
         failed: false,
-        notification: false
+        notification: false,
+        stylesApplied: false,
+        styledElements: '',
+        stylesArray: '',
+        token: ''
     },
     loaderHandler: () => {},
     setSuccessMessageStatus: () => {},
     setNotification: () => {},
-    resetGlobalState: () => {}
+    resetGlobalState: () => {},
+    setToken: () => {}
 });

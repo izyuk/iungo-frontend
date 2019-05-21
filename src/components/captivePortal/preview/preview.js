@@ -17,7 +17,7 @@ class Preview extends Component {
         const {style} = this.context;
         style.container_border.type === 'none' ? this.ContainerMain.current.style.boxShadow = 'none' : this.ContainerMain.current.style.boxShadow = '0 1px 9px 0 rgba(191, 197, 210, 0.25)';
         if (this.context.externalCss !== '') {
-            console.log(this.context.externalCss);
+            // console.log(this.context.externalCss);
             const HEAD = document.getElementsByTagName('HEAD')[0];
             const style = document.getElementsByTagName('STYLE')[0] ? document.getElementsByTagName('STYLE')[0] : document.createElement('style');
             style.type = 'text/css';
@@ -34,7 +34,7 @@ class Preview extends Component {
                 styledElements[item].removeAttribute('style');
             });
             this.context.setExternalCssInfo(this.context.externalCss, true, styledElements, stylesArray);
-            console.log(document.querySelectorAll('.previewWrap [style]'));
+            // console.log(document.querySelectorAll('.previewWrap [style]'));
         }
 
     }

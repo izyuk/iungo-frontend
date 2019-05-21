@@ -32,6 +32,7 @@ class CaptivePortal extends Component {
     findPortal = async (data) => {
         const id = localStorage.getItem('cpID');
         console.log(id);
+        console.log('TOKEN findPortal on CP DID MOUNT: ',data);
         if (id !== null) {
             let query = getPortal(data, id);
             this.context.loaderHandler(true);
@@ -74,7 +75,7 @@ class CaptivePortal extends Component {
                     Object.keys(styledElements).map((item) => {
                         styledElements[item].removeAttribute('style');
                     });
-                    console.log(styledElements);
+                    // console.log(styledElements);
                     this.context.setExternalCssInfo(data.externalCss, true, styledElements, stylesArray);
                     const STYLE = document.getElementsByTagName('STYLE')[0];
                     if (!!STYLE) {
@@ -119,16 +120,6 @@ class CaptivePortal extends Component {
 
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        // if (this.state.mobile !== nextState.mobile) return true;
-        // else if (this.state.loader !== nextState.loader) return true;
-        // else if (this.state.publishedType !== nextState.publishedType) return true;
-        // else if (this.state.failed !== nextState.failed) return true;
-        // else if (this.state.styledElements !== nextState.styledElements) return true;
-        // else if (this.state.stylesArray !== nextState.stylesArray) return true;
-        // else if (this.state.mount !== nextState.mount) return true;
-        // else if (this.context !== nextContext) return true;
-        // else return false;
-
         return (this.state.mobile !== nextState.mobile)
             || (this.state.loader !== nextState.loader)
             || (this.state.publishedType !== nextState.publishedType)
@@ -137,7 +128,6 @@ class CaptivePortal extends Component {
             || (this.state.stylesArray !== nextState.stylesArray)
             || (this.state.mount !== nextState.mount)
             || (this.context !== nextContext);
-
     }
 
     nameEditor = (e) => {
@@ -169,16 +159,18 @@ class CaptivePortal extends Component {
         }
     };
 
-    setName = (e) => {
+    setName = e => {
         e.currentTarget.classList.remove('error');
         this.context.addPortalName(e.currentTarget.value);
     };
 
     componentDidMount() {
+        this.context.setToken(localStorage.getItem('token'));
         this.findPortal(localStorage.getItem('token'));
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        // console.log('CONTAINER ON MOUNT', this.container);
     }
 
     render() {

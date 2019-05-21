@@ -182,7 +182,8 @@ class GlobalCaptivePortalState extends Component {
             notification: false,
             stylesApplied: false,
             styledElements: '',
-            stylesArray: ''
+            stylesArray: '',
+            token: ''
         }
     };
 
@@ -294,17 +295,6 @@ class GlobalCaptivePortalState extends Component {
         currentState.dataToExclude.styledElements = nodes;
         currentState.dataToExclude.stylesArray = inlineStyles;
         this.setState(currentState);
-        // if (status) {
-        //     Object.keys(nodes).map((item, i) => {
-        //         nodes[item].removeAttribute('style');
-        //     });
-        // } else {
-        //     const STYLE = document.getElementsByTagName('STYLE')[0];
-        //     if (STYLE) STYLE.parentNode.removeChild(STYLE);
-        //     Object.keys(state.styledElements).map((item, i) => {
-        //         state.styledElements[item].setAttribute('style', state.stylesArray[item])
-        //     })
-        // }
     };
 
     loaderHandler = boolean => {
@@ -325,6 +315,12 @@ class GlobalCaptivePortalState extends Component {
         currentState.dataToExclude.failed = failed;
         currentState.dataToExclude.notification = status;
         this.setState(currentState)
+    };
+
+    setToken = token => {
+        const currentState = this.state;
+        currentState.dataToExclude.token = token;
+        this.setState(currentState);
     };
 
     resetGlobalState = async () => {
@@ -578,6 +574,7 @@ class GlobalCaptivePortalState extends Component {
             setSuccessMessageStatus: this.setSuccessMessageStatus,
             setNotification: this.setNotification,
             resetGlobalState: this.resetGlobalState,
+            setToken: this.setToken
         }}
         >{this.props.children}</CaptivePortalContext.Provider>
     }

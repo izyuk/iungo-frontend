@@ -51,6 +51,7 @@ class CaptivePortalList extends Component {
     };
 
     componentDidMount() {
+        console.log('TOKEN: ', localStorage.getItem('token'));
         const STYLE = document.getElementsByTagName('STYLE')[0];
         if (STYLE) STYLE.parentNode.removeChild(STYLE);
         this.findAllPortals(localStorage.getItem('token'));
