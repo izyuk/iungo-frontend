@@ -70,8 +70,8 @@ class Options extends Component {
                         </li>
                         <li onClick={this.tabHandler}
                             data-cy={'contentTab'}>Content</li>
-                        <li onClick={this.tabHandler}
-                            data-cy={'settingsTab'}>Settings</li>
+                        {/*<li onClick={this.tabHandler}
+                            data-cy={'settingsTab'}>Settings</li>*/}
                     </ul>
 
                     {this.state.tab === 'Style' ?

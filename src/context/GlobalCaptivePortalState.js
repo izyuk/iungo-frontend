@@ -534,6 +534,101 @@ class GlobalCaptivePortalState extends Component {
         await this.addPortalName(data.name);
     };
 
+
+    previewCssGenerator = () => {
+        const {
+            style: {
+                header: {top, description},
+                footer,
+                container_background,
+                container_border,
+                container_size,
+                background_and_logo: {background, logo},
+                success_message,
+                accept_button_border,
+                accept_button_color,
+                accept_button_font,
+                accept_button_size
+            }
+        } = this.state;
+    return `
+    
+            .previewMain { 
+                background:  ${ background.backgroundType === 'COLOR' ?
+                    `rgba(${background.color.rgba.r}, ${background.color.rgba.g}, ${background.color.rgba.b}, ${background.color.rgba.a})` :
+                    `url('${background.url}')`}; 
+            }
+            
+            .previewLogoPlace {
+                justify-content: ${logo.position};
+            }
+           
+            .previewContainer > div.section {
+                border: ${container_border.thickness}px ${container_border.type} rgba(${container_border.color.rgba.r},${container_border.color.rgba.g},${container_border.color.rgba.b},${container_border.color.rgba.a});
+                border-radius: ${container_border.radius}px;
+                background: rgba(${container_background.color.rgba.r},${container_background.color.rgba.g},${container_background.color.rgba.b},${container_background.color.rgba.a});
+                opacity: ${container_background.opacity / 100};
+                max-width: ${container_size.width}px;
+                padding: ${container_size.padding}px;
+                ${container_border.type === 'none' ? 'box-shadow: none;' : 'box-shadow: 0 1px 9px 0 rgba(191, 197, 210, 0.25);'}
+            }
+            
+            .previewContainer > div.section .head {
+                color: rgba(${top && top.color.rgba.r}, ${top && top.color.rgba.g}, ${top && top.color.rgba.b}, ${top && top.color.rgba.a});
+                font-size: ${top && top.fontSize}px;
+                font-weight: ${top && top.textActions.bold ? 'bold' : '100'};
+                font-style: ${top && top.textActions.italic === true ? 'italic' : 'normal'};
+                text-decoration: ${top && top.textActions.underline ? 'underline' : 'none'};
+                text-align: ${top && top.alignment};
+            }
+            
+            .previewContainer > div.section .description {
+                color: rgba(${description && description.color.rgba.r}, ${description && description.color.rgba.g}, ${description && description.color.rgba.b}, ${description && description.color.rgba.a});
+                font-size: ${description && description.fontSize}px;
+                font-weight: ${description && description.textActions.bold ? 'bold' : '100'};
+                font-style: ${description && description.textActions.italic === true ? 'italic' : 'normal'};
+                text-decoration: ${description && description.textActions.underline ? 'underline' : 'none'};
+                text-align: ${description && description.alignment};
+            }
+            
+            .previewContainer > div.section .text {
+                color: rgba(${success_message && success_message.color.rgba.r}, ${success_message && success_message.color.rgba.g}, ${success_message && success_message.color.rgba.b}, ${success_message && success_message.color.rgba.a});
+                font-size: ${success_message && success_message.fontSize}px;
+                font-weight: ${success_message && success_message.textActions.bold ? 'bold' : '100'};
+                font-style: ${success_message && success_message.textActions.italic === true ? 'italic' : 'normal'};
+                text-decoration: ${success_message && success_message.textActions.underline ? 'underline' : 'none'};
+                text-align: ${success_message && success_message.alignment};
+            }
+            
+            .previewMain > .footer .text {
+                color: rgba(${footer && footer.color.rgba.r}, ${footer && footer.color.rgba.g}, ${footer && footer.color.rgba.b}, ${footer && footer.color.rgba.a});
+                font-size: ${footer && footer.fontSize}px;
+                font-weight: ${footer && footer.textActions.bold ? 'bold' : '100'};
+                font-style: ${footer && footer.textActions.italic === true ? 'italic' : 'normal'};
+                text-decoration: ${footer && footer.textActions.underline ? 'underline' : 'none'};
+                text-align: ${footer && footer.alignment};
+            }
+            
+            .previewContainer .socialsWrap .accept button {
+                border: ${accept_button_border && accept_button_border.thickness}px ${accept_button_border && accept_button_border.type} rgba(${accept_button_border && accept_button_border.color.rgba.r}, ${accept_button_border && accept_button_border.color.rgba.g}, ${accept_button_border && accept_button_border.color.rgba.b}, ${accept_button_border && accept_button_border.color.rgba.a});
+                border-radius: ${accept_button_border.radius}px;
+                background-color: rgba(${accept_button_color.rgba.r}, ${accept_button_color.rgba.g}, ${accept_button_color.rgba.b}, ${accept_button_color.rgba.a});
+                color: rgba(${accept_button_font.color.rgba.r}, ${accept_button_font.color.rgba.g}, ${accept_button_font.color.rgba.b}, ${accept_button_font.color.rgba.a});
+                font-size: ${accept_button_font.fontSize}px;
+                text-align: ${accept_button_font.alignment};
+                font-weight: ${accept_button_font.textActions.bold ? 'bold' : '100'};
+                font-style: ${accept_button_font.textActions.italic ? 'italic' : 'unset'};
+                text-decoration: ${accept_button_font.textActions.underline ? 'underline' : 'unset'};
+                min-width: ${accept_button_size.width}px;
+                width: 'auto';
+                padding: ${accept_button_size.padding}px;
+                word-break: 'break-all';
+            }
+            
+            `;
+
+    };
+
     render() {
         return <CaptivePortalContext.Provider value={{
             background: this.state.background,
@@ -574,7 +669,8 @@ class GlobalCaptivePortalState extends Component {
             setSuccessMessageStatus: this.setSuccessMessageStatus,
             setNotification: this.setNotification,
             resetGlobalState: this.resetGlobalState,
-            setToken: this.setToken
+            setToken: this.setToken,
+            previewCssGenerator: this.previewCssGenerator
         }}
         >{this.props.children}</CaptivePortalContext.Provider>
     }

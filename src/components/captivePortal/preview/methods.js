@@ -100,21 +100,7 @@ class Methods extends Component {
                     </span>
                     <input type="button" value="Continue with Twitter"/></div>
                 <div className="accept" ref={this.button}>
-                    <button style={{
-                        border: `${accept_button_border.thickness}px ${accept_button_border.type} rgba(${accept_button_border.color.rgba.r}, ${accept_button_border.color.rgba.g}, ${accept_button_border.color.rgba.b}, ${accept_button_border.color.rgba.a})`,
-                        borderRadius: accept_button_border.radius,
-                        backgroundColor: `rgba(${accept_button_color.rgba.r}, ${accept_button_color.rgba.g}, ${accept_button_color.rgba.b}, ${accept_button_color.rgba.a})`,
-                        color: `rgba(${accept_button_font.color.rgba.r}, ${accept_button_font.color.rgba.g}, ${accept_button_font.color.rgba.b}, ${accept_button_font.color.rgba.a})`,
-                        fontSize: accept_button_font.fontSize,
-                        textAlign: accept_button_font.alignment,
-                        fontWeight: accept_button_font.textActions.bold ? ' bold' : 100,
-                        fontStyle: accept_button_font.textActions.italic ? 'italic' : 'unset',
-                        textDecoration: accept_button_font.textActions.underline ? 'underline' : 'unset',
-                        minWidth: accept_button_size.width,
-                        width: 'auto',
-                        padding: accept_button_size.padding,
-                        wordBreak: 'break-all'
-                    }}>
+                    <button>
                         {acceptButtonText}
                     </button>
                 </div>

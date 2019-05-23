@@ -83,11 +83,11 @@ class CSS extends Component {
 
     componentDidMount() {
         console.log('CONTEXT:\n', this.context);
-        console.log(JSON.stringify(this.context));
+        // console.log(JSON.stringify(this.context));
         const data_to_store = this.context;
         data_to_store.dataToExclude.token = '';
-        localStorage.setItem('context_state', JSON.stringify(data_to_store));
-        console.log(localStorage.getItem('context_state'));
+        // localStorage.setItem('context_state', JSON.stringify(data_to_store));
+        // console.log(localStorage.getItem('context_state'));
     }
 
     render() {

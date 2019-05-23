@@ -73,28 +73,6 @@ export const getPortal = (string, id) => {
         .catch(err => authChecker(err.response));
 };
 
-// export const uploadImage = (string, name, base64) => {
-//     return axios({
-//         method: 'post',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Accept': 'application/json',
-//             'Authorization': `${string}`
-//         },
-//         url: `${BACKEND_API}/image`,
-//         mode: 'no-cors',
-//         data: {"name": name, "base64Content": base64},
-//         onUploadProgress: progressEvent => {
-//             console.log(Math.round(progressEvent.loaded/progressEvent.total*100));
-//             return Math.round(progressEvent.loaded/progressEvent.total*100);
-//         }
-//     })
-//         .then(res => res)
-//         // .then()
-//         .catch(err => console.warn('In uploadImage API method\n', err));
-//
-// };
-
 export const getAllImages = (string) => {
     return axios({
         method: 'get',

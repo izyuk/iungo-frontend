@@ -202,5 +202,6 @@ export default React.createContext({
     setSuccessMessageStatus: () => {},
     setNotification: () => {},
     resetGlobalState: () => {},
-    setToken: () => {}
+    setToken: () => {},
+    previewCssGenerator: () => {}
 });
