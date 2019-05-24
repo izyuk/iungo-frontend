@@ -70,11 +70,16 @@ class Restore extends Component {
                 if (confirmedPassword === password) {
                     let query = restorePasswordSendConfirmedPassword(token, password);
                     query.then(res => {
-                        this.context.setNotification('Your password was changed successfully', false, true);
-                        setTimeout(() => {
-                            this.context.setNotification('', false, false);
-                            location.href = '/';
-                        }, 3000)
+                        console.log(res.status);
+                        if( res.status === 404){
+                            this.context.setNotification('Your token is probably expired. Please try again or contact system administrator', true, true);
+                        } else {
+                            this.context.setNotification('Your password was changed successfully', false, true);
+                            setTimeout(() => {
+                                this.context.setNotification('', false, false);
+                                location.href = '/';
+                            }, 3000)
+                        }
                     }).catch(e => {
                         this.context.setNotification(e, true, true);
                     });
@@ -134,7 +139,14 @@ class Restore extends Component {
         const {toPasswordFields} = this.state;
         return (
             <div className="formWrap">
-                <p>Reset your password</p>
+                {!toPasswordFields ?
+                    <div>
+                        <p>Enter your email address to reset your password</p>
+                        <p className={'smaller'}>We will email you a link to reset password</p>
+                    </div>
+                    :
+                    <p>Reset your password</p>
+                }
                 {
                     !toPasswordFields ?
                         <div className="inputsWrap">
