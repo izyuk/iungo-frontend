@@ -145,7 +145,7 @@ class Restore extends Component {
                         <p className={'smaller'}>We will email you a link to reset password</p>
                     </div>
                     :
-                    <p>Reset your password</p>
+                    <p>Reset Password</p>
                 }
                 {
                     !toPasswordFields ?
@@ -180,7 +180,7 @@ class Restore extends Component {
                                        datatype={'password'}
                                        ref={this.password}
                                        onBlur={this.fieldsHandler}
-                                       placeholder="Your Password"/>
+                                       placeholder="New password"/>
                             </div>
                             <div
                                 className={this.state.failed ? 'password confirmField validationFail' : 'password confirmField'}>
@@ -196,13 +196,13 @@ class Restore extends Component {
                                        datatype={'confirmedPassword'}
                                        ref={this.confirmedPassword}
                                        onBlur={this.fieldsHandler}
-                                       placeholder="Your Password"/>
+                                       placeholder="Repeat new password"/>
                             </div>
                         </div>
                 }
                 <span
                     className={"login"}
-                    onClick={this.sendData}>Reset</span>
+                    onClick={this.sendData}>Reset Password</span>
                 {this.context.dataToExclude.notification && <Notification/>}
             </div>
         )
