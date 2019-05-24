@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
-import {getPortal, createPortal} from "../../api/API";
+import {getPortal} from "../../api/API";
 import Loader from "../../loader";
 
 import {GetBuilderParams} from "./optionsSidebar/getBuilderParams";
@@ -165,12 +165,13 @@ class CaptivePortal extends Component {
     };
 
     componentDidMount() {
+        console.log('CP ON MOUNT', this.context);
         this.context.setToken(localStorage.getItem('token'));
         this.findPortal(localStorage.getItem('token'));
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        // console.log('CONTAINER ON MOUNT', this.container);
+        console.log('CP ON UPDATE', this.context);
     }
 
     render() {

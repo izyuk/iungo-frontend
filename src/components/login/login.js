@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
+import CaptivePortalContext from "../../context/captive-portal-context";
 
 class Login extends Component {
+
+    static contextType = CaptivePortalContext;
+
     state = {
         email: '',
         password: '',

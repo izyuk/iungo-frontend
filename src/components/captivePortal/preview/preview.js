@@ -14,6 +14,7 @@ class Preview extends Component {
     FooterText = React.createRef();
 
     componentDidMount() {
+        console.log(this.context);
         const {style} = this.context;
         if (this.context.externalCss !== '') {
             const HEAD = document.getElementsByTagName('HEAD')[0];

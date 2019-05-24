@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-import {restorePasswordSendUsername, restorePasswordSendConfirmedPassword} from "../../api/API";
+import {restorePasswordSendConfirmedPassword, restorePasswordSendUsername} from "../../api/API";
 import Notification from "../additional/notification";
+import CaptivePortalContext from "../../context/captive-portal-context";
 
 
 class Restore extends Component {
+
+    static contextType = CaptivePortalContext;
 
     state = {
         email: '',
@@ -67,40 +70,24 @@ class Restore extends Component {
                 if (confirmedPassword === password) {
                     let query = restorePasswordSendConfirmedPassword(token, password);
                     query.then(res => {
-                        this.setState({
-                            notification: true,
-                            notificationText: 'Your password was changed successfully',
-                            failed: false
-                        });
+                        this.context.setNotification('Your password was changed successfully', false, true);
                         setTimeout(() => {
-                            this.setState({notification: false, failed: false, notificationText: ''});
+                            this.context.setNotification('', false, false);
                             location.href = '/';
                         }, 3000)
                     }).catch(e => {
-                        this.setState({
-                            notification: true,
-                            notificationText: e,
-                            failed: true
-                        })
+                        this.context.setNotification(e, true, true);
                     });
                 } else {
-                    this.setState({
-                        failed: true,
-                        notification: true,
-                        notificationText: 'Password doesn\'t match'
-                    });
+                    this.context.setNotification('Password doesn\'t match', true, true);
                     setTimeout(() => {
-                        this.setState({notification: false, failed: false, notificationText: ''});
+                        this.context.setNotification('', false, false);
                     }, 2000)
                 }
             } else {
-                this.setState({
-                    failed: true,
-                    notification: true,
-                    notificationText: 'Password should not be less than 8 characters'
-                });
+                this.context.setNotification('Password should not be less than 8 characters', true, true);
                 setTimeout(() => {
-                    this.setState({notification: false, failed: false, notificationText: ''});
+                    this.context.setNotification('', false, false);
                 }, 2000)
             }
 
@@ -110,30 +97,18 @@ class Restore extends Component {
                 if (emailMask.test(email)) {
                     let query = restorePasswordSendUsername(email);
                     query.then(res => {
-                        this.setState({
-                            failed: false,
-                            notification: true,
-                            notificationText: 'If this email address matched a registered account, a password restore email has been sent'
-                        });
+                        this.context.setNotification('If this email address matched a registered account, a password restore email has been sent', false, true);
                         setTimeout(() => {
-                            this.setState({notification: false, failed: false, notificationText: ''});
+                            this.context.setNotification('', false, false);
                             location.href = '/';
                         }, 3000)
                     }).catch(e => {
-                        this.setState({
-                            notification: true,
-                            notificationText: e,
-                            failed: true
-                        })
+                        this.context.setNotification(e, true, true);
                     });
                 } else {
-                    this.setState({
-                        failed: true,
-                        notification: true,
-                        notificationText: 'Wrong email format',
-                    });
+                    this.context.setNotification('Wrong email format', true, true);
                     setTimeout(() => {
-                        this.setState({notification: false, failed: true, notificationText: ''});
+                        this.context.setNotification('', false, false);
                     }, 2000)
                 }
 
@@ -216,9 +191,7 @@ class Restore extends Component {
                 <span
                     className={"login"}
                     onClick={this.sendData}>Reset</span>
-                {this.state.notification &&
-                <Notification type={this.state.failed ? 'fail' : 'info'}
-                              text={this.state.notificationText}/>}
+                {this.context.dataToExclude.notification && <Notification/>}
             </div>
         )
     }

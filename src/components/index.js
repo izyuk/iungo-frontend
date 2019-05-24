@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {download_users} from '../reducers/background_and_logo';
 
 import Enter from './login/enter';
 import Restore from './login/restore';
 
 
-import {Switch, Route} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 
 class Index extends Component {
     constructor(props) {
@@ -74,13 +72,4 @@ class Index extends Component {
     }
 }
 
-export const Button = props => {
-    return (
-        <button type='button' onClick={props.onClick}>Press me</button>
-    );
-};
-
-export default connect(
-    state => ({}),
-    dispatch => ({})
-)(Index);
+export default Index;

@@ -2,11 +2,9 @@ import React, {Component} from 'react';
 
 import StyleTab from './tabs/styleTab';
 import ContentTab from './tabs/contentTab';
-import SettingsTab from './tabs/settingsTab';
 
 import Publish from './publish';
 import CaptivePortalContext from '../../../context/captive-portal-context';
-import OptionsCoverage from '../../additional/optionsCoverage';
 
 class Options extends Component {
 
@@ -70,17 +68,13 @@ class Options extends Component {
                         </li>
                         <li onClick={this.tabHandler}
                             data-cy={'contentTab'}>Content</li>
-                        {/*<li onClick={this.tabHandler}
-                            data-cy={'settingsTab'}>Settings</li>*/}
                     </ul>
 
                     {this.state.tab === 'Style' ?
                         <StyleTab />
                         : (this.state.tab === 'Content') ?
                             <ContentTab />
-                            : (this.state.tab === 'Settings') ?
-                                <SettingsTab />
-                                : ''}
+                            : false}
                     <Publish loaderHandler={this.props.loaderHandler}/>
                 </div>
             </div>

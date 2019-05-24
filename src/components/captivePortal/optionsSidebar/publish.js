@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { previewPortal } from "../../../api/API";
-import { PublishPortalMethodHandler } from './publishPortalMethodHandler';
-import { GetBuilderParams } from './getBuilderParams';
+import {previewPortal} from "../../../api/API";
+import {PublishPortalMethodHandler} from './publishPortalMethodHandler';
+import {GetBuilderParams} from './getBuilderParams';
 import Notification from "../../additional/notification";
 import CaptivePortalContext from "../../../context/captive-portal-context";
 
@@ -69,9 +69,7 @@ class Publish extends Component {
                 </p>
                 <button type="button" onClick={this.callPublishMethod} className="publishBtn">Save
                 </button>
-                {this.state.notification &&
-                <Notification type={this.state.failed ? 'fail' : 'info'}
-                              text={this.state.publishedType}/>}
+                {this.context.dataToExclude.notification && <Notification/>}
             </div>
         )
     }

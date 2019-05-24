@@ -1,19 +1,18 @@
 import React, {Component} from 'react';
-import {Redirect, Switch, Router, Route, Link} from 'react-router-dom';
-import {createBrowserHistory} from 'history';
+import {Link, Redirect} from 'react-router-dom';
 
 import {userLogin, userRegister} from '../../api/API';
-
-import {connect} from 'react-redux';
 
 import Login from './login';
 import Register from './register';
 
 import Loader from '../../loader';
-
-import Notification from '../additional/notification';
+import CaptivePortalContext from "../../context/captive-portal-context";
+import Notification from "../additional/notification";
 
 class Enter extends Component {
+
+    static contextType = CaptivePortalContext;
 
     state = {
         login: true,
@@ -30,9 +29,7 @@ class Enter extends Component {
         if (this.state.userData !== null) {
             const {email, password} = this.state.userData;
             let query = this.state.login ? userLogin(email, password) : userRegister(email, password);
-            this.setState({
-                loader: true
-            });
+            this.context.loaderHandler(true);
             query.then(res => {
                 localStorage.setItem('email', email);
                 const {status} = res;
@@ -41,38 +38,28 @@ class Enter extends Component {
                         const {headers: {authorization}} = res;
                         localStorage.setItem('token', authorization);
                         this.setState({
-                            auth: true,
-                            loader: false,
-                            showNotification: false,
-                            notificationType: ''
+                            auth: true
                         });
                     } else {
                         this.setState({
-                            auth: false,
-                            loader: false,
-                            showNotification: true,
-                            notificationType: 'info',
-                            notificationText: 'Please check your e-mail'
-                        })
+                            auth: false
+                        });
+                        this.context.setNotification('Please check your e-mail', false, true);
                     }
-
-
+                    this.context.loaderHandler(false);
+                    setTimeout(() => {
+                        this.context.setNotification('', false, false);
+                    }, 3000)
                 } else {
-                    this.setState({
-                        auth: false,
-                        loader: false,
-                        showNotification: true,
-                        notificationType: 'fail'
-                    });
                     if (status === 401) {
-                        this.setState({
-                            notificationText: 'Wrong username or password'
-                        })
+                        this.context.setNotification('Wrong username or password', true, true);
                     } else if (status === 400) {
-                        this.setState({
-                            notificationText: res.data.errors[0].message
-                        })
+                        this.context.setNotification(res.data.errors[0].message, true, true);
                     }
+                    this.context.loaderHandler(false);
+                    setTimeout(() => {
+                        this.context.setNotification('', false, false);
+                    }, 2000)
                 }
             })
         }
@@ -97,11 +84,9 @@ class Enter extends Component {
                 });
             } else {
                 this.setState({
-                    auth: false,
-                    showNotification: true,
-                    notificationType: 'fail',
-                    notificationText: 'Please enter a valid email'
+                    auth: false
                 });
+                this.context.setNotification('Please enter a valid email', true, true);
             }
         }
 
@@ -110,9 +95,7 @@ class Enter extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.userData !== nextState.userData) return true;
         else if (this.state.login !== nextState.login) {
-            this.setState({
-                showNotification: false
-            });
+            this.context.setNotification('', false, false);
             return true;
         }
         else if (this.state.auth !== nextState.auth) return true;
@@ -126,21 +109,14 @@ class Enter extends Component {
     }
 
     componentDidMount() {
+        this.context.loaderHandler(false);
         const url_string = window.location.href;
         const url = new URL(url_string);
         const confirmed = url.searchParams.get("confirmed");
         if (confirmed === 'true') {
-            this.setState({
-                showNotification: true,
-                notificationType: 'info',
-                notificationText: 'Your account was confirmed'
-            })
+            this.context.setNotification('Your account was confirmed', false, true);
         } else if (confirmed === 'false') {
-            this.setState({
-                showNotification: true,
-                notificationType: 'confirmation-fail',
-                notificationText: 'Your account was not confirmed. Please try again or contact a system administrator'
-            })
+            this.context.setNotification('Your account was not confirmed. Please try again or contact a system administrator', true, true);
         }
     }
 
@@ -149,20 +125,16 @@ class Enter extends Component {
             login,
             auth,
             loader,
-            showNotification,
-            notificationText,
             notificationType
         } = this.state;
 
         return (
             <div className="formWrap">
-
-                {loader && <Loader/>}
                 <p>{login ? 'Login' : 'Create your account now'}</p>
                 {login ? <Login setLoginData={this.setLoginData}
                                 notificationType={notificationType}>{this.props.children}</Login> :
                     <Register setLoginData={this.setLoginData} register={!this.state.auth}>{this.props.children}</Register>}
-                {showNotification && <p className={notificationType}>{notificationText}</p>}
+
 
                 <span
                     className={"login"}
@@ -197,19 +169,11 @@ class Enter extends Component {
                         <Redirect to='/captive-portals'/>
                         : false
                 }
+                {this.context.dataToExclude.notification && <Notification/>}
+                {this.context.dataToExclude.loader && <Loader/>}
             </div>
         )
     }
 }
 
-export default connect(
-    state => ({
-        token: state.token
-    }),
-    dispatch => ({
-        setToken: (string) => {
-            dispatch({type: "TOKEN", payload: string})
-        }
-    })
-)
-(Enter);
+export default Enter;

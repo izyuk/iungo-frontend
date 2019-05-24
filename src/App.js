@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Switch, Route, Redirect} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 
 import Index from './components';
 import Tool from './components/tool/tool'
+import GlobalCaptivePortalState from "./context/GlobalCaptivePortalState";
 
 class MainRouter extends Component {
     state = {
@@ -10,7 +11,7 @@ class MainRouter extends Component {
     };
 
     componentDidMount() {
-        if (!localStorage.getItem('token') && (window.location.pathname !== '/') && (window.location.pathname !== '/restore')) {
+        if (!localStorage.getItem('token') && (window.location.pathname !== '/') && (window.location.pathname !== '/reset')) {
             this.setState({
                 unauthorized: true
             })
@@ -24,11 +25,13 @@ class MainRouter extends Component {
 
     render() {
         return (
-            <Switch>
-                {this.state.unauthorized && <Redirect to={'/'}/>}
-                <Route exact path="/(|register|reset)" component={Index}/>
-                <Route component={Tool}/>
-            </Switch>
+            <GlobalCaptivePortalState>
+                <Switch>
+                    {this.state.unauthorized && <Redirect to={'/'}/>}
+                    <Route exact path="/(|register|reset)" component={Index}/>
+                    <Route component={Tool}/>
+                </Switch>
+            </GlobalCaptivePortalState>
         )
     }
 }
