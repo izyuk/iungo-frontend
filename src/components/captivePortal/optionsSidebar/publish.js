@@ -34,14 +34,43 @@ class Publish extends Component {
                 this.context.setNotification('', false, false);
             }, 2000)
         } else {
-            this.props.addPortalName('');
+            this.context.addPortalName('');
             document.getElementById('portalName').classList.add('error');
         }
     };
 
     previewPortalMethodHandler = async () => {
+        const {
+            addPortalName,
+            setBackground,
+            setLogo,
+            setBorderStyle,
+            setBackgroundStyle,
+            setSizeStyle,
+            setHeaderTopData,
+            setHeaderDescriptionData,
+            setLoginMethods,
+            setFooterData,
+            setLogoID,
+            setBackgroundID,
+            setCSS,
+            redirectURLChanger,
+            setButtonStyles,
+            setSuccessMessageData,
+            setExternalCssInfo,
+            loaderHandler,
+            setSuccessMessageStatus,
+            setNotification,
+            resetGlobalState,
+            setToken,
+            previewCssGenerator,
+            dataToExclude,
+            ...rest
+        } = this.context;
+        await this.props.collectData(rest);
+
         this.context.loaderHandler(true);
-        const {dataToExclude, ...rest} = this.context;
+        // const {dataToExclude, ...rest} = this.context;
         const portalDataToSend = GetBuilderParams(rest);
         const token = localStorage.getItem('token');
         const query = previewPortal(token, portalDataToSend);
@@ -50,6 +79,7 @@ class Publish extends Component {
             this.context.loaderHandler(false);
             window.open(data, '_blank');
         });
+        console.log(this.props.allData);
     };
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -63,7 +93,7 @@ class Publish extends Component {
         return (
             <div className="buttonsRow">
                 <p>
-                    <button type="button" onClick={this.previewPortalMethodHandler} className="previewBtn">Preview
+                    <button type="button" onClick={this.previewPortalMethodHandler} data-cy="previewBtn" className="previewBtn">Preview
                     </button>
                     <span>Please allow new windows opening</span>
                 </p>
@@ -77,11 +107,11 @@ class Publish extends Component {
 
 export default connect(
     state => ({
-        tabName: state
+        allData: state
     }),
     dispatch => ({
-        addPortalName: (name) => {
-            dispatch({type: "PORTAL_NAME", payload: name})
+        collectData: (data) => {
+            dispatch({type: "COLLECT_DATA", payload: data})
         },
     })
 )(Publish);

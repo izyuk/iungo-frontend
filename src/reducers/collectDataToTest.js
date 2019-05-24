@@ -1,6 +1,4 @@
-import React from 'react';
-
-export default React.createContext({
+const INITIAL = {
     background: '',
     name: '',
     externalCss: '',
@@ -165,44 +163,13 @@ export default React.createContext({
             thickness: 1
         }
     },
-    googleLogin: false,
-    facebookLogin: false,
-    twitterLogin: false,
-    acceptTermsLogin: false,
-    successRedirectUrl: '',
-    acceptButtonText: 'Connect',
-    addPortalName: () => {},
-    setBackground: () => {},
-    setLogo: () => {},
-    setBorderStyle: () => {},
-    setBackgroundStyle: () => {},
-    setSizeStyle: () => {},
-    setHeaderTopData: () => {},
-    setHeaderDescriptionData: () => {},
-    setLoginMethods: () => {},
-    setFooterData: () => {},
-    setLogoID: () => {},
-    setBackgroundID: () => {},
-    setCSS: () => {},
-    redirectURLChanger: () => {},
-    setButtonStyles: () => {},
-    setSuccessMessageData: () => {},
-    setExternalCssInfo: () => {},
-    dataToExclude: {
-        successMessageStatus: false,
-        loader: false,
-        publishedType: '',
-        failed: false,
-        notification: false,
-        stylesApplied: false,
-        styledElements: '',
-        stylesArray: '',
-        token: ''
-    },
-    loaderHandler: () => {},
-    setSuccessMessageStatus: () => {},
-    setNotification: () => {},
-    resetGlobalState: () => {},
-    setToken: () => {},
-    previewCssGenerator: () => {}
-});
+};
+
+export default function (state = INITIAL, action) {
+    switch (action.type) {
+        case "COLLECT_DATA":
+            return Object.assign(state, action.payload);
+        default:
+            return state
+    }
+}

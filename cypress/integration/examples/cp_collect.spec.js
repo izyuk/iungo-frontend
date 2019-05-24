@@ -71,6 +71,103 @@ function setSomeSize(selector, value) {
         .blur({force: true});
 }
 
+const expectedStore = {
+    background: null,
+    name: "CP TEST NAME",
+    logoId: "268",
+    backgroundId: "",
+    header: "CP TEST HEADER TEXT",
+    description: "CP TEST DESCRIPTION TEXT",
+    footer: "TEST FOOTER TEXT",
+    successMessage: "CP TEST SOME SUCCESS MESSAGE TEXT",
+    style: {
+        header: {
+            top: {
+                color: {
+                    rgba: {r: 237, g: 170, b: 85, a: 1},
+                    hex: "#edaa55"
+                },
+                fontSize: 18,
+                textActions: {bold: false, italic: false, underline: false},
+                alignment: "center"
+            },
+            description: {
+                color: {
+                    rgba: {r: 237, g: 170, b: 85, a: 1},
+                    hex: "#5585ed"
+                },
+                fontSize: 18,
+                textActions: {bold: false, italic: false, underline: false},
+                alignment: "center",
+                colorHEX: "#edaa55"
+            }
+        },
+        footer: {
+            color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
+            fontSize: 18,
+            textActions: {bold: false, italic: false, underline: false},
+            alignment: "center"
+        },
+        success_message: {
+            color: {
+                rgba: {r: 237, g: 170, b: 85, a: 1},
+                hex: "#edaa55"
+            },
+            fontSize: 18,
+            textActions: {bold: false, italic: false, underline: false},
+            alignment: "center"
+        },
+        background_and_logo: {
+            background: {
+                url: null,
+                color: {rgba: {r: 48, g: 51, b: 56, a: 1}, hex: "#303338"},
+                backgroundType: "COLOR"
+            },
+            logo: {
+                url: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/IMG_1093.JPG",
+                position: "center"
+            }
+        },
+        container_background: {
+            color: {
+                rgba: {r: 92, g: 64, b: 64, a: 0},
+                hex: "#5c4040"
+            }, opacity: 100
+        },
+        container_border: {
+            color: {
+                rgba: {r: 255, g: 105, b: 0, a: 1},
+                hex: "#ff6900"
+            }, type: "solid", thickness: 3, radius: 2
+        },
+        container_size: {width: 1920, padding: 20},
+        accept_button_font: {
+            alignment: "center",
+            color: {hex: "#edaa55", rgba: {r: 237, g: 170, b: 85, a: 1}},
+            fontSize: 18,
+            textActions: {bold: false, italic: false, underline: false}
+        },
+        accept_button_color: {
+            hex: "#ffffff",
+            rgba: {r: 255, g: 255, b: 255, a: 1}
+        },
+        accept_button_size: {width: 320, padding: 10},
+        accept_button_border: {
+            color: {
+                hex: "#5585ed",
+                rgba: {r: 85, g: 133, b: 237, a: 1}
+            }, radius: 5, type: "solid", thickness: 1
+        }
+    },
+    googleLogin: true,
+    facebookLogin: true,
+    twitterLogin: false,
+    acceptTermsLogin: true,
+    successRedirectUrl: "",
+    acceptButtonText: "Connect FOR FREE",
+    externalCss: ""
+};
+
 
 context('Start and going to CP', function () {
     beforeEach(function () {
@@ -322,7 +419,7 @@ context('Content tab', function () {
         });
 
         it('Set connect button background color', () => {
-            fillColorHEXWithOpacity('[data-cy="connectButtonBackgroundColor"]', 'ffffff', '0');
+            fillColorHEXWithOpacity('[data-cy="connectButtonBackgroundColor"]', 'ffffff', '100');
         });
 
         it('Set connect button border color', () => {
@@ -415,26 +512,26 @@ context('Content tab', function () {
 
 });
 
-context('Settings tab', function () {
-    beforeEach(function () {
-        cy.viewport('macbook-11')
-    });
-    describe('Style tab', () => {
-        it('Style tab', () => {
-            cy.get('[data-cy="settingsTab"]')
-                .click({force: true});
-        })
-    })
-});
+// context('Settings tab', function () {
+//     beforeEach(function () {
+//         cy.viewport('macbook-11')
+//     });
+//     describe('Style tab', () => {
+//         it('Style tab', () => {
+//             cy.get('[data-cy="settingsTab"]')
+//                 .click({force: true});
+//         })
+//     })
+// });
 
 context('Tests finished', function () {
     beforeEach(function () {
         cy.viewport('macbook-11')
     });
 
-    describe('Going back to the style tab', () => {
-        it('Style tab', () => {
-            cy.get('[data-cy="styleTab"]')
+    describe('Open Preview', () => {
+        it('Going to preview', () => {
+            cy.get('[data-cy="previewBtn"]')
                 .click({force: true});
         })
     })
@@ -449,116 +546,13 @@ context('Starting comparing collected data', function () {
         it('Has expected state on CP building finish', () => {
             cy.url().should('include', '/captive-portals/new').then(() => {
                 cy.window().then(win => {
-                    const store = JSON.parse(localStorage.getItem('context_state'));
-                    expect(store).to.deep.equal(
-                        {
-                            background: null,
-                            name: "CP TEST NAME",
-                            logoId: 268,
-                            backgroundId: "",
-                            header: "CP TEST HEADER TEXT",
-                            description: "CP TEST DESCRIPTION TEXT",
-                            footer: "TEST FOOTER TEXT",
-                            successMessage: "CP TEST SOME SUCCESS MESSAGE TEXT",
-                            style: {
-                                header: {
-                                    top: {
-                                        color: {
-                                            rgba: {r: 237, g: 170, b: 85, a: 1},
-                                            hex: "#edaa55"
-                                        },
-                                        fontSize: 18,
-                                        textActions: {bold: false, italic: false, underline: false},
-                                        alignment: "center"
-                                    },
-                                    description: {
-                                        color: {
-                                            rgba: {r: 237, g: 170, b: 85, a: 1},
-                                            hex: "#5585ed"
-                                        },
-                                        fontSize: 18,
-                                        textActions: {bold: false, italic: false, underline: false},
-                                        alignment: "center",
-                                        colorHEX: "#edaa55"
-                                    }
-                                },
-                                footer: {
-                                    color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
-                                    fontSize: 18,
-                                    textActions: {bold: false, italic: false, underline: false},
-                                    alignment: "center"
-                                },
-                                success_message: {
-                                    color: {
-                                        rgba: {r: 237, g: 170, b: 85, a: 1},
-                                        hex: "#edaa55"
-                                    },
-                                    fontSize: 18,
-                                    textActions: {bold: false, italic: false, underline: false},
-                                    alignment: "center"
-                                },
-                                background_and_logo: {
-                                    background: {
-                                        url: null,
-                                        color: {rgba: {r: 48, g: 51, b: 56, a: 1}, hex: "#303338"},
-                                        backgroundType: "COLOR"
-                                    },
-                                    logo: {
-                                        url: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/IMG_1093.JPG",
-                                        position: "center"
-                                    }
-                                },
-                                container_background: {
-                                    color: {
-                                        rgba: {r: 92, g: 64, b: 64, a: 1},
-                                        hex: "#5c4040"
-                                    }, opacity: 100
-                                },
-                                container_border: {
-                                    color: {
-                                        rgba: {r: 255, g: 105, b: 0, a: 1},
-                                        hex: "#ff6900"
-                                    }, type: "solid", thickness: 3, radius: 2
-                                },
-                                container_size: {width: 1920, padding: 20},
-                                accept_button_font: {
-                                    alignment: "center",
-                                    color: {hex: "#edaa55", rgba: {r: 237, g: 170, b: 85, a: 1}},
-                                    fontSize: 18,
-                                    textActions: {bold: false, italic: false, underline: false}
-                                },
-                                accept_button_color: {
-                                    hex: "#ffffff",
-                                    rgba: {r: 255, g: 255, b: 255, a: 1}
-                                },
-                                accept_button_size: {width: 320, padding: 10},
-                                accept_button_border: {
-                                    color: {
-                                        hex: "#5585ed",
-                                        rgba: {r: 85, g: 133, b: 237, a: 1}
-                                    }, radius: 5, type: "solid", thickness: 1
-                                }
-                            },
-                            googleLogin: true,
-                            facebookLogin: true,
-                            twitterLogin: false,
-                            acceptTermsLogin: true,
-                            successRedirectUrl: "",
-                            acceptButtonText: "Connect FOR FREE",
-                            externalCss: "",
-                            dataToExclude: {
-                                successMessageStatus: false,
-                                loader: false,
-                                publishedType: "",
-                                failed: false,
-                                notification: false,
-                                stylesApplied: false,
-                                styledElements: "",
-                                stylesArray: "",
-                                token: ""
-                            }
-                        }
-                    )
+                    // const store = GetBuilderParams(Object.assign({}, win.__store__));
+                    const store = {...win.__store__.collectDataToTest};
+                    console.log(store);
+                    console.log(JSON.stringify(store));
+                    console.log(expectedStore);
+                    console.log(JSON.stringify(expectedStore));
+                    expect(store).to.deep.equal(expectedStore)
                 })
             });
         });
