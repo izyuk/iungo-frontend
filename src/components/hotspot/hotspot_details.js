@@ -79,7 +79,7 @@ class HotspotDetails extends Component {
             this.setState({
                 incorrect: false
             });
-            const token = this.props.token.token !== undefined ? this.props.token.token : localStorage.getItem('token');
+            const token = localStorage.getItem('token');
             var query;
             if (this.state.id !== '') {
                 query = updateHotspotById(token, this.state.name, this.state.address, this.state.description, this.state.captivePortalID, this.state.id);
@@ -96,7 +96,7 @@ class HotspotDetails extends Component {
             }
 
             await query.then(res => {
-                this.props.token.token !== undefined ? this.getHotspotsMethodHandler(this.props.token.token) : this.getHotspotsMethodHandler(localStorage.getItem('token'));
+                this.getHotspotsMethodHandler(localStorage.getItem('token'));
             });
 
 
