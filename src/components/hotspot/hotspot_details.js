@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import HotspotForm from './hotspotForm';
 import HotspotTable from './hotspotTable';
 import Notification from '../additional/notification';
 
-import {createHotspot, getHotspots, updateHotspotById, getAllPortals} from '../../api/API';
+import {createHotspot, getAllPortals, getHotspots, updateHotspotById} from '../../api/API';
 import {connect} from "react-redux";
 
 class HotspotDetails extends Component {
@@ -88,8 +87,7 @@ class HotspotDetails extends Component {
                     submitted: true,
                     submittedType: 'updated'
                 })
-            }
-            else {
+            } else {
                 query = createHotspot(token, this.state.name, this.state.address, this.state.description, this.state.captivePortalID);
                 this.setState({
                     submitted: true,
@@ -114,13 +112,8 @@ class HotspotDetails extends Component {
     };
 
     componentDidMount() {
-        if (this.props.token.token !== undefined) {
-            this.getHotspotsMethodHandler(this.props.token.token);
-            this.getAllPortalsMethodHandler(this.props.token.token)
-        } else {
-            this.getHotspotsMethodHandler(localStorage.getItem('token'));
-            this.getAllPortalsMethodHandler(localStorage.getItem('token'))
-        }
+        this.getHotspotsMethodHandler(localStorage.getItem('token'));
+        this.getAllPortalsMethodHandler(localStorage.getItem('token'))
     }
 
     editHandler = (HSid, HSname, HSaddress, HSdescription, portalID) => {
@@ -130,18 +123,18 @@ class HotspotDetails extends Component {
                 [el]: data[el]
             });
         });
-        if(portalID){
+        if (portalID) {
             let portalsList = this.state.portalsList;
             const {[0]: {id, name}} = portalsList.filter(el => {
-                if(el.id === portalID) {
+                if (el.id === portalID) {
                     console.log(el);
                     return el;
                 }
             });
-            document.getElementsByClassName('selectedPortal')[0].innerText =  name;
+            document.getElementsByClassName('selectedPortal')[0].innerText = name;
             this.setState({captivePortalID: id});
         } else {
-            document.getElementsByClassName('selectedPortal')[0].innerText =  'Select Captive Portal';
+            document.getElementsByClassName('selectedPortal')[0].innerText = 'Select Captive Portal';
             this.setState({captivePortalID: ''});
 
         }
