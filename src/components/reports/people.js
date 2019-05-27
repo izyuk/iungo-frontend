@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Notification from "../additional/notification";
-import {getHotspots, getHotspotUsers, exportHotspotUsersCSV} from "../../api/API";
+import {exportHotspotUsersCSV, getHotspots, getHotspotUsers} from "../../api/API";
 import {connect} from "react-redux";
 import {dateISO} from '../../modules/dateISO';
 
@@ -12,7 +12,7 @@ class People extends Component {
         UUIDChecker: false,
         notificationText: 'Nothing to export'
     };
-    token = this.props.token.token !== undefined ? this.props.token.token : localStorage.getItem('token');
+    token = localStorage.getItem('token');
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.list !== nextProps.list) return true;
