@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 // import {connect} from 'react-redux';
 // import {upload_file} from '../../../../../reducers/background_and_logo';
-import ImageUploader from '../../../imageUploader/imageUploader';
+import BackgroundAndLogo from '../../../imageUploader/background-and-logo';
 
 class Logo extends Component {
     constructor(props) {
@@ -16,4 +16,4 @@ class Logo extends Component {
     }
 }
 
-export default ImageUploader;
+export default BackgroundAndLogo;

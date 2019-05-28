@@ -5,10 +5,13 @@ import {getAllImages} from '../../../api/API';
 import Modal from '../../additional/modal';
 import axios from "axios";
 import CaptivePortalContext from "../../../context/captive-portal-context";
+import Repeating from "./backgroundStylingComponents/repeating";
+import Position from "./backgroundStylingComponents/position";
+import Size from "./backgroundStylingComponents/size";
 
 const BACKEND_API = 'https://backend.bravofy.com';
 
-class ImageUploader extends Component {
+class BackgroundAndLogo extends Component {
 
     static contextType = CaptivePortalContext;
     state = {
@@ -285,27 +288,32 @@ class ImageUploader extends Component {
                     </div>
                 </div>
                 {this.props.type === "background" ?
-                    <div className="row">
-                        <div className="left">
-                                <span className="descr">
-                                    Color
-                                </span>
-                        </div>
-                        <div className="right">
-                            <div className="innerRow">
-                                <div className="colorWrap">
-                                    <input type="text" value={background.color.hex} disabled/>
-                                    <button ref={this.cpbButton}
-                                            style={{backgroundColor: `rgba(${background.color.rgba.r}, ${background.color.rgba.g}, ${background.color.rgba.b}, ${background.color.rgba.a})`}}
-                                            onClick={this.handleClick}
-                                            data-cy="openColorPicker"></button>
-                                    {this.state.displayColorPicker ? <div style={popover}>
-                                        <div style={cover} onClick={this.handleClose}/>
-                                        <SketchPicker color={background.color.rgba} onChange={this.handleChange}/>
-                                    </div> : null}
+                    <div>
+                        <div className="row">
+                            <div className="left">
+                                    <span className="descr">
+                                        Color
+                                    </span>
+                            </div>
+                            <div className="right">
+                                <div className="innerRow">
+                                    <div className="colorWrap">
+                                        <input type="text" value={background.color.hex} disabled/>
+                                        <button ref={this.cpbButton}
+                                                style={{backgroundColor: `rgba(${background.color.rgba.r}, ${background.color.rgba.g}, ${background.color.rgba.b}, ${background.color.rgba.a})`}}
+                                                onClick={this.handleClick}
+                                                data-cy="openColorPicker"> </button>
+                                        {this.state.displayColorPicker ? <div style={popover}>
+                                            <div style={cover} onClick={this.handleClose}/>
+                                            <SketchPicker color={background.color.rgba} onChange={this.handleChange}/>
+                                        </div> : null}
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <Repeating/>
+                        <Position/>
+                        <Size/>
                     </div> :
                     false}
                 {this.props.type === "logo" ?
@@ -358,4 +366,4 @@ class ImageUploader extends Component {
     }
 }
 
-export default ImageUploader;
+export default BackgroundAndLogo;

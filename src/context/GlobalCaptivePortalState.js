@@ -100,7 +100,21 @@ class GlobalCaptivePortalState extends Component {
                         },
                         hex: '#e5e9f2'
                     },
-                    backgroundType: 'COLOR'
+                    backgroundType: 'COLOR',
+                    backgroundRepeat: 'repeat',
+                    backgroundPosition: {
+                        inPercentDimension: true,
+                        posX: 0,
+                        posY: 0,
+                        option: ''
+                    },
+                    backgroundAttachment: 'scroll',
+                    backgroundSize: {
+                        inPercentDimension: false,
+                        width: 0,
+                        height: 0,
+                        option: 'auto'
+                    },
                 },
                 logo: {
                     url: '',
@@ -183,7 +197,7 @@ class GlobalCaptivePortalState extends Component {
             stylesApplied: false,
             styledElements: '',
             stylesArray: '',
-            token: ''
+            token: '',
         }
     };
 
@@ -198,6 +212,32 @@ class GlobalCaptivePortalState extends Component {
         currentState.style.background_and_logo.background.color = color;
         currentState.style.background_and_logo.background.backgroundType = type;
         this.setState(currentState)
+    };
+
+    setBackgroundRepeating = (repeating) => {
+        const currentState = this.state;
+        currentState.style.background_and_logo.background.backgroundRepeat = repeating;
+        this.setState(currentState);
+    };
+
+    setBackgroundPosition = (position, inPercentDimension) => {
+        const merged = {...position, ...inPercentDimension};
+        const currentState = this.state;
+        currentState.style.background_and_logo.background.backgroundPosition = merged;
+        this.setState(currentState);
+    };
+
+    setBackgroundAttachment = (attachment) => {
+        const currentState = this.state;
+        currentState.style.background_and_logo.background.backgroundAttachment = attachment;
+        this.setState(currentState);
+    };
+
+    setBackgroundSize = (size, inPercentDimension) => {
+        const merged = {...size, ...inPercentDimension};
+        const currentState = this.state;
+        currentState.style.background_and_logo.background.backgroundSize = merged;
+        this.setState(currentState);
     };
 
     setLogo = (path, position) => {
@@ -421,7 +461,21 @@ class GlobalCaptivePortalState extends Component {
                             },
                             hex: '#e5e9f2'
                         },
-                        backgroundType: 'COLOR'
+                        backgroundType: 'COLOR',
+                        backgroundRepeat: 'initial',
+                        backgroundPosition: {
+                            inPercentDimension: true,
+                            posX: 0,
+                            posY: 0,
+                            option: ''
+                        },
+                        backgroundAttachment: 'scroll',
+                        backgroundSize: {
+                            inPercentDimension: false,
+                            width: 0,
+                            height: 0,
+                            option: 'auto'
+                        },
                     },
                     logo: {
                         url: '',
@@ -556,7 +610,15 @@ class GlobalCaptivePortalState extends Component {
             .previewMain { 
                 background:  ${ background.backgroundType === 'COLOR' ?
                     `rgba(${background.color.rgba.r}, ${background.color.rgba.g}, ${background.color.rgba.b}, ${background.color.rgba.a})` :
-                    `url('${background.url}')`}; 
+                    `url('${background.url}')`};
+                    background-repeat: ${background.backgroundRepeat};
+                    background-position: ${background.backgroundPosition.inPercentDimension ? 
+                                            `${background.backgroundPosition.posX}% ${background.backgroundPosition.posY}%` :
+                                        background.backgroundPosition.option};
+                    background-attachment: ${background.backgroundAttachment};
+                    background-size: ${background.backgroundSize.inPercentDimension ? 
+                                        `${background.backgroundSize.width}% ${background.backgroundSize.height}%`:
+                                    background.backgroundPosition.option};
             }
             
             .previewLogoPlace {
@@ -624,9 +686,8 @@ class GlobalCaptivePortalState extends Component {
                 padding: ${accept_button_size.padding}px;
                 word-break: 'break-all';
             }
-            
-            `;
-
+           
+        `;
     };
 
     render() {
@@ -649,6 +710,10 @@ class GlobalCaptivePortalState extends Component {
             externalCss: this.state.externalCss,
             addPortalName: this.addPortalName,
             setBackground: this.setBackground,
+            setBackgroundRepeating: this.setBackgroundRepeating,
+            setBackgroundPosition: this.setBackgroundPosition,
+            setBackgroundAttachment: this.setBackgroundAttachment,
+            setBackgroundSize: this.setBackgroundSize,
             setLogo: this.setLogo,
             setBorderStyle: this.setBorderStyle,
             setBackgroundStyle: this.setBackgroundStyle,
