@@ -101,15 +101,15 @@ class GlobalCaptivePortalState extends Component {
                         hex: '#e5e9f2'
                     },
                     backgroundType: 'COLOR',
-                    backgroundRepeat: 'repeat',
-                    backgroundPosition: {
+                    repeat: 'repeat',
+                    position: {
                         inPercentDimension: true,
                         posX: 0,
                         posY: 0,
                         option: ''
                     },
-                    backgroundAttachment: 'scroll',
-                    backgroundSize: {
+                    attachment: 'scroll',
+                    size: {
                         inPercentDimension: false,
                         width: 0,
                         height: 0,
@@ -216,27 +216,27 @@ class GlobalCaptivePortalState extends Component {
 
     setBackgroundRepeating = (repeating) => {
         const currentState = this.state;
-        currentState.style.background_and_logo.background.backgroundRepeat = repeating;
+        currentState.style.background_and_logo.background.repeat = repeating;
         this.setState(currentState);
     };
 
     setBackgroundPosition = (position, inPercentDimension) => {
         const merged = {...position, ...inPercentDimension};
         const currentState = this.state;
-        currentState.style.background_and_logo.background.backgroundPosition = merged;
+        currentState.style.background_and_logo.background.position = merged;
         this.setState(currentState);
     };
 
     setBackgroundAttachment = (attachment) => {
         const currentState = this.state;
-        currentState.style.background_and_logo.background.backgroundAttachment = attachment;
+        currentState.style.background_and_logo.background.position = attachment;
         this.setState(currentState);
     };
 
     setBackgroundSize = (size, inPercentDimension) => {
         const merged = {...size, ...inPercentDimension};
         const currentState = this.state;
-        currentState.style.background_and_logo.background.backgroundSize = merged;
+        currentState.style.background_and_logo.background.size = merged;
         this.setState(currentState);
     };
 
@@ -462,15 +462,15 @@ class GlobalCaptivePortalState extends Component {
                             hex: '#e5e9f2'
                         },
                         backgroundType: 'COLOR',
-                        backgroundRepeat: 'initial',
-                        backgroundPosition: {
+                        repeat: 'repeat',
+                        position: {
                             inPercentDimension: true,
                             posX: 0,
                             posY: 0,
                             option: ''
                         },
-                        backgroundAttachment: 'scroll',
-                        backgroundSize: {
+                        attachment: 'scroll',
+                        size: {
                             inPercentDimension: false,
                             width: 0,
                             height: 0,
@@ -611,14 +611,14 @@ class GlobalCaptivePortalState extends Component {
                 background:  ${ background.backgroundType === 'COLOR' ?
                     `rgba(${background.color.rgba.r}, ${background.color.rgba.g}, ${background.color.rgba.b}, ${background.color.rgba.a})` :
                     `url('${background.url}')`};
-                    background-repeat: ${background.backgroundRepeat};
-                    background-position: ${background.backgroundPosition.inPercentDimension ? 
-                                            `${background.backgroundPosition.posX}% ${background.backgroundPosition.posY}%` :
-                                        background.backgroundPosition.option};
-                    background-attachment: ${background.backgroundAttachment};
-                    background-size: ${background.backgroundSize.inPercentDimension ? 
-                                        `${background.backgroundSize.width}% ${background.backgroundSize.height}%`:
-                                    background.backgroundSize.option};
+                    background-repeat: ${background.repeat};
+                    background-position: ${background.position.inPercentDimension ? 
+                                            `${background.position.posX}% ${background.position.posY}%` :
+                                        background.position.option};
+                    background-attachment: ${background.attachment};
+                    background-size: ${background.size.inPercentDimension ? 
+                                        `${background.size.width}% ${background.size.height}%`:
+                                    background.size.option};
             }
             
             .previewLogoPlace {

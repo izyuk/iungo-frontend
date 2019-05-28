@@ -7,20 +7,20 @@ export default class Repeating extends Component {
     static contextType = CaptivePortalContext;
 
     state = {
-        backgroundRepeat: 'initial'
+        repeat: 'initial'
     };
 
     backgroundRepeating = (e) => {
         const currentState = this.state;
-        currentState.backgroundRepeat = e.currentTarget.getAttribute('datatype');
+        currentState.repeat = e.currentTarget.getAttribute('datatype');
         this.context.setBackgroundRepeating(e.currentTarget.getAttribute('datatype'));
         this.setState(currentState);
     };
 
     componentDidMount() {
-        const {style: {background_and_logo: {background: {backgroundRepeat}}}} = this.context;
+        const {style: {background_and_logo: {background: {repeat}}}} = this.context;
 
-        document.getElementById(`${backgroundRepeat}`).checked = true;
+        document.getElementById(`${repeat}`).checked = true;
     }
 
     render() {

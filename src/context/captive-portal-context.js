@@ -99,9 +99,9 @@ export default React.createContext({
                 },
                 backgroundType: 'COLOR',
                 backgroundRepeat: 'initial',
-                backgroundPosition: '0% 0%',
-                backgroundAttachment: 'scroll',
-                backgroundSize: 'auto'
+                position: '0% 0%',
+                position: 'scroll',
+                size: 'auto'
             },
             logo: {
                 url: '',

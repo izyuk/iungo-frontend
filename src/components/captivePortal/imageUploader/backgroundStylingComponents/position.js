@@ -7,9 +7,9 @@ export default class Position extends Component {
     static contextType = CaptivePortalContext;
 
     state = {
-        option: this.context.style.background_and_logo.background.backgroundPosition.option,
-        posX: this.context.style.background_and_logo.background.backgroundPosition.posX,
-        posY: this.context.style.background_and_logo.background.backgroundPosition.posY,
+        option: this.context.style.background_and_logo.background.position.option,
+        posX: this.context.style.background_and_logo.background.position.posX,
+        posY: this.context.style.background_and_logo.background.position.posY,
     };
 
     posXInput = React.createRef();
@@ -19,7 +19,6 @@ export default class Position extends Component {
         const currentState = this.state;
         if (e.currentTarget.getAttribute('datatype') === 'custom') {
             this.posXInput.current.focus();
-            this.context.setBackgroundPosition(currentState, true);
         } else {
             currentState.option = e.currentTarget.getAttribute('datatype');
             this.context.setBackgroundPosition(currentState, false);
@@ -54,11 +53,11 @@ export default class Position extends Component {
     }
 
     componentDidMount() {
-        const {style: {background_and_logo: {background: {backgroundPosition}}}} = this.context;
-        if(backgroundPosition.inPercentDimension){
+        const {style: {background_and_logo: {background: {position}}}} = this.context;
+        if(position.inPercentDimension){
             this.custom.current.checked = true;
         } else {
-            document.getElementById(`${backgroundPosition.option}`).checked = true;
+            document.getElementById(`${position.option}`).checked = true;
         }
     }
 
@@ -149,7 +148,6 @@ export default class Position extends Component {
                             <div className="inputRadioWrap">
                                 <input onChange={this.backgroundPosition}
                                        ref={this.custom}
-                                       onFocus={this.onFocusHandler}
                                        id='custom-number'
                                        datatype={'custom'} type="radio"
                                        name='background_position'/>
@@ -171,6 +169,7 @@ export default class Position extends Component {
                             </div>
                             <div className="inputRadioWrap">
                                 <input onChange={this.changePosY}
+                                       onFocus={this.onFocusHandler}
                                        id='custom-number-y'
                                        datatype={'custom-number-y'}
                                        name='background_position'

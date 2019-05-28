@@ -7,9 +7,9 @@ export default class Size extends Component {
     static contextType = CaptivePortalContext;
 
     state = {
-        option: this.context.style.background_and_logo.background.backgroundSize.option,
-        width: this.context.style.background_and_logo.background.backgroundSize.width,
-        height: this.context.style.background_and_logo.background.backgroundSize.height
+        option: this.context.style.background_and_logo.background.size.option,
+        width: this.context.style.background_and_logo.background.size.width,
+        height: this.context.style.background_and_logo.background.size.height
     };
 
     widthInput = React.createRef();
@@ -19,7 +19,6 @@ export default class Size extends Component {
         const currentState = this.state;
         if (e.currentTarget.getAttribute('datatype') === 'custom') {
             this.widthInput.current.focus();
-
         } else {
             currentState.option = e.currentTarget.getAttribute('datatype');
             this.context.setBackgroundSize(currentState, false);
@@ -49,21 +48,16 @@ export default class Size extends Component {
         this.context.setBackgroundSize(currentState, true);
     };
 
-
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         return (this.state.option !== nextState.option)
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(this.state);
-    }
-
     componentDidMount() {
-        const {style: {background_and_logo: {background: {backgroundSize}}}} = this.context;
-        if(backgroundSize.inPercentDimension){
+        const {style: {background_and_logo: {background: {size}}}} = this.context;
+        if(size.inPercentDimension){
             this.custom.current.checked = true;
         } else {
-            document.getElementById(`${backgroundSize.option}`).checked = true;
+            document.getElementById(`${size.option}`).checked = true;
         }
     }
 

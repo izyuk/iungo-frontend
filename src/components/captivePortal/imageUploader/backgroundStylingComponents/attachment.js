@@ -7,12 +7,12 @@ export default class Attachment extends Component {
     static contextType = CaptivePortalContext;
 
     state = {
-        backgroundAttachment: 'scroll',
+        position: 'scroll',
     };
 
     backgroundAttachment = (e) => {
         const currentState = this.state;
-        currentState.backgroundAttachment = e.currentTarget.getAttribute('datatype');
+        currentState.position = e.currentTarget.getAttribute('datatype');
         this.context.setBackgroundAttachment(e.currentTarget.getAttribute('datatype'));
         this.setState(currentState);
     };
