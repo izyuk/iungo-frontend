@@ -155,7 +155,7 @@ export default class Position extends Component {
                                 <p>enter your value</p>
                             </div>
                             <div className="inputRadioWrap">
-                                <p className={'label'}>axis X</p>
+                                <p className={'label'}>Axis X</p>
                                 <input onChange={this.changePosX}
                                        ref={this.posXInput}
                                        onFocus={this.onFocusHandler}
@@ -169,7 +169,7 @@ export default class Position extends Component {
                                 &nbsp;%
                             </div>
                             <div className="inputRadioWrap">
-                                <p className={'label'}>axis Y</p>
+                                <p className={'label'}>Axis Y</p>
                                 <input onChange={this.changePosY}
                                        onFocus={this.onFocusHandler}
                                        id='custom-number-y'
