@@ -16,14 +16,21 @@ export default class Position extends Component {
     custom = React.createRef();
 
     backgroundPosition = (e) => {
+        const currentState = this.state;
         if (e.currentTarget.getAttribute('datatype') === 'custom') {
             this.posXInput.current.focus();
+            this.context.setBackgroundPosition(currentState, true);
         } else {
-            const currentState = this.state;
             currentState.option = e.currentTarget.getAttribute('datatype');
             this.context.setBackgroundPosition(currentState, false);
             this.setState(currentState);
         }
+    };
+
+    onFocusHandler = () => {
+        const currentState = this.state;
+        this.custom.current.checked = true;
+        this.context.setBackgroundPosition(currentState, true);
     };
 
     changePosX = (e) => {
@@ -138,18 +145,21 @@ export default class Position extends Component {
                             </div>
                         </label>
 
-                        <label className={'inputs'} htmlFor="custom-number">enter your value
+                        <label className={'inputs'} htmlFor="custom-number">
                             <div className="inputRadioWrap">
                                 <input onChange={this.backgroundPosition}
                                        ref={this.custom}
+                                       onFocus={this.onFocusHandler}
                                        id='custom-number'
                                        datatype={'custom'} type="radio"
                                        name='background_position'/>
                                 <span className="radio"> </span>
+                                <p>enter your value</p>
                             </div>
                             <div className="inputRadioWrap">
                                 <input onChange={this.changePosX}
                                        ref={this.posXInput}
+                                       onFocus={this.onFocusHandler}
                                        id='custom-number-x'
                                        datatype={'custom-number-x'}
                                        name='background_position'

@@ -618,7 +618,7 @@ class GlobalCaptivePortalState extends Component {
                     background-attachment: ${background.backgroundAttachment};
                     background-size: ${background.backgroundSize.inPercentDimension ? 
                                         `${background.backgroundSize.width}% ${background.backgroundSize.height}%`:
-                                    background.backgroundPosition.option};
+                                    background.backgroundSize.option};
             }
             
             .previewLogoPlace {

@@ -16,14 +16,21 @@ export default class Size extends Component {
     custom = React.createRef();
 
     backgroundSize = (e) => {
+        const currentState = this.state;
         if (e.currentTarget.getAttribute('datatype') === 'custom') {
             this.widthInput.current.focus();
+
         } else {
-            const currentState = this.state;
             currentState.option = e.currentTarget.getAttribute('datatype');
             this.context.setBackgroundSize(currentState, false);
             this.setState(currentState);
         }
+    };
+
+    onFocusHandler = () => {
+        const currentState = this.state;
+        this.custom.current.checked = true;
+        this.context.setBackgroundSize(currentState, true);
     };
 
     changeWidth = (e) => {
@@ -70,7 +77,7 @@ export default class Size extends Component {
                 </div>
                 <div className="right">
                     <div className="innerCol">
-                        <label htmlFor="cover">auto
+                        <label htmlFor="auto">auto
                             <div className="inputRadioWrap">
                                 <input onChange={this.backgroundSize} id='auto' datatype={'auto'}
                                        type="radio"
@@ -78,7 +85,7 @@ export default class Size extends Component {
                                 <span className="radio"> </span>
                             </div>
                         </label>
-                        <label htmlFor="contain">cover
+                        <label htmlFor="cover">cover
                             <div className="inputRadioWrap">
                                 <input onChange={this.backgroundSize} id='cover' datatype={'cover'}
                                        type="radio"
@@ -94,7 +101,7 @@ export default class Size extends Component {
                                 <span className="radio"> </span>
                             </div>
                         </label>
-                        <label className={'inputs'} htmlFor="custom-number-size">enter your value
+                        <label className={'inputs'} htmlFor="custom-number-size">
                             <div className="inputRadioWrap">
                                 <input onChange={this.backgroundSize}
                                        ref={this.custom}
@@ -102,10 +109,12 @@ export default class Size extends Component {
                                        datatype={'custom'} type="radio"
                                        name='size'/>
                                 <span className="radio"> </span>
+                                <p>enter your value</p>
                             </div>
                             <div className="inputRadioWrap">
                                 <input onChange={this.changeWidth}
                                        ref={this.widthInput}
+                                       onFocus={this.onFocusHandler}
                                        id='custom-number-width'
                                        datatype={'custom-number-width'}
                                        name='size'
@@ -117,6 +126,7 @@ export default class Size extends Component {
                             </div>
                             <div className="inputRadioWrap">
                                 <input onChange={this.changeHeight}
+                                       onFocus={this.onFocusHandler}
                                        id='custom-number-height'
                                        datatype={'custom-number-height'}
                                        name='size'
