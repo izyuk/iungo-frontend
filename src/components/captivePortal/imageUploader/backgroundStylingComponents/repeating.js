@@ -10,17 +10,33 @@ export default class Repeating extends Component {
         repeat: 'initial'
     };
 
+    repeating = React.createRef();
+
+    // backgroundRepeating = (e) => {
+    //     const currentState = this.state;
+    //     currentState.repeat = e.currentTarget.getAttribute('datatype');
+    //     this.context.setBackgroundRepeating(e.currentTarget.getAttribute('datatype'));
+    //     this.setState(currentState);
+    // };
+
     backgroundRepeating = (e) => {
+        const data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
+        const span = e.currentTarget.nextSibling.children[0];
+        span.innerText = data;
         const currentState = this.state;
-        currentState.repeat = e.currentTarget.getAttribute('datatype');
-        this.context.setBackgroundRepeating(e.currentTarget.getAttribute('datatype'));
+        currentState.repeat = data;
+        this.setState(currentState);
+        this.context.setBackgroundRepeating(data);
         this.setState(currentState);
     };
 
     componentDidMount() {
         const {style: {background_and_logo: {background: {repeat}}}} = this.context;
-
-        document.getElementById(`${repeat}`).checked = true;
+        this.repeating.current.value = repeat;
+        let svg = this.repeating.current.nextSibling.children[0];
+        let span = document.createElement('span');
+        span.innerText = this.repeating.current.options[this.repeating.current.selectedIndex].value;
+        this.repeating.current.nextSibling.insertBefore(span, svg);
     }
 
     render() {
@@ -28,43 +44,24 @@ export default class Repeating extends Component {
             <div className="row">
                 <div className="logoLeft">
                     <span className="descr position">
-                        Background repeat
+                        Repeating
                     </span>
                 </div>
                 <div className="right">
-                    <div className="innerCol">
-                        <label htmlFor="repeat">repeat (axis X & Y)
-                            <div className="inputRadioWrap">
-                                <input onChange={this.backgroundRepeating} id='repeat' datatype={'repeat'}
-                                       type="radio"
-                                       name='background_repeating'/>
-                                <span className="radio"> </span>
-                            </div>
-                        </label>
-                        <label htmlFor="repeat-x">repeat-x
-                            <div className="inputRadioWrap">
-                                <input onChange={this.backgroundRepeating} id='repeat-x' datatype={'repeat-x'}
-                                       type="radio"
-                                       name='background_repeating'/>
-                                <span className="radio"> </span>
-                            </div>
-                        </label>
-                        <label htmlFor="repeat-y">repeat-y
-                            <div className="inputRadioWrap">
-                                <input onChange={this.backgroundRepeating} id='repeat-y' datatype={'repeat-y'}
-                                       type="radio"
-                                       name='background_repeating'/>
-                                <span className="radio"> </span>
-                            </div>
-                        </label>
-                        <label htmlFor="no-repeat">no-repeat
-                            <div className="inputRadioWrap">
-                                <input onChange={this.backgroundRepeating} id='no-repeat' datatype={'no-repeat'}
-                                       type="radio"
-                                       name='background_repeating'/>
-                                <span className="radio"> </span>
-                            </div>
-                        </label>
+                    <div className="innerRow">
+                        <select ref={this.repeating}
+                                onChange={this.backgroundRepeating}>
+                            <option value="repeat">repeat (axis X & Y)</option>
+                            <option value="repeat-x">repeat-x</option>
+                            <option value="repeat-y">repeat-y</option>
+                            <option value="no-repeat">no-repeat</option>
+                        </select>
+                        <p className="select">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="#BFC5D2" fillRule="nonzero"
+                                      d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
+                            </svg>
+                        </p>
                     </div>
                 </div>
             </div>

@@ -1407,6 +1407,14 @@ header {
               }
             }
 
+            .innerRow > .innerCol {
+              margin: 0;
+
+              & > .innerRow {
+                margin: 0;
+              }
+            }
+
             .inputSelect {
               width: 100%;
               max-width: 105px;
@@ -1530,6 +1538,7 @@ header {
                   flex-direction: column;
                   text-indent: 0;
                   text-align: left;
+
                   .inputRadioWrap {
                     width: 120px;
                     height: auto;
@@ -1538,12 +1547,15 @@ header {
                     align-items: center;
                     //justify-content: space-between;
                     margin-top: 5px;
-                    p:not(.label){
+
+                    p:not(.label) {
                       text-indent: 15px;
                     }
-                    .label{
+
+                    .label {
                       width: 90px;
                     }
+
                     input[type=number] {
                       left: unset;
                       width: 100%;

@@ -14,17 +14,18 @@ export default class Position extends Component {
 
     posXInput = React.createRef();
     custom = React.createRef();
+    position = React.createRef();
 
-    backgroundPosition = (e) => {
-        const currentState = this.state;
-        if (e.currentTarget.getAttribute('datatype') === 'custom') {
-            this.posXInput.current.focus();
-        } else {
-            currentState.option = e.currentTarget.getAttribute('datatype');
-            this.context.setBackgroundPosition(currentState, false);
-            this.setState(currentState);
-        }
-    };
+    // backgroundPosition = (e) => {
+    //     const currentState = this.state;
+    //     if (e.currentTarget.getAttribute('datatype') === 'custom') {
+    //         this.posXInput.current.focus();
+    //     } else {
+    //         currentState.option = e.currentTarget.getAttribute('datatype');
+    //         this.context.setBackgroundPosition(currentState, false);
+    //         this.setState(currentState);
+    //     }
+    // };
 
     onFocusHandler = () => {
         const currentState = this.state;
@@ -52,13 +53,44 @@ export default class Position extends Component {
         return (this.state.option !== nextState.option)
     }
 
+    backgroundPosition = (e) => {
+        const currentState = this.state;
+        if (e.currentTarget.value === 'Your size') {
+            this.custom.current.style.display = 'flex';
+            const data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
+            const span = e.currentTarget.nextSibling.children[0];
+            span.innerText = data;
+        } else {
+            this.custom.current.style.display = 'none';
+            const data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
+            const span = e.currentTarget.nextSibling.children[0];
+            span.innerText = data;
+            currentState.option = data;
+            this.setState(currentState);
+            this.context.setBackgroundPosition(currentState, false);
+        }
+
+    };
+
     componentDidMount() {
         const {style: {background_and_logo: {background: {position}}}} = this.context;
-        if(position.inPercentDimension){
-            this.custom.current.checked = true;
+        console.log(position.inPercentDimension);
+        if (position.inPercentDimension) {
+            this.position.current.value = 'Your size';
+            console.log(this.position.current.value);
+            this.custom.current.style.display = 'flex'
         } else {
-            document.getElementById(`${position.option}`).checked = true;
+            this.position.current.value = position.option;
+            this.custom.current.style.display = 'none';
+            this.position.current.value = position.option;
         }
+        let svg = this.position.current.nextSibling.children[0];
+        let span = document.createElement('span');
+        span.innerText = position.option;
+        console.log(this.position.current.options);
+        console.log(this.position.current.selectedIndex);
+        span.innerText = this.position.current.options[this.position.current.selectedIndex].value;
+        this.position.current.nextSibling.insertBefore(span, svg);
     }
 
     render() {
@@ -66,122 +98,63 @@ export default class Position extends Component {
             <div className="row">
                 <div className="logoLeft">
                     <span className="descr position">
-                        Background position
+                        Position
                     </span>
                 </div>
                 <div className="right">
-                    <div className="innerCol">
-                        <label htmlFor="left-top">left top
-                            <div className="inputRadioWrap">
-                                <input onChange={this.backgroundPosition} id='left-top' datatype={'left top'}
-                                       type="radio"
-                                       name='background_position'/>
-                                <span className="radio"> </span>
+                    <div className="innerRow">
+                        <div className="innerCol">
+                            <div className="innerRow">
+                                <select ref={this.position}
+                                        onChange={this.backgroundPosition}>
+                                    <option value="left top">left top</option>
+                                    <option value="left center">left center</option>
+                                    <option value="left bottom">left bottom</option>
+                                    <option value="right top">right top</option>
+                                    <option value="right center">right center</option>
+                                    <option value="right bottom">right bottom</option>
+                                    <option value="center top">center top</option>
+                                    <option value="center center">center center</option>
+                                    <option value="center bottom">center bottom</option>
+                                    <option value="Your size">Your size</option>
+                                </select>
+                                <p className="select">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <path fill="#BFC5D2" fillRule="nonzero"
+                                              d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
+                                    </svg>
+                                </p>
                             </div>
-                        </label>
-                        <label htmlFor="left-center">left center
-                            <div className="inputRadioWrap">
-                                <input onChange={this.backgroundPosition} id='left-center' datatype={'left center'}
-                                       type="radio"
-                                       name='background_position'/>
-                                <span className="radio"> </span>
-                            </div>
-                        </label>
-                        <label htmlFor="left-bottom">left bottom
-                            <div className="inputRadioWrap">
-                                <input onChange={this.backgroundPosition} id='left-bottom' datatype={'left bottom'}
-                                       type="radio"
-                                       name='background_position'/>
-                                <span className="radio"> </span>
-                            </div>
-                        </label>
-                        <label htmlFor="right-top">right top
-                            <div className="inputRadioWrap">
-                                <input onChange={this.backgroundPosition} id='right-top' datatype={'right top'}
-                                       type="radio"
-                                       name='background_position'/>
-                                <span className="radio"> </span>
-                            </div>
-                        </label>
-                        <label htmlFor="right-center">right center
-                            <div className="inputRadioWrap">
-                                <input onChange={this.backgroundPosition} id='right-center' datatype={'right center'}
-                                       type="radio"
-                                       name='background_position'/>
-                                <span className="radio"> </span>
-                            </div>
-                        </label>
-                        <label htmlFor="right-bottom">right bottom
-                            <div className="inputRadioWrap">
-                                <input onChange={this.backgroundPosition} id='right-bottom' datatype={'right bottom'}
-                                       type="radio"
-                                       name='background_position'/>
-                                <span className="radio"> </span>
-                            </div>
-                        </label>
-                        <label htmlFor="center-top">center top
-                            <div className="inputRadioWrap">
-                                <input onChange={this.backgroundPosition} id='center-top' datatype={'center top'}
-                                       type="radio"
-                                       name='background_position'/>
-                                <span className="radio"> </span>
-                            </div>
-                        </label>
-                        <label htmlFor="center-center">center center
-                            <div className="inputRadioWrap">
-                                <input onChange={this.backgroundPosition} id='center-center'
-                                       datatype={'center center'} type="radio"
-                                       name='background_position'/>
-                                <span className="radio"> </span>
-                            </div>
-                        </label>
-                        <label htmlFor="center-bottom">center bottom
-                            <div className="inputRadioWrap">
-                                <input onChange={this.backgroundPosition} id='center-bottom'
-                                       datatype={'center bottom'} type="radio"
-                                       name='background_position'/>
-                                <span className="radio"> </span>
-                            </div>
-                        </label>
-
-                        <label className={'inputs'} htmlFor="custom-number">
-                            <div className="inputRadioWrap">
-                                <input onChange={this.backgroundPosition}
-                                       ref={this.custom}
-                                       id='custom-number'
-                                       datatype={'custom'} type="radio"
-                                       name='background_position'/>
-                                <span className="radio"> </span>
-                                <p>enter your value</p>
-                            </div>
-                            <div className="inputRadioWrap">
-                                <p className={'label'}>Axis X</p>
-                                <input onChange={this.changePosX}
-                                       ref={this.posXInput}
-                                       onFocus={this.onFocusHandler}
-                                       id='custom-number-x'
-                                       datatype={'custom-number-x'}
-                                       name='background_position'
-                                       type="number"
-                                       placeholder={'By axis X'}
-                                       step={'1'}
-                                       defaultValue={this.state.posX}/>
-                                &nbsp;%
-                            </div>
-                            <div className="inputRadioWrap">
-                                <p className={'label'}>Axis Y</p>
-                                <input onChange={this.changePosY}
-                                       onFocus={this.onFocusHandler}
-                                       id='custom-number-y'
-                                       datatype={'custom-number-y'}
-                                       name='background_position'
-                                       type="number"
-                                       placeholder={'By axis Y'}
-                                       step={'1'}
-                                       defaultValue={this.state.posY}/>
-                                &nbsp;%
-                            </div>
-                        </label>
+                            <label className={'inputs'} htmlFor="custom-number" ref={this.custom}>
+                                <div className="inputRadioWrap">
+                                    <p className={'label'}>Axis X</p>
+                                    <input onChange={this.changePosX}
+                                           ref={this.posXInput}
+                                           onFocus={this.onFocusHandler}
+                                           id='custom-number-x'
+                                           datatype={'custom-number-x'}
+                                           name='background_position'
+                                           type="number"
+                                           placeholder={'By axis X'}
+                                           step={'1'}
+                                           defaultValue={this.state.posX}/>
+                                    &nbsp;%
+                                </div>
+                                <div className="inputRadioWrap">
+                                    <p className={'label'}>Axis Y</p>
+                                    <input onChange={this.changePosY}
+                                           onFocus={this.onFocusHandler}
+                                           id='custom-number-y'
+                                           datatype={'custom-number-y'}
+                                           name='background_position'
+                                           type="number"
+                                           placeholder={'By axis Y'}
+                                           step={'1'}
+                                           defaultValue={this.state.posY}/>
+                                    &nbsp;%
+                                </div>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
