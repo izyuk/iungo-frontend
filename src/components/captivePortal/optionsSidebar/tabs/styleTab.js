@@ -25,6 +25,7 @@ class StyleTab extends Component {
     }
 
     dropDownHandler = (e) => {
+        console.log(e.currentTarget);
         this.setState({
             event: e.currentTarget
         });
@@ -51,8 +52,7 @@ class StyleTab extends Component {
                         </svg>
                     </div>
                     {this.state.visible === 'Background' ?
-                        <Background type="background"
-                                    handler={this.props.handler}/> :
+                        <Background type="background"/> :
                         false}
                 </div>
                 <div className="wrap">
@@ -65,9 +65,7 @@ class StyleTab extends Component {
                         </svg>
                     </div>
                     {this.state.visible === 'Logo' ?
-                        <Logo type="logo"
-                              handler={this.props.handler}
-                              alignment={this.props.alignment}/>:
+                        <Logo type="logo"/>:
                         false}
                 </div>
                 <div className="wrap">

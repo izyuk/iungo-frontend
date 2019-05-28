@@ -97,7 +97,11 @@ export default React.createContext({
                     },
                     hex: '#e5e9f2'
                 },
-                backgroundType: 'COLOR'
+                backgroundType: 'COLOR',
+                backgroundRepeat: 'initial',
+                backgroundPosition: '0% 0%',
+                backgroundAttachment: 'scroll',
+                backgroundSize: 'auto'
             },
             logo: {
                 url: '',
@@ -173,6 +177,10 @@ export default React.createContext({
     acceptButtonText: 'Connect',
     addPortalName: () => {},
     setBackground: () => {},
+    setBackgroundRepeating: () => {},
+    setBackgroundPosition: () => {},
+    setBackgroundAttachment: () => {},
+    setBackgroundSize: () => {},
     setLogo: () => {},
     setBorderStyle: () => {},
     setBackgroundStyle: () => {},

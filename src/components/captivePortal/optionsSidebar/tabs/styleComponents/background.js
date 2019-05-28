@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ImageUploader from '../../../imageUploader/imageUploader';
+import BackgroundAndLogo from '../../../imageUploader/background-and-logo';
 
 
 class Background extends Component {
@@ -15,4 +15,4 @@ class Background extends Component {
     }
 }
 
-export default ImageUploader;
+export default BackgroundAndLogo;
