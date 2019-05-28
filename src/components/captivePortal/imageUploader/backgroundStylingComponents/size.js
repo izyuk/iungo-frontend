@@ -106,6 +106,7 @@ export default class Size extends Component {
                                 <p>enter your value</p>
                             </div>
                             <div className="inputRadioWrap">
+                                <p className={'label'}>Width</p>
                                 <input onChange={this.changeWidth}
                                        ref={this.widthInput}
                                        onFocus={this.onFocusHandler}
@@ -119,6 +120,7 @@ export default class Size extends Component {
                                 &nbsp;%
                             </div>
                             <div className="inputRadioWrap">
+                                <p className={'label'}>Height</p>
                                 <input onChange={this.changeHeight}
                                        onFocus={this.onFocusHandler}
                                        id='custom-number-height'
