@@ -3,6 +3,19 @@ import ReactDOM from 'react-dom';
 import FileBase64 from 'react-file-base64';
 
 class Modal extends Component {
+
+    formatBytes = (bytes, decimals = 2) => {
+        if (bytes === 0) return '0 Bytes';
+
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB'];
+
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+        return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+    };
+
     render() {
         return ReactDOM.createPortal(
             <div className={"modal"}>
@@ -23,15 +36,19 @@ class Modal extends Component {
                             <span>Upload</span>
                             <FileBase64
                                 multiple={false}
-                                onDone={this.props.uploadHandler} accept="image/*"/>
+                                onDone={this.props.uploadHandler}/>
 
                         </div>
+                        {!this.props.fileInfo &&
+                                <span>Max size limit: 5.12 MB</span>
+                        }
                         {this.props.fileInfo &&
 
                         <div className="uploadInfo">
                             <div className="top">
                                 <span>Name: {this.props.fileInfo.name}</span>
-                                <span>Size: {this.props.fileInfo.size}</span>
+                                <span>Size: {this.formatBytes(this.props.fileInfo.size)}</span>
+                                {/*<span>Max size limit: {this.formatBytes(5120)} 5120 KB</span>*/}
                             </div>
                             <div className="progress">
                                 <span className={'bar'}>

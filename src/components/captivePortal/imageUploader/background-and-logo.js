@@ -91,27 +91,43 @@ class BackgroundAndLogo extends Component {
     fileSelectedHandler = async (files) => {
         this.state.backgroundColor = false;
         this.state.alignment = true;
-
-        this.setState({
-            fileInfo: files
-        });
-        this.imageLoad(this.state.fileInfo.base64);
-
-        let img = document.createElement('img');
-        img.setAttribute('src', this.state.fileInfo.base64);
-        document.getElementsByTagName('BODY')[0].appendChild(img);
-        img.style.opacity = 0;
-        img.style.position = 'absolute';
-        img.style.top = 0;
-        img.style.left = 0;
-        img.style.zIndex = -100;
-        img.style.zoom = 0.1;
-
-
-        let query = this.uploadImage(localStorage.getItem('token'), this.state.fileInfo.name, this.state.fileInfo.base64);
-        await query.then(res => {
-            this.getImages();
-        });
+        console.log(files);
+        if((files.type === "image/jpeg") ||
+            (files.type === "image/png") ||
+            (files.type === "image/gif") ||
+            (files.type === "image/svg+xml")){
+            if(files.file.size < 5120000 ){
+                this.setState({
+                    fileInfo: files
+                });
+                this.imageLoad(this.state.fileInfo.base64);
+                console.log(files);
+                let img = document.createElement('img');
+                img.setAttribute('src', this.state.fileInfo.base64);
+                document.getElementsByTagName('BODY')[0].appendChild(img);
+                img.style.opacity = 0;
+                img.style.position = 'absolute';
+                img.style.top = 0;
+                img.style.left = 0;
+                img.style.zIndex = -100;
+                img.style.zoom = 0.1;
+                let query = this.uploadImage(localStorage.getItem('token'), this.state.fileInfo.name, this.state.fileInfo.base64);
+                await query.then(res => {
+                    this.getImages();
+                });
+            } else {
+                await this.context.setNotification('File shouldn`t be larger than 5.12 MB', true, true);
+                setTimeout(() => {
+                    this.context.setNotification('', false, false);
+                }, 5000)
+            }
+        } else {
+            await this.context.setNotification('Wrong file format', true, true);
+            setTimeout(() => {
+                this.context.setNotification('', false, false);
+            }, 5000)
+        }
+        document.querySelector('.modalFooter input').value = '';
     };
 
     chooseImage = (e) => {
