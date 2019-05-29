@@ -45,6 +45,8 @@ class BackgroundAndLogo extends Component {
 
     cpbButton = React.createRef();
 
+    newUploadedImageData = {};
+
     imageLoad = (url) => {
         let image = new Image();
 
@@ -77,8 +79,10 @@ class BackgroundAndLogo extends Component {
                 })
             }
         })
-            .then(res =>
-                console.log(res)
+            .then(res => {
+                    console.log(res);
+                    this.newUploadedImageData = res
+                }
             )
             .catch(err => console.warn('In uploadImage API method\n', err));
 
@@ -133,6 +137,30 @@ class BackgroundAndLogo extends Component {
                 this.context.setBackgroundID(e.currentTarget.getAttribute('dataid'));
                 break;
         }
+
+        this.toggleModal();
+    };
+
+    applyOnUpload = () => {
+        const {data: {id, externalUrl}} = this.newUploadedImageData;
+        const {style: {background_and_logo: {background, logo}}} = this.context;
+        switch (this.props.type) {
+            case "logo":
+                this.setState({logo: externalUrl});
+                logo.url = externalUrl;
+                logo.position = this.state.logoPosition;
+                this.context.setLogoID(id);
+                break;
+            case "background":
+                this.setState({background: externalUrl});
+                const colorData = this.state.color;
+                background.url = externalUrl;
+                background.color = colorData;
+                background.backgroundType = 'IMAGE';
+                this.context.setBackgroundID(id);
+                break;
+        }
+        this.toggleModal();
     };
 
     getImages = async () => {
@@ -145,7 +173,7 @@ class BackgroundAndLogo extends Component {
                 res.data.map((item, i) => {
                     array.push(
                         <div key={i} dataid={item.id} dataurl={item.externalUrl}
-                             onClick={this.chooseImage}>
+                             onDoubleClick={this.chooseImage}>
                             <img src={item.externalUrl} alt=""/>
                             <span>{item.name}</span>
                             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Capa_1" x="0px" y="0px" width="512px"
@@ -374,7 +402,8 @@ class BackgroundAndLogo extends Component {
                     <Modal onClose={this.toggleModal}
                            uploadHandler={this.fileSelectedHandler}
                            progress={this.state.progress}
-                           fileInfo={this.state.fileInfo.file}>
+                           fileInfo={this.state.fileInfo.file}
+                           applyOnUpload={this.applyOnUpload}>
                         <div className="imagesList">
                             {this.state.imagesList !== '' && this.state.imagesList}
                         </div>

@@ -42,6 +42,13 @@ class Modal extends Component {
                         </div>
                         }
 
+                        {
+                            this.props.progress === 100 &&
+                            <div className="upload apply" onClick={this.props.applyOnUpload}>
+                                <span>Apply and Close</span>
+                            </div>
+                        }
+
                     </div>
                 </div>
             </div>,
