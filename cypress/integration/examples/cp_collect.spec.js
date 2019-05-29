@@ -74,8 +74,8 @@ function setSomeSize(selector, value) {
 const expectedStore = {
     background: null,
     name: "CP TEST NAME",
-    logoId: "268",
-    backgroundId: "",
+    logoId: "190",
+    backgroundId: "268",
     header: "CP TEST HEADER TEXT",
     description: "CP TEST DESCRIPTION TEXT",
     footer: "TEST FOOTER TEXT",
@@ -121,7 +121,20 @@ const expectedStore = {
             background: {
                 url: null,
                 color: {rgba: {r: 48, g: 51, b: 56, a: 1}, hex: "#303338"},
-                backgroundType: "COLOR"
+                backgroundType: 'COLOR',
+                repeat: 'no-repeat',
+                position: {
+                    inPercentDimension: false,
+                    posX: 0,
+                    posY: 0,
+                    option: 'left top'
+                },
+                size: {
+                    inPercentDimension: true,
+                    width: 50,
+                    height: 50,
+                    option: 'Your size'
+                },
             },
             logo: {
                 url: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/IMG_1093.JPG",
@@ -233,8 +246,35 @@ context('Style tab', function () {
         cy.viewport('macbook-11')
     });
     describe('Changing background', function () {
-        it('Setting color', () => {
-            fillColorHEX('[data-cy="openColorPicker"]', '303338');
+        it('Setting background image', () => {
+            it('Choosing and applying image', () => {
+                cy.get('.upload')
+                    .click({force: true});
+                cy.get('[dataid=268]')
+                    .click({force: true});
+                cy.get('.close')
+                    .click({force: true});
+            });
+            it('Setting background repeating', () => {
+                cy.get('[data-cy="backgroundRepeating"]')
+                    .select('no-repeat');
+            });
+            it('Setting background position', () => {
+                cy.get('[data-cy="backgroundPosition"]')
+                    .select('left top');
+            });
+            it('Setting background size', () => {
+                cy.get('[data-cy="backgroundSize"]')
+                    .select('Your size');
+                cy.get('[data-cy="backgroundWidth"')
+                    .focus()
+                    .type('50')
+                    .blur({force: true});
+                cy.get('[data-cy="backgroundHeight"')
+                    .focus()
+                    .type('50')
+                    .blur({force: true});
+            });
         });
     });
 
@@ -248,7 +288,7 @@ context('Style tab', function () {
         it('Choosing and applying image', () => {
             cy.get('.upload')
                 .click({force: true});
-            cy.get('[dataid=268]')
+            cy.get('[dataid=190]')
                 .click({force: true});
             cy.get('.close')
                 .click({force: true});

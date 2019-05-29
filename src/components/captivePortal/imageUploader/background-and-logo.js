@@ -289,11 +289,11 @@ class BackgroundAndLogo extends Component {
                                 <span>Choose</span>
                             </div>
                             {
-                                this.props.type === "logo" ? ((logo.url !== '' && this.context.logoId !== '') ?
+                                this.props.type === "logo" &&
+                                ((logo.url !== '' && this.context.logoId !== '') &&
                                     <span className="removeLogo" onClick={this.removeLogoHandler}>
                                         Remove logo
-                                    </span> : '')
-                                    : ''
+                                    </span>)
                             }
                         </div>
                     </div>
@@ -322,9 +322,14 @@ class BackgroundAndLogo extends Component {
                                 </div>
                             </div>
                         </div>
-                        <Repeating/>
-                        <Position/>
-                        <Size/>
+                        {
+                            background.backgroundType === 'IMAGE' &&
+                            <div>
+                                <Repeating/>
+                                <Position/>
+                                <Size/>
+                            </div>
+                        }
                     </div> :
                     false}
                 {this.props.type === "logo" ?
