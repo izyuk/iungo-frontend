@@ -16,17 +16,6 @@ export default class Position extends Component {
     custom = React.createRef();
     position = React.createRef();
 
-    // backgroundPosition = (e) => {
-    //     const currentState = this.state;
-    //     if (e.currentTarget.getAttribute('datatype') === 'custom') {
-    //         this.posXInput.current.focus();
-    //     } else {
-    //         currentState.option = e.currentTarget.getAttribute('datatype');
-    //         this.context.setBackgroundPosition(currentState, false);
-    //         this.setState(currentState);
-    //     }
-    // };
-
     onFocusHandler = () => {
         const currentState = this.state;
         this.custom.current.checked = true;
@@ -55,7 +44,7 @@ export default class Position extends Component {
 
     backgroundPosition = (e) => {
         const currentState = this.state;
-        if (e.currentTarget.value === 'Your size') {
+        if (e.currentTarget.value === 'Custom position') {
             this.custom.current.style.display = 'flex';
             const data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
             const span = e.currentTarget.nextSibling.children[0];
@@ -76,7 +65,7 @@ export default class Position extends Component {
         const {style: {background_and_logo: {background: {position}}}} = this.context;
         console.log(position.inPercentDimension);
         if (position.inPercentDimension) {
-            this.position.current.value = 'Your size';
+            this.position.current.value = 'Custom position';
             console.log(this.position.current.value);
             this.custom.current.style.display = 'flex'
         } else {
@@ -117,7 +106,7 @@ export default class Position extends Component {
                                     <option value="center top">center top</option>
                                     <option value="center center">center center</option>
                                     <option value="center bottom">center bottom</option>
-                                    <option value="Your size">Your size</option>
+                                    <option value="Custom position">Custom position</option>
                                 </select>
                                 <p className="select">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
