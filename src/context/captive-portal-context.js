@@ -98,10 +98,19 @@ export default React.createContext({
                     hex: '#e5e9f2'
                 },
                 backgroundType: 'COLOR',
-                backgroundRepeat: 'initial',
-                position: '0% 0%',
-                position: 'scroll',
-                size: 'auto'
+                repeat: 'repeat',
+                position: {
+                    inPercentDimension: true,
+                    posX: 0,
+                    posY: 0,
+                    option: ''
+                },
+                size: {
+                    inPercentDimension: false,
+                    width: 0,
+                    height: 0,
+                    option: 'auto'
+                },
             },
             logo: {
                 url: '',
@@ -212,5 +221,6 @@ export default React.createContext({
     setNotification: () => {},
     resetGlobalState: () => {},
     setToken: () => {},
-    previewCssGenerator: () => {}
+    previewCssGenerator: () => {},
+    removeLogo: () => {}
 });

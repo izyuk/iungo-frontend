@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-// import {connect} from 'react-redux';
-// import {upload_file} from '../../../../../reducers/background_and_logo';
 import BackgroundAndLogo from '../../../imageUploader/background-and-logo';
 
 class Logo extends Component {

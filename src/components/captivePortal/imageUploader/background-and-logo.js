@@ -217,6 +217,10 @@ class BackgroundAndLogo extends Component {
         this.context.setBackground(this.state.background, this.state.color, 'COLOR');
     };
 
+    removeLogoHandler = () => {
+        this.context.removeLogo();
+    };
+
     componentDidMount() {
         if (this.props.type === "background") {
             if (this.context.style.background_and_logo.background) {
@@ -265,7 +269,7 @@ class BackgroundAndLogo extends Component {
             left: '0px',
         };
 
-        const {style: {background_and_logo: {background}}} = this.context;
+        const {style: {background_and_logo: {background, logo}}} = this.context;
         return (
             <div
                 className={this.props.type === "background" ? "container active" : "container"}>
@@ -276,7 +280,7 @@ class BackgroundAndLogo extends Component {
                         </span>
                     </div>
                     <div className="right">
-                        <div className="innerRow">
+                        <div className="innerRow logo">
                             <div className="upload" onClick={this.toggleModal}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                     <path fill="#FFF" fillRule="nonzero"
@@ -284,6 +288,13 @@ class BackgroundAndLogo extends Component {
                                 </svg>
                                 <span>Choose</span>
                             </div>
+                            {
+                                this.props.type === "logo" ? ((logo.url !== '' && this.context.logoId !== '') ?
+                                    <span className="removeLogo" onClick={this.removeLogoHandler}>
+                                        Remove logo
+                                    </span> : '')
+                                    : ''
+                            }
                         </div>
                     </div>
                 </div>
@@ -291,9 +302,9 @@ class BackgroundAndLogo extends Component {
                     <div>
                         <div className="row">
                             <div className="left">
-                                    <span className="descr">
-                                        Color
-                                    </span>
+                                <span className="descr">
+                                    Color
+                                </span>
                             </div>
                             <div className="right">
                                 <div className="innerRow">
@@ -302,7 +313,7 @@ class BackgroundAndLogo extends Component {
                                         <button ref={this.cpbButton}
                                                 style={{backgroundColor: `rgba(${background.color.rgba.r}, ${background.color.rgba.g}, ${background.color.rgba.b}, ${background.color.rgba.a})`}}
                                                 onClick={this.handleClick}
-                                                data-cy="openColorPicker"> </button>
+                                                data-cy="openColorPicker"></button>
                                         {this.state.displayColorPicker ? <div style={popover}>
                                             <div style={cover} onClick={this.handleClose}/>
                                             <SketchPicker color={background.color.rgba} onChange={this.handleChange}/>
@@ -327,21 +338,24 @@ class BackgroundAndLogo extends Component {
                             <div className="innerCol">
                                 <label htmlFor="left">Left
                                     <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='left' datatype={'flex-start'} type="radio"
+                                        <input onChange={this.alignment} id='left' datatype={'flex-start'}
+                                               type="radio"
                                                name='alignment'/>
                                         <span className="radio"> </span>
                                     </div>
                                 </label>
                                 <label htmlFor="center">Center
                                     <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='center' datatype={'center'} type="radio"
+                                        <input onChange={this.alignment} id='center' datatype={'center'}
+                                               type="radio"
                                                name='alignment'/>
                                         <span className="radio"> </span>
                                     </div>
                                 </label>
                                 <label htmlFor="right">Right
                                     <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='right' datatype={'flex-end'} type="radio"
+                                        <input onChange={this.alignment} id='right' datatype={'flex-end'}
+                                               type="radio"
                                                name='alignment'/>
                                         <span className="radio"> </span>
                                     </div>

@@ -12,13 +12,6 @@ export default class Repeating extends Component {
 
     repeating = React.createRef();
 
-    // backgroundRepeating = (e) => {
-    //     const currentState = this.state;
-    //     currentState.repeat = e.currentTarget.getAttribute('datatype');
-    //     this.context.setBackgroundRepeating(e.currentTarget.getAttribute('datatype'));
-    //     this.setState(currentState);
-    // };
-
     backgroundRepeating = (e) => {
         const data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
         const span = e.currentTarget.nextSibling.children[0];
@@ -50,6 +43,7 @@ export default class Repeating extends Component {
                 <div className="right">
                     <div className="innerRow">
                         <select ref={this.repeating}
+                                data-cy={'backgroundRepeating'}
                                 onChange={this.backgroundRepeating}>
                             <option value="repeat">repeat (axis X & Y)</option>
                             <option value="repeat-x">repeat-x</option>

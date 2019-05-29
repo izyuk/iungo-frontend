@@ -1162,6 +1162,20 @@ header {
               justify-content: flex-start;
               align-items: center;
               width: 100%;
+              &.logo{
+                display: flex;
+                justify-content: space-between;
+              }
+
+              span{
+                &.removeLogo{
+                  text-decoration: underline;
+                  cursor: pointer;
+                  .font(@avenir-medium, 12);
+                  line-height: 2.67;
+                  color: @steel;
+                }
+              }
 
               select,
               & > input {

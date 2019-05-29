@@ -35,7 +35,7 @@ export default class Position extends Component {
 
     changePosX = (e) => {
         const currentState = this.state;
-        currentState.posX = e.currentTarget.value;
+        currentState.posX = parseInt(e.currentTarget.value);
         currentState.option = `${e.currentTarget.value}% ${currentState.posY}%`;
         this.setState(currentState);
         this.context.setBackgroundPosition(currentState, true);
@@ -43,7 +43,7 @@ export default class Position extends Component {
 
     changePosY = (e) => {
         const currentState = this.state;
-        currentState.posY = e.currentTarget.value;
+        currentState.posY = parseInt(e.currentTarget.value);
         currentState.option = `${currentState.posX}% ${e.currentTarget.value}%`;
         this.setState(currentState);
         this.context.setBackgroundPosition(currentState, true);
@@ -106,6 +106,7 @@ export default class Position extends Component {
                         <div className="innerCol">
                             <div className="innerRow">
                                 <select ref={this.position}
+                                        data-cy={'backgroundPosition'}
                                         onChange={this.backgroundPosition}>
                                     <option value="left top">left top</option>
                                     <option value="left center">left center</option>

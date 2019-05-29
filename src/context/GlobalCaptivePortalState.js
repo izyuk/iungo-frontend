@@ -469,7 +469,6 @@ class GlobalCaptivePortalState extends Component {
                             posY: 0,
                             option: ''
                         },
-                        attachment: 'scroll',
                         size: {
                             inPercentDimension: false,
                             width: 0,
@@ -690,6 +689,13 @@ class GlobalCaptivePortalState extends Component {
         `;
     };
 
+    removeLogo = () => {
+        const currentState = this.state;
+        currentState.logoId = '';
+        currentState.style.background_and_logo.logo.url = '';
+        this.setState(currentState);
+    };
+
     render() {
         return <CaptivePortalContext.Provider value={{
             background: this.state.background,
@@ -735,7 +741,8 @@ class GlobalCaptivePortalState extends Component {
             setNotification: this.setNotification,
             resetGlobalState: this.resetGlobalState,
             setToken: this.setToken,
-            previewCssGenerator: this.previewCssGenerator
+            previewCssGenerator: this.previewCssGenerator,
+            removeLogo: this.removeLogo
         }}
         >{this.props.children}</CaptivePortalContext.Provider>
     }

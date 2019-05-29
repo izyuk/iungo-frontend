@@ -35,7 +35,7 @@ export default class Size extends Component {
 
     changeWidth = (e) => {
         const currentState = this.state;
-        currentState.width = e.currentTarget.value;
+        currentState.width = parseInt(e.currentTarget.value);
         currentState.option = `${e.currentTarget.value}% ${currentState.height}%`;
         this.setState(currentState);
         this.context.setBackgroundSize(currentState, true);
@@ -43,7 +43,7 @@ export default class Size extends Component {
 
     changeHeight = (e) => {
         const currentState = this.state;
-        currentState.height = e.currentTarget.value;
+        currentState.height = parseInt(e.currentTarget.value);
         currentState.option = `${currentState.width}% ${e.currentTarget.value}%`;
         this.setState(currentState);
         this.context.setBackgroundSize(currentState, true);
@@ -102,6 +102,7 @@ export default class Size extends Component {
                         <div className="innerCol">
                             <div className="innerRow">
                                 <select ref={this.size}
+                                        data-cy={'backgroundSize'}
                                         onChange={this.backgroundSize}>
                                     <option value="auto">auto</option>
                                     <option value="cover">cover</option>
@@ -119,6 +120,7 @@ export default class Size extends Component {
                                 <div className="inputRadioWrap">
                                     <p className={'label'}>Width</p>
                                     <input onChange={this.changeWidth}
+                                           data-cy={'backgroundWidth'}
                                            ref={this.widthInput}
                                            onFocus={this.onFocusHandler}
                                            id='custom-number-width'
@@ -133,6 +135,7 @@ export default class Size extends Component {
                                 <div className="inputRadioWrap">
                                     <p className={'label'}>Height</p>
                                     <input onChange={this.changeHeight}
+                                           data-cy={'backgroundHeight'}
                                            onFocus={this.onFocusHandler}
                                            id='custom-number-height'
                                            datatype={'custom-number-height'}
