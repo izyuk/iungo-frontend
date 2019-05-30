@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import background from "../captivePortal/optionsSidebar/tabs/styleComponents/background";
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {Link, Redirect} from 'react-router-dom';
+
 class Header extends Component {
     constructor(props){
         super(props);
@@ -89,6 +89,7 @@ class Header extends Component {
                                 </a>
                                 <div className={this.state.popup ? "popup active" : 'popup'}>
                                     <ul>
+                                        <li><Link to={'/profile'}>Profile</Link></li>
                                         <li><button onClick={this.logOut} type="button">Log out</button></li>
                                     </ul>
                                 </div>

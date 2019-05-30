@@ -6,6 +6,7 @@ import Hotspot from '../hotspot/hotspot';
 import Reports from '../reports/reports';
 import CaptivePortal from "../captivePortal/captive-portal";
 import CaptivePortalList from "../captivePortal/captivePortalList";
+import Profile from '../profile/profile';
 
 
 class MainSide extends Component {
@@ -49,6 +50,7 @@ class MainSide extends Component {
                     )}/>
                     <Route exact path="/hotspot" component={Hotspot}/>
                     <Route exact path="/reports/people" component={Reports}/>
+                    <Route exact path="/profile" component={Profile}/>
                 </Switch>
             </div>
         )
