@@ -66,6 +66,11 @@ class CaptivePortal extends Component {
                     acceptButtonBorder: data.style.accept_button_border
                 });
                 this.context.addPortalName(data.name);
+                this.context.setBackgroundRepeating(data.style.background_and_logo.background.repeat);
+                const position = data.style.background_and_logo.background.position;
+                this.context.setBackgroundPosition({option: position.option, posX: position.posX, posY: position.posY}, position.inPercentDimension);
+                const size = data.style.background_and_logo.background.size;
+                this.context.setBackgroundSize({option: size.option, width: size.width, height: size.height}, size.inPercentDimension);
                 if (data.externalCss.length > 0) {
                     const styledElements = document.querySelectorAll('.previewWrap [style]');
                     let stylesArray = [];

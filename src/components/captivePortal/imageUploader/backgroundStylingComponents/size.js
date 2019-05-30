@@ -84,7 +84,10 @@ export default class Size extends Component {
             this.size.current.value = size.option;
             this.custom.current.style.display = 'none'
         }
-        this.size.current.value = size.option;
+        console.log(this.size.current);
+        console.log(this.size.current.selectedIndex);
+        console.log(this.size.current.options);
+        console.log(this.size.current[this.size.current.selectedIndex]);
         let svg = this.size.current.nextSibling.children[0];
         let span = document.createElement('span');
         span.innerText = this.size.current.options[this.size.current.selectedIndex].value;
