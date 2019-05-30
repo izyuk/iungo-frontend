@@ -49,15 +49,18 @@ export default class Position extends Component {
             const data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
             const span = e.currentTarget.nextSibling.children[0];
             span.innerText = data;
+            currentState.option = data;
+            // this.setState(currentState);
+            this.context.setBackgroundPosition(currentState, true);
         } else {
             this.custom.current.style.display = 'none';
             const data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
             const span = e.currentTarget.nextSibling.children[0];
             span.innerText = data;
             currentState.option = data;
-            this.setState(currentState);
             this.context.setBackgroundPosition(currentState, false);
         }
+        this.setState(currentState);
 
     };
 

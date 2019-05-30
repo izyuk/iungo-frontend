@@ -19,9 +19,34 @@ class Publish extends Component {
 
     callPublishMethod = async () => {
         if(this.context.name.length > 0){
-
+            const {
+                addPortalName,
+                setBackground,
+                setLogo,
+                setBorderStyle,
+                setBackgroundStyle,
+                setSizeStyle,
+                setHeaderTopData,
+                setHeaderDescriptionData,
+                setLoginMethods,
+                setFooterData,
+                setLogoID,
+                setBackgroundID,
+                setCSS,
+                redirectURLChanger,
+                setButtonStyles,
+                setSuccessMessageData,
+                setExternalCssInfo,
+                loaderHandler,
+                setSuccessMessageStatus,
+                setNotification,
+                resetGlobalState,
+                setToken,
+                previewCssGenerator,
+                dataToExclude,
+                ...rest
+            } = this.context;
             this.context.loaderHandler(true);
-            const {dataToExclude, ...rest} = this.context;
             const portalDataToSend = GetBuilderParams(rest);
             const data = await PublishPortalMethodHandler(portalDataToSend, this.state.id === null ? localStorage.getItem('cpID') : this.state.id);
             this.setState(data);
@@ -68,6 +93,7 @@ class Publish extends Component {
             ...rest
         } = this.context;
         await this.props.collectData(rest);
+
 
         this.context.loaderHandler(true);
         // const {dataToExclude, ...rest} = this.context;

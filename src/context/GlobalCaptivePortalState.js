@@ -220,21 +220,23 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState);
     };
 
-    setBackgroundPosition = (position, inPercentDimension) => {
-        const merged = {...position, ...inPercentDimension};
+    setBackgroundPosition = (position, status) => {
+        const merged = {...position, inPercentDimension: status};
+        console.log('context position: ',merged);
         const currentState = this.state;
         currentState.style.background_and_logo.background.position = merged;
         this.setState(currentState);
     };
 
-    setBackgroundAttachment = (attachment) => {
-        const currentState = this.state;
-        currentState.style.background_and_logo.background.position = attachment;
-        this.setState(currentState);
-    };
+    // setBackgroundAttachment = (attachment) => {
+    //     const currentState = this.state;
+    //     currentState.style.background_and_logo.background.position = attachment;
+    //     this.setState(currentState);
+    // };
 
-    setBackgroundSize = (size, inPercentDimension) => {
-        const merged = {...size, ...inPercentDimension};
+    setBackgroundSize = (size, status) => {
+        const merged = {...size, inPercentDimension: status};
+        console.log('context size: ',merged);
         const currentState = this.state;
         currentState.style.background_and_logo.background.size = merged;
         this.setState(currentState);
