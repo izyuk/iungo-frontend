@@ -253,3 +253,43 @@ export const restorePasswordSendConfirmedPassword = (string, password) => {
         .then(res => res)
         .catch(err => authChecker(err.response));
 };
+
+export const setCompanyProfileInfo = (token, {name, companyCode, vatCode, country, region, city, address, zipCode, locale}) => {
+    return axios({
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${token}`
+        },
+        url: `${BACKEND_API}/profile`,
+        mode: 'no-cors',
+        data: {
+            "name": name,
+            "companyCode": companyCode,
+            "vatCode": vatCode,
+            "country": country,
+            "region": region,
+            "city": city,
+            "address": address,
+            "zipCode": zipCode,
+            "locale": locale
+        }
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
+
+export const getCompanyProfileInfo = (string) => {
+    return axios({
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${BACKEND_API}/profile`,
+        mode: 'no-cors'
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
