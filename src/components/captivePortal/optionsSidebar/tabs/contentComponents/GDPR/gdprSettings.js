@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
+import CaptivePortalContext from "../../../../../../context/project-context";
+import Slider from "rc-slider";
 import {SketchPicker} from "react-color";
 import Tooltip from 'rc-tooltip';
-import Slider from 'rc-slider';
-import CaptivePortalContext from "../../../../../../context/project-context";
 
 const style = {
     marginRight: 16,
@@ -29,16 +29,16 @@ const handle = (props) => {
     );
 };
 
-class FooterEditor extends Component {
+
+class GDPR extends Component {
+
     static contextType = CaptivePortalContext;
+
     state = {
         displayColorPicker: false,
-        fontInputData: this.context.style.footer.fontSize,
-        color: {rgba: this.context.style.footer.color.rgba, hex: this.context.style.footer.color.hex},
-        fontSize: this.context.style.footer.fontSize,
-        textActions: this.context.style.footer.textActions,
-        text: this.context.footer,
-        alignment: this.context.style.footer.alignment
+        fontInputData: this.context.style.gdpr_settings.fontSize,
+        color: {rgba: this.context.style.gdpr_settings.color.rgba, hex: this.context.style.gdpr_settings.color.hex},
+        fontSize: this.context.style.gdpr_settings.fontSize
     };
 
     onSliderChange = (value) => {
@@ -54,36 +54,17 @@ class FooterEditor extends Component {
             fontSize: parseInt(value),
             fontInputData: parseInt(value)
         });
-        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
-        this.context.setFooterData(text, rest);
+        const {displayColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setGDPRSettings(rest);
     };
 
     fontInputHandler = (value) => {
         const currentState = this.state;
         currentState.fontInputData = parseInt(value);
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
-        this.context.setFooterData(text, rest);
+        const {displayColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setGDPRSettings(rest);
     };
-
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.fontSize !== nextState.fontSize) {
-            return true;
-        } else if (this.state.color !== nextState.color) {
-            return true;
-        } else if (this.state.displayColorPicker !== nextState.displayColorPicker) {
-            return true;
-        } else if (this.state.textActions !== nextState.textActions) {
-            return true;
-        } else if (this.state.text !== nextState.text) {
-            return true;
-        } else
-            return false;
-    }
-
-    componentDidMount() {
-        document.getElementById(this.context.style.footer.alignment).checked = true;
-    }
 
     handleClick = () => {
         this.setState({displayColorPicker: !this.state.displayColorPicker});
@@ -98,34 +79,20 @@ class FooterEditor extends Component {
         currentState.color.rgba = color.rgb;
         currentState.color.hex = color.hex;
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
-        this.context.setFooterData(text, rest);
+        const {displayColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setGDPRSettings(rest);
     };
 
-    textActionsHandler = (e) => {
-        const name = e.currentTarget.getAttribute('data-type');
-        const currentState = this.state;
-        currentState.textActions[name] = !this.state.textActions[name];
-        this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
-        this.context.setFooterData(text, rest);
-    };
+    componentDidMount() {
+        this.context.setGDPRSettingsStatus(true);
+    }
 
-    textChanges = (e) => {
-        const currentState = this.state;
-        currentState.text = e.currentTarget.value;
-        this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
-        this.context.setFooterData(text, rest);
-    };
-
-    alignment = (e) => {
-        const currentState = this.state;
-        currentState.alignment = e.target.getAttribute('data-id');
-        this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
-        this.context.setFooterData(text, rest);
-    };
+    componentWillUnmount() {
+        this.context.setGDPRSettingsStatus(false);
+        // const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = this.state;
+        // this.context.setSuccessMessageData(text, {color: color, ...rest});
+        // this.context.redirectURLChanger(redirectURL);
+    }
 
     render() {
         const popover = {
@@ -143,59 +110,6 @@ class FooterEditor extends Component {
         };
         return (
             <div className="container">
-                <div className="row">
-                    <div className="right">
-                        <div className="innerRow">
-                            <div className="textActions">
-                                <button onClick={this.textActionsHandler}
-                                        className={this.state.textActions.bold ? "active" : ''}
-                                        data-cy="footerTopBold"
-                                        type="button"
-                                        data-type="bold">B
-                                </button>
-                                <button onClick={this.textActionsHandler}
-                                        className={this.state.textActions.italic ? "active" : ''}
-                                        data-cy="footerTopItalic"
-                                        type="button"
-                                        data-type="italic">i
-                                </button>
-                                <button onClick={this.textActionsHandler}
-                                        className={this.state.textActions.underline ? "active" : ''}
-                                        data-cy="footerTopUnderline"
-                                        type="button"
-                                        data-type="underline">U
-                                </button>
-                            </div>
-                            <div className="innerCol toRow">
-                                <label htmlFor="left">Left
-                                    <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='left' data-id='left' type="radio"
-                                               name='alignment' data-cy="footerTopLeft"/>
-                                        <span className="radio"></span>
-                                    </div>
-                                </label>
-                                <label htmlFor="center">Center
-                                    <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='center' data-id='center' type="radio"
-                                               name='alignment' data-cy="footerTopCenter"/>
-                                        <span className="radio"></span>
-                                    </div>
-                                </label>
-                                <label htmlFor="right">Right
-                                    <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='right' data-id='right' type="radio"
-                                               name='alignment' data-cy="footerTopRight"/>
-                                        <span className="radio"></span>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                        <div className="innerRow">
-                            <textarea onChange={this.textChanges} data-cy="footerText" onMouseUp={this.getText}
-                                      defaultValue={this.state.text}></textarea>
-                        </div>
-                    </div>
-                </div>
                 <div className="row">
                     <div className="logoLeft">
                         <span className="">Font size</span>
@@ -272,7 +186,8 @@ class FooterEditor extends Component {
                 </div>
             </div>
         )
+
     }
 }
 
-export default FooterEditor;
+export default GDPR;

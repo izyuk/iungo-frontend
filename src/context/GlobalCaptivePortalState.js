@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import CaptivePortalContext from './captive-portal-context';
+import CaptivePortalContext from './project-context';
 
 class GlobalCaptivePortalState extends Component {
 
@@ -69,6 +69,18 @@ class GlobalCaptivePortalState extends Component {
                     underline: false
                 },
                 alignment: 'center'
+            },
+            gdpr_settings: {
+                color: {
+                    rgba: {
+                        r: 85,
+                        g: 133,
+                        b: 237,
+                        a: 1,
+                    },
+                    hex: '#5585ed'
+                },
+                fontSize: 14,
             },
             success_message: {
                 color: {
@@ -190,6 +202,7 @@ class GlobalCaptivePortalState extends Component {
         acceptButtonText: 'Connect',
         dataToExclude: {
             successMessageStatus: false,
+            gdprSettingsStatus: false,
             loader: false,
             publishedType: '',
             failed: false,
@@ -351,6 +364,12 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState)
     };
 
+    setGDPRSettingsStatus = boolean => {
+        const currentState = this.state;
+        currentState.dataToExclude.gdprSettingsStatus = boolean;
+        this.setState(currentState)
+    };
+
     setNotification = (text, failed, status) => {
         const currentState = this.state;
         currentState.dataToExclude.publishedType = text;
@@ -363,6 +382,12 @@ class GlobalCaptivePortalState extends Component {
         const currentState = this.state;
         currentState.dataToExclude.token = token;
         this.setState(currentState);
+    };
+
+    setGDPRSettings = (styles) => {
+        const currentState = this.state;
+        currentState.style.gdpr_settings = styles;
+        this.setState(currentState)
     };
 
     resetGlobalState = async () => {
@@ -552,6 +577,7 @@ class GlobalCaptivePortalState extends Component {
             acceptButtonText: 'Connect',
             dataToExclude: {
                 successMessageStatus: false,
+                gdprSettingsStatus: false,
                 loader: false,
                 publishedType: '',
                 failed: false,
@@ -603,7 +629,8 @@ class GlobalCaptivePortalState extends Component {
                 accept_button_border,
                 accept_button_color,
                 accept_button_font,
-                accept_button_size
+                accept_button_size,
+                gdpr_settings
             }
         } = this.state;
     return `
@@ -652,6 +679,12 @@ class GlobalCaptivePortalState extends Component {
                 font-style: ${description && description.textActions.italic === true ? 'italic' : 'normal'};
                 text-decoration: ${description && description.textActions.underline ? 'underline' : 'none'};
                 text-align: ${description && description.alignment};
+            }
+            
+            .previewContainer .gdprLabel {
+                color: rgba(${gdpr_settings && gdpr_settings.color.rgba.r}, ${gdpr_settings && gdpr_settings.color.rgba.g}, ${gdpr_settings && gdpr_settings.color.rgba.b}, ${gdpr_settings && gdpr_settings.color.rgba.a});
+                font-size: ${gdpr_settings && gdpr_settings.fontSize}px;
+                text-indent 16px;
             }
             
             .previewContainer > div.section .text {
@@ -744,7 +777,9 @@ class GlobalCaptivePortalState extends Component {
             resetGlobalState: this.resetGlobalState,
             setToken: this.setToken,
             previewCssGenerator: this.previewCssGenerator,
-            removeLogo: this.removeLogo
+            removeLogo: this.removeLogo,
+            setGDPRSettings: this.setGDPRSettings,
+            setGDPRSettingsStatus: this.setGDPRSettingsStatus
         }}
         >{this.props.children}</CaptivePortalContext.Provider>
     }

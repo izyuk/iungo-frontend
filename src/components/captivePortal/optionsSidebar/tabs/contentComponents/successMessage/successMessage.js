@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
 import Tooltip from 'rc-tooltip';
 import Slider from 'rc-slider';
-import CaptivePortalContext from "../../../../../../context/captive-portal-context";
+import CaptivePortalContext from "../../../../../../context/project-context";
 
 const style = {
     marginRight: 16,
@@ -115,7 +115,7 @@ class SuccessActions extends Component {
         this.setState(currentState);
         const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = currentState;
         this.context.setSuccessMessageData(text, {color: color, ...rest});
-    }
+    };
 
     textChanges = (e) => {
         const currentState = this.state;

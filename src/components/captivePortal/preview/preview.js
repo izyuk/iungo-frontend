@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import Methods from './methods';
-import CaptivePortalContext from "../../../context/captive-portal-context";
+import CaptivePortalContext from "../../../context/project-context";
 
 
 class Preview extends Component {
@@ -38,7 +38,7 @@ class Preview extends Component {
         console.log(this.PreviewMain.current.classList);
 
 
-        const STYLE = document.getElementsByTagName('STYLE')[document.getElementsByTagName('STYLE').length-1];
+        const STYLE = document.getElementsByTagName('STYLE')[document.getElementsByTagName('STYLE').length - 1];
         if (!!STYLE) {
             STYLE.parentNode.removeChild(STYLE);
         }
@@ -57,7 +57,7 @@ class Preview extends Component {
         const {style} = this.context;
         console.log(this.PreviewMain.current.classList);
 
-        const STYLE = document.getElementsByTagName('STYLE')[document.getElementsByTagName('STYLE').length-1];
+        const STYLE = document.getElementsByTagName('STYLE')[document.getElementsByTagName('STYLE').length - 1];
         if (!!STYLE) {
             STYLE.parentNode.removeChild(STYLE);
         }
@@ -91,8 +91,13 @@ class Preview extends Component {
                         </div>
                         <div className="section"
                              ref={this.ContainerMain}>
-                            {!this.context.dataToExclude.successMessageStatus ?
+                            {this.context.dataToExclude.successMessageStatus ?
                                 <div className="contentPlace">
+                                    <p className="text">
+                                        {this.context.successMessage && this.context.successMessage}
+                                    </p>
+                                </div>
+                                : <div className="contentPlace">
                                     <div className="textPlace">
                                         <p className="head">
                                             {this.context.header && this.context.header}
@@ -102,13 +107,18 @@ class Preview extends Component {
                                             {this.context.description && this.context.description}
                                         </p>
                                     </div>
+                                    {this.context.dataToExclude.gdprSettingsStatus ?
+                                        <div className="contentPlace">
+                                            <p className={'gdprLabel'}>
+                                                <input type="checkbox"/>
+                                                Accept Terms and Conditions and Privacy Policy
+                                            </p>
+                                            <p className={'gdprLabel'}>
+                                                <input type="checkbox"/>
+                                                Agree to receive marketing emails and SMS
+                                            </p>
+                                        </div> : ''}
                                     <Methods/>
-                                </div>
-                                :
-                                <div className="contentPlace">
-                                    <p className="text">
-                                        {this.context.successMessage && this.context.successMessage}
-                                    </p>
                                 </div>
                             }
                         </div>

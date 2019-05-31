@@ -4,7 +4,7 @@ import {previewPortal} from "../../../api/API";
 import {PublishPortalMethodHandler} from './publishPortalMethodHandler';
 import {GetBuilderParams} from './getBuilderParams';
 import Notification from "../../additional/notification";
-import CaptivePortalContext from "../../../context/captive-portal-context";
+import CaptivePortalContext from "../../../context/project-context";
 
 class Publish extends Component {
 

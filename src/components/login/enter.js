@@ -7,7 +7,7 @@ import Login from './login';
 import Register from './register';
 
 import Loader from '../../loader';
-import CaptivePortalContext from "../../context/captive-portal-context";
+import CaptivePortalContext from "../../context/project-context";
 import Notification from "../additional/notification";
 
 class Enter extends Component {

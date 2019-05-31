@@ -67,6 +67,18 @@ export default React.createContext({
             },
             alignment: 'center'
         },
+        gdpr_settings: {
+            color: {
+                rgba: {
+                    r: 85,
+                    g: 133,
+                    b: 237,
+                    a: 1,
+                },
+                hex: '#5585ed'
+            },
+            fontSize: 18,
+        },
         success_message: {
             color: {
                 rgba: {
@@ -207,6 +219,7 @@ export default React.createContext({
     setExternalCssInfo: () => {},
     dataToExclude: {
         successMessageStatus: false,
+        gdprSettingsStatus: false,
         loader: false,
         publishedType: '',
         failed: false,
@@ -222,5 +235,7 @@ export default React.createContext({
     resetGlobalState: () => {},
     setToken: () => {},
     previewCssGenerator: () => {},
-    removeLogo: () => {}
+    removeLogo: () => {},
+    setGDPRSettings: () => {},
+    setGDPRSettingsStatus: () => {}
 });

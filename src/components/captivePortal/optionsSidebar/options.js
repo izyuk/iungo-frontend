@@ -4,7 +4,7 @@ import StyleTab from './tabs/styleTab';
 import ContentTab from './tabs/contentTab';
 
 import Publish from './publish';
-import CaptivePortalContext from '../../../context/captive-portal-context';
+import CaptivePortalContext from '../../../context/project-context';
 
 class Options extends Component {
 

@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {getAllPortals} from "../../api/API";
 import {dateISO} from '../../modules/dateISO';
 import Loader from "../../loader";
-import {Redirect, Link, Route} from "react-router-dom";
-import CaptivePortalContext from "../../context/captive-portal-context";
+import {Link, Redirect, Route} from "react-router-dom";
+import CaptivePortalContext from "../../context/project-context";
 
 class CaptivePortalList extends Component {
 

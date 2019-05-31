@@ -3,7 +3,7 @@ import ProfileForm from './profileForm';
 import Notification from '../additional/notification';
 import {getCompanyProfileInfo, setCompanyProfileInfo} from '../../api/API';
 import {connect} from "react-redux";
-import CaptivePortalContext from "../../context/captive-portal-context";
+import CaptivePortalContext from "../../context/project-context";
 
 class HotspotDetails extends Component {
 

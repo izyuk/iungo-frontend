@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
-import CaptivePortalContext from "../../../../../../context/captive-portal-context";
+import CaptivePortalContext from "../../../../../../context/project-context";
 
 class ContentBorder extends Component {
     static contextType = CaptivePortalContext;

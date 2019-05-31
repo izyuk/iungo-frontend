@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {restorePasswordSendConfirmedPassword, restorePasswordSendUsername} from "../../api/API";
 import Notification from "../additional/notification";
-import CaptivePortalContext from "../../context/captive-portal-context";
+import CaptivePortalContext from "../../context/project-context";
 
 
 class Restore extends Component {

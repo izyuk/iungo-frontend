@@ -4,7 +4,7 @@ import {getAllImages} from '../../../api/API';
 
 import Modal from '../../additional/modal';
 import axios from "axios";
-import CaptivePortalContext from "../../../context/captive-portal-context";
+import CaptivePortalContext from "../../../context/project-context";
 import Repeating from "./backgroundStylingComponents/repeating";
 import Position from "./backgroundStylingComponents/position";
 import Size from "./backgroundStylingComponents/size";

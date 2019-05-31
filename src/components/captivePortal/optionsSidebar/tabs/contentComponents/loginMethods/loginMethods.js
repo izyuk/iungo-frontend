@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import AgreementButton from './agreementButton';
-import CaptivePortalContext from "../../../../../../context/captive-portal-context";
+import CaptivePortalContext from "../../../../../../context/project-context";
 
 class LoginMethods extends Component {
 
