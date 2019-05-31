@@ -77,7 +77,7 @@ export default React.createContext({
                 },
                 hex: '#5585ed'
             },
-            fontSize: 18,
+            fontSize: 14,
         },
         success_message: {
             color: {

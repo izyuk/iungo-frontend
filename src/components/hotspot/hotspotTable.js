@@ -59,6 +59,7 @@ class HotspotTable extends Component {
                 <thead>
                 <tr>
                     <th>Name</th>
+                    <th>CP name</th>
                     <th>Address</th>
                     <th>Description</th>
                     <th>Virtual URL</th>
@@ -68,9 +69,11 @@ class HotspotTable extends Component {
                 <tbody>
                 {hotspotList && hotspotList.map((item, i) => {
                     const {id, name, address, description, virtualUrl, portal, updatedAt } = item;
+                    console.log(portal);
                     return (
                         <tr key={i} onClick={(e) => ::this.getDataToEdit(e, id, portal)}>
                             <td>{name}</td>
+                            <td>{portal ? portal.name : ''}</td>
                             <td>{address}</td>
                             <td>{description}</td>
                             <td className={"url"}>
