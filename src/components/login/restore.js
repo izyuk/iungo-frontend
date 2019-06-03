@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {restorePasswordSendConfirmedPassword, restorePasswordSendUsername} from "../../api/API";
 import Notification from "../additional/notification";
 import CaptivePortalContext from "../../context/project-context";
+import {Link} from 'react-router-dom';
 
 
 class Restore extends Component {
@@ -16,6 +17,7 @@ class Restore extends Component {
         notification: false,
         notificationText: '',
         failed: false,
+        emailSent: false
     };
 
     email = React.createRef();
@@ -30,6 +32,7 @@ class Restore extends Component {
         else if (this.state.notification !== nextState.notification) return true;
         else if (this.state.notificationText !== nextState.notificationText) return true;
         else if (this.state.failed !== nextState.failed) return true;
+        else if (this.state.emailSent !== nextState.emailSent) return true;
         else return false;
     }
 
@@ -71,7 +74,7 @@ class Restore extends Component {
                     let query = restorePasswordSendConfirmedPassword(token, password);
                     query.then(res => {
                         console.log(res.status);
-                        if( res.status === 404){
+                        if (res.status === 404) {
                             this.context.setNotification('Your token is probably expired. Please try again or contact system administrator', true, true);
                         } else {
                             this.context.setNotification('Your password was changed successfully', false, true);
@@ -95,17 +98,19 @@ class Restore extends Component {
                     this.context.setNotification('', false, false);
                 }, 2000)
             }
-
         } else {
             if (email !== '') {
                 const emailMask = /[\w_.-]+@[0-9a-z_-]+\.[a-z]{2,5}/i;
                 if (emailMask.test(email)) {
                     let query = restorePasswordSendUsername(email);
                     query.then(res => {
+                        const currentState = this.state;
+                        currentState.emailSent = true;
+                        this.setState(currentState);
+
                         this.context.setNotification('If this email address matched a registered account, a password restore email has been sent', false, true);
                         setTimeout(() => {
                             this.context.setNotification('', false, false);
-                            location.href = '/';
                         }, 3000)
                     }).catch(e => {
                         this.context.setNotification(e, true, true);
@@ -116,11 +121,8 @@ class Restore extends Component {
                         this.context.setNotification('', false, false);
                     }, 2000)
                 }
-
             }
         }
-
-
     };
 
     componentDidMount() {
@@ -136,36 +138,50 @@ class Restore extends Component {
     }
 
     render() {
-        const {toPasswordFields} = this.state;
+        const {toPasswordFields, emailSent} = this.state;
         return (
             <div className="formWrap">
-                {!toPasswordFields ?
-                    <div>
-                        <p>Enter your email address to reset your password</p>
-                        <p className={'smaller'}>We will email you a link to reset password</p>
-                    </div>
-                    :
-                    <p>Reset Password</p>
+
+                {
+                    !toPasswordFields ?
+                        (
+                            emailSent ?
+                                <div>
+                                    <p>An email is on its way to you. Follow the instructions to reset your
+                                        password.</p>
+                                </div> :
+                                <div>
+                                    <p>Enter your email address to reset your password</p>
+                                    <p className={'smaller'}>We will email you a link to reset password</p>
+                                </div>
+                        )
+                        :
+                        <p>Reset Password</p>
                 }
                 {
                     !toPasswordFields ?
-                        <div className="inputsWrap">
-                            <div className={this.state.failed ? 'email validationFail' : 'email'}>
-                                <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14">
-                                        <g fill="#8D98B0" fillRule="nonzero">
-                                            <path d="M15 0H1C.4 0 0 .4 0 1v1.4l8 4.5 8-4.4V1c0-.6-.4-1-1-1z"/>
-                                            <path
-                                                d="M7.5 8.9L0 4.7V13c0 .6.4 1 1 1h14c.6 0 1-.4 1-1V4.7L8.5 8.9c-.28.14-.72.14-1 0z"/>
-                                        </g>
-                                    </svg>
-                                </span>
-                                <input type="email"
-                                       ref={this.email}
-                                       onBlur={this.fieldsHandler}
-                                       placeholder="Your Email"/>
-                            </div>
-                        </div> :
+                        (
+                            emailSent ?
+                                '' :
+                                <div className="inputsWrap">
+                                    <div className={this.state.failed ? 'email validationFail' : 'email'}>
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14"
+                                             viewBox="0 0 16 14">
+                                            <g fill="#8D98B0" fillRule="nonzero">
+                                                <path d="M15 0H1C.4 0 0 .4 0 1v1.4l8 4.5 8-4.4V1c0-.6-.4-1-1-1z"/>
+                                                <path
+                                                    d="M7.5 8.9L0 4.7V13c0 .6.4 1 1 1h14c.6 0 1-.4 1-1V4.7L8.5 8.9c-.28.14-.72.14-1 0z"/>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                        <input type="email"
+                                               ref={this.email}
+                                               onBlur={this.fieldsHandler}
+                                               placeholder="Your Email"/>
+                                    </div>
+                                </div>
+                        ) :
                         <div className="inputsWrap">
                             <div className={this.state.failed ? 'password validationFail' : 'password'}>
                                 <span>
@@ -200,9 +216,19 @@ class Restore extends Component {
                             </div>
                         </div>
                 }
-                <span
-                    className={"login"}
-                    onClick={this.sendData}>Reset Password</span>
+                {
+                    emailSent ?
+                        <p className="question">
+                            <Link
+                                to={'/'}>Back to login
+                            </Link>
+                        </p>
+                        :
+                        <span
+                            className={"login"}
+                            onClick={this.sendData}>Reset Password</span>
+                }
+
                 {this.context.dataToExclude.notification && <Notification/>}
             </div>
         )
