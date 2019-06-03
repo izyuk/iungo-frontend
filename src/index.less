@@ -496,6 +496,11 @@ header {
   }
 }
 
+.mainContent {
+  display: flex;
+  height: calc(100vh - 65px);
+}
+
 .wrap {
   justify-content: space-between;
 }
@@ -614,7 +619,7 @@ header {
 }
 
 .wrapFix {
-  align-items: stretch;
+  align-items: flex-start;
 }
 
 .wrapFix2 {
@@ -626,6 +631,7 @@ header {
 .containerFix {
   margin: unset;
   padding: 24px 40px 40px 40px;
+  height: calc(100vh - 65px);
 }
 
 .info {
@@ -765,12 +771,23 @@ header {
   border-left: 1px solid @pale-grey-seven;
   box-shadow: -1px 0 2px 0 rgba(191, 197, 210, 0.15);
   position: relative;
+  height: 100%;
+  overflow-y: scroll;
 
   .wrap {
     width: 100%;
-    height: unset;
+    height: auto;
     display: flex;
     flex-direction: column;
+
+    &:not(:last-child){
+      border-bottom: 1px solid @pale-grey-seven;
+      .dropdown{
+        .head{
+
+        }
+      }
+    }
 
     .buttonsWrap {
       display: flex;
@@ -803,13 +820,16 @@ header {
       flex-direction: column;
       font-size: 14px;
       width: 100%;
+      height: 100%;
+      max-height: calc(100vh - 231px);
+      overflow-y: scroll;
 
       .head {
         width: 100%;
         background: #fff;
         cursor: pointer;
         padding: 16px 24px;
-        border-bottom: 1px solid @pale-grey-seven;
+        //border-bottom: 1px solid @pale-grey-seven;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -850,8 +870,8 @@ header {
         align-items: center;
         justify-content: center;
         padding: 24px;
-        border-bottom: 1px solid @pale-grey-seven;
         max-width: 100%;
+        height: auto;
 
         &.methodList {
           & > p {
@@ -1083,7 +1103,7 @@ header {
 
         &.active {
           display: flex;
-
+          border-top: 1px solid @pale-grey-seven;
           & > div {
             width: 100%;
           }
@@ -1624,11 +1644,13 @@ header {
 
     .buttonsRow {
       margin-top: auto;
-      margin-bottom: 10px;
       display: flex;
-      padding: 20px 0 0 0;
+      padding: 20px 0 9px;
       justify-content: space-around;
       width: 100%;
+      background: @w;
+      border-top: 1px solid @pale-grey-seven;
+      //padding-bottom: 10px;
 
       p {
         width: 128px;
@@ -1860,16 +1882,19 @@ header {
 
 .contentPlace {
   .gdprLabel {
-    &:first-child{
+    &:first-child {
       margin-top: 16px;
     }
+
     input {
       margin-right: 10px;
     }
-    &:not(:last-child){
+
+    &:not(:last-child) {
       margin-bottom: 10px;
     }
   }
+
   .textPlace {
     width: 100%;
 
@@ -2251,11 +2276,13 @@ header {
     padding: 10px;
     border: 1px solid @pale-grey-three;
     box-shadow: 0 1px 2px 0 rgba(191, 197, 210, 0.15);
-    .onTopFieldLabel{
+
+    .onTopFieldLabel {
       .font(@avenir-medium, 12);
       line-height: 2.67;
       color: @steel;
     }
+
     & > div {
       position: relative;
       display: flex;
@@ -2318,8 +2345,10 @@ header {
         }
       }
     }
+
     .profileDetails {
       height: auto;
+
       select {
         -webkit-appearance: none;
         -moz-appearance: none;

@@ -22,7 +22,7 @@ class Tool extends Component {
         return (
             <div>
                 <Header sidebarStatus={this.sidebarStatus}/>
-                <div style={{display: 'flex'}}>
+                <div className={'mainContent'}>
                     <Sidebar status={this.state.sidebar}/>
                     <MainSide/>
                 </div>
