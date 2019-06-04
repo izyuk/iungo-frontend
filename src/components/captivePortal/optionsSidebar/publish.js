@@ -94,6 +94,13 @@ class Publish extends Component {
         } = this.context;
         await this.props.collectData(rest);
 
+        let data = rest,
+            key;
+
+        for (key in data){
+
+        }
+
 
         this.context.loaderHandler(true);
         // const {dataToExclude, ...rest} = this.context;

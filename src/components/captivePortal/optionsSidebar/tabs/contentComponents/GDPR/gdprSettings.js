@@ -38,8 +38,11 @@ class GDPR extends Component {
         displayColorPicker: false,
         fontInputData: this.context.style.gdpr_settings.fontSize,
         color: {rgba: this.context.style.gdpr_settings.color.rgba, hex: this.context.style.gdpr_settings.color.hex},
-        fontSize: this.context.style.gdpr_settings.fontSize
+        fontSize: this.context.style.gdpr_settings.fontSize,
+        setting: this.context.style.gdpr_settings.setting
     };
+
+    setting = React.createRef();
 
     onSliderChange = (value) => {
         const currentState = this.state;
@@ -74,6 +77,25 @@ class GDPR extends Component {
         this.setState({displayColorPicker: false});
     };
 
+    settingHandler = (e) => {
+        if(e){
+            const currentState = this.state;
+            currentState.setting = e.currentTarget.options[e.currentTarget.selectedIndex].value;
+            this.setState(currentState);
+            const span = e.currentTarget.nextSibling.children[0];
+            span.innerText = e.currentTarget.options[e.currentTarget.selectedIndex].value;
+            const {displayColorPicker, fontInputData, ...rest} = currentState;
+            this.context.setGDPRSettings(rest);
+        } else {
+            const {style: {gdpr_settings: {setting}}} = this.context;
+            this.setting.current.value = setting;
+            let svg = this.setting.current.nextSibling.children[0];
+            let span = document.createElement('span');
+            span.innerText = this.setting.current.options[this.setting.current.selectedIndex].value;
+            this.setting.current.nextSibling.insertBefore(span, svg);
+        }
+    };
+
     handleChange = (color) => {
         const currentState = this.state;
         currentState.color.rgba = color.rgb;
@@ -84,6 +106,7 @@ class GDPR extends Component {
     };
 
     componentDidMount() {
+        this.settingHandler();
         this.context.setGDPRSettingsStatus(true);
     }
 
@@ -110,6 +133,34 @@ class GDPR extends Component {
         };
         return (
             <div className="container">
+                <div className="row">
+                    <div className="logoLeft">
+                    <span className="descr position">
+                        Settings
+                    </span>
+                    </div>
+                    <div className="right">
+                        <div className="innerRow">
+                            <div className="innerCol">
+                                <div className="innerRow">
+                                    <select ref={this.setting}
+                                            data-cy={'gdprSettings'}
+                                            onChange={this.settingHandler}>
+                                        <option value="list">List</option>
+                                        <option value="set-nothing">Set nothing</option>
+                                    </select>
+                                    <p className="select">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24">
+                                            <path fill="#BFC5D2" fillRule="nonzero"
+                                                  d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
+                                        </svg>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="logoLeft">
                         <span className="">Font size</span>
@@ -153,7 +204,7 @@ class GDPR extends Component {
                                        onBlur={(e) => this.onSliderChange(e.target.value)}
                                        defaultValue={this.state.fontSize}
                                        value={this.state.fontInputData}
-                                       data-cy="footerFontSize"/>
+                                       data-cy="gdprFontSize"/>
                                 <span>
                                     px
                                 </span>
@@ -171,7 +222,7 @@ class GDPR extends Component {
                                 <input type="text" value={this.state.color.hex} disabled/>
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${this.state.color.rgba.r}, ${this.state.color.rgba.g}, ${this.state.color.rgba.b}, ${this.state.color.rgba.a})`}}
-                                        onClick={this.handleClick} data-cy="footerTextColor"></button>
+                                        onClick={this.handleClick} data-cy="gdprTextColor"></button>
                                 {
                                     this.state.displayColorPicker ?
                                         <div style={popover}>

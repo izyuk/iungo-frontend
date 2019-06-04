@@ -44,7 +44,7 @@ export default class Position extends Component {
 
     backgroundPosition = (e) => {
         const currentState = this.state;
-        if (e.currentTarget.value === 'Custom position') {
+        if (e.currentTarget.value === 'custom-position') {
             this.custom.current.style.display = 'flex';
             const data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
             const span = e.currentTarget.nextSibling.children[0];
@@ -68,7 +68,7 @@ export default class Position extends Component {
         const {style: {background_and_logo: {background: {position}}}} = this.context;
         console.log(position.inPercentDimension);
         if (position.inPercentDimension) {
-            this.position.current.value = 'Custom position';
+            this.position.current.value = 'custom-position';
             console.log(this.position.current.value);
             this.custom.current.style.display = 'flex'
         } else {
@@ -109,7 +109,7 @@ export default class Position extends Component {
                                     <option value="center top">center top</option>
                                     <option value="center center">center center</option>
                                     <option value="center bottom">center bottom</option>
-                                    <option value="Custom position">Custom position</option>
+                                    <option value="custom-position">Custom position</option>
                                 </select>
                                 <p className="select">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">

@@ -59,15 +59,15 @@ class ContentTab extends Component {
                 </div>
                 <div className="wrap">
                     <div className="head"
-                         data-cy="dropDownGDPRSettings"
+                         data-cy="dropDownGDPR"
                          onClick={this.dropDownHandler}>
-                        <span>GDPR Settings</span>
+                        <span>GDPR</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <path fill="#BFC5D2" fillRule="nonzero"
                                   d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
                         </svg>
                     </div>
-                    {this.state.visible === 'GDPR Settings' ?
+                    {this.state.visible === 'GDPR' ?
                         <GDPR/> :
                         false}
                 </div>

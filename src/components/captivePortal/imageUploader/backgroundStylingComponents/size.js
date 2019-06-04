@@ -55,7 +55,7 @@ export default class Size extends Component {
 
     backgroundSize = (e) => {
         const currentState = this.state;
-        if (e.currentTarget.value === 'Custom size') {
+        if (e.currentTarget.value === 'custom-size') {
             this.custom.current.style.display = 'flex';
             const data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
             const span = e.currentTarget.nextSibling.children[0];
@@ -77,7 +77,7 @@ export default class Size extends Component {
     componentDidMount() {
         const {style: {background_and_logo: {background: {size}}}} = this.context;
         if (size.inPercentDimension) {
-            this.size.current.value = 'Custom size';
+            this.size.current.value = 'custom-size';
             this.custom.current.style.display = 'flex'
 
         } else {
@@ -112,7 +112,7 @@ export default class Size extends Component {
                                     <option value="auto">auto</option>
                                     <option value="cover">cover</option>
                                     <option value="contain">contain</option>
-                                    <option value="Custom size">Custom size</option>
+                                    <option value="custom-size">Custom size</option>
                                 </select>
                                 <p className="select">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">

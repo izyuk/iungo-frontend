@@ -74,8 +74,9 @@ function setSomeSize(selector, value) {
 const expectedStore = {
     background: null,
     name: "CP TEST NAME",
-    logoId: "190",
-    backgroundId: "268",
+    externalCss: "",
+    logoId: "330",
+    backgroundId: "331",
     header: "CP TEST HEADER TEXT",
     description: "CP TEST DESCRIPTION TEXT",
     footer: "TEST FOOTER TEXT",
@@ -103,10 +104,18 @@ const expectedStore = {
             }
         },
         footer: {
-            color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
+            color: {
+                rgba: {r: 237, g: 170, b: 85, a: 1},
+                hex: "#edaa55"
+            },
             fontSize: 18,
             textActions: {bold: false, italic: false, underline: false},
             alignment: "center"
+        },
+        gdpr_settings: {
+            setting: 'list',
+            color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
+            fontSize: 23
         },
         success_message: {
             color: {
@@ -119,9 +128,9 @@ const expectedStore = {
         },
         background_and_logo: {
             background: {
-                url: null,
-                color: {rgba: {r: 48, g: 51, b: 56, a: 1}, hex: "#303338"},
-                backgroundType: 'COLOR',
+                url: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/nasa-53884-unsplash.jpg",
+                color: {rgba: {r: 229, g: 233, b: 242, a: 1,}, hex: '#e5e9f2'},
+                backgroundType: 'IMAGE',
                 repeat: 'no-repeat',
                 position: {
                     inPercentDimension: false,
@@ -129,15 +138,16 @@ const expectedStore = {
                     posY: 0,
                     option: 'left top'
                 },
+                attachment: "scroll",
                 size: {
                     inPercentDimension: true,
                     width: 50,
                     height: 50,
-                    option: 'Your size'
+                    option: '50% 50%'
                 },
             },
             logo: {
-                url: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/IMG_1093.JPG",
+                url: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/google_logo.svg",
                 position: "center"
             }
         },
@@ -177,8 +187,7 @@ const expectedStore = {
     twitterLogin: false,
     acceptTermsLogin: true,
     successRedirectUrl: "",
-    acceptButtonText: "Connect FOR FREE",
-    externalCss: ""
+    acceptButtonText: "Connect FOR FREE"
 };
 
 
@@ -246,35 +255,33 @@ context('Style tab', function () {
         cy.viewport('macbook-11')
     });
     describe('Changing background', function () {
-        it('Setting background image', () => {
-            it('Choosing and applying image', () => {
-                cy.get('.upload')
-                    .click({force: true});
-                cy.get('[dataid=268]')
-                    .click({force: true});
-                cy.get('.close')
-                    .click({force: true});
-            });
-            it('Setting background repeating', () => {
-                cy.get('[data-cy="backgroundRepeating"]')
-                    .select('no-repeat');
-            });
-            it('Setting background position', () => {
-                cy.get('[data-cy="backgroundPosition"]')
-                    .select('left top');
-            });
-            it('Setting background size', () => {
-                cy.get('[data-cy="backgroundSize"]')
-                    .select('Your size');
-                cy.get('[data-cy="backgroundWidth"')
-                    .focus()
-                    .type('50')
-                    .blur({force: true});
-                cy.get('[data-cy="backgroundHeight"')
-                    .focus()
-                    .type('50')
-                    .blur({force: true});
-            });
+        it('Choosing and applying image', () => {
+            cy.get('.upload')
+                .click({force: true});
+            cy.get('[dataid=331]')
+                .dblclick({force: true});
+        });
+        it('Setting background repeating', () => {
+            cy.get('[data-cy="backgroundRepeating"]')
+                .select('no-repeat');
+        });
+        it('Setting background position', () => {
+            cy.get('[data-cy="backgroundPosition"]')
+                .select('left top');
+        });
+        it('Setting background size', () => {
+            cy.get('[data-cy="backgroundSize"]')
+                .select('custom-size');
+            cy.get('[data-cy="backgroundWidth"')
+                .focus()
+                .clear()
+                .type('50')
+                .blur({force: true});
+            cy.get('[data-cy="backgroundHeight"')
+                .focus()
+                .clear()
+                .type('50')
+                .blur({force: true});
         });
     });
 
@@ -288,10 +295,8 @@ context('Style tab', function () {
         it('Choosing and applying image', () => {
             cy.get('.upload')
                 .click({force: true});
-            cy.get('[dataid=190]')
-                .click({force: true});
-            cy.get('.close')
-                .click({force: true});
+            cy.get('[dataid=330]')
+                .dblclick({force: true});
         });
 
         it('Checking workability of all alignment options', () => {
@@ -396,6 +401,19 @@ context('Content tab', function () {
         // it('Set description text font size', () => {
         //     setSomeSize('[data-cy="headerDescriptionFontSize"]', 23);
         // })
+    });
+
+    describe('GDPR drop-down', () => {
+        it('Choosing needed setting', () => {
+            cy.get('[data-cy="dropDownGDPR"]')
+                .click({force: true});
+        });
+        it('Set GDPR text font size', () => {
+            setSomeSize('[data-cy="gdprFontSize"]', 23);
+        });
+        it('Set GDPR text color', () => {
+            fillColorHEX('[ data-cy="gdprTextColor"]', 'edaa55');
+        });
     });
 
     describe('Login methods drop-down', () => {

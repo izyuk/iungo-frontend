@@ -68,6 +68,7 @@ export default React.createContext({
             alignment: 'center'
         },
         gdpr_settings: {
+            setting: 'list',
             color: {
                 rgba: {
                     r: 85,
