@@ -88,18 +88,18 @@ class Publish extends Component {
             setNotification,
             resetGlobalState,
             setToken,
+            removeLogo,
+            setBackgroundAttachment,
+            setBackgroundPosition,
+            setBackgroundRepeating,
+            setGDPRSettingsStatus,
+            setGDPRSettings,
+            setBackgroundSize,
             previewCssGenerator,
             dataToExclude,
             ...rest
         } = this.context;
         await this.props.collectData(rest);
-
-        let data = rest,
-            key;
-
-        for (key in data){
-
-        }
 
 
         this.context.loaderHandler(true);

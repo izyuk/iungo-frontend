@@ -98,7 +98,7 @@ class CaptivePortal extends Component {
             this.context.resetGlobalState();
             this.context.loaderHandler(false);
         }
-        console.log(this.context);
+        // console.log(this.context);
     };
 
 
@@ -170,13 +170,13 @@ class CaptivePortal extends Component {
     };
 
     componentDidMount() {
-        console.log('CP ON MOUNT', this.context);
+        // console.log('CP ON MOUNT', this.context);
         this.context.setToken(localStorage.getItem('token'));
         this.findPortal(localStorage.getItem('token'));
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log('CP ON UPDATE', this.context);
+        // console.log('CP ON UPDATE', this.context);
     }
 
     render() {
