@@ -19,7 +19,7 @@ npm-build:
     paths:
       - build/*
 
-testing:
+cypress-testing:
   image: cypress/base:10
   script:
     - npm install --save-dev cypress
