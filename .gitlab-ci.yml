@@ -4,6 +4,7 @@ services:
 
 stages:
   - build
+  - testing
   - deploy
 
 npm-build:
@@ -17,6 +18,13 @@ npm-build:
   artifacts:
     paths:
       - build/*
+
+testing:
+  image: cypress/base:10
+  script:
+    - npm install --save-dev cypress
+    - $(npm bin)/cypress verify
+    - $(npm bin)/cypress run
 
 deploy-to-s3:
   only:
