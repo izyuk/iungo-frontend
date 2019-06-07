@@ -3,8 +3,8 @@ services:
   - docker:dind
 
 stages:
-  - build
   - testing
+  - build
   - deploy
 
 npm-build:
