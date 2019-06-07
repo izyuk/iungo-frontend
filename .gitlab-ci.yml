@@ -25,7 +25,6 @@ cypress-testing:
   script:
     - npm install --save-dev cypress
     - $(npm bin)/cypress verify
-    - $(npm bin)/cypress start
     - $(npm bin)/cypress run "cypress/integration/examples/cp_collect.spec.js"
 
 deploy-to-s3:
