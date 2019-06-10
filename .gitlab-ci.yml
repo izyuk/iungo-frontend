@@ -24,7 +24,7 @@ cypress-testing:
   stage: testing
   before_script:
     - npm i
-    - npm run start
+    - npm start
   script:
     - npm install --save-dev cypress
     - $(npm bin)/cypress verify
