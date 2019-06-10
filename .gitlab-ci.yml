@@ -22,10 +22,9 @@ npm-build:
 cypress-testing:
   image: cypress/base:10
   stage: testing
-  before_script:
+  script:
     - npm i
     - npm start
-  script:
     - npm install --save-dev cypress
     - $(npm bin)/cypress verify
     - $(npm bin)/cypress run "cypress/integration/examples/cp_collect.spec.js"
