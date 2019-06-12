@@ -238,5 +238,6 @@ export default React.createContext({
     previewCssGenerator: () => {},
     removeLogo: () => {},
     setGDPRSettings: () => {},
-    setGDPRSettingsStatus: () => {}
+    setGDPRSettingsStatus: () => {},
+    setGDPRContent: () => {}
 });

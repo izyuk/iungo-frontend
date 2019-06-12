@@ -109,14 +109,18 @@ class Preview extends Component {
                                     </div>
                                     {this.context.dataToExclude.gdprSettingsStatus ?
                                         <div className="contentPlace">
-                                            <p className={'gdprLabel'}>
-                                                <input type="checkbox"/>
-                                                Accept Terms and Conditions and Privacy Policy
-                                            </p>
-                                            <p className={'gdprLabel'}>
-                                                <input type="checkbox"/>
+                                            {this.context.style.gdpr_settings.setting !== 'set nothing' &&
+                                            <div>
+                                                <p className={'gdprLabel'}>
+                                                    <input type="checkbox"/>
+                                                    Accept Terms and Conditions and Privacy Policy
+                                                </p>
+                                                <p className={'gdprLabel'}>
+                                                    <input type="checkbox"/>
                                                 Agree to receive marketing emails and SMS
-                                            </p>
+                                                </p>
+                                            </div>
+                                            }
                                         </div> : ''}
                                     <Methods/>
                                 </div>

@@ -212,6 +212,7 @@ class GlobalCaptivePortalState extends Component {
             styledElements: '',
             stylesArray: '',
             token: '',
+            gdprContent: ''
         }
     };
 
@@ -729,6 +730,12 @@ class GlobalCaptivePortalState extends Component {
         const currentState = this.state;
         currentState.logoId = '';
         currentState.style.background_and_logo.logo.url = '';
+        this.setState(currentState);
+    };
+
+    setGDPRContent = (string) => {
+        const currentState = this.state;
+        currentState.dataToExclude.gdprContent = string;
         this.setState(currentState);
     };
 

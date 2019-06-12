@@ -39,7 +39,8 @@ class GDPR extends Component {
         fontInputData: this.context.style.gdpr_settings.fontSize,
         color: {rgba: this.context.style.gdpr_settings.color.rgba, hex: this.context.style.gdpr_settings.color.hex},
         fontSize: this.context.style.gdpr_settings.fontSize,
-        setting: this.context.style.gdpr_settings.setting
+        setting: this.context.style.gdpr_settings.setting,
+        settingsCollection: ''
     };
 
     setting = React.createRef();
@@ -57,7 +58,7 @@ class GDPR extends Component {
             fontSize: parseInt(value),
             fontInputData: parseInt(value)
         });
-        const {displayColorPicker, fontInputData, ...rest} = currentState;
+        const {displayColorPicker, fontInputData, settingsCollection, ...rest} = currentState;
         this.context.setGDPRSettings(rest);
     };
 
@@ -65,7 +66,7 @@ class GDPR extends Component {
         const currentState = this.state;
         currentState.fontInputData = parseInt(value);
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, ...rest} = currentState;
+        const {displayColorPicker, fontInputData, settingsCollection, ...rest} = currentState;
         this.context.setGDPRSettings(rest);
     };
 
@@ -84,7 +85,7 @@ class GDPR extends Component {
             this.setState(currentState);
             const span = e.currentTarget.nextSibling.children[0];
             span.innerText = e.currentTarget.options[e.currentTarget.selectedIndex].value;
-            const {displayColorPicker, fontInputData, ...rest} = currentState;
+            const {displayColorPicker, fontInputData, settingsCollection, ...rest} = currentState;
             this.context.setGDPRSettings(rest);
         } else {
             const {style: {gdpr_settings: {setting}}} = this.context;
@@ -101,11 +102,11 @@ class GDPR extends Component {
         currentState.color.rgba = color.rgb;
         currentState.color.hex = color.hex;
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, ...rest} = currentState;
+        const {displayColorPicker, fontInputData, settingsCollection, ...rest} = currentState;
         this.context.setGDPRSettings(rest);
     };
 
-    componentDidMount() {
+    async componentDidMount () {
         this.settingHandler();
         this.context.setGDPRSettingsStatus(true);
     }
@@ -147,7 +148,7 @@ class GDPR extends Component {
                                             data-cy={'gdprSettings'}
                                             onChange={this.settingHandler}>
                                         <option value="list">List</option>
-                                        <option value="set-nothing">Set nothing</option>
+                                        <option value="set nothing">Set nothing</option>
                                     </select>
                                     <p className="select">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

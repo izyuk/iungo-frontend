@@ -254,6 +254,8 @@ export const restorePasswordSendConfirmedPassword = (string, password) => {
         .catch(err => authChecker(err.response));
 };
 
+// User profile data controller
+
 export const setCompanyProfileInfo = (token, {name, companyCode, vatCode, country, region, city, address, zipCode, locale}) => {
     return axios({
         method: 'put',
@@ -288,6 +290,22 @@ export const getCompanyProfileInfo = (string) => {
             'Authorization': `${string}`
         },
         url: `${BACKEND_API}/profile`,
+        mode: 'no-cors'
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
+
+// Term and condition data controller
+
+export const getTermsAndConditionsParama = (string) => {
+    return axios({
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${BACKEND_API}/term_and_condition`,
         mode: 'no-cors'
     })
         .then(res => res)

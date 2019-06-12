@@ -97,6 +97,7 @@ class Publish extends Component {
             setBackgroundSize,
             previewCssGenerator,
             dataToExclude,
+            setGDPRContent,
             ...rest
         } = this.context;
         await this.props.collectData(rest);
