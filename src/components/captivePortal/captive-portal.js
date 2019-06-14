@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
-import {getPortal} from "../../api/API";
+import {getPortal, getTermsAndConditionsParama} from "../../api/API";
 import Loader from "../../loader";
 
 import {GetBuilderParams} from "./optionsSidebar/getBuilderParams";
@@ -169,13 +169,25 @@ class CaptivePortal extends Component {
         this.context.addPortalName(e.currentTarget.value);
     };
 
+    setGDPRToContext = async () => {
+        const query = getTermsAndConditionsParama(localStorage.getItem('token'));
+        await query.then(res => {
+            const {data} = res;
+            const settingsCollection = data.map(item => item);
+            console.log(settingsCollection);
+            console.log(this.context);
+            this.context.setGDPRCollection(settingsCollection);
+        });
+    };
+
     componentDidMount() {
-        // console.log('CP ON MOUNT', this.context);
         this.context.setToken(localStorage.getItem('token'));
         this.findPortal(localStorage.getItem('token'));
+        this.setGDPRToContext();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log(this.context);
         // console.log('CP ON UPDATE', this.context);
     }
 

@@ -68,7 +68,6 @@ export default React.createContext({
             alignment: 'center'
         },
         gdpr_settings: {
-            setting: 'list',
             color: {
                 rgba: {
                     r: 85,
@@ -196,12 +195,13 @@ export default React.createContext({
     twitterLogin: false,
     acceptTermsLogin: false,
     successRedirectUrl: '',
+    termAndConditionId: '',
     acceptButtonText: 'Connect',
     addPortalName: () => {},
     setBackground: () => {},
     setBackgroundRepeating: () => {},
     setBackgroundPosition: () => {},
-    setBackgroundAttachment: () => {},
+    // setBackgroundAttachment: () => {},
     setBackgroundSize: () => {},
     setLogo: () => {},
     setBorderStyle: () => {},
@@ -218,9 +218,16 @@ export default React.createContext({
     setButtonStyles: () => {},
     setSuccessMessageData: () => {},
     setExternalCssInfo: () => {},
+    setGDPRSettings: () => {},
+    setGDPRSettingsStatus: () => {},
+    setGDPRCollection: () => {},
     dataToExclude: {
         successMessageStatus: false,
         gdprSettingsStatus: false,
+        gdprSettingsSetting: 'set nothing',
+        gdprList: '',
+        agreeWithTermsAndConditionsLabel: '',
+        allowToUsePersonalInfoLabel: '',
         loader: false,
         publishedType: '',
         failed: false,
@@ -237,7 +244,4 @@ export default React.createContext({
     setToken: () => {},
     previewCssGenerator: () => {},
     removeLogo: () => {},
-    setGDPRSettings: () => {},
-    setGDPRSettingsStatus: () => {},
-    setGDPRContent: () => {}
 });

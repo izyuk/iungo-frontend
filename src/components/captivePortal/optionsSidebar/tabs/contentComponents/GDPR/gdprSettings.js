@@ -39,8 +39,11 @@ class GDPR extends Component {
         fontInputData: this.context.style.gdpr_settings.fontSize,
         color: {rgba: this.context.style.gdpr_settings.color.rgba, hex: this.context.style.gdpr_settings.color.hex},
         fontSize: this.context.style.gdpr_settings.fontSize,
-        setting: this.context.style.gdpr_settings.setting,
-        settingsCollection: ''
+        setting: this.context.dataToExclude.gdprSettingsSetting,
+        agreeWithTermsAndConditionsLabel: this.context.dataToExclude.agreeWithTermsAndConditionsLabel,
+        allowToUsePersonalInfoLabel: this.context.dataToExclude.allowToUsePersonalInfoLabel,
+        settingId: this.context.termAndConditionId,
+        settingsCollection: this.context.dataToExclude.gdprList
     };
 
     setting = React.createRef();
@@ -79,23 +82,43 @@ class GDPR extends Component {
     };
 
     settingHandler = (e) => {
-        if(e){
+        if (e) {
             const currentState = this.state;
             currentState.setting = e.currentTarget.options[e.currentTarget.selectedIndex].value;
+            console.log(e.currentTarget.options[e.currentTarget.selectedIndex].getAttribute('dataid'));
+            const dataid = e.currentTarget.options[e.currentTarget.selectedIndex].getAttribute('dataid');
+            const gdprContent = currentState.settingsCollection.reduce((obj, item) => {
+                if (item.id === parseInt(dataid)) {
+                    obj['agreeWithTermsAndConditionsLabel'] = item.agreeWithTermsAndConditionsLabel;
+                    obj['allowToUsePersonalInfoLabel'] = item.allowToUsePersonalInfoLabel;
+                    obj['settingId'] = item.id;
+                }
+                return obj;
+            }, {});
+            currentState.agreeWithTermsAndConditionsLabel = gdprContent.agreeWithTermsAndConditionsLabel;
+            currentState.allowToUsePersonalInfoLabel = gdprContent.allowToUsePersonalInfoLabel;
+            currentState.settingId = gdprContent.settingId;
             this.setState(currentState);
             const span = e.currentTarget.nextSibling.children[0];
             span.innerText = e.currentTarget.options[e.currentTarget.selectedIndex].value;
             const {displayColorPicker, fontInputData, settingsCollection, ...rest} = currentState;
             this.context.setGDPRSettings(rest);
         } else {
-            const {style: {gdpr_settings: {setting}}} = this.context;
-            this.setting.current.value = setting;
-            let svg = this.setting.current.nextSibling.children[0];
-            let span = document.createElement('span');
+            const currentState = this.state;
+            console.log(currentState.setting);
+            this.setting.current.value = currentState.setting;
+            const svg = this.setting.current.nextSibling.children[0];
+            const span = document.createElement('span');
             span.innerText = this.setting.current.options[this.setting.current.selectedIndex].value;
             this.setting.current.nextSibling.insertBefore(span, svg);
+            const {displayColorPicker, fontInputData, settingsCollection, ...rest} = currentState;
+            this.context.setGDPRSettings(rest);
         }
     };
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return (this.state.settingsCollection !== nextState.settingsCollection);
+    }
 
     handleChange = (color) => {
         const currentState = this.state;
@@ -106,16 +129,16 @@ class GDPR extends Component {
         this.context.setGDPRSettings(rest);
     };
 
-    async componentDidMount () {
+    async componentDidMount() {
         this.settingHandler();
         this.context.setGDPRSettingsStatus(true);
     }
 
     componentWillUnmount() {
+        const currentState = this.state;
+        const {displayColorPicker, fontInputData, settingsCollection, ...rest} = currentState;
+        this.context.setGDPRSettings(rest);
         this.context.setGDPRSettingsStatus(false);
-        // const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = this.state;
-        // this.context.setSuccessMessageData(text, {color: color, ...rest});
-        // this.context.redirectURLChanger(redirectURL);
     }
 
     render() {
@@ -132,6 +155,7 @@ class GDPR extends Component {
             bottom: '0px',
             left: '0px',
         };
+        const {settingsCollection} = this.state;
         return (
             <div className="container">
                 <div className="row">
@@ -147,8 +171,14 @@ class GDPR extends Component {
                                     <select ref={this.setting}
                                             data-cy={'gdprSettings'}
                                             onChange={this.settingHandler}>
-                                        <option value="list">List</option>
-                                        <option value="set nothing">Set nothing</option>
+                                        {
+                                            settingsCollection &&
+                                            settingsCollection.map((item, i) => {
+                                                return (<option key={i} dataid={item.id}
+                                                                value={item.name}>{item.name}</option>)
+                                            })
+                                        }
+                                        <option dataid="" value="set nothing">Set nothing</option>
                                     </select>
                                     <p className="select">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -223,7 +253,8 @@ class GDPR extends Component {
                                 <input type="text" value={this.state.color.hex} disabled/>
                                 <button ref={this.cpbButton}
                                         style={{backgroundColor: `rgba(${this.state.color.rgba.r}, ${this.state.color.rgba.g}, ${this.state.color.rgba.b}, ${this.state.color.rgba.a})`}}
-                                        onClick={this.handleClick} data-cy="gdprTextColor"></button>
+                                        onClick={this.handleClick} data-cy="gdprTextColor">
+                                </button>
                                 {
                                     this.state.displayColorPicker ?
                                         <div style={popover}>

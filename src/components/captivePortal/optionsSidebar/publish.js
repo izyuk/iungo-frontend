@@ -18,6 +18,7 @@ class Publish extends Component {
     };
 
     callPublishMethod = async () => {
+        console.log(this.context);
         if(this.context.name.length > 0){
             const {
                 addPortalName,
@@ -42,12 +43,20 @@ class Publish extends Component {
                 setNotification,
                 resetGlobalState,
                 setToken,
+                removeLogo,
+                setBackgroundAttachment,
+                setBackgroundPosition,
+                setBackgroundRepeating,
+                setGDPRSettingsStatus,
+                setGDPRSettings,
+                setBackgroundSize,
                 previewCssGenerator,
                 dataToExclude,
                 ...rest
             } = this.context;
             this.context.loaderHandler(true);
             const portalDataToSend = GetBuilderParams(rest);
+
             const data = await PublishPortalMethodHandler(portalDataToSend, this.state.id === null ? localStorage.getItem('cpID') : this.state.id);
             this.setState(data);
             if(data.id){
@@ -97,7 +106,6 @@ class Publish extends Component {
             setBackgroundSize,
             previewCssGenerator,
             dataToExclude,
-            setGDPRContent,
             ...rest
         } = this.context;
         await this.props.collectData(rest);

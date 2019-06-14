@@ -12,6 +12,8 @@ class Preview extends Component {
     PreviewMain = React.createRef();
     ContainerMain = React.createRef();
     FooterText = React.createRef();
+    agree = React.createRef();
+    allow = React.createRef();
 
     componentDidMount() {
         // console.log(this.context);
@@ -66,6 +68,7 @@ class Preview extends Component {
         styleTag.type = 'text/css';
         styleTag.innerHTML = this.context.previewCssGenerator();
         BODY.appendChild(styleTag);
+        console.log(this.context.termAndConditionId);
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -76,8 +79,18 @@ class Preview extends Component {
 
     render() {
         const {
-            style: {header: {top, description}, footer, container_background, container_border, container_size, background_and_logo: {background}, success_message}
+            style: {
+                header: {top, description},
+                footer,
+                container_background,
+                container_border,
+                container_size,
+                background_and_logo: {background},
+                success_message
+            },
+            dataToExclude: {gdprSettingsStatus, gdprSettingsSetting, agreeWithTermsAndConditionsLabel, allowToUsePersonalInfoLabel}
         } = this.context;
+
         return (
             <div className="previewWrap">
                 <div className={this.props.state.mobile ? "previewMain mobile" : "previewMain"}
@@ -107,18 +120,26 @@ class Preview extends Component {
                                             {this.context.description && this.context.description}
                                         </p>
                                     </div>
-                                    {this.context.dataToExclude.gdprSettingsStatus ?
+                                    {gdprSettingsStatus ?
                                         <div className="contentPlace">
-                                            {this.context.style.gdpr_settings.setting !== 'set nothing' &&
+                                            {gdprSettingsSetting !== 'set nothing' &&
                                             <div>
+                                                {agreeWithTermsAndConditionsLabel &&
                                                 <p className={'gdprLabel'}>
                                                     <input type="checkbox"/>
-                                                    Accept Terms and Conditions and Privacy Policy
+                                                    <span ref={this.agree}
+                                                          dangerouslySetInnerHTML={{__html: agreeWithTermsAndConditionsLabel}}>
+                                                    </span>
                                                 </p>
+                                                }
+                                                {allowToUsePersonalInfoLabel &&
                                                 <p className={'gdprLabel'}>
                                                     <input type="checkbox"/>
-                                                Agree to receive marketing emails and SMS
+                                                    <span ref={this.allow}
+                                                          dangerouslySetInnerHTML={{__html: allowToUsePersonalInfoLabel}}>
+                                                    </span>
                                                 </p>
+                                                }
                                             </div>
                                             }
                                         </div> : ''}

@@ -71,7 +71,6 @@ class GlobalCaptivePortalState extends Component {
                 alignment: 'center'
             },
             gdpr_settings: {
-                setting: 'list',
                 color: {
                     rgba: {
                         r: 85,
@@ -195,6 +194,7 @@ class GlobalCaptivePortalState extends Component {
                 thickness: 1
             }
         },
+        termAndConditionId: '',
         googleLogin: false,
         facebookLogin: false,
         twitterLogin: false,
@@ -204,6 +204,10 @@ class GlobalCaptivePortalState extends Component {
         dataToExclude: {
             successMessageStatus: false,
             gdprSettingsStatus: false,
+            gdprSettingsSetting: 'set nothing',
+            gdprList: '',
+            agreeWithTermsAndConditionsLabel: '',
+            allowToUsePersonalInfoLabel: '',
             loader: false,
             publishedType: '',
             failed: false,
@@ -211,8 +215,7 @@ class GlobalCaptivePortalState extends Component {
             stylesApplied: false,
             styledElements: '',
             stylesArray: '',
-            token: '',
-            gdprContent: ''
+            token: ''
         }
     };
 
@@ -237,7 +240,7 @@ class GlobalCaptivePortalState extends Component {
 
     setBackgroundPosition = (position, status) => {
         const merged = {...position, inPercentDimension: status};
-        console.log('context position: ',merged);
+        console.log('context position: ', merged);
         const currentState = this.state;
         currentState.style.background_and_logo.background.position = merged;
         this.setState(currentState);
@@ -251,7 +254,7 @@ class GlobalCaptivePortalState extends Component {
 
     setBackgroundSize = (size, status) => {
         const merged = {...size, inPercentDimension: status};
-        console.log('context size: ',merged);
+        console.log('context size: ', merged);
         const currentState = this.state;
         currentState.style.background_and_logo.background.size = merged;
         this.setState(currentState);
@@ -388,8 +391,23 @@ class GlobalCaptivePortalState extends Component {
 
     setGDPRSettings = (styles) => {
         const currentState = this.state;
-        currentState.style.gdpr_settings = styles;
-        this.setState(currentState)
+        const {setting, agreeWithTermsAndConditionsLabel, allowToUsePersonalInfoLabel, settingId, ...rest} = styles;
+        currentState.style.gdpr_settings = rest;
+        currentState.dataToExclude.gdprSettingsSetting = setting;
+        currentState.dataToExclude.agreeWithTermsAndConditionsLabel = agreeWithTermsAndConditionsLabel;
+        currentState.dataToExclude.allowToUsePersonalInfoLabel = allowToUsePersonalInfoLabel;
+        console.log(typeof settingId);
+        currentState.termAndConditionId = settingId;
+        console.log(settingId);
+        this.setState(currentState);
+        console.log(currentState);
+    };
+
+    setGDPRCollection = (array) => {
+        const currentState = this.state;
+        currentState.dataToExclude.gdprList = array;
+        console.log(array);
+        this.setState(currentState);
     };
 
     resetGlobalState = async () => {
@@ -460,6 +478,18 @@ class GlobalCaptivePortalState extends Component {
                     },
                     alignment: 'center'
                 },
+                gdpr_settings: {
+                    color: {
+                        rgba: {
+                            r: 85,
+                            g: 133,
+                            b: 237,
+                            a: 1,
+                        },
+                        hex: '#5585ed'
+                    },
+                    fontSize: 14,
+                },
                 success_message: {
                     color: {
                         rgba: {
@@ -498,6 +528,7 @@ class GlobalCaptivePortalState extends Component {
                             posY: 0,
                             option: ''
                         },
+                        attachment: 'scroll',
                         size: {
                             inPercentDimension: false,
                             width: 0,
@@ -571,6 +602,7 @@ class GlobalCaptivePortalState extends Component {
                     thickness: 1
                 }
             },
+            termAndConditionId: '',
             googleLogin: false,
             facebookLogin: false,
             twitterLogin: false,
@@ -580,10 +612,18 @@ class GlobalCaptivePortalState extends Component {
             dataToExclude: {
                 successMessageStatus: false,
                 gdprSettingsStatus: false,
+                gdprSettingsSetting: 'set nothing',
+                gdprList: '',
+                agreeWithTermsAndConditionsLabel: '',
+                allowToUsePersonalInfoLabel: '',
                 loader: false,
                 publishedType: '',
                 failed: false,
-                notification: false
+                notification: false,
+                stylesApplied: false,
+                styledElements: '',
+                stylesArray: '',
+                token: ''
             }
         };
         await this.loaderHandler(true);
@@ -635,20 +675,20 @@ class GlobalCaptivePortalState extends Component {
                 gdpr_settings
             }
         } = this.state;
-    return `
+        return `
     
             .previewMain { 
-                background:  ${ background.backgroundType === 'COLOR' ?
-                    `rgba(${background.color.rgba.r}, ${background.color.rgba.g}, ${background.color.rgba.b}, ${background.color.rgba.a})` :
-                    `url('${background.url}')`};
+                background:  ${background.backgroundType === 'COLOR' ?
+            `rgba(${background.color.rgba.r}, ${background.color.rgba.g}, ${background.color.rgba.b}, ${background.color.rgba.a})` :
+            `url('${background.url}')`};
                     background-repeat: ${background.repeat};
-                    background-position: ${background.position.inPercentDimension ? 
-                                            `${background.position.posX}% ${background.position.posY}%` :
-                                        background.position.option};
+                    background-position: ${background.position.inPercentDimension ?
+            `${background.position.posX}% ${background.position.posY}%` :
+            background.position.option};
                     background-attachment: ${background.attachment};
-                    background-size: ${background.size.inPercentDimension ? 
-                                        `${background.size.width}% ${background.size.height}%`:
-                                    background.size.option};
+                    background-size: ${background.size.inPercentDimension ?
+            `${background.size.width}% ${background.size.height}%` :
+            background.size.option};
             }
             
             .previewLogoPlace {
@@ -733,12 +773,6 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState);
     };
 
-    setGDPRContent = (string) => {
-        const currentState = this.state;
-        currentState.dataToExclude.gdprContent = string;
-        this.setState(currentState);
-    };
-
     render() {
         return <CaptivePortalContext.Provider value={{
             background: this.state.background,
@@ -757,6 +791,7 @@ class GlobalCaptivePortalState extends Component {
             successRedirectUrl: this.state.successRedirectUrl,
             acceptButtonText: this.state.acceptButtonText,
             externalCss: this.state.externalCss,
+            termAndConditionId: this.state.termAndConditionId,
             addPortalName: this.addPortalName,
             setBackground: this.setBackground,
             setBackgroundRepeating: this.setBackgroundRepeating,
@@ -787,7 +822,8 @@ class GlobalCaptivePortalState extends Component {
             previewCssGenerator: this.previewCssGenerator,
             removeLogo: this.removeLogo,
             setGDPRSettings: this.setGDPRSettings,
-            setGDPRSettingsStatus: this.setGDPRSettingsStatus
+            setGDPRSettingsStatus: this.setGDPRSettingsStatus,
+            setGDPRCollection: this.setGDPRCollection
         }}
         >{this.props.children}</CaptivePortalContext.Provider>
     }
