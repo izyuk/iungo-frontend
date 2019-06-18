@@ -117,7 +117,8 @@ class GDPR extends Component {
     };
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return (this.state.settingsCollection !== nextState.settingsCollection);
+        return (this.state.settingsCollection !== nextState.settingsCollection) ||
+            (this.state.displayColorPicker !== nextState.displayColorPicker);
     }
 
     handleChange = (color) => {

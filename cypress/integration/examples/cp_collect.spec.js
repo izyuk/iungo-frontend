@@ -113,7 +113,6 @@ const expectedStore = {
             alignment: "center"
         },
         gdpr_settings: {
-            setting: 'list',
             color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
             fontSize: 23
         },
@@ -187,6 +186,7 @@ const expectedStore = {
     twitterLogin: false,
     acceptTermsLogin: true,
     successRedirectUrl: "",
+    termAndConditionId: 2,
     acceptButtonText: "Connect FOR FREE"
 };
 
@@ -395,7 +395,7 @@ context('Content tab', function () {
         });
 
         it('Set description text color', () => {
-            fillColorHEX('[ data-cy="headerDescriptionColor"]', 'edaa55');
+            fillColorHEX('[data-cy="headerDescriptionColor"]', 'edaa55');
         });
         //
         // it('Set description text font size', () => {
@@ -408,11 +408,15 @@ context('Content tab', function () {
             cy.get('[data-cy="dropDownGDPR"]')
                 .click({force: true});
         });
+        it('Set option from GDPR list', () => {
+            cy.get('[data-cy="gdprSettings"]')
+                .select('GDPR default');
+        });
         it('Set GDPR text font size', () => {
             setSomeSize('[data-cy="gdprFontSize"]', 23);
         });
         it('Set GDPR text color', () => {
-            fillColorHEX('[ data-cy="gdprTextColor"]', 'edaa55');
+            fillColorHEX('[data-cy="gdprTextColor"]', 'edaa55');
         });
     });
 
