@@ -88,10 +88,11 @@ class Header extends Component {
                                     </svg>
                                 </a>
                                 <div className={this.state.popup ? "popup active" : 'popup'}>
-                                    <ul>
+                                    <ul className={'zi'}>
                                         <li><Link to={'/profile'}>Profile</Link></li>
                                         <li><button onClick={this.logOut} type="button">Log out</button></li>
                                     </ul>
+                                        <div onClick={this.popup} className={'backgroundCover'}></div>
                                 </div>
                             </div>
                         </div>
