@@ -162,7 +162,7 @@ class GDPR extends Component {
                 <div className="row">
                     <div className="logoLeft">
                     <span className="descr position">
-                        Settings
+                        Enable
                     </span>
                     </div>
                     <div className="right">
@@ -179,7 +179,7 @@ class GDPR extends Component {
                                                                 value={item.name}>{item.name}</option>)
                                             })
                                         }
-                                        <option dataid="" value="set nothing">Set nothing</option>
+                                        <option dataid="" value="No">No</option>
                                     </select>
                                     <p className="select">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

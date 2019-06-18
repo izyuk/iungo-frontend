@@ -204,7 +204,7 @@ class GlobalCaptivePortalState extends Component {
         dataToExclude: {
             successMessageStatus: false,
             gdprSettingsStatus: false,
-            gdprSettingsSetting: 'set nothing',
+            gdprSettingsSetting: 'No',
             gdprList: '',
             agreeWithTermsAndConditionsLabel: '',
             allowToUsePersonalInfoLabel: '',
@@ -612,7 +612,7 @@ class GlobalCaptivePortalState extends Component {
             dataToExclude: {
                 successMessageStatus: false,
                 gdprSettingsStatus: false,
-                gdprSettingsSetting: 'set nothing',
+                gdprSettingsSetting: 'No',
                 gdprList: '',
                 agreeWithTermsAndConditionsLabel: '',
                 allowToUsePersonalInfoLabel: '',

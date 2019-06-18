@@ -122,7 +122,7 @@ class Preview extends Component {
                                     </div>
                                     {gdprSettingsStatus ?
                                         <div className="contentPlace">
-                                            {gdprSettingsSetting !== 'set nothing' &&
+                                            {gdprSettingsSetting !== 'No' &&
                                             <div>
                                                 {agreeWithTermsAndConditionsLabel &&
                                                 <p className={'gdprLabel'}>

@@ -224,7 +224,7 @@ export default React.createContext({
     dataToExclude: {
         successMessageStatus: false,
         gdprSettingsStatus: false,
-        gdprSettingsSetting: 'set nothing',
+        gdprSettingsSetting: 'No',
         gdprList: '',
         agreeWithTermsAndConditionsLabel: '',
         allowToUsePersonalInfoLabel: '',
