@@ -139,7 +139,9 @@ class GDPR extends Component {
         const currentState = this.state;
         const {displayColorPicker, fontInputData, settingsCollection, ...rest} = currentState;
         this.context.setGDPRSettings(rest);
-        this.context.setGDPRSettingsStatus(false);
+        if(this.context.dataToExclude.gdprSettingsSetting === 'No'){
+            this.context.setGDPRSettingsStatus(false);
+        }
     }
 
     render() {

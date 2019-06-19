@@ -29,6 +29,7 @@ class CaptivePortal extends Component {
 
     portalName = React.createRef();
 
+
     findPortal = async (data) => {
         const id = localStorage.getItem('cpID');
         console.log(id);
