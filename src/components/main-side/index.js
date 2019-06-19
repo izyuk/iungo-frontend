@@ -7,9 +7,13 @@ import Reports from '../reports/reports';
 import CaptivePortal from "../captivePortal/captive-portal";
 import CaptivePortalList from "../captivePortal/captivePortalList";
 import Profile from '../profile/profile';
+import CaptivePortalContext from "../../context/project-context";
 
 
 class MainSide extends Component {
+
+    static contextType = CaptivePortalContext;
+
     state = {
         currentId: '',
         loader: false,
@@ -38,6 +42,9 @@ class MainSide extends Component {
     }
 
     render() {
+        if (this.context.dataToExclude.urlPath !== location.pathname) {
+            this.context.urlPathHandler(location.pathname);
+        }
         return (
             <div className="mainSide">
                 <Switch>

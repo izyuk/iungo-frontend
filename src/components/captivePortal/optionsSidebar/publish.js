@@ -53,6 +53,7 @@ class Publish extends Component {
                 setBackgroundSize,
                 previewCssGenerator,
                 dataToExclude,
+                urlPathHandler,
                 ...rest
             } = this.context;
             this.context.loaderHandler(true);
@@ -108,6 +109,7 @@ class Publish extends Component {
             setBackgroundSize,
             previewCssGenerator,
             dataToExclude,
+            urlPathHandler,
             ...rest
         } = this.context;
         await this.props.collectData(rest);

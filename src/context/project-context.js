@@ -235,7 +235,8 @@ export default React.createContext({
         stylesApplied: false,
         styledElements: '',
         stylesArray: '',
-        token: ''
+        token: '',
+        urlPath: ''
     },
     loaderHandler: () => {},
     setSuccessMessageStatus: () => {},
@@ -244,4 +245,5 @@ export default React.createContext({
     setToken: () => {},
     previewCssGenerator: () => {},
     removeLogo: () => {},
+    urlPathHandler: () => {},
 });

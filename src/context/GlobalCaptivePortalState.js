@@ -215,7 +215,8 @@ class GlobalCaptivePortalState extends Component {
             stylesApplied: false,
             styledElements: '',
             stylesArray: '',
-            token: ''
+            token: '',
+            urlPath: ''
         }
     };
 
@@ -623,7 +624,8 @@ class GlobalCaptivePortalState extends Component {
                 stylesApplied: false,
                 styledElements: '',
                 stylesArray: '',
-                token: ''
+                token: '',
+                urlPath: ''
             }
         };
         await this.loaderHandler(true);
@@ -773,6 +775,12 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState);
     };
 
+    urlPathHandler = url => {
+        const currentState = this.state;
+        currentState.dataToExclude.urlPath = url;
+        this.setState(currentState);
+    };
+
     render() {
         return <CaptivePortalContext.Provider value={{
             background: this.state.background,
@@ -823,7 +831,8 @@ class GlobalCaptivePortalState extends Component {
             removeLogo: this.removeLogo,
             setGDPRSettings: this.setGDPRSettings,
             setGDPRSettingsStatus: this.setGDPRSettingsStatus,
-            setGDPRCollection: this.setGDPRCollection
+            setGDPRCollection: this.setGDPRCollection,
+            urlPathHandler: this.urlPathHandler,
         }}
         >{this.props.children}</CaptivePortalContext.Provider>
     }
