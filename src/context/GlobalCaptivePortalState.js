@@ -611,7 +611,6 @@ class GlobalCaptivePortalState extends Component {
             successRedirectUrl: '',
             acceptButtonText: 'Connect',
             dataToExclude: {
-                profileInfo: '',
                 successMessageStatus: false,
                 gdprSettingsStatus: false,
                 gdprSettingsSetting: 'No',

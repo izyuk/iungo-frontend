@@ -12,7 +12,8 @@ class Header extends Component {
         super(props);
         this.state = {
             popup: false,
-            auth: true
+            auth: true,
+            // path: ''
         };
         this.openClose = this.openClose.bind(this);
         this.popup = this.popup.bind(this);
@@ -48,11 +49,6 @@ class Header extends Component {
     }
 
     render() {
-        if(this.context.dataToExclude.urlPath === '/profile'){
-            this.setState({
-                popup: false
-            })
-        }
         return (
             <header>
                 <div className="container">
@@ -106,7 +102,7 @@ class Header extends Component {
                                 </a>
                                 <div className={this.state.popup ? "popup active" : 'popup'}>
                                     <ul className={'zi'}>
-                                        <li><Link to={'/profile'}>Profile</Link></li>
+                                        <li onClick={() => {this.state.popup && this.setState({popup: false})}}><Link to={'/profile'}>Profile</Link></li>
                                         <li>
                                             <button onClick={this.logOut} type="button">Log out</button>
                                         </li>
