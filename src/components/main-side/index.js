@@ -39,6 +39,19 @@ class MainSide extends Component {
         this.setState({
             storageCleared: false
         });
+        if(location.pathname === '/profile') {
+            document.querySelector('.mainSide').style.overflowY = 'auto';
+        } else {
+            document.querySelector('.mainSide').removeAttribute('style');
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(location.pathname === '/profile') {
+            document.querySelector('.mainSide').style.overflowY = 'auto';
+        } else {
+            document.querySelector('.mainSide').removeAttribute('style');
+        }
     }
 
     render() {
