@@ -8,7 +8,7 @@ class Profile extends Component {
         return (
             <div className="container containerFix">
                 <div className="wrap wrapFix2">
-                    <div className="info">
+                    <div className="info profile">
                         <h3>Company profile</h3>
                     </div>
                     <ProfileDetails/>

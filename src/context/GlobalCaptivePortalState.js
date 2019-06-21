@@ -611,6 +611,7 @@ class GlobalCaptivePortalState extends Component {
             successRedirectUrl: '',
             acceptButtonText: 'Connect',
             dataToExclude: {
+                profileInfo: '',
                 successMessageStatus: false,
                 gdprSettingsStatus: false,
                 gdprSettingsSetting: 'No',
@@ -781,6 +782,12 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState);
     };
 
+    profileHandler = data => {
+        const currentState = this.state;
+        currentState.dataToExclude.profileInfo = data;
+        this.setState(currentState);
+    };
+
     render() {
         return <CaptivePortalContext.Provider value={{
             background: this.state.background,
@@ -833,6 +840,7 @@ class GlobalCaptivePortalState extends Component {
             setGDPRSettingsStatus: this.setGDPRSettingsStatus,
             setGDPRCollection: this.setGDPRCollection,
             urlPathHandler: this.urlPathHandler,
+            profileHandler: this.profileHandler,
         }}
         >{this.props.children}</CaptivePortalContext.Provider>
     }

@@ -246,4 +246,5 @@ export default React.createContext({
     previewCssGenerator: () => {},
     removeLogo: () => {},
     urlPathHandler: () => {},
+    profileHandler: () => {},
 });

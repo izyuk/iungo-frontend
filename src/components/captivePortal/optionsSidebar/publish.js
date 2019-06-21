@@ -54,6 +54,7 @@ class Publish extends Component {
                 previewCssGenerator,
                 dataToExclude,
                 urlPathHandler,
+                profileHandler,
                 ...rest
             } = this.context;
             this.context.loaderHandler(true);
@@ -110,6 +111,7 @@ class Publish extends Component {
             previewCssGenerator,
             dataToExclude,
             urlPathHandler,
+            profileHandler,
             ...rest
         } = this.context;
         await this.props.collectData(rest);
