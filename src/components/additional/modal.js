@@ -61,11 +61,18 @@ class Modal extends Component {
                         }
 
                         {
-                            this.props.progress === 100 &&
+                            (this.props.progress === 100 || this.props.imageEventType === 'click') &&
                             <div className="upload apply" onClick={this.props.applyOnUpload}>
                                 <span>Apply and Close</span>
                             </div>
                         }
+
+                        {/*{*/}
+                        {/*    this.props.imageEventType === 'click' &&*/}
+                        {/*    <div className="upload apply" onClick={this.props.applyOnUpload}>*/}
+                        {/*        <span>Apply and Close</span>*/}
+                        {/*    </div>*/}
+                        {/*}*/}
 
                     </div>
                 </div>

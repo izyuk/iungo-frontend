@@ -39,7 +39,8 @@ class BackgroundAndLogo extends Component {
         },
         isModalOpen: false,
         imagesList: '',
-        progress: ''
+        progress: '',
+        inModalImageEventType: ''
     };
 
 
@@ -92,11 +93,11 @@ class BackgroundAndLogo extends Component {
         this.state.backgroundColor = false;
         this.state.alignment = true;
         console.log(files);
-        if((files.type === "image/jpeg") ||
+        if ((files.type === "image/jpeg") ||
             (files.type === "image/png") ||
             (files.type === "image/gif") ||
-            (files.type === "image/svg+xml")){
-            if(files.file.size < 5120000 ){
+            (files.type === "image/svg+xml")) {
+            if (files.file.size < 5120000) {
                 this.setState({
                     fileInfo: files
                 });
@@ -153,8 +154,12 @@ class BackgroundAndLogo extends Component {
                 this.context.setBackgroundID(e.currentTarget.getAttribute('dataid'));
                 break;
         }
-
-        this.toggleModal();
+        this.setState({
+            inModalImageEventType: e.type
+        });
+        if (e.type === 'dblclick') {
+            this.toggleModal();
+        }
     };
 
     applyOnUpload = () => {
@@ -189,7 +194,7 @@ class BackgroundAndLogo extends Component {
                 res.data.map((item, i) => {
                     array.push(
                         <div key={i} dataid={item.id} dataurl={item.externalUrl}
-                             onDoubleClick={this.chooseImage}>
+                             onDoubleClick={this.chooseImage} onClick={this.chooseImage}>
                             <img src={item.externalUrl} alt=""/>
                             <span>{item.name}</span>
                             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Capa_1" x="0px" y="0px" width="512px"
@@ -419,7 +424,8 @@ class BackgroundAndLogo extends Component {
                            uploadHandler={this.fileSelectedHandler}
                            progress={this.state.progress}
                            fileInfo={this.state.fileInfo.file}
-                           applyOnUpload={this.applyOnUpload}>
+                           applyOnUpload={this.applyOnUpload}
+                           imageEventType={this.state.inModalImageEventType}>
                         <div className="imagesList">
                             {this.state.imagesList !== '' && this.state.imagesList}
                         </div>

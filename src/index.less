@@ -2665,9 +2665,9 @@ table {
         width: 100%;
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(100px, 350px));
-        grid-template-rows: repeat(auto-fill, auto);
-        grid-gap: 20px;
-        //column-gap: 20px;
+        grid-template-rows: repeat(auto-fill, 235px);
+        row-gap: 30px;
+        column-gap: 20px;
         justify-content: center;
 
         div {
@@ -2709,12 +2709,13 @@ table {
 
           img {
             width: 100%;
-            //height: 100%;
-            objectt: contain;
+            max-height: 227px;
+            object-fit: contain;
           }
 
           span {
-            margin-top: 10px;
+            position: absolute;
+            bottom: -30px;
             word-break: break-word;
           }
         }
