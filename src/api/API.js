@@ -73,6 +73,20 @@ export const getPortal = (string, id) => {
         .catch(err => authChecker(err.response));
 };
 
+export const getPortalByUUID = (string, uuid) => {
+    return axios({
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${BACKEND_API}/portal/uuid/${uuid}`,
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
+
 export const getAllImages = (string) => {
     return axios({
         method: 'get',

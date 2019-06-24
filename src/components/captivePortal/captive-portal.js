@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
-import {getPortal, getTermsAndConditionsParama} from "../../api/API";
+import {getPortal, getPortalByUUID, getTermsAndConditionsParama} from "../../api/API";
 import Loader from "../../loader";
 
 import {GetBuilderParams} from "./optionsSidebar/getBuilderParams";
@@ -32,10 +32,12 @@ class CaptivePortal extends Component {
 
     findPortal = async (data) => {
         const id = localStorage.getItem('cpID');
+        const uuid = this.props.match.params.uuid;
         console.log(id);
-        console.log('TOKEN findPortal on CP DID MOUNT: ',data);
-        if (id !== null) {
-            let query = getPortal(data, id);
+        console.log(uuid);
+        console.log('TOKEN findPortal on CP DID MOUNT: ', data);
+        let query = id !== null ? getPortal(data, id) : getPortalByUUID(data, uuid);
+        if (query) {
             this.context.loaderHandler(true);
             await query.then(res => {
                 const {data} = res;
@@ -69,9 +71,17 @@ class CaptivePortal extends Component {
                 this.context.addPortalName(data.name);
                 this.context.setBackgroundRepeating(data.style.background_and_logo.background.repeat);
                 const position = data.style.background_and_logo.background.position;
-                this.context.setBackgroundPosition({option: position.option, posX: position.posX, posY: position.posY}, position.inPercentDimension);
+                this.context.setBackgroundPosition({
+                    option: position.option,
+                    posX: position.posX,
+                    posY: position.posY
+                }, position.inPercentDimension);
                 const size = data.style.background_and_logo.background.size;
-                this.context.setBackgroundSize({option: size.option, width: size.width, height: size.height}, size.inPercentDimension);
+                this.context.setBackgroundSize({
+                    option: size.option,
+                    width: size.width,
+                    height: size.height
+                }, size.inPercentDimension);
                 if (data.externalCss.length > 0) {
                     const styledElements = document.querySelectorAll('.previewWrap [style]');
                     let stylesArray = [];

@@ -65,8 +65,8 @@ class MainSide extends Component {
                     <Route exact path='/captive-portals' render={() => (
                         <CaptivePortalList setId={this.idHandler} clearing={this.storageCleaningHandler}/>
                     )}/>
-                    <Route path='/captive-portals/:uuid' render={() => (
-                        <CaptivePortal settedId={this.state.currentId}/>
+                    <Route path='/captive-portals/:uuid' render={(props) => (
+                        <CaptivePortal settedId={this.state.currentId} {...props}/>
                     )}/>
                     <Route exact path="/hotspot" component={Hotspot}/>
                     <Route exact path="/reports/people" component={Reports}/>
