@@ -38,15 +38,15 @@ class ProfileDetails extends Component {
             || (this.state.submittedType !== nextState.submittedType);
     }
 
-    selectOnMountHandler = (collection) => {
-        collection.map((item) => {
-            let svg = item[0].current.nextSibling.children[0];
-            let span = document.createElement('span');
-            item[0].current.value = item[1] ? item[1] : 'Language';
-            span.innerText = item[0].current.options[item[0].current.selectedIndex].value;
-            item[0].current.nextSibling.insertBefore(span, svg);
-            this.context.profileHandler(this.state);
-        });
+    selectOnMountHandler = (element, value) => {
+        // collection.map((item) => {
+        let svg = element.current.nextSibling.children[0];
+        let span = document.createElement('span');
+        element.current.value = value ? value : 'Language';
+        span.innerText = element.current.options[element.current.selectedIndex].value;
+        element.current.nextSibling.insertBefore(span, svg);
+        this.context.profileHandler(this.state);
+        // });
     };
 
     selectHandler = (e) => {
@@ -88,7 +88,7 @@ class ProfileDetails extends Component {
         await query.then(res => {
             console.log(res);
             const {data: {id, createdAt, updatedAt, uuid, ...rest}} = res;
-            this.selectOnMountHandler([[this.country, rest.country], [this.language, rest.locale]]);
+            this.selectOnMountHandler(this.language, rest.locale);
             this.setState(rest);
         });
         this.context.profileHandler(this.state);
@@ -100,6 +100,8 @@ class ProfileDetails extends Component {
             companyCode,
             address,
             zipCode,
+            country,
+            city
         } = this.state;
         return (
             <div className={'profileDetailsWrapContainer'}>
@@ -150,18 +152,26 @@ class ProfileDetails extends Component {
                             />
                         </div>
                         <label htmlFor={'country'}>Country</label>
-                        <div className={'profileDetails'}>
-                            <select name="country" ref={this.country} id={'country'} onChange={this.selectHandler}>
-                                <option value="Lithuania">Lithuania</option>
-                                <option value="England">England</option>
-                                <option value="USA">USA</option>
-                            </select>
-                            <p className="select">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
-                                    <path fill="#ffffff" fillRule="nonzero"
-                                          d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                                </svg>
-                            </p>
+                        <div>
+                            <input
+                                type="text"
+                                datatype="country"
+                                id={'country'}
+                                placeholder={"Country"}
+                                defaultValue={country}
+                                onChange={this.fieldsHandler}
+                            />
+                        </div>
+                        <label htmlFor={'city'}>City</label>
+                        <div>
+                            <input
+                                type="text"
+                                datatype="city"
+                                id={'city'}
+                                placeholder={"City"}
+                                defaultValue={city}
+                                onChange={this.fieldsHandler}
+                            />
                         </div>
                     </ProfileForm>
                     {this.state.submitted &&
