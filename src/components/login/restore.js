@@ -77,7 +77,7 @@ class Restore extends Component {
                         if (res.status === 404) {
                             this.context.setNotification('Your token is probably expired. Please try again or contact system administrator', true, true);
                         } else {
-                            this.context.setNotification('Your password was changed successfully', false, true);
+                            // this.context.setNotification('Your password was changed successfully', false, true);
                             setTimeout(() => {
                                 this.context.setNotification('', false, false);
                                 location.href = '/';
@@ -108,7 +108,7 @@ class Restore extends Component {
                         currentState.emailSent = true;
                         this.setState(currentState);
 
-                        this.context.setNotification('If this email address matched a registered account, a password restore email has been sent', false, true);
+                        // this.context.setNotification('If this email address matched a registered account, a password restore email has been sent', false, true);
                         setTimeout(() => {
                             this.context.setNotification('', false, false);
                         }, 3000)
