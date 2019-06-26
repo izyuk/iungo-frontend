@@ -178,7 +178,7 @@ class GDPR extends Component {
                                             settingsCollection &&
                                             settingsCollection.map((item, i) => {
                                                 return (<option key={i} dataid={item.id}
-                                                                value={item.name}>{item.name}</option>)
+                                                                value='Yes'>{/*{item.name}*/} Yes</option>)
                                             })
                                         }
                                         <option dataid="" value="No">No</option>

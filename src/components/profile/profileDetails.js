@@ -187,7 +187,6 @@ class ProfileDetails extends Component {
                         <label htmlFor={'country'}>Language</label>
                         <div className={'profileDetails'}>
                             <select name="locale" ref={this.language} onChange={this.selectHandler}>
-                                <option value="Language" defaultValue>Language</option>
                                 <option value="LT">Lithuanian</option>
                                 <option value="EN">English</option>
                             </select>
