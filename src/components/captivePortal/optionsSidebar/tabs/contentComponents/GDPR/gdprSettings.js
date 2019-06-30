@@ -3,6 +3,7 @@ import CaptivePortalContext from "../../../../../../context/project-context";
 import Slider from "rc-slider";
 import {SketchPicker} from "react-color";
 import Tooltip from 'rc-tooltip';
+import {getTermsAndConditionsParams} from "../../../../../../api/API";
 
 const style = {
     marginRight: 16,
@@ -43,7 +44,7 @@ class GDPR extends Component {
         agreeWithTermsAndConditionsLabel: this.context.dataToExclude.agreeWithTermsAndConditionsLabel,
         allowToUsePersonalInfoLabel: this.context.dataToExclude.allowToUsePersonalInfoLabel,
         settingId: this.context.termAndConditionId,
-        settingsCollection: this.context.dataToExclude.gdprList
+        settingsCollection: ''
     };
 
     setting = React.createRef();
@@ -82,10 +83,9 @@ class GDPR extends Component {
     };
 
     settingHandler = (e) => {
+        const currentState = this.state;
         if (e) {
-            const currentState = this.state;
             currentState.setting = e.currentTarget.options[e.currentTarget.selectedIndex].value;
-            console.log(e.currentTarget.options[e.currentTarget.selectedIndex].getAttribute('dataid'));
             const dataid = e.currentTarget.options[e.currentTarget.selectedIndex].getAttribute('dataid');
             const gdprContent = currentState.settingsCollection.reduce((obj, item) => {
                 if (item.id === parseInt(dataid)) {
@@ -104,21 +104,24 @@ class GDPR extends Component {
             const {displayColorPicker, fontInputData, settingsCollection, ...rest} = currentState;
             this.context.setGDPRSettings(rest);
         } else {
-            const currentState = this.state;
-            console.log(currentState.setting);
-            this.setting.current.value = currentState.setting;
+            // if (this.state.settingsCollection) {
+            this.setting.current.value = this.context.dataToExclude.savedGdprSetting.name === "GDPR default" ? 'Yes' : 'No';
             const svg = this.setting.current.nextSibling.children[0];
             const span = document.createElement('span');
-            span.innerText = this.setting.current.options[this.setting.current.selectedIndex].value;
+            if (this.setting.current.selectedIndex) {
+                span.innerText = this.setting.current.options[this.setting.current.selectedIndex].value;
+            }
             this.setting.current.nextSibling.insertBefore(span, svg);
             const {displayColorPicker, fontInputData, settingsCollection, ...rest} = currentState;
             this.context.setGDPRSettings(rest);
+            // }
         }
     };
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         return (this.state.settingsCollection !== nextState.settingsCollection) ||
-            (this.state.displayColorPicker !== nextState.displayColorPicker);
+            (this.state.displayColorPicker !== nextState.displayColorPicker) ||
+            (this.state.settingsCollection !== nextState.settingsCollection);
     }
 
     handleChange = (color) => {
@@ -130,16 +133,30 @@ class GDPR extends Component {
         this.context.setGDPRSettings(rest);
     };
 
+    setGDPRToContext = async () => {
+        const query = getTermsAndConditionsParams(localStorage.getItem('token'));
+        const currentState = this.state;
+        await query.then(res => {
+            console.log('res: ', res);
+            const {data} = res;
+            const collectionData = data.map(item => item);
+            console.log('collectionData: ', collectionData);
+            currentState.settingsCollection = collectionData;
+        });
+        this.setState(currentState);
+    };
+
     async componentDidMount() {
-        this.settingHandler();
-        this.context.setGDPRSettingsStatus(true);
+        await this.setGDPRToContext();
+        // setTimeout(this.settingHandler());
+        await this.context.setGDPRSettingsStatus(true);
     }
 
     componentWillUnmount() {
         const currentState = this.state;
         const {displayColorPicker, fontInputData, settingsCollection, ...rest} = currentState;
         this.context.setGDPRSettings(rest);
-        if(this.context.dataToExclude.gdprSettingsSetting === 'No'){
+        if (this.context.dataToExclude.gdprSettingsSetting === 'No') {
             this.context.setGDPRSettingsStatus(false);
         }
     }

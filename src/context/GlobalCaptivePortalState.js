@@ -205,7 +205,7 @@ class GlobalCaptivePortalState extends Component {
             successMessageStatus: false,
             gdprSettingsStatus: false,
             gdprSettingsSetting: 'No',
-            gdprList: '',
+            savedGdprSetting: '',
             agreeWithTermsAndConditionsLabel: '',
             allowToUsePersonalInfoLabel: '',
             loader: false,
@@ -370,11 +370,6 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState)
     };
 
-    setGDPRSettingsStatus = boolean => {
-        const currentState = this.state;
-        currentState.dataToExclude.gdprSettingsStatus = boolean;
-        this.setState(currentState)
-    };
 
     setNotification = (text, failed, status) => {
         const currentState = this.state;
@@ -390,10 +385,18 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState);
     };
 
+    setGDPRSettingsStatus = boolean => {
+        const currentState = this.state;
+        currentState.dataToExclude.gdprSettingsStatus = boolean;
+        this.setState(currentState)
+    };
+
     setGDPRSettings = (styles) => {
         const currentState = this.state;
         const {setting, agreeWithTermsAndConditionsLabel, allowToUsePersonalInfoLabel, settingId, ...rest} = styles;
-        currentState.style.gdpr_settings = rest;
+        // if (!!rest) {
+        //     currentState.style.gdpr_settings = rest;
+        // }
         currentState.dataToExclude.gdprSettingsSetting = setting;
         currentState.dataToExclude.agreeWithTermsAndConditionsLabel = agreeWithTermsAndConditionsLabel;
         currentState.dataToExclude.allowToUsePersonalInfoLabel = allowToUsePersonalInfoLabel;
@@ -406,7 +409,7 @@ class GlobalCaptivePortalState extends Component {
 
     setGDPRCollection = (array) => {
         const currentState = this.state;
-        currentState.dataToExclude.gdprList = array;
+        currentState.dataToExclude.savedGdprSetting = array;
         console.log(array);
         this.setState(currentState);
     };
