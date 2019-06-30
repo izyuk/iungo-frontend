@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
-import {getPortal, getPortalByUUID} from "../../api/API";
+import {getPortal, getPortalByUUID, getTermsAndConditionsParama} from "../../api/API";
 import Loader from "../../loader";
 
 import {GetBuilderParams} from "./optionsSidebar/getBuilderParams";
@@ -68,19 +68,6 @@ class CaptivePortal extends Component {
                     acceptButtonFont: data.style.accept_button_font,
                     acceptButtonBorder: data.style.accept_button_border
                 });
-                this.context.setGDPRCollection(data.termAndCondition);
-                console.log('terms exist or not', data.termAndCondition);
-                if(!!data.termAndCondition){
-                    this.context.setGDPRSettings({
-                        setting: data.termAndCondition.name,
-                        agreeWithTermsAndConditionsLabel: data.termAndCondition.agreeWithTermsAndConditionsLabel,
-                        allowToUsePersonalInfoLabel: data.termAndCondition.allowToUsePersonalInfoLabel,
-                        settingId: data.termAndCondition.id
-                    });
-                    if (data.termAndCondition.name !== 'No') {
-                        this.context.setGDPRSettingsStatus(true);
-                    }
-                }
                 this.context.addPortalName(data.name);
                 this.context.setBackgroundRepeating(data.style.background_and_logo.background.repeat);
                 const position = data.style.background_and_logo.background.position;
@@ -193,9 +180,21 @@ class CaptivePortal extends Component {
         this.context.addPortalName(e.currentTarget.value);
     };
 
+    setGDPRToContext = async () => {
+        const query = getTermsAndConditionsParama(localStorage.getItem('token'));
+        await query.then(res => {
+            const {data} = res;
+            const settingsCollection = data.map(item => item);
+            console.log(settingsCollection);
+            console.log(this.context);
+            this.context.setGDPRCollection(settingsCollection);
+        });
+    };
+
     componentDidMount() {
         this.context.setToken(localStorage.getItem('token'));
         this.findPortal(localStorage.getItem('token'));
+        this.setGDPRToContext();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

@@ -312,7 +312,7 @@ export const getCompanyProfileInfo = (string) => {
 
 // Term and condition data controller
 
-export const getTermsAndConditionsParams = (string) => {
+export const getTermsAndConditionsParama = (string) => {
     return axios({
         method: 'get',
         headers: {
