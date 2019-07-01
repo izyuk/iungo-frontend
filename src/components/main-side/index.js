@@ -8,6 +8,7 @@ import CaptivePortal from "../captivePortal/captive-portal";
 import CaptivePortalList from "../captivePortal/captivePortalList";
 import Profile from '../profile/profile';
 import CaptivePortalContext from "../../context/project-context";
+import HotspotEditor from "../hotspot/hotspotEditor";
 
 
 class MainSide extends Component {
@@ -44,6 +45,9 @@ class MainSide extends Component {
         } else {
             document.querySelector('.mainSide').removeAttribute('style');
         }
+        if (this.context.dataToExclude.urlPath !== location.pathname) {
+            this.context.urlPathHandler(location.pathname);
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -55,9 +59,6 @@ class MainSide extends Component {
     }
 
     render() {
-        if (this.context.dataToExclude.urlPath !== location.pathname) {
-            this.context.urlPathHandler(location.pathname);
-        }
         return (
             <div className="mainSide">
                 <Switch>
@@ -69,6 +70,7 @@ class MainSide extends Component {
                         <CaptivePortal settedId={this.state.currentId} {...props}/>
                     )}/>
                     <Route exact path="/hotspot" component={Hotspot}/>
+                    <Route exact path="/hotspot/new" component={HotspotEditor}/>
                     <Route exact path="/reports/people" component={Reports}/>
                     <Route exact path="/profile" component={Profile}/>
                 </Switch>

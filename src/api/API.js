@@ -156,6 +156,8 @@ export const updateHotspotById = (string, name, address, description, portalId, 
         .then(res => res)
         .catch(err => authChecker(err.response));
 };
+
+// TODO add method which will get hotspot information by UUID
 export const createPortal = (string, info) => {
     return axios({
         method: 'post',

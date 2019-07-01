@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 import Notification from '../additional/notification';
-import {dateISO} from "../../modules/dateISO";
 
 class HotspotTable extends Component {
     state = {
@@ -19,13 +17,6 @@ class HotspotTable extends Component {
         else if (this.state.copied !== nextState.copied) return true;
         else return false
     }
-
-    getDataToEdit = (e, currentHotSpotId, portal) => {
-        e.preventDefault();
-        const {hotspotList} = this.props;
-        const {[0]: {id, name, address, description}} = hotspotList.filter(el => el.id === currentHotSpotId);
-        this.props.editHandler(id, name, address, description, portal && portal.id);
-    };
 
     copyToClipboard = (e) => {
         const NODE = e.currentTarget;
@@ -67,29 +58,7 @@ class HotspotTable extends Component {
                 </tr>
                 </thead>
                 <tbody>
-                {hotspotList && hotspotList.map((item, i) => {
-                    const {id, name, address, description, virtualUrl, portal, updatedAt } = item;
-                    console.log(portal);
-                    return (
-                        <tr key={i} onClick={(e) => ::this.getDataToEdit(e, id, portal)}>
-                            <td>{name}</td>
-                            <td>{portal ? portal.name : ''}</td>
-                            <td>{address}</td>
-                            <td>{description}</td>
-                            <td className={"url"}>
-                                {virtualUrl !== null ?
-                                    <a href={`${virtualUrl}`}
-                                       onClick={this.copyToClipboard}
-                                    >
-                                        {virtualUrl}
-                                    </a>
-                                    : ''
-                                }
-                            </td>
-                            <td>{dateISO(updatedAt)}</td>
-                        </tr>
-                    )
-                })}
+                {hotspotList && hotspotList}
                 </tbody>
                 {this.state.copied && <Notification type={'info'} text={'Virtual URL was copied'}/>}
             </table>
@@ -98,9 +67,4 @@ class HotspotTable extends Component {
 
 }
 
-export default connect(
-    state => ({
-        token: state.token
-    }),
-    dispatch => ({})
-)(HotspotTable);
+export default HotspotTable;
