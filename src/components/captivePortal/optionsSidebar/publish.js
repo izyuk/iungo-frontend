@@ -55,6 +55,7 @@ class Publish extends Component {
                 dataToExclude,
                 urlPathHandler,
                 profileHandler,
+                setTermsFromBE,
                 ...rest
             } = this.context;
             this.context.loaderHandler(true);
@@ -112,6 +113,7 @@ class Publish extends Component {
             dataToExclude,
             urlPathHandler,
             profileHandler,
+            setTermsFromBE,
             ...rest
         } = this.context;
         await this.props.collectData(rest);
