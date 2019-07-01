@@ -105,12 +105,23 @@ class GDPR extends Component {
             this.context.setGDPRSettings(rest);
         } else {
             const currentState = this.state;
+            const gdprFromBE = this.context.dataToExclude.gdprFromBE;
             console.log(currentState.setting);
-            this.setting.current.value = currentState.setting;
+            console.log('gdprFromBE: ', gdprFromBE);
+            if (gdprFromBE.name === 'GDPR default') {
+                this.setting.current.value = 'Yes';
+                currentState.setting = 'Yes';
+            } else {
+                currentState.setting = gdprFromBE.name;
+            }
+            currentState.agreeWithTermsAndConditionsLabel = gdprFromBE.agreeWithTermsAndConditionsLabel;
+            currentState.allowToUsePersonalInfoLabel = gdprFromBE.allowToUsePersonalInfoLabel;
+            currentState.settingId = gdprFromBE.id;
             const svg = this.setting.current.nextSibling.children[0];
             const span = document.createElement('span');
             span.innerText = this.setting.current.options[this.setting.current.selectedIndex].value;
             this.setting.current.nextSibling.insertBefore(span, svg);
+
             const {displayColorPicker, fontInputData, settingsCollection, ...rest} = currentState;
             this.context.setGDPRSettings(rest);
         }
@@ -139,7 +150,7 @@ class GDPR extends Component {
         const currentState = this.state;
         const {displayColorPicker, fontInputData, settingsCollection, ...rest} = currentState;
         this.context.setGDPRSettings(rest);
-        if(this.context.dataToExclude.gdprSettingsSetting === 'No'){
+        if (this.context.dataToExclude.gdprSettingsSetting === 'No') {
             this.context.setGDPRSettingsStatus(false);
         }
     }

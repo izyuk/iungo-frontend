@@ -216,7 +216,8 @@ class GlobalCaptivePortalState extends Component {
             styledElements: '',
             stylesArray: '',
             token: '',
-            urlPath: ''
+            urlPath: '',
+            gdprFromBE: ''
         }
     };
 
@@ -393,6 +394,7 @@ class GlobalCaptivePortalState extends Component {
     setGDPRSettings = (styles) => {
         const currentState = this.state;
         const {setting, agreeWithTermsAndConditionsLabel, allowToUsePersonalInfoLabel, settingId, ...rest} = styles;
+        console.log('GDPR ...REST', rest);
         currentState.style.gdpr_settings = rest;
         currentState.dataToExclude.gdprSettingsSetting = setting;
         currentState.dataToExclude.agreeWithTermsAndConditionsLabel = agreeWithTermsAndConditionsLabel;
@@ -625,7 +627,8 @@ class GlobalCaptivePortalState extends Component {
                 styledElements: '',
                 stylesArray: '',
                 token: '',
-                urlPath: ''
+                urlPath: '',
+                gdprFromBE: ''
             }
         };
         await this.loaderHandler(true);
@@ -657,6 +660,25 @@ class GlobalCaptivePortalState extends Component {
             acceptButtonBorder: data.style.accept_button_border
         });
         await this.addPortalName(data.name);
+        await this.setGDPRSettingsStatus(false);
+        await this.setGDPRSettings({
+            color: {
+                rgba: {
+                    r: 85,
+                    g: 133,
+                    b: 237,
+                    a: 1,
+                },
+                hex: '#5585ed'
+            },
+            fontSize: 14,
+            setting: data.dataToExclude.gdprSettingsSetting,
+            agreeWithTermsAndConditionsLabel: data.dataToExclude.gdprSettingsSetting,
+            allowToUsePersonalInfoLabel: data.dataToExclude.allowToUsePersonalInfoLabel,
+            settingId: data.termAndConditionId,
+        });
+        await this.setGDPRCollection(data.dataToExclude.gdprList);
+        await this.setTermsFromBE(data.dataToExclude.gdprFromBE)
     };
 
 
@@ -677,6 +699,7 @@ class GlobalCaptivePortalState extends Component {
                 gdpr_settings
             }
         } = this.state;
+        console.log(gdpr_settings);
         return `
     
             .previewMain { 
@@ -787,6 +810,12 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState);
     };
 
+    setTermsFromBE = (data) => {
+        const currentState = this.state;
+        currentState.dataToExclude.gdprFromBE = data;
+        this.setState(currentState);
+    };
+
     render() {
         return <CaptivePortalContext.Provider value={{
             background: this.state.background,
@@ -840,6 +869,7 @@ class GlobalCaptivePortalState extends Component {
             setGDPRCollection: this.setGDPRCollection,
             urlPathHandler: this.urlPathHandler,
             profileHandler: this.profileHandler,
+            setTermsFromBE: this.setTermsFromBE,
         }}
         >{this.props.children}</CaptivePortalContext.Provider>
     }

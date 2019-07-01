@@ -247,4 +247,5 @@ export default React.createContext({
     removeLogo: () => {},
     urlPathHandler: () => {},
     profileHandler: () => {},
+    setTermsFromBE: () => {},
 });

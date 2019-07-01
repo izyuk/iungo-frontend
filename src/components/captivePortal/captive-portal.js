@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
-import {getPortal, getPortalByUUID, getTermsAndConditionsParama} from "../../api/API";
+import {getPortal, getPortalByUUID, getTermsAndConditionsParams} from "../../api/API";
 import Loader from "../../loader";
 
 import {GetBuilderParams} from "./optionsSidebar/getBuilderParams";
@@ -68,6 +68,27 @@ class CaptivePortal extends Component {
                     acceptButtonFont: data.style.accept_button_font,
                     acceptButtonBorder: data.style.accept_button_border
                 });
+                this.context.setTermsFromBE(data.termAndCondition);
+                if(!!data.termAndCondition){
+                    this.context.setGDPRSettings({
+                        color: data.style.gdpr_settings.color,
+                        fontSize: data.style.gdpr_settings.fontSize,
+                        setting: data.termAndCondition.name,
+                        agreeWithTermsAndConditionsLabel: data.termAndCondition.agreeWithTermsAndConditionsLabel,
+                        allowToUsePersonalInfoLabel: data.termAndCondition.allowToUsePersonalInfoLabel,
+                        settingId: data.termAndCondition.id,
+                    });
+                    this.context.setGDPRSettingsStatus(true);
+                } /*else {
+                    this.context.setGDPRSettings({
+                        color: this.context.style.gdpr_settings.color,
+                        fontSize: this.context.style.gdpr_settings.fontSize,
+                        setting: this.context.dataToExclude.gdprSettingsSetting,
+                        agreeWithTermsAndConditionsLabel: this.context.termAndCondition.agreeWithTermsAndConditionsLabel,
+                        allowToUsePersonalInfoLabel: this.context.termAndCondition.allowToUsePersonalInfoLabel,
+                        settingId: this.context.termAndCondition.id,
+                    });
+                }*/
                 this.context.addPortalName(data.name);
                 this.context.setBackgroundRepeating(data.style.background_and_logo.background.repeat);
                 const position = data.style.background_and_logo.background.position;
@@ -181,7 +202,7 @@ class CaptivePortal extends Component {
     };
 
     setGDPRToContext = async () => {
-        const query = getTermsAndConditionsParama(localStorage.getItem('token'));
+        const query = getTermsAndConditionsParams(localStorage.getItem('token'));
         await query.then(res => {
             const {data} = res;
             const settingsCollection = data.map(item => item);

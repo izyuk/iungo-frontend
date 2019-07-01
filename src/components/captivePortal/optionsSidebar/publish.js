@@ -59,7 +59,7 @@ class Publish extends Component {
             } = this.context;
             this.context.loaderHandler(true);
             const portalDataToSend = GetBuilderParams(rest);
-
+            console.log('GDPR DATA TO SEND: ', portalDataToSend.style.gdpr_settings);
             const data = await PublishPortalMethodHandler(portalDataToSend, this.state.id === null ? localStorage.getItem('cpID') : this.state.id);
             this.setState(data);
             if(data.id){
