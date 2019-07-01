@@ -170,119 +170,138 @@ class GDPR extends Component {
             left: '0px',
         };
         const {settingsCollection} = this.state;
-        return (
-            <div className="container">
-                <div className="row">
-                    <div className="logoLeft">
+        if (settingsCollection) {
+            return (
+                <div className="container">
+                    <div className="row">
+                        <div className="logoLeft">
                     <span className="descr position">
                         Enable
                     </span>
+                        </div>
+                        <div className="right">
+                            <div className="innerRow">
+                                <div className="innerCol">
+                                    <div className="innerRow">
+                                        <select ref={this.setting}
+                                                data-cy={'gdprSettings'}
+                                                onChange={this.settingHandler}>
+                                            {
+                                                settingsCollection &&
+                                                settingsCollection.map((item, i) => {
+                                                    return (<option key={i} dataid={item.id}
+                                                                    value='Yes'>Yes</option>)
+                                                })
+                                            }
+                                            <option dataid="" value="No">No</option>
+                                        </select>
+                                        <p className="select">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24">
+                                                <path fill="#BFC5D2" fillRule="nonzero"
+                                                      d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
+                                            </svg>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="right">
-                        <div className="innerRow">
-                            <div className="innerCol">
-                                <div className="innerRow">
-                                    <select ref={this.setting}
-                                            data-cy={'gdprSettings'}
-                                            onChange={this.settingHandler}>
-                                        {
-                                            settingsCollection &&
-                                            settingsCollection.map((item, i) => {
-                                                return (<option key={i} dataid={item.id}
-                                                                value='Yes'>Yes</option>)
-                                            })
-                                        }
-                                        <option dataid="" value="No">No</option>
-                                    </select>
-                                    <p className="select">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24">
-                                            <path fill="#BFC5D2" fillRule="nonzero"
-                                                  d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                                        </svg>
-                                    </p>
+                    <div className="row">
+                        <div className="logoLeft">
+                            <span className="">Font size</span>
+                        </div>
+                        <div className="right">
+                            <div className="innerRow">
+                                <div style={style}>
+                                    <Slider min={8}
+                                            max={52}
+                                            defaultValue={parseInt(this.state.fontSize)}
+                                            handle={handle}
+                                            trackStyle={{
+                                                backgroundColor: '#5585ED',
+                                                height: 4,
+                                                borderRadius: 4,
+                                                position: 'absolute'
+                                            }}
+                                            railStyle={{
+                                                backgroundColor: '#E7E9EF',
+                                                height: 4,
+                                                borderRadius: 4,
+                                                position: 'absolute',
+                                                width: '100%'
+                                            }}
+                                            handleStyle={{
+                                                border: '2px solid #fff',
+                                                height: 12,
+                                                width: 12,
+                                                borderRadius: 12,
+                                                backgroundColor: '#5585ED',
+                                                marginLeft: -6,
+                                                position: 'absolute',
+                                                top: -4
+                                            }}
+                                            onChange={this.onSliderChange}
+                                    />
+                                </div>
+                                <div className={'select medium'}>
+                                    <input className="medium" type={'number'} min={8} max={52} maxLength={2} size={2}
+                                           onChange={(e) => this.fontInputHandler(e.target.value)}
+                                           onBlur={(e) => this.onSliderChange(e.target.value)}
+                                           defaultValue={this.state.fontSize}
+                                           value={this.state.fontInputData}
+                                           data-cy="gdprFontSize"/>
+                                    <span>
+                                    px
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="logoLeft">
+                            <span className="">Color</span>
+                        </div>
+                        <div className="right">
+                            <div className="innerRow">
+                                <div className="colorWrap">
+                                    <input type="text" value={this.state.color.hex} disabled/>
+                                    <button ref={this.cpbButton}
+                                            style={{backgroundColor: `rgba(${this.state.color.rgba.r}, ${this.state.color.rgba.g}, ${this.state.color.rgba.b}, ${this.state.color.rgba.a})`}}
+                                            onClick={this.handleClick} data-cy="gdprTextColor">
+                                    </button>
+                                    {
+                                        this.state.displayColorPicker ?
+                                            <div style={popover}>
+                                                <div style={cover} onClick={this.handleClose}/>
+                                                <SketchPicker color={this.state.color.rgba}
+                                                              onChange={this.handleChange}/>
+                                            </div>
+                                            : null
+                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="logoLeft">
-                        <span className="">Font size</span>
-                    </div>
-                    <div className="right">
-                        <div className="innerRow">
-                            <div style={style}>
-                                <Slider min={8}
-                                        max={52}
-                                        defaultValue={parseInt(this.state.fontSize)}
-                                        handle={handle}
-                                        trackStyle={{
-                                            backgroundColor: '#5585ED',
-                                            height: 4,
-                                            borderRadius: 4,
-                                            position: 'absolute'
-                                        }}
-                                        railStyle={{
-                                            backgroundColor: '#E7E9EF',
-                                            height: 4,
-                                            borderRadius: 4,
-                                            position: 'absolute',
-                                            width: '100%'
-                                        }}
-                                        handleStyle={{
-                                            border: '2px solid #fff',
-                                            height: 12,
-                                            width: 12,
-                                            borderRadius: 12,
-                                            backgroundColor: '#5585ED',
-                                            marginLeft: -6,
-                                            position: 'absolute',
-                                            top: -4
-                                        }}
-                                        onChange={this.onSliderChange}
-                                />
-                            </div>
-                            <div className={'select medium'}>
-                                <input className="medium" type={'number'} min={8} max={52} maxLength={2} size={2}
-                                       onChange={(e) => this.fontInputHandler(e.target.value)}
-                                       onBlur={(e) => this.onSliderChange(e.target.value)}
-                                       defaultValue={this.state.fontSize}
-                                       value={this.state.fontInputData}
-                                       data-cy="gdprFontSize"/>
-                                <span>
-                                    px
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+            )
+        } else {
+            return (
+                <div className="container">
+                    <p style={{
+                        width: '100%',
+                        textAlign: 'center',
+                        color: '#ff90ad',
+                        backgroundColor: 'rgba(255,144,173,.5)',
+                        border: '2px solid #ff90ad',
+                        borderRadius: '5px',
+                        margin: '5px'
+                    }}>
+                        Before you will be able to manage GDPR settings, please fill profile page with your information
+                    </p>
                 </div>
-                <div className="row">
-                    <div className="logoLeft">
-                        <span className="">Color</span>
-                    </div>
-                    <div className="right">
-                        <div className="innerRow">
-                            <div className="colorWrap">
-                                <input type="text" value={this.state.color.hex} disabled/>
-                                <button ref={this.cpbButton}
-                                        style={{backgroundColor: `rgba(${this.state.color.rgba.r}, ${this.state.color.rgba.g}, ${this.state.color.rgba.b}, ${this.state.color.rgba.a})`}}
-                                        onClick={this.handleClick} data-cy="gdprTextColor">
-                                </button>
-                                {
-                                    this.state.displayColorPicker ?
-                                        <div style={popover}>
-                                            <div style={cover} onClick={this.handleClose}/>
-                                            <SketchPicker color={this.state.color.rgba} onChange={this.handleChange}/>
-                                        </div>
-                                        : null
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
+            )
+        }
 
     }
 }
