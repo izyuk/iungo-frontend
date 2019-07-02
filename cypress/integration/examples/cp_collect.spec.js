@@ -410,7 +410,8 @@ context('Content tab', function () {
         });
         it('Set option from GDPR list', () => {
             cy.get('[data-cy="gdprSettings"]')
-                .select('GDPR default');
+                // .select('GDPR default');
+                .select('Yes');
         });
         it('Set GDPR text font size', () => {
             setSomeSize('[data-cy="gdprFontSize"]', 23);
