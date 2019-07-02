@@ -61,7 +61,8 @@ class HotspotEditor extends Component {
             }
 
             await query.then(res => {
-                this.getHotspotsMethodHandler(localStorage.getItem('token'));
+                currentState.id = res.data.id;
+                this.setState(currentState)
             });
 
 
