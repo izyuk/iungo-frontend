@@ -21,16 +21,6 @@ class HotspotDetails extends Component {
         submittedType: ''
     };
 
-    // getHotspotsMethodHandler = async (str) => {
-    //     const query = getHotspots(str);
-    //     await query.then(res => {
-    //         const {data} = res;
-    //         this.setState({
-    //             list: data
-    //         })
-    //     });
-    // };
-
     findAllHotspots = async (str) => {
         let query = getHotspots(str);
         let listArray = [];
@@ -41,8 +31,7 @@ class HotspotDetails extends Component {
                 listArray.push(
                     <Route key={i} render={({history}) => (
                         <tr dataid={item.id} datauuid={item.uuid} onClick={(e) => {
-                            this.getId(e);
-                            history.push(`/hotspots/${item.uuid}`)
+                            history.push(`/hotspot/${item.uuid}`)
                         }}>
                             <td>{item.name}</td>
                             <td>{item.portal ? item.portal.name : ''}</td>

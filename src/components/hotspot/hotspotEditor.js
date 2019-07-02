@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Notification from "../additional/notification";
-import {createHotspot, getAllPortals, updateHotspotById} from "../../api/API";
+import {createHotspot, getAllPortals, getHotspotByUUID, updateHotspotById} from "../../api/API";
 import CaptivePortalContext from "../../context/project-context";
 
 class HotspotEditor extends Component {
@@ -107,6 +107,25 @@ class HotspotEditor extends Component {
     //     }
     // };
 
+    getHotspotMethodHandler = async (string) => {
+        const uuid = this.props.match.params.uuid;
+        if (uuid !== 'new') {
+            const query = getHotspotByUUID(string, uuid);
+            await query.then(res => {
+                const {data: {address, description, id, name, portal, virtualUrl}} = res;
+                console.log(address, description, id, name, portal, virtualUrl);
+                const currentState = this.state;
+                currentState.address = address;
+                currentState.description = description;
+                currentState.id = id;
+                currentState.name = name;
+                currentState.captivePortalID = portal.id;
+                currentState.url = portal.externalUrl;
+                this.setState(currentState);
+            });
+        }
+    };
+
     selectHandler = (e) => {
         const currentState = this.state;
         console.log(currentState);
@@ -118,8 +137,6 @@ class HotspotEditor extends Component {
         console.log(e.target);
         console.log(e.currentTarget.options[e.currentTarget.selectedIndex].getAttribute('dataid'));
         this.setState(currentState);
-        // const {displayColorPicker, ...rest} = this.state;
-        // this.context.setBorderStyle(rest);
     };
 
     copyToClipboard = (e) => {
@@ -148,7 +165,7 @@ class HotspotEditor extends Component {
 
     componentDidMount() {
         this.getAllPortalsMethodHandler(localStorage.getItem('token'));
-        // this.getHotspotsMethodHandler(localStorage.getItem('token'));
+        this.getHotspotMethodHandler(localStorage.getItem('token'));
     }
 
     render() {
@@ -176,6 +193,7 @@ class HotspotEditor extends Component {
                                     name="name"
                                     placeholder={"Your name"}
                                     onChange={this.handleInputChange}
+                                    value={name}
                                 />
                             </div>
                             <label htmlFor={'hotspot-address'}>Address</label>
@@ -186,6 +204,7 @@ class HotspotEditor extends Component {
                                     name="address"
                                     placeholder={"Your address"}
                                     onChange={this.handleInputChange}
+                                    value={address}
                                 />
                             </div>
                             <label htmlFor={'hotspot-description'}>Description</label>
@@ -195,6 +214,7 @@ class HotspotEditor extends Component {
                                     name="description"
                                     placeholder={"Your description"}
                                     onChange={this.handleInputChange}
+                                    value={description}
                                 >
 
                                 </textarea>

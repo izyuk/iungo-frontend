@@ -81,16 +81,7 @@ class CaptivePortal extends Component {
                     if (this.context.termAndConditionId) {
                         this.context.setGDPRSettingsStatus(true);
                     }
-                } /*else {
-                    this.context.setGDPRSettings({
-                        color: this.context.style.gdpr_settings.color,
-                        fontSize: this.context.style.gdpr_settings.fontSize,
-                        setting: this.context.dataToExclude.gdprSettingsSetting,
-                        agreeWithTermsAndConditionsLabel: this.context.termAndCondition.agreeWithTermsAndConditionsLabel,
-                        allowToUsePersonalInfoLabel: this.context.termAndCondition.allowToUsePersonalInfoLabel,
-                        settingId: this.context.termAndCondition.id,
-                    });
-                }*/
+                }
                 this.context.addPortalName(data.name);
                 this.context.setBackgroundRepeating(data.style.background_and_logo.background.repeat);
                 const position = data.style.background_and_logo.background.position;

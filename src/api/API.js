@@ -158,6 +158,23 @@ export const updateHotspotById = (string, name, address, description, portalId, 
 };
 
 // TODO add method which will get hotspot information by UUID
+
+export const getHotspotByUUID = (string, uuid) => {
+    return axios({
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${BACKEND_API}/hotspot/uuid/${uuid}`,
+        mode: 'no-cors'
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
+
+
 export const createPortal = (string, info) => {
     return axios({
         method: 'post',

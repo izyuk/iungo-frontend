@@ -70,7 +70,7 @@ class MainSide extends Component {
                         <CaptivePortal settedId={this.state.currentId} {...props}/>
                     )}/>
                     <Route exact path="/hotspot" component={Hotspot}/>
-                    <Route exact path="/hotspot/new" component={HotspotEditor}/>
+                    <Route exact path="/hotspot/:uuid" component={HotspotEditor}/>
                     <Route exact path="/reports/people" component={Reports}/>
                     <Route exact path="/profile" component={Profile}/>
                 </Switch>
