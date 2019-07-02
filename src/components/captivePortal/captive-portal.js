@@ -69,7 +69,7 @@ class CaptivePortal extends Component {
                     acceptButtonBorder: data.style.accept_button_border
                 });
                 this.context.setTermsFromBE(data.termAndCondition);
-                if(!!data.termAndCondition){
+                if (!!data.termAndCondition) {
                     this.context.setGDPRSettings({
                         color: data.style.gdpr_settings.color,
                         fontSize: data.style.gdpr_settings.fontSize,
@@ -78,7 +78,9 @@ class CaptivePortal extends Component {
                         allowToUsePersonalInfoLabel: data.termAndCondition.allowToUsePersonalInfoLabel,
                         settingId: data.termAndCondition.id,
                     });
-                    this.context.setGDPRSettingsStatus(true);
+                    if (this.context.termAndConditionId) {
+                        this.context.setGDPRSettingsStatus(true);
+                    }
                 } /*else {
                     this.context.setGDPRSettings({
                         color: this.context.style.gdpr_settings.color,

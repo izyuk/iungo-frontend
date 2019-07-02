@@ -103,20 +103,21 @@ class GDPR extends Component {
             span.innerText = e.currentTarget.options[e.currentTarget.selectedIndex].value;
             const {displayColorPicker, fontInputData, settingsCollection, ...rest} = currentState;
             this.context.setGDPRSettings(rest);
+            this.context.setGDPRSettingsStatus(true);
         } else {
             const currentState = this.state;
             const gdprFromBE = this.context.dataToExclude.gdprFromBE;
             console.log(currentState.setting);
             console.log('gdprFromBE: ', gdprFromBE);
-            if (gdprFromBE.name === 'GDPR default') {
+            if (!!gdprFromBE && (gdprFromBE.name === 'GDPR default')) {
                 this.setting.current.value = 'Yes';
+                currentState.agreeWithTermsAndConditionsLabel = gdprFromBE.agreeWithTermsAndConditionsLabel;
+                currentState.allowToUsePersonalInfoLabel = gdprFromBE.allowToUsePersonalInfoLabel;
+                currentState.settingId = gdprFromBE.id;
                 currentState.setting = 'Yes';
             } else {
-                currentState.setting = gdprFromBE.name;
+                currentState.setting = 'No';
             }
-            currentState.agreeWithTermsAndConditionsLabel = gdprFromBE.agreeWithTermsAndConditionsLabel;
-            currentState.allowToUsePersonalInfoLabel = gdprFromBE.allowToUsePersonalInfoLabel;
-            currentState.settingId = gdprFromBE.id;
             const svg = this.setting.current.nextSibling.children[0];
             const span = document.createElement('span');
             span.innerText = this.setting.current.options[this.setting.current.selectedIndex].value;
@@ -143,7 +144,9 @@ class GDPR extends Component {
 
     async componentDidMount() {
         this.settingHandler();
-        this.context.setGDPRSettingsStatus(true);
+        if (this.context.termAndConditionId) {
+            this.context.setGDPRSettingsStatus(true);
+        }
     }
 
     componentWillUnmount() {
@@ -186,6 +189,7 @@ class GDPR extends Component {
                                         <select ref={this.setting}
                                                 data-cy={'gdprSettings'}
                                                 onChange={this.settingHandler}>
+                                            <option dataid="" value="No">No</option>
                                             {
                                                 settingsCollection &&
                                                 settingsCollection.map((item, i) => {
@@ -193,7 +197,7 @@ class GDPR extends Component {
                                                                     value='Yes'>Yes</option>)
                                                 })
                                             }
-                                            <option dataid="" value="No">No</option>
+
                                         </select>
                                         <p className="select">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

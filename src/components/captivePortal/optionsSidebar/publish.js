@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 import {previewPortal} from "../../../api/API";
 import {PublishPortalMethodHandler} from './publishPortalMethodHandler';
 import {GetBuilderParams} from './getBuilderParams';
@@ -155,13 +154,4 @@ class Publish extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        allData: state
-    }),
-    dispatch => ({
-        collectData: (data) => {
-            dispatch({type: "COLLECT_DATA", payload: data})
-        },
-    })
-)(Publish);
+export default Publish;
