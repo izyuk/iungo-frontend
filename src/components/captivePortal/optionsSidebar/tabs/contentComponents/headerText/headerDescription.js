@@ -69,7 +69,6 @@ class HeaderDescription extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.fontSize !== nextState.fontSize) return true;
         else if (this.state.fontInputData !== nextState.fontInputData) return true;
-        else if (this.state.colorHEX !== nextState.colorHEX) return true;
         else if (this.state.color !== nextState.color) return true;
         else if (this.state.displayColorPicker !== nextState.displayColorPicker) return true;
         else if (this.state.textActions !== nextState.textActions) return true;
@@ -95,7 +94,7 @@ class HeaderDescription extends Component {
     handleChange = (color) => {
         const currentState = this.state;
         currentState.color.rgba = color.rgb;
-        currentState.colorHEX = color.hex;
+        currentState.color.hex = color.hex;
         this.setState(currentState);
         const {displayColorPicker, fontInputData, text, ...rest} = this.state;
         this.context.setHeaderDescriptionData(text, {color: this.state.color, ...rest});
