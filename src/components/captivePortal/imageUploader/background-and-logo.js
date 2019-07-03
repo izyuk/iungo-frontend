@@ -138,6 +138,12 @@ class BackgroundAndLogo extends Component {
         }
         e.currentTarget.classList.add('active');
         const {style: {background_and_logo: {background, logo}}} = this.context;
+        this.newUploadedImageData = {
+            data: {
+                id: e.currentTarget.getAttribute('dataid'),
+                externalUrl: e.currentTarget.getAttribute('dataurl')
+            }
+        };
         switch (this.props.type) {
             case "logo":
                 this.setState({logo: e.currentTarget.getAttribute('dataurl')});
@@ -163,6 +169,7 @@ class BackgroundAndLogo extends Component {
     };
 
     applyOnUpload = () => {
+        console.log(this.newUploadedImageData);
         const {data: {id, externalUrl}} = this.newUploadedImageData;
         const {style: {background_and_logo: {background, logo}}} = this.context;
         switch (this.props.type) {
