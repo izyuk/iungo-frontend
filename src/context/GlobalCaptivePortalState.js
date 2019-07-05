@@ -228,6 +228,7 @@ class GlobalCaptivePortalState extends Component {
     setBackground = (path, color, type) => {
         const currentState = this.state;
         currentState.background = 'COLOR' ? null : path;
+        currentState.backgroundId = 'COLOR' && null;
         currentState.style.background_and_logo.background.url = type === 'COLOR' ? null : path;
         currentState.style.background_and_logo.background.color = color;
         currentState.style.background_and_logo.background.backgroundType = type;

@@ -470,6 +470,49 @@
           background: @dark-sky-blue;
         }
       }
+      &.phone_number {
+        background-color: @light-blue-grey;
+        span{
+          background-color: @pale-grey-six;
+        }
+        input{
+          color: @steel-three;
+          .font(@avenir-heavy, 12);
+          font-weight: bold;
+          padding: 0 10px;
+          &::-webkit-input-placeholder {
+            color: @steel-three;
+            .font(@avenir-heavy, 12);
+            font-weight: bold;
+            line-height: 2;
+            text-align: left;
+          }
+
+          &::-moz-placeholder {
+            color: @steel-three;
+            .font(@avenir-heavy, 12);
+            font-weight: bold;
+            line-height: 2;
+            text-align: left;
+          }
+
+          &:-ms-input-placeholder {
+            color: @steel-three;
+            .font(@avenir-heavy, 12);
+            font-weight: bold;
+            line-height: 2;
+            text-align: left;
+          }
+
+          &:-moz-placeholder {
+            color: @steel-three;
+            .font(@avenir-heavy, 12);
+            font-weight: bold;
+            line-height: 2;
+            text-align: left;
+          }
+        }
+      }
     }
   }
 }
