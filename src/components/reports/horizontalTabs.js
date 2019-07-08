@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Switch, Route, Link, NavLink} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 export default class HorizontalTabs extends Component {
     state = {
@@ -15,6 +15,11 @@ export default class HorizontalTabs extends Component {
             <div className="tabsLine">
                 <div className="row">
                     <div className="line">
+                        <NavLink to={'/reports/portal-usage'} activeClassName={'active'}>
+                            <span>
+                                Portal Usage
+                            </span>
+                        </NavLink>
                         <NavLink to={'/reports/people'} activeClassName={'active'}>
                             <span>
                                 People

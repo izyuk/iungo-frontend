@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import HotspotTable from './hotspotTable';
 import Notification from '../additional/notification';
 
-import {getAllPortals, getHotspots} from '../../api/API';
+import {getHotspots} from '../../api/API';
 import {Route} from "react-router-dom";
 import {dateISO} from "../../modules/dateISO";
 
@@ -58,20 +58,8 @@ class HotspotDetails extends Component {
         })
     };
 
-    getAllPortalsMethodHandler = async (str) => {
-        const query = getAllPortals(str);
-        await query.then(res => {
-            const {data} = res;
-            this.setState({
-                portalsList: data
-            })
-        });
-    };
-
     componentDidMount() {
-        // this.getHotspotsMethodHandler(localStorage.getItem('token'));
         this.findAllHotspots(localStorage.getItem('token'));
-        // this.getAllPortalsMethodHandler(localStorage.getItem('token'))
     }
 
     editHandler = (HSid, HSname, HSaddress, HSdescription, portalID) => {

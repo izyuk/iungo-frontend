@@ -342,3 +342,17 @@ export const getTermsAndConditionsParams = (string) => {
         .then(res => res)
         .catch(err => authChecker(err.response));
 };
+
+export const getSummaryAnalytics = (string, hotSpotId) => {
+    return axios({
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${ANALYTICS_API}/analytics/summary/${hotSpotId}`,
+        mode: 'no-cors'
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};

@@ -7,6 +7,14 @@ class Sidebar extends Component {
         this.state = {};
     }
 
+    pageEvent = (match, location) => {
+        if (!match) {
+            return false
+        }
+        if(window.location.pathname === '/reports/') window.location.pathname = '/reports/portal-usage';
+        const eventID = location.pathname.split('/');
+        return eventID.indexOf('reports');
+    };
 
     render() {
         return (
@@ -37,7 +45,7 @@ class Sidebar extends Component {
                         Hotspots
                     </span>
                 </NavLink>
-                <NavLink to="/reports/people" activeClassName='active'>
+                <NavLink to="/reports/" isActive={this.pageEvent} activeClassName='active'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <g fill="#BFC5D2" fillRule="nonzero">
                             <path

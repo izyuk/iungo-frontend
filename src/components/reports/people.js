@@ -58,6 +58,7 @@ class People extends Component {
             })
         });
     };
+
     exportCSV = async () => {
         if (this.state.uuid) {
             this.setState({UUIDChecker: false});

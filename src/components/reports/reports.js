@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import { Switch, Route } from 'react-router-dom';
 import HorizontalTabs from './horizontalTabs';
 import People from './people';
+import PortalUsage from './portal-usage';
 
 export default class Reports extends Component {
     state = {};
@@ -11,6 +11,9 @@ export default class Reports extends Component {
     static defaultProps = {};
 
     render() {
+        console.log(this.props.match.params);
+        const param = this.props.match.params;
+
         return (
             <div className="container containerFix">
                 <div className="wrap wrapFix2">
@@ -18,7 +21,12 @@ export default class Reports extends Component {
                         <h3>Reports</h3>
                     </div>
                     <HorizontalTabs/>
-                    <People/>
+                    {param.page === 'people' ?
+                        <People/> :
+                        (param.page === 'portal-usage' ?
+                            <PortalUsage/> :
+                                <div></div>)
+                    }
                 </div>
             </div>
         )
