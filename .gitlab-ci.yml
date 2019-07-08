@@ -8,8 +8,6 @@ stages:
   - deploy
 
 npm-build:
-  only:
-    - master
   image: node:10-alpine
   stage: build
   script:
