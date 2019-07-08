@@ -102,7 +102,7 @@ class LoginMethods extends Component {
                                     </svg>
                                 </span>
                             </div>
-                            <span>Phone number</span>
+                            <span>Phone number via SMS</span>
                         </label>
                         <label htmlFor="button">
                                 <span className="checkBoxPlace">
