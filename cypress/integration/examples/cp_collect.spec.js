@@ -95,12 +95,11 @@ const expectedStore = {
             description: {
                 color: {
                     rgba: {r: 237, g: 170, b: 85, a: 1},
-                    hex: "#5585ed"
+                    hex: "#edaa55"
                 },
                 fontSize: 18,
                 textActions: {bold: false, italic: false, underline: false},
-                alignment: "center",
-                colorHEX: "#edaa55"
+                alignment: "center"
             }
         },
         footer: {
@@ -184,6 +183,7 @@ const expectedStore = {
     googleLogin: true,
     facebookLogin: true,
     twitterLogin: false,
+    phoneLogin: true,
     acceptTermsLogin: true,
     successRedirectUrl: "",
     termAndConditionId: 2,
@@ -432,6 +432,8 @@ context('Content tab', function () {
                 .click({force: true});
             cy.get('[data-cy="loginMethodGoogle"]')
                 .click({force: true});
+            cy.get('[data-cy="loginMethodPhone"]')
+                .click({force: true});
             cy.get('[data-cy="loginMethodConnectButton"]')
                 .click({force: true});
         });
@@ -441,6 +443,8 @@ context('Content tab', function () {
                 .click({force: true});
             cy.get('[data-cy="loginMethodGoogle"]')
                 .click({force: true});
+            cy.get('[data-cy="loginMethodPhone"]')
+                .click({force: true});
             cy.get('[data-cy="loginMethodConnectButton"]')
                 .click({force: true});
         });
@@ -449,6 +453,8 @@ context('Content tab', function () {
             cy.get('[data-cy="loginMethodFacebook"]')
                 .click({force: true});
             cy.get('[data-cy="loginMethodGoogle"]')
+                .click({force: true});
+            cy.get('[data-cy="loginMethodPhone"]')
                 .click({force: true});
             cy.get('[data-cy="loginMethodConnectButton"]')
                 .click({force: true});

@@ -14,6 +14,7 @@ class Methods extends Component {
         this.facebook = React.createRef();
         this.google = React.createRef();
         this.twitter = React.createRef();
+        this.phone = React.createRef();
         this.button = React.createRef();
     }
 
@@ -30,12 +31,14 @@ class Methods extends Component {
             googleLogin,
             facebookLogin,
             twitterLogin,
+            phoneLogin,
             acceptTermsLogin
         } = this.context;
         this.methodsHandler({
             google: googleLogin,
             facebook: facebookLogin,
             twitter: twitterLogin,
+            phone: phoneLogin,
             button: acceptTermsLogin
         })
     }
@@ -45,12 +48,14 @@ class Methods extends Component {
             googleLogin,
             facebookLogin,
             twitterLogin,
+            phoneLogin,
             acceptTermsLogin
         } = this.context;
         this.methodsHandler({
             google: googleLogin,
             facebook: facebookLogin,
             twitter: twitterLogin,
+            phone: phoneLogin,
             button: acceptTermsLogin
         });
 
@@ -65,6 +70,7 @@ class Methods extends Component {
         if (this.context.googleLogin !== nextContext.googleLogin) return true;
         else if (this.context.facebookLogin !== nextContext.facebookLogin) return true;
         else if (this.context.twitterLogin !== nextContext.twitterLogin) return true;
+        else if (this.context.phoneLogin !== nextContext.phoneLogin) return true;
         else if (this.context.acceptTermsLogin !== nextContext.acceptTermsLogin) return true;
         else return false
     }
@@ -99,7 +105,7 @@ class Methods extends Component {
                         </svg>
                     </span>
                     <input type="button" value="Continue with Twitter"/></div>
-                <div className="phone_number">
+                <div className="phone_number" ref={this.phone}>
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                                 <path fill="#8D98B0" fillRule="nonzero"

@@ -53,6 +53,7 @@ class CaptivePortal extends Component {
                     facebook: data.facebookLogin,
                     google: data.googleLogin,
                     twitter: data.twitterLogin,
+                    phone: data.phoneLogin,
                     button: data.acceptTermsLogin
                 });
                 this.context.setFooterData(data.footer, data.style.footer);

@@ -193,6 +193,7 @@ export default React.createContext({
     googleLogin: false,
     facebookLogin: false,
     twitterLogin: false,
+    phoneLogin: false,
     acceptTermsLogin: false,
     successRedirectUrl: '',
     termAndConditionId: '',

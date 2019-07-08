@@ -198,6 +198,7 @@ class GlobalCaptivePortalState extends Component {
         googleLogin: false,
         facebookLogin: false,
         twitterLogin: false,
+        phoneLogin: false,
         acceptTermsLogin: false,
         successRedirectUrl: '',
         acceptButtonText: 'Connect',
@@ -299,11 +300,12 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState)
     };
     setLoginMethods = data => {
-        const {google, facebook, twitter, button} = data;
+        const {google, facebook, twitter, phone, button} = data;
         this.setState({
             googleLogin: google,
             facebookLogin: facebook,
             twitterLogin: twitter,
+            phoneLogin: phone,
             acceptTermsLogin: button
         })
     };
@@ -610,6 +612,7 @@ class GlobalCaptivePortalState extends Component {
             googleLogin: false,
             facebookLogin: false,
             twitterLogin: false,
+            phoneLogin: false,
             acceptTermsLogin: false,
             successRedirectUrl: '',
             acceptButtonText: 'Connect',
@@ -831,6 +834,7 @@ class GlobalCaptivePortalState extends Component {
             googleLogin: this.state.googleLogin,
             facebookLogin: this.state.facebookLogin,
             twitterLogin: this.state.twitterLogin,
+            phoneLogin: this.state.phoneLogin,
             acceptTermsLogin: this.state.acceptTermsLogin,
             successRedirectUrl: this.state.successRedirectUrl,
             acceptButtonText: this.state.acceptButtonText,
