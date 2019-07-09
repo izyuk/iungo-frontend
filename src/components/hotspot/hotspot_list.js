@@ -100,7 +100,7 @@ class HotspotDetails extends Component {
 
     render() {
         return (
-            <div className="hotspotDetailsWrap">
+            <div className="contentWrapWithTopBorder">
                 <HotspotTable
                     hotspotList={this.state.list !== '' ? this.state.list : false}
                     editHandler={this.editHandler}/>

@@ -67,7 +67,8 @@ class CaptivePortalList extends Component {
                     <div className="wrap wrapFix2">
                         <div className="info">
                             <h3>Captive Portals List</h3>
-                            <Link onClick={this.addNewCP} className={"addNewCPButton"} to={`/captive-portals/new`}>Add new Captive Portal</Link>
+                            {/*<Link onClick={this.addNewCP} className={"addNewCPButton"} to={`/captive-portals/new`}>Get started</Link>*/}
+                            <Link className={"addNewCPButton"} to={`/captive-portals/templates`}>Get started</Link>
                         </div>
                         <table className={"captivePortalList"} rules="rows">
                             <thead>

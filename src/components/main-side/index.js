@@ -5,6 +5,7 @@ import Dashboard from '../dashboard/dashboard';
 import Hotspot from '../hotspot/hotspot';
 import Reports from '../reports/reports';
 import CaptivePortal from "../captivePortal/captive-portal";
+import CaptivePortalTemplates from "../captivePortal/captive-portal-templates";
 import CaptivePortalList from "../captivePortal/captivePortalList";
 import Profile from '../profile/profile';
 import CaptivePortalContext from "../../context/project-context";
@@ -65,6 +66,9 @@ class MainSide extends Component {
                     <Route exact path="/dashboard" component={Dashboard}/>
                     <Route exact path='/captive-portals' render={() => (
                         <CaptivePortalList setId={this.idHandler} clearing={this.storageCleaningHandler}/>
+                    )}/>
+                    <Route exact path='/captive-portals/templates' render={() => (
+                        <CaptivePortalTemplates />
                     )}/>
                     <Route path='/captive-portals/:uuid' render={(props) => (
                         <CaptivePortal settedId={this.state.currentId} {...props}/>

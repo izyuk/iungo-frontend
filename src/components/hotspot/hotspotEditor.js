@@ -184,7 +184,7 @@ class HotspotEditor extends Component {
                     <div className="info">
                         <h3>Hotspot Settings</h3>
                     </div>
-                    <div className="hotspotDetailsWrap">
+                    <div className="contentWrapWithTopBorder">
                         <div className="hotspotForm">
                             <label htmlFor={'hotspot-name'}>Name</label>
                             <div>

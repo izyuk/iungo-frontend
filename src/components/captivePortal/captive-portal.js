@@ -38,6 +38,7 @@ class CaptivePortal extends Component {
         console.log('TOKEN findPortal on CP DID MOUNT: ', data);
         let query = id !== null ? getPortal(data, id) : getPortalByUUID(data, uuid);
         if (id !== null || uuid !== 'new') {
+            console.log('PASSED');
             this.context.loaderHandler(true);
             await query.then(res => {
                 const {data} = res;

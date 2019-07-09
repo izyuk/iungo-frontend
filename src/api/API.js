@@ -356,3 +356,17 @@ export const getSummaryAnalytics = (string, hotSpotId) => {
         .then(res => res)
         .catch(err => authChecker(err.response));
 };
+
+export const getAllPublicTemplates = (string) => {
+    return axios({
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${BACKEND_API}/template/public`,
+        mode: 'no-cors'
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
