@@ -8,6 +8,9 @@ stages:
   - deploy
 
 npm-build:
+  only:
+    - master
+    - dev
   image: node:10-alpine
   stage: build
   script:
@@ -31,6 +34,7 @@ cypress-testing:
 deploy-to-s3:
   only:
     - master
+    - dev
   image: ubuntu:18.04
   stage: deploy
   script:
