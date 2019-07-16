@@ -138,9 +138,12 @@ class HotspotEditor extends Component {
         }, 2000)
     };
 
-    componentDidMount() {
-        this.getAllPortalsMethodHandler(localStorage.getItem('token'));
-        this.getHotspotMethodHandler(localStorage.getItem('token'));
+    async componentDidMount() {
+        await this.getAllPortalsMethodHandler(localStorage.getItem('token'));
+        await this.getHotspotMethodHandler(localStorage.getItem('token'));
+        const data = this.portals.current.options[this.portals.current.selectedIndex].value;
+        const span = this.portals.current.nextSibling.children[0];
+        span.innerText = data;
     }
 
     render() {
@@ -150,6 +153,7 @@ class HotspotEditor extends Component {
             description,
             portalsList,
             portalUrl,
+            captivePortalID,
             url
         } = this.state;
 
@@ -205,7 +209,7 @@ class HotspotEditor extends Component {
                                     {
                                         portalsList !== '' &&
                                         portalsList.map((item, i) => {
-                                            return <option key={i} dataid={item.id}
+                                            return <option key={i} dataid={item.id} selected={captivePortalID === item.id}
                                                            url={item.externalUrl}>{item.name}</option>
                                         })
                                     }
