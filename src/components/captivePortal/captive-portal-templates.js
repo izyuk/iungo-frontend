@@ -30,6 +30,8 @@ class CaptivePortalTemplates extends Component {
     };
 
     componentDidMount() {
+        this.context.setToken(this.token);
+        console.log('CP TEMPLATES TOKEN', this.token);
         this.getAllTemplatesHandler();
         const STYLE = document.getElementsByTagName('STYLE')[0];
         if (STYLE) STYLE.parentNode.removeChild(STYLE);

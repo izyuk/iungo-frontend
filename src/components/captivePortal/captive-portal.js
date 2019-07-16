@@ -29,6 +29,8 @@ class CaptivePortal extends Component {
 
     portalName = React.createRef();
 
+    token = this.context.dataToExclude.token;
+
 
     findPortal = async (data) => {
         const id = localStorage.getItem('cpID');
@@ -36,8 +38,9 @@ class CaptivePortal extends Component {
         console.log(id);
         console.log(uuid);
         console.log('TOKEN findPortal on CP DID MOUNT: ', data);
-        let query = id !== null ? getPortal(data, id) : getPortalByUUID(data, uuid);
+        // let query = id !== null ? getPortal(data, id) : getPortalByUUID(data, uuid);
         if (id !== null || uuid !== 'new') {
+            let query = id !== null ? getPortal(data, id) : getPortalByUUID(data, uuid);
             console.log('PASSED');
             this.context.loaderHandler(true);
             await query.then(res => {
@@ -197,8 +200,9 @@ class CaptivePortal extends Component {
     };
 
     setGDPRToContext = async () => {
-        const query = getTermsAndConditionsParams(localStorage.getItem('token'));
+        const query = getTermsAndConditionsParams(this.token);
         await query.then(res => {
+            console.log('setGDPRToContext', res);
             const {data} = res;
             const settingsCollection = data.map(item => item);
             console.log(settingsCollection);
@@ -207,10 +211,11 @@ class CaptivePortal extends Component {
         });
     };
 
-    componentDidMount() {
-        this.context.setToken(localStorage.getItem('token'));
-        this.findPortal(localStorage.getItem('token'));
-        this.setGDPRToContext();
+    async componentDidMount() {
+        console.log('CP MAIN TOKEN', this.token);
+        console.log('CP MAIN TOKEN FROM CONTEXT', this.context.dataToExclude.token);
+        await this.findPortal(this.token);
+        await this.setGDPRToContext();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

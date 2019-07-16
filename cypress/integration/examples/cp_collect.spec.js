@@ -230,8 +230,17 @@ context('Start and going to CP', function () {
         });
     });
 
+
+    describe('CP templates', function () {
+        it('Going to CP templates', () => {
+            cy.get('.addNewCPButton')
+                .click({force: true})
+        });
+
+    });
+
     describe('NEW CP', function () {
-        it('Creating', () => {
+        it('Creating new CP', () => {
             cy.get('.addNewCPButton')
                 .click({force: true})
         });
@@ -246,7 +255,6 @@ context('Start and going to CP', function () {
             cy.get('[data-id="desktop"] span')
                 .click({force: true})
         });
-
     });
 });
 
