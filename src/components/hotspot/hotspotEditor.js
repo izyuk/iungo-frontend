@@ -78,41 +78,13 @@ class HotspotEditor extends Component {
             });
         }
     };
-    //
-    // setCPId = (e) => {
-    //     document.getElementsByClassName('selectedPortal')[0].innerText = e.currentTarget.innerText;
-    //     this.setState({captivePortalID: e.currentTarget.getAttribute('dataid') ? e.currentTarget.getAttribute('dataid') : ''});
-    // };
-    //
-    // editHandler = (HSid, HSname, HSaddress, HSdescription, portalID) => {
-    //     const data = {id: HSid, name: HSname, address: HSaddress, description: HSdescription};
-    //     Object.keys(data).map((el) => {
-    //         this.setState({
-    //             [el]: data[el]
-    //         });
-    //     });
-    //     if (portalID) {
-    //         let portalsList = this.state.portalsList;
-    //         const {[0]: {id, name}} = portalsList.filter(el => {
-    //             if (el.id === portalID) {
-    //                 console.log(el);
-    //                 return el;
-    //             }
-    //         });
-    //         document.getElementsByClassName('selectedPortal')[0].innerText = name;
-    //         this.setState({captivePortalID: id});
-    //     } else {
-    //         document.getElementsByClassName('selectedPortal')[0].innerText = 'Select Captive Portal';
-    //         this.setState({captivePortalID: ''});
-    //
-    //     }
-    // };
 
     getHotspotMethodHandler = async (string) => {
         const uuid = this.props.match.params.uuid;
         if (uuid !== 'new') {
             const query = getHotspotByUUID(string, uuid);
             await query.then(res => {
+                console.log(res.data);
                 const {data: {address, description, id, name, portal, virtualUrl}} = res;
                 console.log(address, description, id, name, portal, virtualUrl);
                 const currentState = this.state;
@@ -121,7 +93,7 @@ class HotspotEditor extends Component {
                 currentState.id = id;
                 currentState.name = name;
                 currentState.captivePortalID = portal.id;
-                currentState.url = portal.externalUrl;
+                currentState.url = virtualUrl;
                 this.setState(currentState);
             });
         }
