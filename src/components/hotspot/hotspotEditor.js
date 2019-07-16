@@ -14,6 +14,7 @@ class HotspotEditor extends Component {
         id: '',
         captivePortalID: '',
         portalsList: '',
+        portalUrl: '',
         submitted: false,
         submittedType: ''
     };
@@ -94,6 +95,7 @@ class HotspotEditor extends Component {
                 currentState.name = name;
                 currentState.captivePortalID = portal.id;
                 currentState.url = virtualUrl;
+                currentState.portalUrl = portal.externalUrl;
                 this.setState(currentState);
             });
         }
@@ -147,6 +149,7 @@ class HotspotEditor extends Component {
             address,
             description,
             portalsList,
+            portalUrl,
             url
         } = this.state;
 
@@ -251,8 +254,8 @@ class HotspotEditor extends Component {
                         <div className={'portalPreviewWrap'}>
                             <div className="portalPreview">
                                 {
-                                    !!url &&
-                                    <iframe src={url} frameBorder="0"></iframe>
+                                    !!portalUrl &&
+                                    <iframe src={portalUrl} frameBorder="0"></iframe>
                                 }
                             </div>
                         </div>
