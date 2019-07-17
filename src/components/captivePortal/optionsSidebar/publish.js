@@ -122,8 +122,9 @@ class Publish extends Component {
         this.context.loaderHandler(true);
         // const {dataToExclude, ...rest} = this.context;
         const portalDataToSend = GetBuilderParams(rest);
-        const token = localStorage.getItem('token');
+        const token = this.context.dataToExclude.token;
         const query = previewPortal(token, portalDataToSend);
+        console.log(this.context.dataToExclude.token);
         await query.then(res => {
             const {data} = res;
             this.context.loaderHandler(false);

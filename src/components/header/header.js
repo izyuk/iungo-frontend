@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 import {Link, Redirect} from 'react-router-dom';
 import CaptivePortalContext from "../../context/project-context";
 
@@ -31,7 +30,7 @@ class Header extends Component {
     }
 
     logOut() {
-        this.props.setToken('');
+        this.context.setToken('');
         localStorage.removeItem('token');
         this.setState({
             auth: false
@@ -123,13 +122,4 @@ class Header extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        token: state.token
-    }),
-    dispatch => ({
-        setToken: (string) => {
-            dispatch({type: "TOKEN", payload: string})
-        }
-    })
-)(Header);
+export default Header

@@ -9,6 +9,7 @@ const ANALYTICS_API = 'https://analytics.bravofy.com';
 function authChecker(response){
     if (response.status === 401){
         window.location = '/';
+        localStorage.removeItem('token');
     } else return response
 }
 
@@ -343,18 +344,19 @@ export const getTermsAndConditionsParams = (string) => {
         .catch(err => authChecker(err.response));
 };
 
-export const getSummaryAnalytics = (string, hotSpotId) => {
+export const getSummaryAnalytics = (string, hotSpotUUID) => {
     return axios({
         method: 'get',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `${string}`
         },
-        url: `${ANALYTICS_API}/analytics/summary/${hotSpotId}`,
+        url: `${ANALYTICS_API}/analytics/summary/${hotSpotUUID}`,
         mode: 'no-cors'
     })
         .then(res => res)
-        .catch(err => authChecker(err.response));
+        // .catch(err => authChecker(err.response));
+        .catch(err => console.log(err));
 };
 
 export const getAllPublicTemplates = (string) => {

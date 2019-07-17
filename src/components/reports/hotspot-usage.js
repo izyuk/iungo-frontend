@@ -1,13 +1,17 @@
 import React, {Component} from 'react';
-import {getAllPortals, getSummaryAnalytics} from "../../api/API";
+import {getHotspots, getSummaryAnalytics} from "../../api/API";
+import CaptivePortalContext from "../../context/project-context";
 
 // import {dateISO} from "../../modules/dateISO";
 
 
 
 class HotspotUsage extends Component {
+
+    static contextType = CaptivePortalContext;
+
     state = {
-        portalList: '',
+        hotspotList: '',
         uuid: '',
         captivePortalID: '',
         summaryInfo: ''
@@ -16,18 +20,18 @@ class HotspotUsage extends Component {
     token = localStorage.getItem('token');
 
     shouldComponentUpdate(nextProps, nextState) {
-        return (this.state.portalList !== nextState.list) ||
+        return (this.state.hotspotList !== nextState.list) ||
             (this.state.uuid !== nextState.uuid) ||
             (this.state.captivePortalID !== nextState.captivePortalID);
     }
 
-    getAllPortalsMethodHandler = async (str) => {
-        const query = getAllPortals(str);
+    getAllHotspotsMethodHandler = async (str) => {
+        const query = getHotspots(str);
         const currentState = this.state;
         await query.then(res => {
             const {data} = res;
             console.log(data);
-            currentState.portalList = data;
+            currentState.hotspotList = data;
         });
         this.setState(currentState)
     };
@@ -36,16 +40,17 @@ class HotspotUsage extends Component {
         e.currentTarget.classList.toggle("active");
     };
 
-    setCPId = async (e, uuid, id) => {
+    setHSId = async (e, uuid, id) => {
         this.setState({
             uuid: uuid
         });
         document.getElementsByClassName('selectedPortal')[0].childNodes[0].innerText = e.currentTarget.innerText;
         this.setState({captivePortalID: id ? id : ''});
-        const query = getSummaryAnalytics(this.token, id);
+        const query = getSummaryAnalytics(this.token, uuid);
         await query.then(res => {
             const {data} = res;
             console.log(data);
+            debugger;
             this.setState({
                 summaryInfo: data
             })
@@ -53,12 +58,12 @@ class HotspotUsage extends Component {
     };
 
     componentDidMount() {
-        this.getAllPortalsMethodHandler(this.token);
+        this.getAllHotspotsMethodHandler(this.token);
     }
 
     render() {
-        const {portalList} = this.state;
-        console.log(portalList);
+        const {hotspotList} = this.state;
+        console.log(hotspotList);
         return (
             <div className={'container'}>
                 <div className="setInfoLine">
@@ -66,7 +71,7 @@ class HotspotUsage extends Component {
                         <div className="hsSelector" onClick={this.toggleCPSelectorActive}>
                             <p className={'selectedPortal'}>
                                 <span>
-                                    Select CP
+                                    Select Hotspot
                                 </span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                     <path fill="#FFF" fillRule="nonzero"
@@ -75,8 +80,8 @@ class HotspotUsage extends Component {
 
                             </p>
                             <div className="list">
-                                {!!portalList && portalList.map((item, i) =>
-                                    <p onClick={(e) => this.setCPId(e, item.uuid, item.id)} key={i} dataid={item.id}>{item.name}</p>
+                                {!!hotspotList && hotspotList.map((item, i) =>
+                                    <p onClick={(e) => this.setHSId(e, item.uuid, item.id)} key={i} dataid={item.id}>{item.name}</p>
                                 )}
                             </div>
                         </div>
