@@ -3,6 +3,8 @@ import CaptivePortalContext from "../../../../../../context/project-context";
 import Slider from "rc-slider";
 import {SketchPicker} from "react-color";
 import Tooltip from 'rc-tooltip';
+import {Link} from "react-router-dom";
+
 
 const style = {
     marginRight: 16,
@@ -173,7 +175,8 @@ class GDPR extends Component {
             left: '0px',
         };
         const {settingsCollection} = this.state;
-        if (settingsCollection) {
+        console.log('settingsCollection', settingsCollection);
+        if (!!!settingsCollection) {
             return (
                 <div className="container">
                     <div className="row">
@@ -301,7 +304,12 @@ class GDPR extends Component {
                         borderRadius: '5px',
                         margin: '5px'
                     }}>
-                        Before you will be able to manage GDPR settings, please fill profile page with your information
+                        Before you will be able to manage GDPR settings, please fill <Link to={'/profile'}><span
+                        style={{
+                            textDecoration: 'underline',
+                            paddingBottom: 3,
+                            display: 'inline-block'
+                        }}>Profile page</span></Link>
                     </p>
                 </div>
             )

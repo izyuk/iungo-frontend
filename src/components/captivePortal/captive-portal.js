@@ -32,15 +32,18 @@ class CaptivePortal extends Component {
     token = this.context.dataToExclude.token;
 
 
-    findPortal = async (data) => {
+    findPortal = async (str) => {
         const id = localStorage.getItem('cpID');
         const uuid = this.props.match.params.uuid;
         console.log(id);
         console.log(uuid);
-        console.log('TOKEN findPortal on CP DID MOUNT: ', data);
+        console.log('TOKEN findPortal on CP DID MOUNT: ', str);
+        if(!!!str){
+            str = localStorage.getItem('token');
+        }
         // let query = id !== null ? getPortal(data, id) : getPortalByUUID(data, uuid);
         if (id !== null || uuid !== 'new') {
-            let query = id !== null ? getPortal(data, id) : getPortalByUUID(data, uuid);
+            let query = id !== null ? getPortal(str, id) : getPortalByUUID(str, uuid);
             console.log('PASSED');
             this.context.loaderHandler(true);
             await query.then(res => {
@@ -200,7 +203,7 @@ class CaptivePortal extends Component {
     };
 
     setGDPRToContext = async () => {
-        const query = getTermsAndConditionsParams(this.token);
+        const query = getTermsAndConditionsParams(!!this.token ? this.token : localStorage.getItem('token'));
         await query.then(res => {
             console.log('setGDPRToContext', res);
             const {data} = res;
