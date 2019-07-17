@@ -15,9 +15,9 @@ export default class HorizontalTabs extends Component {
             <div className="tabsLine">
                 <div className="row">
                     <div className="line">
-                        <NavLink to={'/reports/portal-usage'} activeClassName={'active'}>
+                        <NavLink to={'/reports/hotspot-usage'} activeClassName={'active'}>
                             <span>
-                                Portal Usage
+                                Hotspot Usage
                             </span>
                         </NavLink>
                         <NavLink to={'/reports/people'} activeClassName={'active'}>

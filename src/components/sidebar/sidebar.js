@@ -11,7 +11,7 @@ class Sidebar extends Component {
         if (!match) {
             return false
         }
-        if(window.location.pathname === '/reports/') window.location.pathname = '/reports/portal-usage';
+        if(window.location.pathname === '/reports/') window.location.pathname = '/reports/hotspot-usage';
         const eventID = location.pathname.split('/');
         return eventID.indexOf('reports');
     };

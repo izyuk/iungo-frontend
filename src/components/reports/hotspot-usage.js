@@ -5,7 +5,7 @@ import {getAllPortals, getSummaryAnalytics} from "../../api/API";
 
 
 
-class PortalUsage extends Component {
+class HotspotUsage extends Component {
     state = {
         portalList: '',
         uuid: '',
@@ -115,4 +115,4 @@ class PortalUsage extends Component {
     }
 }
 
-export default PortalUsage;
+export default HotspotUsage;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import HorizontalTabs from './horizontalTabs';
 import People from './people';
-import PortalUsage from './portal-usage';
+import HotspotUsage from './hotspot-usage';
 
 export default class Reports extends Component {
     state = {};
@@ -23,8 +23,8 @@ export default class Reports extends Component {
                     <HorizontalTabs/>
                     {param.page === 'people' ?
                         <People/> :
-                        (param.page === 'portal-usage' ?
-                            <PortalUsage/> :
+                        (param.page === 'hotspot-usage' ?
+                            <HotspotUsage/> :
                                 <div></div>)
                     }
                 </div>
