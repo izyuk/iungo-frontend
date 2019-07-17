@@ -13,8 +13,8 @@ export const PublishPortalMethodHandler = async (portalDataToSend, cpID) => {
     else {
         await createPortal(token, portalDataToSend)
             .then(res => {
-                if (res.status !== 400) {
-                    updatePortal(token, portalDataToSend, res.data.id);
+                if (res.status !== 400 || res.status !== 500) {
+                    // updatePortal(token, portalDataToSend, res.data.id);
                     collectData.id = res.data.id;
                     collectData.notification = true;
                     collectData.publishedType = 'created and published';
