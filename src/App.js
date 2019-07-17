@@ -16,7 +16,6 @@ class MainRouter extends Component {
             this.setState({
                 unauthorized: true
             });
-            debugger;
         }
         setTimeout(() => {
             this.setState({unauthorized: false});

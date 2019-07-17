@@ -50,7 +50,6 @@ class HotspotUsage extends Component {
         await query.then(res => {
             const {data} = res;
             console.log(data);
-            debugger;
             this.setState({
                 summaryInfo: data
             })
