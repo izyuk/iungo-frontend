@@ -120,7 +120,8 @@ class HotspotUsage extends Component {
                             <p className="info">
                                 <span
                                     className={'count'}>
-                                    {!!summaryInfo ? (summaryInfo.totalSessions !== null ? summaryInfo.{/*<span className={'difference'}>{'1,2'}%</span>*/}
+                                    {!!summaryInfo ? (summaryInfo.totalSessions !== null ? summaryInfo.totalSessions : 0) : '0'}
+                                </span>
                             </p>
                         </div>
                     </div>
