@@ -786,8 +786,8 @@ class GlobalCaptivePortalState extends Component {
                 font-weight: ${accept_button_font.textActions.bold ? 'bold' : '100'};
                 font-style: ${accept_button_font.textActions.italic ? 'italic' : 'unset'};
                 text-decoration: ${accept_button_font.textActions.underline ? 'underline' : 'unset'};
-                min-width: ${accept_button_size.width}px;
-                width: 'auto';
+                max-width: ${accept_button_size.width}px;
+                width: 100%;
                 padding: ${accept_button_size.padding}px;
                 word-break: 'break-all';
             }
