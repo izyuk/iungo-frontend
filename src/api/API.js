@@ -372,3 +372,17 @@ export const getAllPublicTemplates = (string) => {
         .then(res => res)
         .catch(err => authChecker(err.response));
 };
+
+export const getTemplate = (string, id) => {
+    return axios({
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${BACKEND_API}/template/${id}`,
+        mode: 'no-cors'
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};

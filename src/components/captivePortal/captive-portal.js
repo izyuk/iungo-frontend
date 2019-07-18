@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
-import {getPortal, getPortalByUUID, getTermsAndConditionsParams} from "../../api/API";
+import {getPortal, getPortalByUUID, getTemplate, getTermsAndConditionsParams} from "../../api/API";
 import Loader from "../../loader";
 
 import {GetBuilderParams} from "./optionsSidebar/getBuilderParams";
@@ -35,6 +35,7 @@ class CaptivePortal extends Component {
     findPortal = async (str) => {
         const id = localStorage.getItem('cpID');
         const uuid = this.props.match.params.uuid;
+        const from = localStorage.getItem('from');
         console.log(id);
         console.log(uuid);
         console.log('TOKEN findPortal on CP DID MOUNT: ', str);
@@ -42,8 +43,8 @@ class CaptivePortal extends Component {
             str = localStorage.getItem('token');
         }
         // let query = id !== null ? getPortal(data, id) : getPortalByUUID(data, uuid);
-        if (id !== null || uuid !== 'new') {
-            let query = id !== null ? getPortal(str, id) : getPortalByUUID(str, uuid);
+        if (!!id || (!!uuid && uuid !== 'new')) {
+            let query = !!id ? (from === 'templates' ? getTemplate(str, id) : getPortal(str, id)) : getPortalByUUID(str, uuid);
             console.log('PASSED');
             this.context.loaderHandler(true);
             await query.then(res => {

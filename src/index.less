@@ -470,16 +470,20 @@
           background: @dark-sky-blue;
         }
       }
+
       &.phone_number {
         background-color: @light-blue-grey;
-        span{
+
+        span {
           background-color: @pale-grey-six;
         }
-        input{
+
+        input {
           color: @steel-three;
           .font(@avenir-heavy, 12);
           font-weight: bold;
           padding: 0 10px;
+
           &::-webkit-input-placeholder {
             color: @steel-three;
             .font(@avenir-heavy, 12);
@@ -1017,8 +1021,9 @@ header {
                     background: @water-blue;
                   }
                 }
-                &.phone_number{
-                  span{
+
+                &.phone_number {
+                  span {
                     background-color: @pale-grey-six;
                     border-radius: 0;
                   }
@@ -2079,6 +2084,10 @@ header {
   align-items: flex-start;
   justify-content: space-between;
 
+  &.templates {
+    justify-content: flex-start;
+  }
+
   .cpSelector {
     display: flex;
     justify-content: center;
@@ -2451,7 +2460,8 @@ header {
       }
     }
   }
-  .template{
+
+  .template {
     flex: 1 1 230px;
     max-width: 230px;
     height: 230px;
@@ -2461,9 +2471,22 @@ header {
     justify-content: center;
     align-items: flex-end;
     position: relative;
-    svg{
+    margin-top: 20px;
+    margin-right: 50px;
+    &:nth-child(4n){
+      margin-right: 0;
+    }
+    svg {
       position: absolute;
 
+    }
+
+    p {
+      position: absolute;
+      top: -20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .addNewCPButton {
@@ -2490,13 +2513,15 @@ header {
       border-radius: 20px;
       font-weight: bold;
       margin-bottom: 37px;
-        z-index: 1;
+      z-index: 1;
     }
-    &:hover{
-      a{
+
+    &:hover {
+      a {
         display: flex;
       }
-      &:after{
+
+      &:after {
         content: '';
         display: block;
         width: 100%;
@@ -2506,6 +2531,7 @@ header {
         position: absolute;
         background: rgba(85, 133, 237, .2);
       }
+
       border-color: @soft-blue;
     }
   }
@@ -3058,7 +3084,8 @@ table {
       .font(@avenir-medium, 14);
       color: @steel;
       line-height: 1.71;
-      &:not(:last-child){
+
+      &:not(:last-child) {
         margin-right: 24px;
       }
 
@@ -3179,32 +3206,38 @@ table {
     }
   }
 }
-.mainGraph{
+
+.mainGraph {
   width: 100%;
   display: flex;
   flex-direction: column;
   background: @w;
   border: 1px solid @pale-grey-three;
   box-shadow: 0 1px 2px 0 @cloudy-blue-15;
-  .numericRow{
+
+  .numericRow {
     display: flex;
-    .infoCell{
+
+    .infoCell {
       flex: 1;
       height: 112px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       padding-left: 32px;
-      &:not(:last-child){
+
+      &:not(:last-child) {
         border-right: 1px solid @pale-grey-three;
       }
-      .name{
+
+      .name {
         .font(@avenir-medium, 12);
         color: @steel;
         line-height: 2;
         font-weight: 500;
       }
-      .info{
+
+      .info {
         .font(@avenir-roman, 30);
         color: @dark-indigo;
         line-height: 1.33;
