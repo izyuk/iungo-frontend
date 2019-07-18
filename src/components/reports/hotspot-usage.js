@@ -5,7 +5,6 @@ import CaptivePortalContext from "../../context/project-context";
 // import {dateISO} from "../../modules/dateISO";
 
 
-
 class HotspotUsage extends Component {
 
     static contextType = CaptivePortalContext;
@@ -61,7 +60,7 @@ class HotspotUsage extends Component {
     }
 
     render() {
-        const {hotspotList} = this.state;
+        const {hotspotList, summaryInfo} = this.state;
         console.log(hotspotList);
         return (
             <div className={'container'}>
@@ -80,7 +79,8 @@ class HotspotUsage extends Component {
                             </p>
                             <div className="list">
                                 {!!hotspotList && hotspotList.map((item, i) =>
-                                    <p onClick={(e) => this.setHSId(e, item.uuid, item.id)} key={i} dataid={item.id}>{item.name}</p>
+                                    <p onClick={(e) => this.setHSId(e, item.uuid, item.id)} key={i}
+                                       dataid={item.id}>{item.name}</p>
                                 )}
                             </div>
                         </div>
@@ -91,25 +91,36 @@ class HotspotUsage extends Component {
                         <div className="infoCell">
                             <span className={'name'}>New Devices</span>
                             <p className="info">
-                                <span className={'count'}>{'1,621'}</span>{/*<span className={'difference'}>{'1,2'}%</span>*/}
+                                <span
+                                    className={'count'}>
+                                    {!!summaryInfo ? (summaryInfo.newDevices !== null ? summaryInfo.newDevices : '0') : '0'}
+                                </span>
                             </p>
                         </div>
                         <div className="infoCell">
                             <span className={'name'}>Unique Devices</span>
                             <p className="info">
-                                <span className={'count'}>{'3,403'}</span>{/*<span className={'difference'}>{'1,2'}%</span>*/}
+                                <span
+                                    className={'count'}>
+                                    {!!summaryInfo ? (summaryInfo.uniqueDevices !== null ? summaryInfo.uniqueDevices : '0') : '0'}
+                                </span>
                             </p>
                         </div>
                         <div className="infoCell">
                             <span className={'name'}>Average Visits</span>
                             <p className="info">
-                                <span className={'count'}>{'52 min'}</span>{/*<span className={'difference'}>{'1,2'}%</span>*/}
+                                <span
+                                    className={'count'}>
+                                    {!!summaryInfo ? (summaryInfo.averageSessionDuration !== null ? summaryInfo.averageSessionDuration : '0') : '0'}
+                                    min</span>
                             </p>
                         </div>
                         <div className="infoCell">
                             <span className={'name'}>Total Sessions</span>
                             <p className="info">
-                                <span className={'count'}>{'10,321'}</span>{/*<span className={'difference'}>{'1,2'}%</span>*/}
+                                <span
+                                    className={'count'}>
+                                    {!!summaryInfo ? (summaryInfo.totalSessions !== null ? summaryInfo.{/*<span className={'difference'}>{'1,2'}%</span>*/}
                             </p>
                         </div>
                     </div>
