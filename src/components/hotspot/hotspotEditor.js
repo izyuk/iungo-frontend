@@ -9,7 +9,6 @@ class HotspotEditor extends Component {
         name: '',
         address: '',
         description: '',
-        url: '',
         list: '',
         id: '',
         captivePortalID: '',
@@ -60,19 +59,15 @@ class HotspotEditor extends Component {
                 currentState.submittedType = 'created';
                 this.setState(currentState)
             }
-
             await query.then(res => {
                 currentState.id = res.data.id;
                 this.setState(currentState)
             });
-
-
             setTimeout(() => {
                 currentState.submited = false;
                 currentState.submittedType = '';
                 this.setState(currentState)
             }, 2000)
-
         } else {
             this.setState({
                 incorrect: true
@@ -94,7 +89,6 @@ class HotspotEditor extends Component {
                 currentState.id = id;
                 currentState.name = name;
                 currentState.captivePortalID = portal.id;
-                currentState.url = virtualUrl;
                 currentState.portalUrl = portal.externalUrl;
                 this.setState(currentState);
             });
@@ -107,8 +101,10 @@ class HotspotEditor extends Component {
         const data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
         const span = e.currentTarget.nextSibling.children[0];
         span.innerText = data;
-        currentState.url = e.currentTarget.options[e.currentTarget.selectedIndex].getAttribute('url');
+        console.log(e.currentTarget.options[e.currentTarget.selectedIndex].getAttribute('portalurl'));
+        currentState.portalUrl = e.currentTarget.options[e.currentTarget.selectedIndex].getAttribute('portalUrl');
         currentState.captivePortalID = e.currentTarget.options[e.currentTarget.selectedIndex].getAttribute('dataid');
+
         console.log(e.target);
         console.log(e.currentTarget.options[e.currentTarget.selectedIndex].getAttribute('dataid'));
         this.setState(currentState);
@@ -139,6 +135,8 @@ class HotspotEditor extends Component {
     };
 
     async componentDidMount() {
+        if(this.props.match.params.uuid === 'new') localStorage.removeItem('HSurl');
+        console.log(this.props.match.params.uuid);
         await this.getAllPortalsMethodHandler(localStorage.getItem('token'));
         await this.getHotspotMethodHandler(localStorage.getItem('token'));
         const data = this.portals.current.options[this.portals.current.selectedIndex].value;
@@ -153,10 +151,8 @@ class HotspotEditor extends Component {
             description,
             portalsList,
             portalUrl,
-            captivePortalID,
-            url
+            captivePortalID
         } = this.state;
-
         return (
             <div className="container containerFix">
                 <div className="wrap wrapFix2">
@@ -209,8 +205,9 @@ class HotspotEditor extends Component {
                                     {
                                         portalsList !== '' &&
                                         portalsList.map((item, i) => {
+                                            console.log(item);
                                             return <option key={i} dataid={item.id} selected={captivePortalID === item.id}
-                                                           url={item.externalUrl}>{item.name}</option>
+                                                           portalurl={item.externalUrl}>{item.name}</option>
                                         })
                                     }
                                 </select>
@@ -226,10 +223,10 @@ class HotspotEditor extends Component {
 
 
                             {
-                                !!url &&
+                                !!localStorage.getItem('HSurl') &&
                                 <p className="link">
                                     <span>
-                                        {url}
+                                        {localStorage.getItem('HSurl')}
                                     </span>
                                     <span onClick={this.copyToClipboard}>
                                         <svg version="1.1" id="Capa_1"

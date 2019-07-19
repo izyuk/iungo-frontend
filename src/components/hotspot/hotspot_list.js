@@ -30,9 +30,12 @@ class HotspotDetails extends Component {
                 console.log(item);
                 listArray.push(
                     <Route key={i} render={({history}) => (
-                        <tr dataid={item.id} datauuid={item.uuid} onClick={(e) => {
-                            history.push(`/hotspot/${item.uuid}`)
-                        }}>
+                        <tr dataid={item.id}
+                            datauuid={item.uuid}
+                            onClick={(e) => {
+                                localStorage.setItem('HSurl', item.virtualUrl);
+                                history.push(`/hotspot/${item.uuid}`)
+                            }}>
                             <td>{item.name}</td>
                             <td>{item.portal ? item.portal.name : ''}</td>
                             <td>{item.address}</td>
@@ -103,6 +106,7 @@ class HotspotDetails extends Component {
             <div className="contentWrapWithTopBorder">
                 <HotspotTable
                     hotspotList={this.state.list !== '' ? this.state.list : false}
+                    virtualUrl={this.state.url}
                     editHandler={this.editHandler}/>
                 {this.state.submitted &&
                 <Notification type={'info'} text={`Hotspot settings was ${this.state.submittedType} successfully`}/>}
