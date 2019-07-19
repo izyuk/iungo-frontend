@@ -386,3 +386,36 @@ export const getTemplate = (string, id) => {
         .then(res => res)
         .catch(err => authChecker(err.response));
 };
+
+export const getMailerLite = (string) => {
+    return axios({
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${BACKEND_API}/profile/mailerlite`,
+        mode: 'no-cors'
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
+
+export const updateMailerLite = (string, data) => {
+    return axios({
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${BACKEND_API}/profile/mailerlite`,
+        mode: 'no-cors',
+        data: {
+            "enable": data.enable,
+            "apiKey": data.apiKey,
+            "groupPrefix": data.groupPrefix
+        }
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};

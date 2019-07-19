@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ProfileForm from './profileForm';
 import Notification from '../additional/notification';
-import {getCompanyProfileInfo, setCompanyProfileInfo} from '../../api/API';
+import {getCompanyProfileInfo, getMailerLite, setCompanyProfileInfo, updateMailerLite} from '../../api/API';
 import CaptivePortalContext from "../../context/project-context";
 
 class ProfileDetails extends Component {
@@ -17,7 +17,10 @@ class ProfileDetails extends Component {
         city: '',
         address: '',
         zipCode: '',
-        locale: ''
+        locale: '',
+        apiKey: '',
+        groupPrefix: '',
+        enable: false
     };
     token = this.context.dataToExclude.token ? this.context.dataToExclude.token : localStorage.getItem('token');
     country = React.createRef();
@@ -35,6 +38,9 @@ class ProfileDetails extends Component {
             || (this.state.description !== nextState.description)
             || (this.state.portalsList !== nextState.portalsList)
             || (this.state.submitted !== nextState.submitted)
+            || (this.state.apiKey !== nextState.apiKey)
+            || (this.state.groupPrefix !== nextState.groupPrefix)
+            || (this.state.enable !== nextState.enable)
             || (this.state.submittedType !== nextState.submittedType);
     }
 
@@ -63,7 +69,7 @@ class ProfileDetails extends Component {
     fieldsHandler = (e) => {
         const currentState = this.state;
         const fieldName = e.currentTarget.getAttribute('datatype');
-        const value = e.currentTarget.value;
+        const value = fieldName !== 'enable' ? e.currentTarget.value : e.currentTarget.checked;
         currentState[fieldName] = value;
         this.setState(currentState);
         this.context.profileHandler(currentState);
@@ -76,6 +82,27 @@ class ProfileDetails extends Component {
         await query.then(res => {
             console.log(res);
         })
+    };
+
+    saveMailerLite = async () => {
+        const {apiKey, enable, groupPrefix} = this.state;
+        const query = updateMailerLite(this.token, {apiKey, enable, groupPrefix});
+        await query.then(res => {
+            console.log(res);
+        });
+    };
+
+    getMailerLite = async () => {
+        const query = getMailerLite(this.token);
+        const currentState = this.state;
+        await query.then(res => {
+            console.log(res);
+            const {data: {apiKey, enable, groupPrefix}} = res;
+            currentState.apiKey = apiKey;
+            currentState.enable = enable;
+            currentState.groupPrefix = groupPrefix;
+        });
+        this.setState(currentState);
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -91,6 +118,7 @@ class ProfileDetails extends Component {
             this.selectOnMountHandler(this.language, rest.locale);
             this.setState(rest);
         });
+        await this.getMailerLite();
         this.context.profileHandler(this.state);
     };
 
@@ -101,7 +129,10 @@ class ProfileDetails extends Component {
             address,
             zipCode,
             country,
-            city
+            city,
+            apiKey,
+            groupPrefix,
+            enable
         } = this.state;
         return (
             <div className={'profileDetailsWrapContainer'}>
@@ -199,9 +230,46 @@ class ProfileDetails extends Component {
                         </div>
 
                     </ProfileForm>
-                    {this.state.submitted &&
-                    <Notification type={'info'}
-                                  text={`Hotspot settings was ${this.state.submittedType} successfully`}/>}
+
+
+                </div>
+
+                <div className="info profile">
+                    <h3>Mailerlite integraion</h3>
+                </div>
+                <div className="profileDetailsWrap">
+                    <ProfileForm onCorrect={this.saveMailerLite}>
+                        <label htmlFor={'toggle'}>Enable</label>
+                        <span className="checkBoxPlace">
+                                <input type="checkbox" id="toggle" datatype="enable"
+                                       onChange={this.fieldsHandler} checked={enable}/>
+                                <span></span>
+                            </span>
+                        <label htmlFor={'apiKey'}>Api key</label>
+                        <div>
+                            <input
+                                type="text"
+                                datatype="apiKey"
+                                id={'apiKey'}
+                                placeholder={"Key"}
+                                defaultValue={apiKey}
+                                onChange={this.fieldsHandler}
+                            />
+                        </div>
+                        <label htmlFor={'groupPrefix'}>Group prefix</label>
+                        <div>
+                            <input
+                                type="text"
+                                datatype="groupPrefix"
+                                id={'groupPrefix'}
+                                placeholder={"Prefix"}
+                                defaultValue={groupPrefix}
+                                onChange={this.fieldsHandler}
+                            />
+                        </div>
+                    </ProfileForm>
+
+
                 </div>
             </div>
 

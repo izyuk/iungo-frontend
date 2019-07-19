@@ -2567,6 +2567,53 @@ header {
     display: flex;
     flex-direction: column;
 
+    .checkBoxPlace {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+
+      input[type=checkbox] {
+        margin-right: 10px;
+        width: 15px;
+        height: 15px;
+        position: relative;
+        opacity: 0;
+        z-index: 1;
+      }
+
+      span {
+        display: flex;
+        position: absolute;
+        left: 0;
+        width: 15px;
+        height: 15px;
+        border: 1px solid @pale-grey-three;
+        border-radius: 2px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      input:checked + span {
+        &:before {
+          content: '';
+          display: block;
+          position: relative;
+          width: 7px;
+          height: 7px;
+          border: 1px solid @soft-blue;
+          border-radius: 2px;
+          background: @soft-blue;
+        }
+      }
+
+      span + p {
+        .font(@avenir-medium, 14);
+        color: @steel;
+        align-self: flex-start;
+      }
+    }
+
     .onTopFieldLabel {
       .font(@avenir-medium, 12);
       line-height: 2.67;
