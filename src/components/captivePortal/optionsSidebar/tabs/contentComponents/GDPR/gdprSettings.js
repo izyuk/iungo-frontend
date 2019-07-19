@@ -175,8 +175,7 @@ class GDPR extends Component {
             left: '0px',
         };
         const {settingsCollection} = this.state;
-        console.log('settingsCollection', settingsCollection);
-        if (!!!settingsCollection) {
+        if (settingsCollection.length) {
             return (
                 <div className="container">
                     <div className="row">

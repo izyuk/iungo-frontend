@@ -85,8 +85,8 @@ class CaptivePortalTemplates extends Component {
                                 New</Link>
                         </div>
                         {
-                            templatesList !== '' && templatesList.map(item => {
-                                return <div className="template">
+                            templatesList !== '' && templatesList.map((item, i) => {
+                                return <div className="template" key={i}>
                                     <p>{item.name}</p>
                                     <svg version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 58 58"
                                          style={{enableBackground: 'new 0 0 58 58'}} width="230px"
