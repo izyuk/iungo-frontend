@@ -48,6 +48,7 @@ class CaptivePortalList extends Component {
         if (STYLE) STYLE.parentNode.removeChild(STYLE);
         this.context.resetGlobalState();
         localStorage.removeItem('cpID');
+        localStorage.removeItem('templateID');
     };
 
     componentDidMount() {

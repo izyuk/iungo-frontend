@@ -241,12 +241,13 @@ context('Start and going to CP', function () {
 
     describe('NEW CP', function () {
         it('Creating new CP', () => {
-            cy.get('.addNewCPButton')
+            cy.get('.newTemplate')
                 .click({force: true})
         });
 
         it('Setting name', () => {
             fillingFields('[data-cy="captivePortalName"]', 'CP TEST NAME');
+            // fillingFields('[id="portalName"]', 'CP TEST NAME');
         });
 
         it('Device toggle', () => {
@@ -280,16 +281,8 @@ context('Style tab', function () {
         it('Setting background size', () => {
             cy.get('[data-cy="backgroundSize"]')
                 .select('custom-size');
-            cy.get('[data-cy="backgroundWidth"')
-                .focus()
-                .clear()
-                .type('50')
-                .blur({force: true});
-            cy.get('[data-cy="backgroundHeight"')
-                .focus()
-                .clear()
-                .type('50')
-                .blur({force: true});
+            fillingFields('[data-cy="backgroundWidth"', '50');
+            fillingFields('[data-cy="backgroundHeight"', '50');
         });
     });
 
@@ -338,10 +331,7 @@ context('Style tab', function () {
             fillColorHEXWithOpacity('[data-cy="containerBackground"', '5c4040', '0');
         });
         it('Size', () => {
-            cy.get('[data-cy="containerWidth"]')
-                .focus()
-                .type('1920')
-                .blur({force: true});
+            fillingFields('[data-cy="containerWidth"]', '1920');
         });
     });
 });

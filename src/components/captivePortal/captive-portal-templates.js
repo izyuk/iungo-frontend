@@ -28,7 +28,9 @@ class CaptivePortalTemplates extends Component {
         const STYLE = document.getElementsByTagName('STYLE')[0];
         if (STYLE) STYLE.parentNode.removeChild(STYLE);
         this.context.resetGlobalState();
-        localStorage.setItem('templateID', id);
+        console.log(id);
+        console.log(typeof id);
+        if(typeof id === "number") localStorage.setItem('templateID', id);
         localStorage.setItem('from', 'templates');
     };
 
@@ -79,7 +81,7 @@ class CaptivePortalTemplates extends Component {
                                     </g>
                                 </g>
                             </svg>
-                            <Link onClick={this.addNewCP} className={"addNewCPButton"} to={`/captive-portals/new`}>Create
+                            <Link onClick={this.addNewCP} className={"addNewCPButton newTemplate"} to={`/captive-portals/new`}>Create
                                 New</Link>
                         </div>
                         {

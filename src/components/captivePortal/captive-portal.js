@@ -95,7 +95,7 @@ class CaptivePortal extends Component {
                         this.context.setGDPRSettingsStatus(true);
                     }
                 }
-                this.context.addPortalName(data.name);
+
                 this.context.setBackgroundRepeating(data.style.background_and_logo.background.repeat);
                 const position = data.style.background_and_logo.background.position;
                 this.context.setBackgroundPosition({
@@ -131,6 +131,7 @@ class CaptivePortal extends Component {
                         HEAD.appendChild(style);
                     }
                 }
+                this.context.addPortalName(data.name);
             });
             this.context.loaderHandler(false);
         } else {
@@ -138,20 +139,17 @@ class CaptivePortal extends Component {
             this.context.resetGlobalState();
             this.context.loaderHandler(false);
         }
-        // console.log(this.context);
     };
 
 
     trigger = (data) => {
         document.querySelectorAll('[data-id]')[0].classList.remove('active');
         document.querySelectorAll('[data-id]')[1].classList.remove('active');
-
         if (data.target.nodeName === 'A') {
             data.target.classList.add('active');
         } else if (data.target.closest('a').getAttribute('data-id')) {
             data.target.closest('a').classList.add('active');
         }
-
         if (data.target.getAttribute('data-id') === 'mobile' || data.target.closest('a').getAttribute('data-id') === 'mobile') {
             this.setState({
                 mobile: true
@@ -200,7 +198,6 @@ class CaptivePortal extends Component {
             } else {
                 e.currentTarget.classList.add('error');
             }
-
         }
     };
 
@@ -230,7 +227,6 @@ class CaptivePortal extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log(this.context);
-        // console.log('CP ON UPDATE', this.context);
     }
 
     render() {
@@ -249,8 +245,11 @@ class CaptivePortal extends Component {
                                            onDoubleClick={this.nameEditor}
                                            onKeyDown={this.sendData}
                                            defaultValue={this.context.name}
-                                           autoFocus={!localStorage.getItem('cpID') ? true : false}
-                                           className={'active'} data-cy="captivePortalName"/>
+                                           autoFocus={
+                                               (!localStorage.getItem('cpID') || !localStorage.getItem('templatesID')) ? true : false
+                                           }
+                                           className={'active'}
+                                           data-cy="captivePortalName"/>
                                     <span></span>
                                     <div className="toggles">
                                         <a href="javascript:void(0)" data-id="desktop"
