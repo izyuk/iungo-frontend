@@ -20,16 +20,16 @@ npm-build:
     paths:
       - build/*
 
-cypress-testing:
-  image: cypress/base:10
-  stage: testing
-  before_script:
-    - npm i
-    - npm start &
-  script:
-    - npm install --save-dev cypress
-    - $(npm bin)/cypress verify
-    - $(npm bin)/cypress run "cypress/integration/examples/cp_collect.spec.js"
+#cypress-testing:
+#  image: cypress/base:10
+#  stage: testing
+#  before_script:
+#    - npm i
+#    - npm start &
+#  script:
+#    - npm install --save-dev cypress
+#    - $(npm bin)/cypress verify
+#    - $(npm bin)/cypress run "cypress/integration/examples/cp_collect.spec.js"
 
 deploy-to-s3:
   only:
