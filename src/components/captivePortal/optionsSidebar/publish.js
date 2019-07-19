@@ -64,6 +64,7 @@ class Publish extends Component {
             const data = await PublishPortalMethodHandler(portalDataToSend, this.state.id === null ? localStorage.getItem('cpID') : this.state.id);
             this.setState(data);
             if(data.id){
+                console.log(data.id);
                 localStorage.setItem('cpID', data.id);
             }
             this.context.loaderHandler(false);

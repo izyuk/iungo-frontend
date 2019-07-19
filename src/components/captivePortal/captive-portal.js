@@ -33,19 +33,23 @@ class CaptivePortal extends Component {
 
 
     findPortal = async (str) => {
-        const id = localStorage.getItem('cpID');
         const uuid = this.props.match.params.uuid;
         const from = localStorage.getItem('from');
+        if(uuid === 'new' && from === 'templates'){
+            localStorage.removeItem('cpID', null);
+        }
+        let id = localStorage.getItem('cpID') || localStorage.getItem('templateID');
         console.log(id);
         console.log(uuid);
-        console.log('TOKEN findPortal on CP DID MOUNT: ', str);
-        if(!!!str){
+        if (!!!str) {
             str = localStorage.getItem('token');
         }
-        // let query = id !== null ? getPortal(data, id) : getPortalByUUID(data, uuid);
+        console.log('TOKEN findPortal on CP DID MOUNT: ', str);
         if (!!id || (!!uuid && uuid !== 'new')) {
-            let query = !!id ? (from === 'templates' ? getTemplate(str, id) : getPortal(str, id)) : getPortalByUUID(str, uuid);
             console.log('PASSED');
+            console.log('ID', id);
+            console.log('FROM', from);
+            let query = !!id ? (from === 'templates' ? getTemplate(str, id) : getPortal(str, id)) : getPortalByUUID(str, uuid);
             this.context.loaderHandler(true);
             await query.then(res => {
                 const {data} = res;
@@ -105,25 +109,27 @@ class CaptivePortal extends Component {
                     width: size.width,
                     height: size.height
                 }, size.inPercentDimension);
-                if (data.externalCss.length > 0) {
-                    const styledElements = document.querySelectorAll('.previewWrap [style]');
-                    let stylesArray = [];
-                    Object.keys(styledElements).map((item) => {
-                        stylesArray.push(styledElements[item].getAttribute('style'));
-                    });
-                    Object.keys(styledElements).map((item) => {
-                        styledElements[item].removeAttribute('style');
-                    });
-                    // console.log(styledElements);
-                    this.context.setExternalCssInfo(data.externalCss, true, styledElements, stylesArray);
-                    const STYLE = document.getElementsByTagName('STYLE')[0];
-                    if (!!STYLE) {
-                        STYLE.parentNode.removeChild(STYLE);
+                if (from !== 'templates') {
+                    if (data.externalCss.length > 0) {
+                        const styledElements = document.querySelectorAll('.previewWrap [style]');
+                        let stylesArray = [];
+                        Object.keys(styledElements).map((item) => {
+                            stylesArray.push(styledElements[item].getAttribute('style'));
+                        });
+                        Object.keys(styledElements).map((item) => {
+                            styledElements[item].removeAttribute('style');
+                        });
+                        // console.log(styledElements);
+                        this.context.setExternalCssInfo(data.externalCss, true, styledElements, stylesArray);
+                        const STYLE = document.getElementsByTagName('STYLE')[0];
+                        if (!!STYLE) {
+                            STYLE.parentNode.removeChild(STYLE);
+                        }
+                        const HEAD = document.getElementsByTagName('HEAD')[0];
+                        let style = document.createElement('style');
+                        style.type = 'text/css';
+                        HEAD.appendChild(style);
                     }
-                    const HEAD = document.getElementsByTagName('HEAD')[0];
-                    let style = document.createElement('style');
-                    style.type = 'text/css';
-                    HEAD.appendChild(style);
                 }
             });
             this.context.loaderHandler(false);

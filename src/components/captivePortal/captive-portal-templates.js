@@ -28,7 +28,7 @@ class CaptivePortalTemplates extends Component {
         const STYLE = document.getElementsByTagName('STYLE')[0];
         if (STYLE) STYLE.parentNode.removeChild(STYLE);
         this.context.resetGlobalState();
-        localStorage.setItem('cpID', id);
+        localStorage.setItem('templateID', id);
         localStorage.setItem('from', 'templates');
     };
 

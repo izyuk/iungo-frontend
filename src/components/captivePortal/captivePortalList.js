@@ -58,6 +58,7 @@ class CaptivePortalList extends Component {
         this.addNewCP();
         this.context.resetGlobalState();
         console.log(this.context);
+        localStorage.setItem('from', 'cp-list');
     }
 
     render() {
