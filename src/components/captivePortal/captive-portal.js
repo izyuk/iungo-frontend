@@ -245,11 +245,8 @@ class CaptivePortal extends Component {
                                            onDoubleClick={this.nameEditor}
                                            onKeyDown={this.sendData}
                                            defaultValue={this.context.name}
-                                           autoFocus={
-                                               (!localStorage.getItem('cpID') || !localStorage.getItem('templatesID')) ? true : false
-                                           }
-                                           className={'active'}
-                                           data-cy="captivePortalName"/>
+                                           autoFocus={!localStorage.getItem('cpID') && !localStorage.getItem('templateID')}
+                                           className={'active'} data-cy="captivePortalName"/>
                                     <span></span>
                                     <div className="toggles">
                                         <a href="javascript:void(0)" data-id="desktop"

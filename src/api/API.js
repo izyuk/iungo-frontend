@@ -6,8 +6,8 @@ const BACKEND_API = 'https://backend.bravofy.com';
 const ANALYTICS_API = 'https://analytics.bravofy.com';
 
 
-function authChecker(response){
-    if (response.status === 401){
+function authChecker(response) {
+    if (response.status === 401) {
         window.location = '/';
         localStorage.removeItem('token');
     } else return response
@@ -418,4 +418,21 @@ export const updateMailerLite = (string, data) => {
     })
         .then(res => res)
         .catch(err => authChecker(err.response));
+};
+
+export const createNewTemplate = (string, object) => {
+    return axios({
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${BACKEND_API}/template`,
+        mode: 'no-cors',
+        data: {...object}
+    })
+        .then(res => res)
+        // .catch(err => authChecker(err.response));
+        .catch(err => err);
 };

@@ -17,9 +17,9 @@ class Publish extends Component {
         failed: false
     };
 
-    callPublishMethod = async () => {
+    callPublishMethod = async (e) => {
         console.log(this.context);
-        if(this.context.name.length > 0){
+        if (this.context.name.length > 0) {
             const {
                 addPortalName,
                 setBackground,
@@ -61,9 +61,9 @@ class Publish extends Component {
             this.context.loaderHandler(true);
             const portalDataToSend = GetBuilderParams(rest);
             console.log('GDPR DATA TO SEND: ', portalDataToSend.style.gdpr_settings);
-            const data = await PublishPortalMethodHandler(portalDataToSend, this.state.id === null ? localStorage.getItem('cpID') : this.state.id);
+            const data = await PublishPortalMethodHandler(e, portalDataToSend, this.state.id === null ? localStorage.getItem('cpID') : this.state.id);
             this.setState(data);
-            if(data.id){
+            if (data.id) {
                 console.log(data.id);
                 localStorage.setItem('cpID', data.id);
             }
@@ -145,12 +145,17 @@ class Publish extends Component {
         return (
             <div className="buttonsRow">
                 <p>
-                    <button type="button" onClick={this.previewPortalMethodHandler} data-cy="previewBtn" className="previewBtn">Preview
+                    <button type="button" onClick={this.previewPortalMethodHandler} data-cy="previewBtn"
+                            className="previewBtn">Preview
                     </button>
                     <span>Please allow new windows opening</span>
                 </p>
-                <button type="button" onClick={this.callPublishMethod} className="publishBtn">Save
-                </button>
+                <p>
+                    <button type="button" onClick={this.callPublishMethod} className="publishBtn">Save
+                    </button>
+                    <button type="button" onClick={this.callPublishMethod} disabled={!this.state.id} name={'create-template'} className="publishBtn">Create template
+                    </button>
+                </p>
                 {this.context.dataToExclude.notification && <Notification/>}
             </div>
         )
