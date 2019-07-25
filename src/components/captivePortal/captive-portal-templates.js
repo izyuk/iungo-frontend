@@ -26,6 +26,14 @@ class CaptivePortalTemplates extends Component {
         const STYLE = document.getElementsByTagName('STYLE')[0];
         if (STYLE) STYLE.parentNode.removeChild(STYLE);
         this.context.resetGlobalState();
+        localStorage.removeItem('cpID');
+        localStorage.removeItem('templateID');
+    };
+
+    addNewCPWithTemplate = async (id) => {
+        const STYLE = document.getElementsByTagName('STYLE')[0];
+        if (STYLE) STYLE.parentNode.removeChild(STYLE);
+        this.context.resetGlobalState();
         if(typeof id === "number") localStorage.setItem('templateID', id);
         localStorage.setItem('from', 'templates');
     };
@@ -85,7 +93,7 @@ class CaptivePortalTemplates extends Component {
                                 return <div className="template" key={i}>
                                     <p>{item.name}</p>
                                     <img src={item.externalUrl} alt=""/>
-                                    <Link onClick={() => this.addNewCP(item.id)} className={"addNewCPButton"}
+                                    <Link onClick={() => this.addNewCPWithTemplate(item.id)} className={"addNewCPButton"}
                                           to={`/captive-portals/${item.uuid}`}>Use Template</Link>
                                 </div>
                             })
