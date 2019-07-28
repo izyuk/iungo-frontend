@@ -15,15 +15,20 @@ class Tool extends Component {
     sidebarStatus = () => {
         this.setState({
             sidebar: !this.state.sidebar
-        })
+        });
+    };
+
+    historyHandler = (path) => {
+        this.props.history.push(path);
     };
 
     render() {
+        console.log(this.props);
         return (
             <div>
                 <Header sidebarStatus={this.sidebarStatus}/>
                 <div className={'mainContent'}>
-                    <Sidebar status={this.state.sidebar}/>
+                    <Sidebar status={this.state.sidebar} historyHandler={this.historyHandler}/>
                     <MainSide/>
                 </div>
             </div>

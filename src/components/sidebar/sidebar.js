@@ -11,7 +11,8 @@ class Sidebar extends Component {
         if (!match) {
             return false
         }
-        if(window.location.pathname === '/reports/') window.location.pathname = '/reports/hotspot-usage';
+        console.log(this.props);
+        if(window.location.pathname === '/reports/') this.props.historyHandler('/reports/hotspot-usage');
         const eventID = location.pathname.split('/');
         return eventID.indexOf('reports');
     };
