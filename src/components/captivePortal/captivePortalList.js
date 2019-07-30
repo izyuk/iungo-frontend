@@ -72,16 +72,18 @@ class CaptivePortalList extends Component {
                             {/*<Link onClick={this.addNewCP} className={"addNewCPButton"} to={`/captive-portals/new`}>Get started</Link>*/}
                             <Link className={"addNewCPButton"} to={`/captive-portals/templates`}>Get started</Link>
                         </div>
-                        <table className={"captivePortalList"} rules="rows">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Created</th>
-                                <th>Updated</th>
-                            </tr>
-                            </thead>
-                            <tbody>{this.state.list !== '' && this.state.list}</tbody>
-                        </table>
+                        <div className="contentWrapWithTopBorder">
+                            <table className={"captivePortalList"} rules="rows">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Created</th>
+                                    <th>Updated</th>
+                                </tr>
+                                </thead>
+                                <tbody>{this.state.list !== '' && this.state.list}</tbody>
+                            </table>
+                        </div>
                     </div>
                     {this.state.list === '' && <Loader/>}
                 </div>
