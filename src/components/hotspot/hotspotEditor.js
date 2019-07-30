@@ -158,9 +158,9 @@ class HotspotEditor extends Component {
                 <div className="wrap wrapFix2">
                     <div className="info">
                         {!!!!localStorage.getItem('HSurl') ? (
-                                <h3>Edit Hotspot Settings</h3>
+                                <h3>Edit Hotspot</h3>
                             ) : (
-                                <h3>Create New Hotspot</h3>
+                                <h3>Create Hotspot</h3>
                                 )
                         }
                     </div>
