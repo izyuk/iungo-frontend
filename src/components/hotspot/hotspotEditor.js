@@ -157,7 +157,12 @@ class HotspotEditor extends Component {
             <div className="container containerFix">
                 <div className="wrap wrapFix2">
                     <div className="info">
-                        <h3>Hotspot Settings</h3>
+                        {!!!!localStorage.getItem('HSurl') ? (
+                                <h3>Edit Hotspot Settings</h3>
+                            ) : (
+                                <h3>Create New Hotspot</h3>
+                                )
+                        }
                     </div>
                     <div className="contentWrapWithTopBorder hotspot">
                         <div className="hotspotForm">
@@ -167,18 +172,18 @@ class HotspotEditor extends Component {
                                     id={'hotspot-name'}
                                     type="text"
                                     name="name"
-                                    placeholder={"Your name"}
+                                    placeholder={"Hostpot name"}
                                     onChange={this.handleInputChange}
                                     value={name}
                                 />
                             </div>
-                            <label htmlFor={'hotspot-address'}>Address</label>
+                            <label htmlFor={'hotspot-address'}>Address or location</label>
                             <div>
                                 <input
                                     id={'hotspot-address'}
                                     type="text"
                                     name="address"
-                                    placeholder={"Your address"}
+                                    placeholder={"Hotspot location or address"}
                                     onChange={this.handleInputChange}
                                     value={address}
                                 />
@@ -188,7 +193,7 @@ class HotspotEditor extends Component {
                                 <textarea
                                     id={'hotspot-description'}
                                     name="description"
-                                    placeholder={"Your description"}
+                                    placeholder={"Description"}
                                     onChange={this.handleInputChange}
                                     value={description}
                                 >
@@ -226,6 +231,8 @@ class HotspotEditor extends Component {
                                 !!localStorage.getItem('HSurl') &&
                                 <p className="link">
                                     <span>
+                                        Copy and paste this URL to your device settings<br />
+                                        <br />
                                         {localStorage.getItem('HSurl')}
                                     </span>
                                     <span onClick={this.copyToClipboard}>
@@ -249,6 +256,7 @@ class HotspotEditor extends Component {
 
                                     </span>
                                 </p>
+
                             }
 
                         </div>

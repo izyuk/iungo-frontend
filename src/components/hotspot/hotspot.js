@@ -8,7 +8,7 @@ export default class Hotspot extends Component {
             <div className="container containerFix">
                 <div className="wrap wrapFix2">
                     <div className="info">
-                        <h3>Hotspot Settings</h3>
+                        <h3>Hotspots</h3>
                         <Link className={"addNewCPButton"} to={`/hotspot/new`}>Create new hotspot</Link>
                     </div>
                     <HotspotDetails/>
