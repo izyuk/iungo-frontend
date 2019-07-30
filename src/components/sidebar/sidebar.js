@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink, withRouter} from 'react-router-dom';
 
 class Sidebar extends Component {
     constructor(props) {
@@ -12,7 +12,7 @@ class Sidebar extends Component {
             return false
         }
         console.log(this.props);
-        if(window.location.pathname === '/reports/') this.props.historyHandler('/reports/hotspot-usage');
+        if(window.location.pathname === '/reports/') this.props.history.replace('/reports/hotspot-usage');
         const eventID = location.pathname.split('/');
         return eventID.indexOf('reports');
     };
@@ -63,4 +63,4 @@ class Sidebar extends Component {
     }
 }
 
-export default Sidebar;
+export default withRouter(Sidebar);
