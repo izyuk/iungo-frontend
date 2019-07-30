@@ -235,7 +235,8 @@ class ProfileDetails extends Component {
                 </div>
 
                 <div className="info profile">
-                    <h3>Mailerlite integraion</h3>
+                    <h3>MailerLite Integration</h3>
+                    <p>MailerLite.com is a email marketing solution for smart small business. Enable integration if you want to push your emails to MailerLite.</p>
                 </div>
                 <div className="profileDetailsWrap">
                     <ProfileForm onCorrect={this.saveMailerLite}>
