@@ -8,9 +8,9 @@ class Container extends Component {
     render() {
         return (
             <div className="container">
-                <Border/>
                 <Background/>
                 <Size/>
+                <Border/>
             </div>
         )
     }
