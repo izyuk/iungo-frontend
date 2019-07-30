@@ -277,6 +277,10 @@ class BackgroundAndLogo extends Component {
         this.context.removeLogo();
     };
 
+    removeBackgroundHandler = () => {
+        this.context.removeBackground();
+    };
+
     componentDidMount() {
         if (this.props.type === "background") {
             if (this.context.style.background_and_logo.background) {
@@ -348,7 +352,14 @@ class BackgroundAndLogo extends Component {
                                 this.props.type === "logo" &&
                                 ((logo.url !== '' && this.context.logoId !== '') &&
                                     <span className="removeLogo" onClick={this.removeLogoHandler}>
-                                        Remove logo
+                                        Remove
+                                    </span>)
+                            }
+                            {
+                                this.props.type === "background" &&
+                                ((background.url !== '' && this.context.backgroundId !== '') &&
+                                    <span className="removeLogo" onClick={this.removeBackgroundHandler}>
+                                        Remove
                                     </span>)
                             }
                         </div>

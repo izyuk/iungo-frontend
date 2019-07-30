@@ -802,6 +802,14 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState);
     };
 
+    removeBackground = () => {
+        const currentState = this.state;
+        currentState.backgroundId = '';
+        currentState.style.background_and_logo.background.url = '';
+        currentState.style.background_and_logo.background.backgroundType = '';
+        this.setState(currentState);
+    };
+
     urlPathHandler = url => {
         const currentState = this.state;
         currentState.dataToExclude.urlPath = url;
@@ -869,6 +877,7 @@ class GlobalCaptivePortalState extends Component {
             setToken: this.setToken,
             previewCssGenerator: this.previewCssGenerator,
             removeLogo: this.removeLogo,
+            removeBackground: this.removeBackground,
             setGDPRSettings: this.setGDPRSettings,
             setGDPRSettingsStatus: this.setGDPRSettingsStatus,
             setGDPRCollection: this.setGDPRCollection,

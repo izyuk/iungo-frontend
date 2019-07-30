@@ -246,6 +246,7 @@ export default React.createContext({
     setToken: () => {},
     previewCssGenerator: () => {},
     removeLogo: () => {},
+    removeBackground: () => {},
     urlPathHandler: () => {},
     profileHandler: () => {},
     setTermsFromBE: () => {},
