@@ -41,7 +41,6 @@ class Sidebar extends Component {
                             <circle cx="13" cy="21" r="2" fill="#BFC5D2"/>
                         </g>
                     </svg>
-
                     <span>
                         Hotspots
                     </span>

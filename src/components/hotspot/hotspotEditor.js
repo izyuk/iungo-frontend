@@ -88,8 +88,10 @@ class HotspotEditor extends Component {
                 currentState.description = description;
                 currentState.id = id;
                 currentState.name = name;
-                currentState.captivePortalID = portal.id;
-                currentState.portalUrl = portal.externalUrl;
+                if(!!portal) {
+                    currentState.captivePortalID = portal.id;
+                    currentState.portalUrl = portal.externalUrl;
+                }
                 this.setState(currentState);
             });
         }
