@@ -5,8 +5,6 @@ import Notification from '../additional/notification';
 import {getHotspots} from '../../api/API';
 import {Route, withRouter} from "react-router-dom";
 import {dateISO} from "../../modules/dateISO";
-
-import {AgGridReact} from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
 
@@ -165,31 +163,36 @@ class HotspotDetails extends Component {
 
     render() {
         console.log('Row data', this.state.rowData);
+        const colDef = {
+            name: 'Static Styles',
+            field: 'field1',
+            cellStyle: {color: 'red', 'background-color': 'green'}
+        };
         return (
             <div>
                 {/*<div className="contentWrapWithTopBorder">*/}
-                    <div>
-                        Filter: <input type="text" placeholder="Filter..." value={this.state.filterText}
-                                       onChange={this.onFilterTextBoxChanged}/>
-                    </div>
-                    <div
-                        className="ag-theme-material"
-                        style={{
-                            height: '100%',
-                            width: '100%'
-                        }}
-                    >
-                        <AgGridReact
-                            gridOptions={this.state.gridOptions}
-                            rowData={this.state.rowData}
-                            onRowClicked={this.viewHotspotForm}
-                            pagination
-                            paginationPageSize={10}
-                            onFirstDataRendered={this.onFirstDataRendered.bind(this)}
-                        >
-                        </AgGridReact>
+                {/*    <div>*/}
+                {/*        Filter: <input type="text" placeholder="Filter..." value={this.state.filterText}*/}
+                {/*                       onChange={this.onFilterTextBoxChanged}/>*/}
+                {/*    </div>*/}
+                {/*    <div*/}
+                {/*        className="ag-theme-material"*/}
+                {/*        style={{*/}
+                {/*            height: '100%',*/}
+                {/*            width: '100%'*/}
+                {/*        }}*/}
+                {/*    >*/}
+                {/*        <AgGridReact*/}
+                {/*            gridOptions={this.state.gridOptions}*/}
+                {/*            rowData={this.state.rowData}*/}
+                {/*            onRowClicked={this.viewHotspotForm}*/}
+                {/*            pagination*/}
+                {/*            paginationPageSize={10}*/}
+                {/*            onFirstDataRendered={this.onFirstDataRendered.bind(this)}*/}
+                {/*        >*/}
+                {/*        </AgGridReact>*/}
 
-                    </div>
+                {/*    </div>*/}
                     <div className="contentWrapWithTopBorder">
                         <HotspotTable
                             hotspotList={this.state.list !== '' ? this.state.list : false}
