@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import HotspotTable from './hotspotTable';
 import Notification from '../additional/notification';
 
 import {getHotspots} from '../../api/API';
 import {Route, withRouter} from "react-router-dom";
 import {dateISO} from "../../modules/dateISO";
+
+import {AgGridReact} from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
 
@@ -106,31 +107,6 @@ class HotspotDetails extends Component {
         this.findAllHotspots(localStorage.getItem('token'));
     }
 
-
-    editHandler = (HSid, HSname, HSaddress, HSdescription, portalID) => {
-        const data = {id: HSid, name: HSname, address: HSaddress, description: HSdescription};
-        Object.keys(data).map((el) => {
-            this.setState({
-                [el]: data[el]
-            });
-        });
-        if (portalID) {
-            let portalsList = this.state.portalsList;
-            const {[0]: {id, name}} = portalsList.filter(el => {
-                if (el.id === portalID) {
-                    console.log(el);
-                    return el;
-                }
-            });
-            document.getElementsByClassName('selectedPortal')[0].innerText = name;
-            this.setState({captivePortalID: id});
-        } else {
-            document.getElementsByClassName('selectedPortal')[0].innerText = 'Select Captive Portal';
-            this.setState({captivePortalID: ''});
-
-        }
-    };
-
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.id !== nextState.id) return true;
         else if (this.state.name !== nextState.name) return true;
@@ -150,16 +126,15 @@ class HotspotDetails extends Component {
     }
 
     onFilterTextBoxChanged = (event) => {
-        this.setState({filterText: event.target.value})
+        this.setState({filterText: event.target.value});
         this.gridApi.setQuickFilter(event.target.value);
-    }
+    };
 
     viewHotspotForm = (params) => {
         console.log('click', params.data.uuid);
-        //localStorage.setItem('HSurl', params.data.virtualUrl);
-        //createHistory.push(`/hotspot/${params.data.uuid}`);
+        localStorage.setItem('HSurl', params.data.virtualUrl);
         this.props.history.push(`/hotspot/${params.data.uuid}`);
-    }
+    };
 
     render() {
         console.log('Row data', this.state.rowData);
@@ -169,41 +144,32 @@ class HotspotDetails extends Component {
             cellStyle: {color: 'red', 'background-color': 'green'}
         };
         return (
-            <div>
-                {/*<div className="contentWrapWithTopBorder">*/}
-                {/*    <div>*/}
-                {/*        Filter: <input type="text" placeholder="Filter..." value={this.state.filterText}*/}
-                {/*                       onChange={this.onFilterTextBoxChanged}/>*/}
-                {/*    </div>*/}
-                {/*    <div*/}
-                {/*        className="ag-theme-material"*/}
-                {/*        style={{*/}
-                {/*            height: '100%',*/}
-                {/*            width: '100%'*/}
-                {/*        }}*/}
-                {/*    >*/}
-                {/*        <AgGridReact*/}
-                {/*            gridOptions={this.state.gridOptions}*/}
-                {/*            rowData={this.state.rowData}*/}
-                {/*            onRowClicked={this.viewHotspotForm}*/}
-                {/*            pagination*/}
-                {/*            paginationPageSize={10}*/}
-                {/*            onFirstDataRendered={this.onFirstDataRendered.bind(this)}*/}
-                {/*        >*/}
-                {/*        </AgGridReact>*/}
-
-                {/*    </div>*/}
-                    <div className="contentWrapWithTopBorder">
-                        <HotspotTable
-                            hotspotList={this.state.list !== '' ? this.state.list : false}
-                            virtualUrl={this.state.url}
-                            editHandler={this.editHandler}
-                        />
+            <div className="contentWrapWithTopBorder">
+                <div
+                    className="ag-theme-material"
+                    style={{
+                        height: '100%',
+                        width: '100%'
+                    }}
+                >
+                    <div>
+                        Filter: <input type="text" placeholder="Filter..." value={this.state.filterText}
+                                       onChange={this.onFilterTextBoxChanged}/>
                     </div>
-                    {this.state.submitted &&
-                    <Notification type={'info'}
-                                  text={`Hotspot settings was ${this.state.submittedType} successfully`}/>}
-                {/*</div>*/}
+                    <AgGridReact
+                        gridOptions={this.state.gridOptions}
+                        rowData={this.state.rowData}
+                        onRowClicked={this.viewHotspotForm}
+                        pagination
+                        paginationPageSize={10}
+                        onFirstDataRendered={this.onFirstDataRendered.bind(this)}
+                    >
+                    </AgGridReact>
+
+                </div>
+                {this.state.submitted &&
+                <Notification type={'info'}
+                              text={`Hotspot settings was ${this.state.submittedType} successfully`}/>}
             </div>
         )
     }

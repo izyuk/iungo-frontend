@@ -703,9 +703,9 @@ header {
   margin-bottom: 24px;
 
   &.profile {
-    align-items: flex-start;
+    //align-items: flex-start;
     flex-direction: column;
-
+    align-items: center;
     h3 {
       color: @steel;
     }
@@ -713,7 +713,8 @@ header {
     p {
       .font(@avenir-medium, 16);
       color: @steel;
-      margin-top: 50px;
+      margin: 49px 0 57px 0;
+      text-align: center;
     }
   }
 
@@ -2649,16 +2650,34 @@ header {
       color: @steel;
       .font(@avenir-medium, 14);
       padding-bottom: 8px;
+      &.error {
+        color: @ruby;
+      }
     }
 
     & > div {
-      position: relative;
-      display: flex;
-      width: 100%;
-      height: 37px;
-      border-radius: 2px;
-      border: solid 1px @pale-grey-seven;
-      background-color: @w;
+      &.error {
+        color: @ruby;
+        .font(@avenir-medium, 12);
+      }
+      &:not(.error){
+        position: relative;
+        display: flex;
+        width: 100%;
+        height: 37px;
+        border-radius: 2px;
+        border: solid 1px @pale-grey-seven;
+        background-color: @w;
+      }
+      &.errorField{
+        position: relative;
+        display: flex;
+        width: 100%;
+        height: 37px;
+        border-radius: 2px;
+        border: solid 1px @ruby;
+        background-color: @w;
+      }
 
       &:not(:last-child) {
         margin-bottom: 27px;
