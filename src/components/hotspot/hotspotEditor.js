@@ -230,7 +230,7 @@ class HotspotEditor extends Component {
 
 
                             {
-                                (!!localStorage.getItem('HSurl') && localStorage.getItem('HSurl')!== null) &&
+                                (localStorage.getItem('HSurl') !== 'null') &&
                                 <p className="link">
                                     <span>
                                         Copy and paste this URL to your device settings<br />
