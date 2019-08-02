@@ -2,51 +2,79 @@ import React, {Component} from 'react';
 import {getAllPortals} from "../../api/API";
 import {dateISO} from '../../modules/dateISO';
 import Loader from "../../loader";
-import {Link, Redirect, Route} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import CaptivePortalContext from "../../context/project-context";
+import {AgGridReact} from "ag-grid-react";
 
 class CaptivePortalList extends Component {
 
     static contextType = CaptivePortalContext;
 
     state = {
-        list: '',
-        cleared: false
-    };
+        // list: '',
+        cleared: false,
 
-    getId = (e) => {
-        this.props.setId(e.currentTarget.getAttribute('dataid'));
+        filterText: '',
+        rowData: '',
+
+        gridOptions: {
+            defaultColDef: {
+                resizable: true,
+                sortable: true
+            },
+            columnDefs: [{
+                headerName: "Name",
+                field: "name",
+                filter: "agTextColumnFilter",
+            }, {
+                headerName: "Created",
+                valueFormatter: (data) => dateISO(data.value),
+                field: "createdAt"
+            }, {
+                headerName: "Updated",
+                field: "updatedAt",
+                valueFormatter: (data) => dateISO(data.value),
+                sort: 'desc'
+            }]
+        }
     };
 
     findAllPortals = async (data) => {
         let query = getAllPortals(data);
-        let listArray = [];
+        let rows = [];
         await query.then(res => {
             let {data} = res;
-            data.map((item, i) => {
-                listArray.push(
-                    <Route key={i} render={({history}) => (
-                        <tr dataid={item.id} datauuid={item.uuid} onClick={(e) => {
-                            this.getId(e);
-                            history.push(`/captive-portals/${item.uuid}`)
-                        }}>
-                            <td className={"CaptivePortalItem"}>{item.name}</td>
-                            <td>{dateISO(item.createdAt)}</td>
-                            <td>{dateISO(item.updatedAt)}</td>
-                        </tr>
-                    )}/>
-                )
-            });
+            console.log(data);
+            rows = data;
         });
         this.setState({
-            list: listArray
+            rowData: rows
         })
+    };
+
+    onFirstDataRendered(params) {
+        this.gridApi = params.api;
+        this.gridColumnApi = params.columnApi;
+        params.api.sizeColumnsToFit();
+    }
+
+    onFilterTextBoxChanged = (event) => {
+        this.setState({filterText: event.target.value});
+        this.gridApi.setQuickFilter(event.target.value);
+    };
+
+    viewCP = (params) => {
+        console.log('click', params.data.uuid);
+        localStorage.setItem('cpID', params.data.id);
+        console.log(this.props);
+        this.props.history.push(`/captive-portals/${params.data.uuid}`);
     };
 
     addNewCP = async () => {
         const STYLE = document.getElementsByTagName('STYLE')[0];
         if (STYLE) STYLE.parentNode.removeChild(STYLE);
         this.context.resetGlobalState();
+        this.props.history.push(`/captive-portals/${params.data.uuid}`);
         localStorage.removeItem('cpID');
         localStorage.removeItem('templateID');
     };
@@ -69,23 +97,33 @@ class CaptivePortalList extends Component {
                     <div className="wrap wrapFix2">
                         <div className="info">
                             <h3>Captive Portals List</h3>
-                            {/*<Link onClick={this.addNewCP} className={"addNewCPButton"} to={`/captive-portals/new`}>Get started</Link>*/}
                             <Link className={"addNewCPButton"} to={`/captive-portals/templates`}>Get started</Link>
                         </div>
                         <div className="contentWrapWithTopBorder">
-                            <table className={"captivePortalList"} rules="rows">
-                                <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Created</th>
-                                    <th>Updated</th>
-                                </tr>
-                                </thead>
-                                <tbody>{this.state.list !== '' && this.state.list}</tbody>
-                            </table>
+                            <div
+                                className="ag-theme-material"
+                                style={{
+                                    width: '100%',
+                                    height: 'calc(100% - 70px)'
+                                }}>
+                                <div className={'filterRow'}>
+                                    Filter:
+                                    <div>
+                                        <input type="text" placeholder="Filter..." value={this.state.filterText} onChange={this.onFilterTextBoxChanged}/>
+                                    </div>
+                                </div>
+                                <AgGridReact
+                                    gridOptions={this.state.gridOptions}
+                                    rowData={this.state.rowData}
+                                    onRowClicked={this.viewCP}
+                                    onFirstDataRendered={this.onFirstDataRendered.bind(this)}
+                                >
+                                </AgGridReact>
+
+                            </div>
                         </div>
                     </div>
-                    {this.state.list === '' && <Loader/>}
+                    {this.state.rowData === '' && <Loader/>}
                 </div>
         )
     }

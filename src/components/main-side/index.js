@@ -64,8 +64,8 @@ class MainSide extends Component {
             <div className="mainSide">
                 <Switch>
                     <Route exact path="/dashboard" component={Dashboard}/>
-                    <Route exact path='/captive-portals' render={() => (
-                        <CaptivePortalList setId={this.idHandler} clearing={this.storageCleaningHandler}/>
+                    <Route exact path='/captive-portals' render={(props) => (
+                        <CaptivePortalList {...props} setId={this.idHandler} clearing={this.storageCleaningHandler}/>
                     )}/>
                     <Route exact path='/captive-portals/templates' render={() => (
                         <CaptivePortalTemplates />
