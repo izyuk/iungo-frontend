@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Notification from '../additional/notification';
 
 import {getHotspots} from '../../api/API';
-import {Route, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import {dateISO} from "../../modules/dateISO";
 
 import {AgGridReact} from 'ag-grid-react';
@@ -62,43 +62,12 @@ class HotspotDetails extends Component {
 
     findAllHotspots = async (str) => {
         let query = getHotspots(str);
-        let listArray = [];
         let rows = [];
         await query.then(res => {
             let {data} = res;
-            rows = res.data;
-            data.map((item, i) => {
-                console.log(item);
-                listArray.push(
-                    <Route key={i} render={({history}) => (
-                        <tr dataid={item.id}
-                            datauuid={item.uuid}
-                            onClick={(e) => {
-                                localStorage.setItem('HSurl', item.virtualUrl);
-                                history.push(`/hotspot/${item.uuid}`)
-                            }}>
-                            <td>{item.name}</td>
-                            <td>{item.portal ? item.portal.name : ''}</td>
-                            <td>{item.address}</td>
-                            <td>{item.description}</td>
-                            <td className={"url"}>
-                                {item.virtualUrl !== null ?
-                                    <a href={`${item.virtualUrl}`}
-                                       onClick={this.copyToClipboard}
-                                    >
-                                        {item.virtualUrl}
-                                    </a>
-                                    : ''
-                                }
-                            </td>
-                            <td>{dateISO(item.updatedAt)}</td>
-                        </tr>
-                    )}/>
-                )
-            });
+            rows = data;
         });
         this.setState({
-            list: listArray,
             rowData: rows
         })
     };
@@ -148,20 +117,19 @@ class HotspotDetails extends Component {
                 <div
                     className="ag-theme-material"
                     style={{
-                        height: '100%',
-                        width: '100%'
-                    }}
-                >
-                    <div>
-                        Filter: <input type="text" placeholder="Filter..." value={this.state.filterText}
-                                       onChange={this.onFilterTextBoxChanged}/>
+                        width: '100%',
+                        height: 'calc(100% - 70px)'
+                    }}>
+                    <div className={'filterRow'}>
+                        Filter:
+                        <div>
+                            <input type="text" placeholder="Filter..." value={this.state.filterText} onChange={this.onFilterTextBoxChanged}/>
+                        </div>
                     </div>
                     <AgGridReact
                         gridOptions={this.state.gridOptions}
                         rowData={this.state.rowData}
                         onRowClicked={this.viewHotspotForm}
-                        pagination
-                        paginationPageSize={10}
                         onFirstDataRendered={this.onFirstDataRendered.bind(this)}
                     >
                     </AgGridReact>

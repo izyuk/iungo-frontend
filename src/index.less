@@ -2099,6 +2099,56 @@ header {
     justify-content: flex-start;
   }
 
+  .filterRow{
+    background: @trans;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    div{
+      margin-left: 10px;
+      position: relative;
+      display: flex;
+      height: 37px;
+      border-radius: 2px;
+      border: solid 1px @pale-grey-seven;
+      background-color: @w;
+      input{
+        .font(@avenir-medium, 12);
+        width: 100%;
+        border: 1px solid transparent;
+        background: transparent;
+        font-weight: 500;
+        line-height: 2;
+        color: @steel-three;
+        padding: 14px 8px;
+        resize: none;
+      }
+    }
+  }
+
+  .ag-theme-material{
+    &>div{
+      &:not(.filterRow){
+        background-color: @w;
+      }
+      .ag-row-hover{
+        cursor: pointer;
+        background: @pale-grey-three;
+      }
+      .ag-header-cell-text{
+        .font(@avenir-medium, 16);
+        color: @dark-grey-blue;
+      }
+    }
+    .ag-root-wrapper{
+      width: 100%;
+      border: 1px solid @pale-grey-three;
+      box-shadow: 0 1px 2px 0 rgba(191, 197, 210, 0.15);
+      background: @w;
+
+    }
+  }
+
   .cpSelector {
     display: flex;
     justify-content: center;
