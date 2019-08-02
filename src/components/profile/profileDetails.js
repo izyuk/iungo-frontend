@@ -25,6 +25,8 @@ class ProfileDetails extends Component {
     token = this.context.dataToExclude.token ? this.context.dataToExclude.token : localStorage.getItem('token');
     country = React.createRef();
     language = React.createRef();
+    name = React.createRef();
+    zipCode = React.createRef();
 
     static propTypes = {};
 
@@ -78,10 +80,12 @@ class ProfileDetails extends Component {
     saveData = async () => {
         const profileInfo = this.context.dataToExclude.profileInfo;
         console.log(profileInfo);
-        const query = setCompanyProfileInfo(this.token, profileInfo);
-        await query.then(res => {
-            console.log(res);
-        })
+        if(this.name.current.value !== '' && this.zipCode.current.value !== ''){
+            const query = setCompanyProfileInfo(this.token, profileInfo);
+            await query.then(res => {
+                console.log(res);
+            })
+        }
     };
 
     saveMailerLite = async () => {
@@ -138,8 +142,14 @@ class ProfileDetails extends Component {
             <div className={'profileDetailsWrapContainer'}>
                 <div className="profileDetailsWrap">
                     <ProfileForm onCorrect={this.saveData}>
-                        <label htmlFor={'company-name'}>Company name</label>
-                        <div>
+                        <label htmlFor={'company-name'} className={name === '' && 'error'}>Company name{name === '' && '*'}</label>
+                        {name === '' &&
+                            <div className={'error'}>
+                                <p>* Required</p>
+                                <p>* Bad format</p>
+                            </div>
+                        }
+                        <div className={name === '' && 'errorField'}>
                             <input
                                 type="text"
                                 datatype="name"
@@ -147,6 +157,7 @@ class ProfileDetails extends Component {
                                 placeholder={"Company name"}
                                 defaultValue={name}
                                 onChange={this.fieldsHandler}
+                                ref={this.name}
                             />
                         </div>
                         <label htmlFor={'registration-number'}>Registration Number</label>
@@ -171,8 +182,13 @@ class ProfileDetails extends Component {
                                 onChange={this.fieldsHandler}
                             />
                         </div>
-                        <label htmlFor={'zip-code'}>ZIP Code</label>
-                        <div>
+                        <label htmlFor={'zip-code'} className={zipCode === '' && 'error'}>ZIP Code{zipCode === '' && '*'}</label>
+                        {zipCode === '' &&
+                        <div className={'error'}>
+                            <p>* Bad format</p>
+                        </div>
+                        }
+                        <div className={zipCode === '' && 'errorField'}>
                             <input
                                 type="text"
                                 datatype="zipCode"
@@ -180,6 +196,7 @@ class ProfileDetails extends Component {
                                 placeholder={"Zip code"}
                                 defaultValue={zipCode}
                                 onChange={this.fieldsHandler}
+                                ref={this.zipCode}
                             />
                         </div>
                         <label htmlFor={'country'}>Country</label>
@@ -236,7 +253,8 @@ class ProfileDetails extends Component {
 
                 <div className="info profile">
                     <h3>MailerLite Integration</h3>
-                    <p>MailerLite.com is a email marketing solution for smart small business. Enable integration if you want to push your emails to MailerLite.</p>
+                    <p>MailerLite.com is a email marketing solution for smart small business. <br/>
+                        Enable integration if you want to push your emails to MailerLite.</p>
                 </div>
                 <div className="profileDetailsWrap">
                     <ProfileForm onCorrect={this.saveMailerLite}>
