@@ -1,0 +1,313 @@
+@dark-indigo: #071031;
+@trans: transparent;
+@soft-blue: #5888ea;
+@cornflower-blue: #4372d6;
+@w: #fff;
+@steel: #768198;
+@steel-two: #7b869c;
+@steel-three: #7a859b;
+@steel-four: #bfc5d2;
+@lgray: #eee;
+@pale-grey: #e9ebf0;
+@pale-grey-two: #f9f9fc;
+@pale-grey-three: #e5e9f2;
+@pale-grey-four: #f3f4f8;
+@pale-grey-five: #f1f3f8;
+@pale-grey-six: #dde1ec;
+@pale-grey-seven: #e7e9ef;
+@marine: #0a2463;
+@french-blue: #4166b2;
+@light-navy-blue: #345497;
+@cloudy-blue: #a6b4d6;
+@cloudy-blue-15: rgba(191, 197, 210, 0.15);
+@dodger-blue: #4285f4;
+@dark-sky-blue: #3675de;
+@azure: #1ca1f2;
+@water-blue: #1494e1;
+@light-blue-grey: #dee5f3;
+@dark-blue-grey: #161f3e;
+@dark-grey-blue: #2a314e;
+@dark-blue-grey-two: #131c3b;
+@dark-blue-grey-three: #101939;
+@super-dark-blue: #092463;
+@shamrock-green: #00d463;
+@pink: #ff6976;
+@ruby: #c4004a;
+
+@avenir-black: 'AvenirLTStd-Black';
+@avenir-blackOblique: 'AvenirLTStd-BlackOblique';
+@avenir-book: 'AvenirLTStd-Book';
+@avenir-bookOblique: 'AvenirLTStd-BookOblique';
+@avenir-heavy: 'AvenirLTStd-Heavy';
+@avenir-heavyOblique: 'AvenirLTStd-HeavyOblique';
+@avenir-light: 'AvenirLTStd-Light';
+@avenir-lightOblique: 'AvenirLTStd-LightOblique';
+@avenir-medium: 'AvenirLTStd-Medium';
+@avenir-mediumOblique: 'AvenirLTStd-MediumOblique';
+@avenir-oblique: 'AvenirLTStd-Oblique';
+@avenir-roman: 'AvenirLTStd-Roman';
+
+@font: '/fonts';
+
+@gray_menu_hover: #5d5d5d;
+@l_gray: #f1f1f1;
+@adm_gray: #c7c7c7;
+@btn_register: #0B65B1;
+@btn_login: #E2F0FC;
+@btn_border: #063A66;
+@btn_color: #063A66;
+@trans: transparent;
+@input_color: #95989A;
+@hr: #909090;
+@randText: #212121;
+@optionsCoverage: rgba(0, 0, 0, 0.8);
+@optionsCoverageText: rgba(255, 255, 255, 0.5);
+@reviewPlans: rgba(0, 0, 0, 0.6);
+@borderRegister: rgba(0, 0, 0, 0.2);
+
+@img: './static/images';
+.font(@font,
+@sizeValue) {
+  font-family: @font, sans-serif;
+  @remValue: (@sizeValue / 16);
+  @pxValue: @sizeValue;
+  font-size:~"@{pxValue}px";
+  font-size:~"@{remValue}rem";
+}
+
+.container{
+  width: 100%;
+  //max-width: calc(100% - 48px);
+  margin: auto;
+  height: 100%;
+}
+
+.wrap{
+  display: flex;
+  align-items: center;
+}
+
+.content{
+  display: flex;
+}
+
+@font-face {
+  font-family: 'Avenir LT Std 55 Roman';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 55 Roman'), ~"url('@{font}/AvenirLTStd-Roman.woff')" format('woff');
+}
+
+@font-face {
+  font-family: 'Avenir LT Std 55 Oblique';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 55 Oblique'), ~"url('@{font}/AvenirLTStd-Oblique.woff')" format('woff');
+}
+
+@font-face {
+  font-family: 'Avenir LT Std 35 Light';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 35 Light'), ~"url('@{font}/AvenirLTStd-Light.woff')" format('woff');
+}
+
+@font-face {
+  font-family: 'Avenir LT Std 35 Light Oblique';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 35 Light Oblique'), ~"url('@{font}/AvenirLTStd-LightOblique.woff')" format('woff');
+}
+
+@font-face {
+  font-family: 'Avenir LT Std 45 Book';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 45 Book'), ~"url('@{font}/AvenirLTStd-Book.woff')" format('woff');
+}
+
+@font-face {
+  font-family: 'Avenir LT Std 45 Book Oblique';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 45 Book Oblique'), ~"url('@{font}/AvenirLTStd-BookOblique.woff')" format('woff');
+}
+
+@font-face {
+  font-family: 'Avenir LT Std 65 Medium';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 65 Medium'), ~"url('@{font}/AvenirLTStd-Medium.woff')" format('woff');
+}
+
+@font-face {
+  font-family: 'Avenir LT Std 65 Medium Oblique';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 65 Medium Oblique'), ~"url('@{font}/AvenirLTStd-MediumOblique.woff')" format('woff');
+}
+
+@font-face {
+  font-family: 'Avenir LT Std 85 Heavy';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 85 Heavy'), ~"url('@{font}/AvenirLTStd-Heavy.woff')" format('woff');
+}
+
+@font-face {
+  font-family: 'Avenir LT Std 85 Heavy Oblique';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 85 Heavy Oblique'), ~"url('@{font}/AvenirLTStd-HeavyOblique.woff')" format('woff');
+}
+
+@font-face {
+  font-family: 'Avenir LT Std 95 Black';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 95 Black'), ~"url('@{font}/AvenirLTStd-Black.woff')" format('woff');
+}
+
+@font-face {
+  font-family: 'Avenir LT Std 95 Black Oblique';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir LT Std 95 Black Oblique'), ~"url('@{font}/AvenirLTStd-BlackOblique.woff')" format('woff');
+}
+
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+button,
+fieldset,
+form,
+input,
+label,
+legend,
+textarea,
+select,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+a,
+b,
+i,
+u,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  font-size: 100%;
+  font-style: normal;
+  font-weight: normal;
+  line-height: inherit;
+  vertical-align: baseline;
+  background: none;
+  white-space: normal;
+  list-style: none;
+}
+
+form {
+  height: inherit;
+}
+
+iframe {
+  width: 100%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  //font-family: @regular;
+  //transition: all .5s linear;
+}
+
+A:link,
+A:active,
+A:hover,
+A:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button, input, select {
+  outline: none;
+  cursor: pointer;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  .font(@avenir-medium, 16);
+}
+
+.width-100{
+  width: 100%;
+}

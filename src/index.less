@@ -1,4 +1,6 @@
-@import "./static/exp.less";
+@import "./static/styles/exp.less";
+@import "./static/styles/settingsForm.less";
+
 
 .list {
   display: flex;
@@ -708,13 +710,16 @@ header {
     align-items: center;
     h3 {
       color: @steel;
+      padding-top: 35px;
     }
 
     p {
       .font(@avenir-medium, 16);
       color: @steel;
-      margin: 49px 0 57px 0;
+      margin: 49px 0;
       text-align: center;
+      max-width: 570px;
+      line-height: 1.67;
     }
   }
 
@@ -2630,13 +2635,8 @@ header {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-
-  &:not(:last-child) {
-    padding-bottom: 50px;
-    margin-top: 50px;
-    margin-bottom: 45px;
-    border-bottom: 1px solid @pale-grey-three;
-  }
+  border-bottom: 1px solid @pale-grey-three;
+  padding-bottom: 50px;
 
   &:last-child {
     margin-bottom: 45px;

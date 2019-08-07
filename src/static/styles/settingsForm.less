@@ -1,0 +1,268 @@
+.settingsDetailsWrap {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    border-bottom: 1px solid @pale-grey-three;
+    padding-bottom: 50px;
+  
+    &:last-child {
+      margin-bottom: 45px;
+    }
+  
+    .settingsForm {
+      width: 450px;
+      display: flex;
+      flex-direction: column;
+  
+      .checkBoxPlace {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+  
+        input[type=checkbox] {
+          margin-right: 10px;
+          width: 15px;
+          height: 15px;
+          position: relative;
+          opacity: 0;
+          z-index: 1;
+        }
+  
+        span {
+          display: flex;
+          position: absolute;
+          left: 0;
+          width: 15px;
+          height: 15px;
+          border: 1px solid @pale-grey-three;
+          border-radius: 2px;
+          justify-content: center;
+          align-items: center;
+        }
+  
+        input:checked + span {
+          &:before {
+            content: '';
+            display: block;
+            position: relative;
+            width: 7px;
+            height: 7px;
+            border: 1px solid @soft-blue;
+            border-radius: 2px;
+            background: @soft-blue;
+          }
+        }
+  
+        span + p {
+          .font(@avenir-medium, 14);
+          color: @steel;
+          align-self: flex-start;
+        }
+      }
+  
+      .onTopFieldLabel {
+        .font(@avenir-medium, 12);
+        line-height: 2.67;
+        color: @steel;
+      }
+  
+      label {
+        color: @steel;
+        .font(@avenir-medium, 14);
+        padding-bottom: 8px;
+        &.error {
+          color: @ruby;
+        }
+      }
+  
+      fieldset { 
+        border: none;
+        margin-bottom: 27px
+      }
+
+      legend {
+        text-align: left;
+        color: @soft-blue;
+        margin: 28px 0;
+        .font(@avenir-heavy, 14);
+        font-weight: 500;
+      }
+
+      div {
+
+        &.error {
+          color: @ruby;
+          .font(@avenir-medium, 12);
+        }
+        &:not(.error){
+          position: relative;
+          display: flex;
+          width: 100%;
+          height: 37px;
+          border-radius: 2px;
+          border: solid 1px @pale-grey-seven;
+          background-color: @w;
+        }
+        &.errorField{
+          position: relative;
+          display: flex;
+          width: 100%;
+          height: 37px;
+          border-radius: 2px;
+          border: solid 1px @ruby;
+          background-color: @w;
+        }
+  
+        &:not(:last-child) {
+          margin-bottom: 27px;
+        }
+  
+        textarea,
+        input {
+          width: 100%;
+          border: 1px solid transparent;
+          background: transparent;
+          .font(@avenir-heavy, 14);
+          font-weight: 500;
+          line-height: 2;
+          color: @steel-three;
+          padding: 14px 8px;
+          resize: none;
+  
+  
+          &::-webkit-input-placeholder {
+            color: @steel-four;
+            .font(@avenir-heavy, 14);
+            font-weight: 500;
+            line-height: 2;
+            text-align: left;
+          }
+  
+          &::-moz-placeholder {
+            color: @steel-four;
+            .font(@avenir-heavy, 14);
+            font-weight: 500;
+            line-height: 2;
+            text-align: left;
+          }
+  
+          &:-ms-input-placeholder {
+            color: @steel-four;
+            .font(@avenir-heavy, 14);
+            font-weight: 500;
+            line-height: 2;
+            text-align: left;
+          }
+  
+          &:-moz-placeholder {
+            color: @steel-four;
+            .font(@avenir-heavy, 14);
+            font-weight: 500;
+            line-height: 2;
+            text-align: left;
+          }
+        }
+      }
+  
+      .profileDetails {
+        height: auto;
+  
+        select {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+          background-position: right;
+          background-repeat: no-repeat;
+          background-size: 24px 24px;
+          position: absolute;
+          z-index: 1;
+          opacity: 0;
+          height: 37px;
+          width: 100%;
+          padding: 6px 6px 6px 16px;
+          border-radius: 4px;
+          //border: 1px solid #e5e9f2;
+          background-color: #fff;
+          display: flex;
+          align-items: center;
+          .font(@avenir-medium, 12);
+          color: #768198;
+          //text-align: center;
+        }
+  
+        p.select {
+          width: 100%;
+          padding: 6px 6px 6px 16px;
+          border-radius: 4px;
+          border: 1px solid #e5e9f2;
+          background-color: #fff;
+          display: flex;
+          align-items: center;
+          position: relative;
+          .font(@avenir-heavy, 14);
+          font-weight: 500;
+          line-height: 2;
+          color: #768198;
+          height: 37px;
+          user-select: none;
+          text-align: left;
+  
+          span {
+            display: block;
+            width: 100%;
+            //font-weight: bold;
+            //text-align: center;
+          }
+  
+          &.tin {
+            max-width: 60px;
+          }
+  
+          &.medium {
+            max-width: 76px;
+            min-width: 76px;
+          }
+  
+          svg {
+            background: @soft-blue;
+            border-radius: 4px;
+            position: absolute;
+            right: 0;
+          }
+        }
+      }
+  
+      & > div.cpSelectorHead {
+        justify-content: center;
+        border: none;
+        background-color: @w;
+      }
+  
+      button {
+        width: 145px;
+        //height: 40px;
+        border: 1px solid @cornflower-blue;
+        background: @soft-blue;
+        color: @w;
+        .font(@avenir-heavy, 14);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+        padding: 10px 0;
+        font-weight: bold;
+        margin-left: auto;
+  
+        &:hover {
+          background: @cornflower-blue;
+        }
+  
+        &:active:hover {
+          background: @cornflower-blue;
+          box-shadow: inset 0 1px 1px 1px rgba(0, 0, 0, .5);
+        }
+      }
+    }
+  }
