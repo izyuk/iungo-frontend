@@ -53,7 +53,7 @@ class MainSide extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(location.pathname === '/profile') {
+        if(location.pathname.includes('/settings')) {
             document.querySelector('.mainSide').style.overflowY = 'auto';
         } else {
             document.querySelector('.mainSide').removeAttribute('style');
