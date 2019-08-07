@@ -101,7 +101,7 @@ class Header extends Component {
                                 </a>
                                 <div className={this.state.popup ? "popup active" : 'popup'}>
                                     <ul className={'zi'}>
-                                        <li onClick={() => {this.state.popup && this.setState({popup: false})}}><Link to={'/profile'}>Profile</Link></li>
+                                        <li onClick={() => {this.state.popup && this.setState({popup: false})}}><Link to={'/settings/profile'}>Settings</Link></li>
                                         <li>
                                             <button onClick={this.logOut} type="button">Log out</button>
                                         </li>
