@@ -193,7 +193,7 @@ class BackgroundAndLogo extends Component {
 
     getImages = async () => {
 
-        const token = this.context.dataToExclude.token;
+        const token = this.context.dataToExclude.token || localStorage.getItem('token');
 
         let query = getAllImages(token);
         let array = [];
