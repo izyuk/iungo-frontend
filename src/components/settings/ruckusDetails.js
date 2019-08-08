@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import SettingsForm from './settingsForm';
 import Notification from '../additional/notification';
-import {getRuckusSZ, updateRuckusSZ} from '../../api/API';
+import {getRuckusSZ, updateRuckusSZ, checkRuckusStatus} from '../../api/API';
 import CaptivePortalContext from "../../context/project-context";
 
 class RuckusDetails extends Component {
@@ -9,7 +9,9 @@ class RuckusDetails extends Component {
     state = { 
         controllerAddress: '',
         username: '',
-        password: ''
+        password: '',
+        connetionTested: false,
+        connetionTestValid: false,
     };
 
     static contextType = CaptivePortalContext;
@@ -22,7 +24,9 @@ class RuckusDetails extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         return (this.state.controllerAddress !== nextState.controllerAddress)
             || (this.state.username !== nextState.username)
-            || (this.state.password !== nextState.password);
+            || (this.state.password !== nextState.password)
+            || (this.state.connetionTested !== nextState.connetionTested)
+            || (this.state.connetionTestValid !== nextState.connetionTestValid);
     }
 
     fieldsHandler = (e) => {
@@ -40,6 +44,20 @@ class RuckusDetails extends Component {
         const query = updateRuckusSZ(this.token, {controllerAddress, username, password});
         await query.then(res => {
             console.log('Save Ruckus SZ', res);
+        });
+    };
+
+    testConnection = async () => {
+        const {controllerAddress, username, password} = this.state;
+        const query = checkRuckusStatus(this.token, {controllerAddress, username, password});
+        await query.then(res => {
+            let connetionTested = false, connetionTestValid = false;
+            console.log('check Ruckus status', res);
+            if (res && res.data.hasOwnProperty('valid')) {
+                connetionTested = true;
+                connetionTestValid = Boolean(res.data.valid);
+            }
+            this.setState({ connetionTested, connetionTestValid });
         });
     };
 
@@ -70,7 +88,9 @@ class RuckusDetails extends Component {
         const {
             controllerAddress,
             username,
-            password
+            password,
+            connetionTested,
+            connetionTestValid
         } = this.state;
         return (
             <div className={'width-100'}>
@@ -81,7 +101,7 @@ class RuckusDetails extends Component {
                 </div>
 
                 <div className="settingsDetailsWrap">
-                    <SettingsForm onCorrect={this.saveRuckusSZ}>
+                    <SettingsForm onCorrect={this.saveRuckusSZ} onTest={this.testConnection}>
                         <label htmlFor={'controllerAddress'}>Controller address (https)</label>
                         <div>
                             <input
@@ -120,6 +140,9 @@ class RuckusDetails extends Component {
                                     />
                             </div>
                         </fieldset>
+                        {connetionTested && <div className={`statusBlock ${connetionTestValid ? 'valid' : 'failed'}`}>
+                            <p>{connetionTestValid ? 'Connetcion test succeeded!' : 'Connetcion test failed!'}</p>
+                        </div>}
                     </SettingsForm>
                 </div>
             </div>

@@ -5,11 +5,14 @@ SettingsForm.propTypes = {
     // expanded: PropTypes.bool
 };
 
-function SettingsForm({ onCorrect, incorrect = false, children }) {
+function SettingsForm({ onCorrect, incorrect = false, children, onTest }) {
     return (
         <div className="settingsForm" style={ incorrect ? { border: '1px solid #ff6976' } : { border: '' } }>
                 {children}
-            <button onClick={ onCorrect }>Save</button>
+            <div className="controlsRow">
+                {Boolean(onTest) && <button className="testBtn" onClick={ onTest }>Test</button>}
+                <button onClick={ onCorrect }>Save</button>
+            </div>
         </div>
     )
 }

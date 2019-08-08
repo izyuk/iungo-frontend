@@ -438,6 +438,24 @@ export const getRuckusSZ = (string) => {
         .catch(err => authChecker(err.response));
 };
 
+/** 
+ * Check ruckus credentials status
+ */
+export const checkRuckusStatus = (token, data) => {
+    return axios({
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+        },
+        url: `${BACKEND_API}/profile/ruckus/status`,
+        mode: 'no-cors',
+        data: data
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
+
 /**
  * Set Ruckus Smart Zone controller Northbound API params
  * 
