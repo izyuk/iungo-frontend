@@ -2106,9 +2106,12 @@ header {
 
   .filterRow{
     background: @trans;
-    margin: 10px 0;
+    padding: 15px 25px;
     display: flex;
     align-items: center;
+    border: solid 1px @pale-grey-seven;
+    border-bottom-width: 0;
+    .font(@avenir-medium, 14);
     div{
       margin-left: 10px;
       position: relative;
@@ -2117,14 +2120,15 @@ header {
       border-radius: 2px;
       border: solid 1px @pale-grey-seven;
       background-color: @w;
+      max-width: 320px;
+      flex: 1;
       input{
-        .font(@avenir-medium, 12);
+        .font(@avenir-medium, 14);
         width: 100%;
         border: 1px solid transparent;
         background: transparent;
         font-weight: 500;
         line-height: 2;
-        color: @steel-three;
         padding: 14px 8px;
         resize: none;
       }
