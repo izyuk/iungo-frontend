@@ -10,14 +10,15 @@ class ContainerSize extends Component {
 
     valueWidth = (e) => {
         const currentState = this.state;
-        if (e.target.value > 1920) {
+        const val = parseFloat(e.target.value) || e.target.value;
+        if (val > 1920) {
             e.target.value = 1920;
             currentState.width = 1920;
-        } else if (e.target.value < 320) {
+        } else if (val < 320) {
             e.target.value = 320;
             currentState.width = 320;
         } else {
-            currentState.width = e.target.value
+            currentState.width = val;
         }
         this.setState(currentState);
         this.context.setSizeStyle(this.state);

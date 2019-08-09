@@ -74,7 +74,7 @@ class CaptivePortalList extends Component {
         const STYLE = document.getElementsByTagName('STYLE')[0];
         if (STYLE) STYLE.parentNode.removeChild(STYLE);
         this.context.resetGlobalState();
-        this.props.history.push(`/captive-portals/${params.data.uuid}`);
+        // this.props.history.push(`/captive-portals/${params.data.uuid}`);
         localStorage.removeItem('cpID');
         localStorage.removeItem('templateID');
     };
