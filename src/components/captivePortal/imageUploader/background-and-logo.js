@@ -200,7 +200,7 @@ class BackgroundAndLogo extends Component {
         await query.then(res => {
                 res.data.map((item, i) => {
                     array.push(
-                        <div key={i} dataid={item.id} dataurl={item.externalUrl}
+                        <div key={i} dataid={item.id} data-cy={`backgroundImageItem${i}`} dataurl={item.externalUrl}
                              onDoubleClick={this.chooseImage} onClick={this.chooseImage}>
                             <img src={item.externalUrl} alt=""/>
                             <span>{item.name}</span>
