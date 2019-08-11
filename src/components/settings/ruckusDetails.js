@@ -40,6 +40,7 @@ class RuckusDetails extends Component {
 
     
     saveRuckusSZ = async () => {
+        this.setState({ connetionTested: false });
         const {controllerAddress, username, password} = this.state;
         const query = updateRuckusSZ(this.token, {controllerAddress, username, password});
         await query.then(res => {
@@ -48,6 +49,7 @@ class RuckusDetails extends Component {
     };
 
     testConnection = async () => {
+        this.setState({ connetionTested: false });
         const {controllerAddress, username, password} = this.state;
         const query = checkRuckusStatus(this.token, {controllerAddress, username, password});
         await query.then(res => {
@@ -102,13 +104,13 @@ class RuckusDetails extends Component {
 
                 <div className="settingsDetailsWrap">
                     <SettingsForm onCorrect={this.saveRuckusSZ} onTest={this.testConnection}>
-                        <label htmlFor={'controllerAddress'}>Controller address (https)</label>
+                        <label htmlFor={'controllerAddress'}>Controller address (http(s))</label>
                         <div>
                             <input
                                 type="text"
                                 datatype="controllerAddress"
                                 id={'controllerAddress'}
-                                placeholder={"controller address"}
+                                placeholder={"controller address, for example http://192.168.102.1:9080/portalintf"}
                                 defaultValue={controllerAddress}
                                 onChange={this.fieldsHandler}
                             />
@@ -140,9 +142,13 @@ class RuckusDetails extends Component {
                                     />
                             </div>
                         </fieldset>
-                        {connetionTested && <div className={`statusBlock ${connetionTestValid ? 'valid' : 'failed'}`}>
-                            <p>{connetionTestValid ? 'Connetcion test succeeded!' : 'Connetcion test failed!'}</p>
-                        </div>}
+                        
+                        <div className={'statusBlockWrap'}>
+                            {connetionTested && <div className={`statusBlock ${connetionTestValid ? 'valid' : 'failed'}`}>
+                                <p>Connection {connetionTestValid ? 'test succeeded!' : 'test failed!'}</p>
+                            </div>}
+                        </div>
+
                     </SettingsForm>
                 </div>
             </div>
