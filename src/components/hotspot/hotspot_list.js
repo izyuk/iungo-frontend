@@ -8,6 +8,7 @@ import {dateISO} from "../../modules/dateISO";
 import {AgGridReact} from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
+import '../../static/styles/ag-grid-custom.less'
 
 
 class HotspotDetails extends Component {
@@ -33,11 +34,10 @@ class HotspotDetails extends Component {
                 sortable: true
             },
             columnDefs: [{
-                headerName: "Name",
+                headerName: "Hotspot",
                 field: "name",
-                filter: "agTextColumnFilter",
             }, {
-                headerName: "Portal name",
+                headerName: "Captive portal",
                 field: "portal.name",
             }, {
                 headerName: "Address",
@@ -45,10 +45,6 @@ class HotspotDetails extends Component {
             }, {
                 headerName: "Description",
                 field: "description",
-            }, {
-                headerName: "Login URL",
-                field: "virtualUrl",
-                sortable: false
             }, {
                 headerName: "Updated",
                 field: "updatedAt",
