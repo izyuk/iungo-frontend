@@ -96,7 +96,7 @@ class CaptivePortalList extends Component {
                 <div className="container containerFix">
                     <div className="wrap wrapFix2">
                         <div className="info">
-                            <h3>Captive Portals List</h3>
+                            <h3>Captive Portals</h3>
                             <Link className={"addNewCPButton"} to={`/captive-portals/templates`}>Get started</Link>
                         </div>
                         <div className="contentWrapWithTopBorder">

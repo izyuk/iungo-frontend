@@ -104,13 +104,13 @@ class RuckusDetails extends Component {
 
                 <div className="settingsDetailsWrap">
                     <SettingsForm onCorrect={this.saveRuckusSZ} onTest={this.testConnection}>
-                        <label htmlFor={'controllerAddress'}>Controller address (http(s))</label>
+                        <label htmlFor={'controllerAddress'}>Controller address ( http(s) )</label>
                         <div>
                             <input
                                 type="text"
                                 datatype="controllerAddress"
                                 id={'controllerAddress'}
-                                placeholder={"controller address, for example http://192.168.102.1:9080/portalintf"}
+                                placeholder={"example http://192.168.102.1:9080/portalintf"}
                                 defaultValue={controllerAddress}
                                 onChange={this.fieldsHandler}
                             />
