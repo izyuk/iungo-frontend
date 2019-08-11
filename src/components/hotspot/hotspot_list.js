@@ -119,7 +119,7 @@ class HotspotDetails extends Component {
                     <div className={'filterRow'}>
                         Filter:
                         <div>
-                            <input type="text" placeholder="Filter..." value={this.state.filterText} onChange={this.onFilterTextBoxChanged}/>
+                            <input type="text" placeholder="Filter..." value={this.state.filterText} onChange={this.onFilterTextBoxChanged} autoFocus/>
                         </div>
                     </div>
                     <AgGridReact
