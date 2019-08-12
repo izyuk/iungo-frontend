@@ -420,6 +420,67 @@ export const updateMailerLite = (string, data) => {
         .catch(err => authChecker(err.response));
 };
 
+/** 
+ * Get Ruckus Smart Zone controller Northbound API params
+ *  
+ */
+export const getRuckusSZ = (string) => {
+    return axios({
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${BACKEND_API}/profile/ruckus`,
+        mode: 'no-cors'
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
+
+/** 
+ * Check ruckus credentials status
+ */
+export const checkRuckusStatus = (token, data) => {
+    return axios({
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+        },
+        url: `${BACKEND_API}/profile/ruckus/status`,
+        mode: 'no-cors',
+        data: data
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
+
+/**
+ * Set Ruckus Smart Zone controller Northbound API params
+ * 
+ * @param {string} string - access token
+ * @param {*} data - params 
+ */
+export const updateRuckusSZ = (string, data) => {
+    return axios({
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${string}`
+        },
+        url: `${BACKEND_API}/profile/ruckus`,
+        mode: 'no-cors',
+        data: {
+            "controllerAddress": data.controllerAddress,
+            "username": data.username,
+            "password": data.password
+        }
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
+
 export const createNewTemplate = (string, object) => {
     return axios({
         method: 'post',

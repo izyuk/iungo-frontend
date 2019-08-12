@@ -10,6 +10,7 @@ import CaptivePortalList from "../captivePortal/captivePortalList";
 import Profile from '../profile/profile';
 import CaptivePortalContext from "../../context/project-context";
 import HotspotEditor from "../hotspot/hotspotEditor";
+import Settings from '../settings/settings';
 
 
 class MainSide extends Component {
@@ -52,7 +53,7 @@ class MainSide extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(location.pathname === '/profile') {
+        if(location.pathname.includes('/settings')) {
             document.querySelector('.mainSide').style.overflowY = 'auto';
         } else {
             document.querySelector('.mainSide').removeAttribute('style');
@@ -76,7 +77,8 @@ class MainSide extends Component {
                     <Route exact path="/hotspot" component={Hotspot}/>
                     <Route exact path="/hotspot/:uuid" component={HotspotEditor}/>
                     <Route exact path="/reports/:page" component={Reports}/>
-                    <Route exact path="/profile" component={Profile}/>
+                    <Route exact path="/settings/:page" component={Settings}/>
+                    {/* <Route exact path="/profile" component={Profile}/> */}
                 </Switch>
             </div>
         )

@@ -230,7 +230,7 @@ class CaptivePortal extends Component {
     }
 
     render() {
-        if (!this.context.dataToExclude.loader) {
+        // if (!this.context.dataToExclude.loader) {
             return (
                 <div className="container">
                     <div className="wrap wrapFix">
@@ -282,9 +282,9 @@ class CaptivePortal extends Component {
                     {this.context.dataToExclude.loader && <Loader/>}
                 </div>
             )
-        } else {
-            return <Loader/>
-        }
+        // } else {
+        //     return <Loader/>
+        // }
 
     }
 }

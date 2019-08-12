@@ -74,7 +74,7 @@ class CaptivePortalList extends Component {
         const STYLE = document.getElementsByTagName('STYLE')[0];
         if (STYLE) STYLE.parentNode.removeChild(STYLE);
         this.context.resetGlobalState();
-        this.props.history.push(`/captive-portals/${params.data.uuid}`);
+        // this.props.history.push(`/captive-portals/${params.data.uuid}`);
         localStorage.removeItem('cpID');
         localStorage.removeItem('templateID');
     };
@@ -96,7 +96,7 @@ class CaptivePortalList extends Component {
                 <div className="container containerFix">
                     <div className="wrap wrapFix2">
                         <div className="info">
-                            <h3>Captive Portals List</h3>
+                            <h3>Captive Portals</h3>
                             <Link className={"addNewCPButton"} to={`/captive-portals/templates`}>Get started</Link>
                         </div>
                         <div className="contentWrapWithTopBorder">
@@ -109,7 +109,7 @@ class CaptivePortalList extends Component {
                                 <div className={'filterRow'}>
                                     Filter:
                                     <div>
-                                        <input type="text" placeholder="Filter..." value={this.state.filterText} onChange={this.onFilterTextBoxChanged}/>
+                                        <input type="text" placeholder="Filter..." value={this.state.filterText} onChange={this.onFilterTextBoxChanged} autoFocus/>
                                     </div>
                                 </div>
                                 <AgGridReact

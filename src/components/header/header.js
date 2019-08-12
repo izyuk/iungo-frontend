@@ -68,7 +68,7 @@ class Header extends Component {
                             </div>
                         </div>
                         <div className="right">
-                            <a href="javascript:void(0)">Help</a>
+                            <a href="https://bravofy.com/support/" target="_blank">Help</a>
                             <div className="user">
                                 <div className="avatar">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="53" height="67" viewBox="0 0 53 67">
@@ -101,7 +101,7 @@ class Header extends Component {
                                 </a>
                                 <div className={this.state.popup ? "popup active" : 'popup'}>
                                     <ul className={'zi'}>
-                                        <li onClick={() => {this.state.popup && this.setState({popup: false})}}><Link to={'/profile'}>Profile</Link></li>
+                                        <li onClick={() => {this.state.popup && this.setState({popup: false})}}><Link to={'/settings/profile'}>Settings</Link></li>
                                         <li>
                                             <button onClick={this.logOut} type="button">Log out</button>
                                         </li>
