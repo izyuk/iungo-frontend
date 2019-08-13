@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getMailerLite, updateMailerLite} from '../../api/API';
+import {getMailerLite, updateMailerLite, checkMailerLite} from '../../api/API';
 import CaptivePortalContext from "../../context/project-context";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -17,6 +17,8 @@ class MailerliteDetails extends Component {
         apiKey: '',
         groupPrefix: '',
         enable: 'No',
+        credentialsTested: false,
+        credentialsTestValid: false,
         APIErrors: null,
     };
     enableSelect = React.createRef();
@@ -34,6 +36,8 @@ class MailerliteDetails extends Component {
             || (this.state.groupPrefix !== nextState.groupPrefix)
             || (this.state.enable !== nextState.enable)
             || (this.state.submittedType !== nextState.submittedType)
+            || (this.state.credentialsTested !== nextState.credentialsTested)
+            || (this.state.credentialsTestValid !== nextState.credentialsTestValid)
             || (this.state.APIErrors !== nextState.APIErrors);
     }
 
@@ -70,12 +74,28 @@ class MailerliteDetails extends Component {
 
     
     saveMailerLite = async () => {
-        this.setState({ APIErrors: null });
+        this.setState({ credentialsTested: false, APIErrors: null });
         const {apiKey, enable, groupPrefix} = this.state;
         const query = updateMailerLite(this.token, {apiKey, enable: Boolean(enable === 'Yes'), groupPrefix});
         await query.then(res => {
             console.log(res);
             this.getAPIErrors(res);
+        });
+    };
+
+    testMailerLite = async () => {
+        this.setState({ credentialsTested: false, APIErrors: null });
+        const {apiKey, enable, groupPrefix} = this.state;
+        const query = checkMailerLite(this.token, {apiKey, enable: Boolean(enable === 'Yes'), groupPrefix});
+        await query.then(res => {
+            let credentialsTested = false, credentialsTestValid = false;
+            console.log('check Mailer Lite API key', res);
+            this.getAPIErrors(res);
+            if (res && res.data.hasOwnProperty('valid')) {
+                credentialsTested = true;
+                credentialsTestValid = Boolean(res.data.valid);
+            }
+            this.setState({ credentialsTested, credentialsTestValid });
         });
     };
 
@@ -134,7 +154,9 @@ class MailerliteDetails extends Component {
         const {
             apiKey,
             groupPrefix,
-            enable
+            enable,
+            credentialsTested,
+            credentialsTestValid
         } = this.state;
         return (
             <div className={'width-100'}>
@@ -213,8 +235,17 @@ class MailerliteDetails extends Component {
                                         onBlur={(e) => this.fieldsHandler(e, handleChange)}
                                     />
                                 </div>
+                                
+                                <div className={'statusBlockWrap'}>
+                                    {credentialsTested && <div className={`statusBlock ${credentialsTestValid ? 'valid' : 'failed'}`}>
+                                        <p>Credentials {credentialsTestValid ? 'test succeeded!' : 'test failed!'}</p>
+                                    </div>}
+                                </div>
 
                                 <div className="controlsRow">
+                                    <button type='submit' className="testBtn" onClick={isValid ? this.testMailerLite.bind(this) : submitForm}>
+                                        Test
+                                    </button>
                                     <button type='submit' onClick={isValid ? this.saveMailerLite.bind(this) : submitForm}>
                                         Save
                                     </button>
