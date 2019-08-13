@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 const ValidationSchema = Yup.object().shape({
     controllerAddress: Yup.string()
         .required('Required')
-        .url('Not valid URL!'),
+        .url('Bad format'),
     username: Yup.string()
         .required('Required'),
     password: Yup.string()
@@ -125,7 +125,7 @@ class RuckusDetails extends Component {
                 error = APIErrors[fieldName];
             }
         }
-        return Boolean(error) ? <p className={'errorText'}>{error}</p> : null;
+        return Boolean(error) ? <p className={'errorText'}>* {error}</p> : null;
     }
 
     render() {
@@ -156,10 +156,16 @@ class RuckusDetails extends Component {
                             handleChange,
                             submitForm,
                             isValid,
-                        }) => (
+                        }) => {
+                            const getErr = fieldName => this.getFieldErrorText(errors, touched, fieldName);
+                            const hasErr = fieldName => Boolean( getErr(fieldName) );
+                            return (
                             <div className="settingsForm">
-                                <label htmlFor={'controllerAddress'}>Controller address ( http(s) )</label>
-                                <div className={Boolean(this.getFieldErrorText(errors, touched, 'controllerAddress')) ? 'errorField' : ''}>
+                                <label htmlFor={'controllerAddress'} className={hasErr('controllerAddress') ? 'error' : ''}>
+                                    Controller address ( http(s) )
+                                </label>
+                                {getErr('controllerAddress')}
+                                <div className={hasErr('controllerAddress') ? 'errorField' : ''}>
                                     <input
                                         type="text"
                                         datatype="controllerAddress"
@@ -169,12 +175,14 @@ class RuckusDetails extends Component {
                                         onChange={(e) => this.fieldsHandler(e, handleChange)}
                                         onBlur={(e) => this.fieldsHandler(e, handleChange)}
                                     />
-                                    {this.getFieldErrorText(errors, touched, 'controllerAddress')}
                                 </div>
                                 <fieldset>
                                     <legend>NORTHBOUND API</legend>
-                                    <label htmlFor={'username'}>Username</label>
-                                    <div className={Boolean(this.getFieldErrorText(errors, touched, 'username')) ? 'errorField' : ''}>
+                                    <label htmlFor={'username'} className={hasErr('username') ? 'error' : ''}>
+                                        Username
+                                    </label>
+                                    {getErr('username')}
+                                    <div className={hasErr('username') ? 'errorField' : ''}>
                                         <input
                                             type="text"
                                             datatype="username"
@@ -185,10 +193,13 @@ class RuckusDetails extends Component {
                                             onBlur={(e) => this.fieldsHandler(e, handleChange)}
                                             autoComplete="new-password"
                                         />
-                                        {this.getFieldErrorText(errors, touched, 'username')}
                                     </div>
-                                    <label htmlFor={'password'}>Password</label>
-                                    <div className={Boolean(this.getFieldErrorText(errors, touched, 'password')) ? 'errorField' : ''}>
+
+                                    <label htmlFor={'password'} className={hasErr('password') ? 'error' : ''}>
+                                        Password
+                                    </label>
+                                    {getErr('password')}
+                                    <div className={hasErr('password') ? 'errorField' : ''}>
                                         <input
                                             type="password"
                                             datatype="password"
@@ -199,7 +210,6 @@ class RuckusDetails extends Component {
                                             onBlur={(e) => this.fieldsHandler(e, handleChange)}
                                             autoComplete="new-password"
                                         />
-                                        {this.getFieldErrorText(errors, touched, 'password')}
                                     </div>
                                 </fieldset>
                                 
@@ -215,7 +225,7 @@ class RuckusDetails extends Component {
                                 </div>
                             </div>
 
-                        )}
+                        )}}
                     />
                 </div>
             </div>
