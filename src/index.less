@@ -2268,9 +2268,25 @@ header {
       border-radius: 2px;
       border: solid 1px @pale-grey-seven;
       background-color: @w;
+      &.errorField{
+        position: relative;
+        display: flex;
+        width: 100%;
+        height: 37px;
+        border-radius: 2px;
+        border: solid 1px @ruby;
+        background-color: @w;
+        .errorText {
+          position: absolute;
+          top: 100%;
+          .font(@avenir-heavy, 12);
+          color: @ruby;
+          padding: 3px 0;
+        }
+      }
 
       &:not(:last-child) {
-        margin-bottom: 27px;
+        margin-bottom: 30px;
       }
 
 
