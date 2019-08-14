@@ -89,7 +89,6 @@ class MailerliteDetails extends Component {
         const query = checkMailerLite(this.token, {apiKey, enable: Boolean(enable === 'Yes'), groupPrefix});
         await query.then(res => {
             let credentialsTested = false, credentialsTestValid = false;
-            console.log('check Mailer Lite API key', res);
             this.getAPIErrors(res);
             if (res && res.data.hasOwnProperty('valid')) {
                 credentialsTested = true;
