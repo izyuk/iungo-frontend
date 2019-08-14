@@ -55,14 +55,10 @@ class CSS extends Component {
 
     removeStyles = async () => {
 
-        console.log(this.context.dataToExclude.styledElements);
-        console.log(this.context.dataToExclude.stylesArray);
-
         const elements = this.context.dataToExclude.styledElements;
         const styles = this.context.dataToExclude.stylesArray;
 
         Object.keys(elements).map((i) => {
-            console.log(elements[i]);
             elements[i].setAttribute('style', styles[i]);
         });
 
@@ -82,12 +78,8 @@ class CSS extends Component {
     }
 
     componentDidMount() {
-        console.log('CONTEXT:\n', this.context);
-        // console.log(JSON.stringify(this.context));
         const data_to_store = this.context;
         data_to_store.dataToExclude.token = '';
-        // localStorage.setItem('context_state', JSON.stringify(data_to_store));
-        // console.log(localStorage.getItem('context_state'));
     }
 
     render() {

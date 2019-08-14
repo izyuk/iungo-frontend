@@ -94,7 +94,6 @@ class HeaderTop extends Component {
         const currentState = this.state;
         currentState.color.rgba = color.rgb;
         currentState.color.hex = color.hex;
-        console.log(currentState);
         this.setState(currentState);
         const {displayColorPicker, fontInputData, text, ...rest} = this.state;
         this.context.setHeaderTopData(text, {color: this.state.color, ...rest});

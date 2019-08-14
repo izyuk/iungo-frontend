@@ -40,7 +40,6 @@ class CaptivePortalTemplates extends Component {
 
     async componentDidMount() {
         this.context.setToken(this.token);
-        console.log('CP TEMPLATES TOKEN', this.token);
         await this.getAllTemplatesHandler();
         const STYLE = document.getElementsByTagName('STYLE')[0];
         if (STYLE) STYLE.parentNode.removeChild(STYLE);
@@ -54,7 +53,6 @@ class CaptivePortalTemplates extends Component {
 
     render() {
         const {templatesList} = this.state;
-        console.log(templatesList);
         return (
             <div className="container containerFix">
                 <div className="wrap wrapFix2">
