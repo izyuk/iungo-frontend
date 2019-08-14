@@ -161,7 +161,7 @@ class HotspotEditor extends Component {
                 error = errors[fieldName];
             }
         }
-        return Boolean(error) ? <p className={'errorText'}>{error}</p> : null;
+        return Boolean(error) ? <p className={'errorText'}>* {error}</p> : null;
     }
 
     render() {
@@ -196,10 +196,16 @@ class HotspotEditor extends Component {
                                 handleChange,
                                 submitForm,
                                 isValid
-                            }) => (
+                            }) => {
+                                const getErr = fieldName => this.getFieldErrorText(errors, touched, fieldName);
+                                const hasErr = fieldName => Boolean( getErr(fieldName) );
+                                return (
                                 <div className="hotspotForm">
-                                    <label htmlFor={'hotspot-name'}>Name</label>
-                                    <div className={Boolean(this.getFieldErrorText(errors, touched, 'name')) ? 'errorField' : ''}>
+                                    <label htmlFor={'hotspot-name'} className={hasErr('name') ? 'error' : ''}>
+                                        Name
+                                    </label>
+                                    {getErr('name')}
+                                    <div className={hasErr('name') ? 'errorField' : ''}>
                                         <input
                                             id={'hotspot-name'}
                                             type="text"
@@ -209,10 +215,13 @@ class HotspotEditor extends Component {
                                             onBlur={(e) => this.handleInputChange(e, handleChange)}
                                             value={values.name}
                                         />
-                                        {this.getFieldErrorText(errors, touched, 'name')}
                                     </div>
-                                    <label htmlFor={'hotspot-address'}>Address or location</label>
-                                    <div className={Boolean(this.getFieldErrorText(errors, touched, 'address')) ? 'errorField' : ''}>
+
+                                    <label htmlFor={'hotspot-address'} className={hasErr('address') ? 'error' : ''}>
+                                        Address or location
+                                    </label>
+                                    {getErr('address')}
+                                    <div className={hasErr('address') ? 'errorField' : ''}>
                                         <input
                                             id={'hotspot-address'}
                                             type="text"
@@ -222,10 +231,13 @@ class HotspotEditor extends Component {
                                             onBlur={(e) => this.handleInputChange(e, handleChange)}
                                             value={address}
                                         />
-                                        {this.getFieldErrorText(errors, touched, 'address')}
                                     </div>
-                                    <label htmlFor={'hotspot-description'}>Description</label>
-                                    <div className={'withTextarea ' + (Boolean(this.getFieldErrorText(errors, touched, 'address')) ? 'errorField' : '')}>
+
+                                    <label htmlFor={'hotspot-description'} className={hasErr('description') ? 'error' : ''}>
+                                        Description
+                                    </label>
+                                    {getErr('description')}
+                                    <div className={'withTextarea ' + (hasErr('description') ? 'errorField' : '')}>
                                         <textarea
                                             id={'hotspot-description'}
                                             name="description"
@@ -236,9 +248,11 @@ class HotspotEditor extends Component {
                                         >
 
                                         </textarea>
-                                        {this.getFieldErrorText(errors, touched, 'description')}
                                     </div>
-                                    <label htmlFor={'select-captive-portal'}>Select Captive Portal</label>
+
+                                    <label htmlFor={'select-captive-portal'}>
+                                        Select Captive Portal
+                                    </label>
                                     <div className={'profileDetails'}>
                                         <select name="portals"
                                                 id={'select-captive-portal'}
@@ -299,7 +313,7 @@ class HotspotEditor extends Component {
 
                                 </div>
 
-                            )}
+                            )}}
                         />  
                         <div className={'portalPreviewWrap'}>
                             <div className="portalPreview">

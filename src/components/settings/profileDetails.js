@@ -13,6 +13,8 @@ const ValidationSchema = Yup.object().shape({
         .required('Required'),
     country: Yup.string()
         .required('Required'),
+    zipCode: Yup.string()
+        .matches(/^[0-9]{5}$/, 'Bad format'),
     city: Yup.string()
         .required('Required'),
     address: Yup.string()
@@ -141,7 +143,7 @@ class ProfileDetails extends Component {
                 error = APIErrors[fieldName];
             }
         }
-        return Boolean(error) ? <p className={'errorText'}>{error}</p> : null;
+        return Boolean(error) ? <p className={'errorText'}>* {error}</p> : null;
     }
 
     render() {
@@ -171,10 +173,16 @@ class ProfileDetails extends Component {
                             handleChange,
                             submitForm,
                             isValid
-                        }) => (
+                        }) => {
+                            const getErr = fieldName => this.getFieldErrorText(errors, touched, fieldName);
+                            const hasErr = fieldName => Boolean( getErr(fieldName) );
+                            return (
                             <div className="settingsForm">
-                                <label htmlFor={'company-name'}>Company name</label>
-                                <div className={Boolean(this.getFieldErrorText(errors, touched, 'name')) ? 'errorField' : ''}>
+                                <label htmlFor={'company-name'} className={hasErr('name') ? 'error' : ''}>
+                                    Company name
+                                </label>
+                                {getErr('name')}
+                                <div className={hasErr('name') ? 'errorField' : ''}>
                                     <input
                                         type="text"
                                         datatype="name"
@@ -185,10 +193,13 @@ class ProfileDetails extends Component {
                                         onChange={(e) => this.fieldsHandler(e, handleChange)}
                                         onBlur={(e) => this.fieldsHandler(e, handleChange)}
                                     />
-                                    {this.getFieldErrorText(errors, touched, 'name')}
                                 </div>
-                                <label htmlFor={'registration-number'}>Registration Number</label>
-                                <div className={Boolean(this.getFieldErrorText(errors, touched, 'companyCode')) ? 'errorField' : ''}>
+
+                                <label htmlFor={'registration-number'} className={hasErr('companyCode') ? 'error' : ''}>
+                                    Registration Number
+                                </label>
+                                {getErr('companyCode')}
+                                <div className={hasErr('companyCode') ? 'errorField' : ''}>
                                     <input
                                         type="text"
                                         datatype="companyCode"
@@ -199,10 +210,13 @@ class ProfileDetails extends Component {
                                         onChange={(e) => this.fieldsHandler(e, handleChange)}
                                         onBlur={(e) => this.fieldsHandler(e, handleChange)}
                                     />
-                                    {this.getFieldErrorText(errors, touched, 'companyCode')}
                                 </div>
-                                <label htmlFor={'registered-office-address'}>Registered Office Address</label>
-                                <div className={Boolean(this.getFieldErrorText(errors, touched, 'address')) ? 'errorField' : ''}>
+
+                                <label htmlFor={'registered-office-address'} className={hasErr('address') ? 'error' : ''}>
+                                    Registered Office Address
+                                </label>
+                                {getErr('address')}
+                                <div className={hasErr('address') ? 'errorField' : ''}>
                                     <input
                                         type="text"
                                         datatype="address"
@@ -213,10 +227,13 @@ class ProfileDetails extends Component {
                                         onChange={(e) => this.fieldsHandler(e, handleChange)}
                                         onBlur={(e) => this.fieldsHandler(e, handleChange)}
                                     />
-                                    {this.getFieldErrorText(errors, touched, 'address')}
                                 </div>
-                                <label htmlFor={'zip-code'}>ZIP Code</label>
-                                <div className={Boolean(this.getFieldErrorText(errors, touched, 'zipCode')) ? 'errorField' : ''}>
+
+                                <label htmlFor={'zip-code'} className={hasErr('zipCode') ? 'error' : ''}>
+                                    ZIP Code
+                                </label>
+                                {getErr('zipCode')}
+                                <div className={hasErr('zipCode') ? 'errorField' : ''}>
                                     <input
                                         type="text"
                                         datatype="zipCode"
@@ -227,10 +244,13 @@ class ProfileDetails extends Component {
                                         onChange={(e) => this.fieldsHandler(e, handleChange)}
                                         onBlur={(e) => this.fieldsHandler(e, handleChange)}
                                     />
-                                    {this.getFieldErrorText(errors, touched, 'zipCode')}
                                 </div>
-                                <label htmlFor={'country'}>Country</label>
-                                <div className={Boolean(this.getFieldErrorText(errors, touched, 'country')) ? 'errorField' : ''}>
+
+                                <label htmlFor={'country'} className={hasErr('country') ? 'error' : ''}>
+                                    Country
+                                </label>
+                                {getErr('country')}
+                                <div className={hasErr('country') ? 'errorField' : ''}>
                                     <input
                                         type="text"
                                         datatype="country"
@@ -241,10 +261,13 @@ class ProfileDetails extends Component {
                                         onChange={(e) => this.fieldsHandler(e, handleChange)}
                                         onBlur={(e) => this.fieldsHandler(e, handleChange)}
                                     />
-                                    {this.getFieldErrorText(errors, touched, 'country')}
                                 </div>
-                                <label htmlFor={'city'}>City</label>
-                                <div className={Boolean(this.getFieldErrorText(errors, touched, 'city')) ? 'errorField' : ''}>
+
+                                <label htmlFor={'city'} className={hasErr('city') ? 'error' : ''}>
+                                    City
+                                </label>
+                                {getErr('city')}
+                                <div className={hasErr('city') ? 'errorField' : ''}>
                                     <input
                                         type="text"
                                         datatype="city"
@@ -255,7 +278,6 @@ class ProfileDetails extends Component {
                                         onChange={(e) => this.fieldsHandler(e, handleChange)}
                                         onBlur={(e) => this.fieldsHandler(e, handleChange)}
                                     />
-                                    {this.getFieldErrorText(errors, touched, 'city')}
                                 </div>
 
                                 <div className="controlsRow">
@@ -265,7 +287,7 @@ class ProfileDetails extends Component {
                                 </div>
                             </div>
 
-                        )}
+                        )}}
                     />  
                     {this.state.submitted &&
                     <Notification type={'info'}
