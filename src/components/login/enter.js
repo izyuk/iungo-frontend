@@ -79,7 +79,6 @@ class Enter extends Component {
         if(data){
             const emailMask = /[\w_.-]+@[0-9a-z_-]+\.[a-z]{2,5}/i;
             if(emailMask.test(data.email)){
-                console.log(data);
                 this.setState({
                     userData: data
                 });
