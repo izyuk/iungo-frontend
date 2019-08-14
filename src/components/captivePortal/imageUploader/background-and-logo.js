@@ -81,7 +81,6 @@ class BackgroundAndLogo extends Component {
             }
         })
             .then(res => {
-                    console.log(res);
                     this.newUploadedImageData = res
                 }
             )

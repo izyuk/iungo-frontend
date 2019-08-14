@@ -72,7 +72,7 @@ class ContentBorder extends Component {
         }
         const {displayColorPicker, ...rest} = this.state;
         this.context.setBorderStyle(rest);
-        console.log(this.context.style.container_border.color);
+
     };
 
     render() {

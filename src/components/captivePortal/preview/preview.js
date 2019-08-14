@@ -16,7 +16,6 @@ class Preview extends Component {
     allow = React.createRef();
 
     componentDidMount() {
-        // console.log(this.context);
         const {style} = this.context;
         if (this.context.externalCss !== '') {
             const HEAD = document.getElementsByTagName('HEAD')[0];
@@ -37,8 +36,6 @@ class Preview extends Component {
             this.context.setExternalCssInfo(this.context.externalCss, true, styledElements, stylesArray);
         }
 
-        // console.log(this.PreviewMain.current.classList);
-
 
         const STYLE = document.getElementsByTagName('STYLE')[document.getElementsByTagName('STYLE').length - 1];
         if (!!STYLE) {
@@ -57,7 +54,6 @@ class Preview extends Component {
 
     componentDidUpdate() {
         const {style} = this.context;
-        // console.log(this.PreviewMain.current.classList);
 
         const STYLE = document.getElementsByTagName('STYLE')[document.getElementsByTagName('STYLE').length - 1];
         if (!!STYLE) {
@@ -68,7 +64,6 @@ class Preview extends Component {
         styleTag.type = 'text/css';
         styleTag.innerHTML = this.context.previewCssGenerator();
         BODY.appendChild(styleTag);
-        console.log(this.context.termAndConditionId);
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {

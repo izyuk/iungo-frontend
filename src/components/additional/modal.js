@@ -17,7 +17,6 @@ class Modal extends Component {
     };
 
     render() {
-        console.log();
         return ReactDOM.createPortal(
             <div className={"modal"}>
                 <div className="modalContent">

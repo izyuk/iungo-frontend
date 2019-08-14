@@ -25,7 +25,7 @@ class StyleTab extends Component {
     }
 
     dropDownHandler = (e) => {
-        console.log(e.currentTarget);
+
         this.setState({
             event: e.currentTarget
         });

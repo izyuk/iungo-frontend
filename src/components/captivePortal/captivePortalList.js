@@ -44,7 +44,6 @@ class CaptivePortalList extends Component {
         let rows = [];
         await query.then(res => {
             let {data} = res;
-            console.log(data);
             rows = data;
         });
         this.setState({
@@ -64,9 +63,7 @@ class CaptivePortalList extends Component {
     };
 
     viewCP = (params) => {
-        console.log('click', params.data.uuid);
         localStorage.setItem('cpID', params.data.id);
-        console.log(this.props);
         this.props.history.push(`/captive-portals/${params.data.uuid}`);
     };
 
@@ -80,13 +77,11 @@ class CaptivePortalList extends Component {
     };
 
     componentDidMount() {
-        console.log('TOKEN: ', localStorage.getItem('token'));
         const STYLE = document.getElementsByTagName('STYLE')[0];
         if (STYLE) STYLE.parentNode.removeChild(STYLE);
         this.findAllPortals(localStorage.getItem('token'));
         this.addNewCP();
         this.context.resetGlobalState();
-        console.log(this.context);
         localStorage.setItem('from', 'cp-list');
     }
 
