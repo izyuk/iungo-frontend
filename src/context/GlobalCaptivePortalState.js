@@ -195,6 +195,7 @@ class GlobalCaptivePortalState extends Component {
             }
         },
         termAndConditionId: '',
+        fontId: '',
         googleLogin: false,
         facebookLogin: false,
         twitterLogin: false,
@@ -207,6 +208,9 @@ class GlobalCaptivePortalState extends Component {
             gdprSettingsStatus: false,
             gdprSettingsSetting: 'No',
             gdprList: '',
+            fontName: '',
+            base64EncodedValue: '',
+            fontsList: '',
             agreeWithTermsAndConditionsLabel: '',
             allowToUsePersonalInfoLabel: '',
             loader: false,
@@ -289,13 +293,13 @@ class GlobalCaptivePortalState extends Component {
     };
     setHeaderTopData = (text, styles) => {
         const currentState = this.state;
-        if(text) currentState.header = text;
+        if (text) currentState.header = text;
         currentState.style.header.top = styles;
         this.setState(currentState)
     };
     setHeaderDescriptionData = (text, styles) => {
         const currentState = this.state;
-        if(text) currentState.description = text;
+        if (text) currentState.description = text;
         currentState.style.header.description = styles;
         this.setState(currentState)
     };
@@ -311,7 +315,7 @@ class GlobalCaptivePortalState extends Component {
     };
     setFooterData = (text, styles) => {
         const currentState = this.state;
-        if(text) currentState.footer = text;
+        if (text) currentState.footer = text;
         currentState.style.footer = styles;
         this.setState(currentState)
     };
@@ -609,6 +613,7 @@ class GlobalCaptivePortalState extends Component {
                 }
             },
             termAndConditionId: '',
+            fontId: '',
             googleLogin: false,
             facebookLogin: false,
             twitterLogin: false,
@@ -621,6 +626,9 @@ class GlobalCaptivePortalState extends Component {
                 gdprSettingsStatus: false,
                 gdprSettingsSetting: 'No',
                 gdprList: '',
+                fontName: '',
+                base64EncodedValue: '',
+                fontsList: '',
                 agreeWithTermsAndConditionsLabel: '',
                 allowToUsePersonalInfoLabel: '',
                 loader: false,
@@ -700,12 +708,24 @@ class GlobalCaptivePortalState extends Component {
                 accept_button_color,
                 accept_button_font,
                 accept_button_size,
-                gdpr_settings
+                gdpr_settings,
+            },
+            dataToExclude: {
+                fontName,
+                base64EncodedValue
             }
         } = this.state;
         console.log(gdpr_settings);
         return `
-    
+            ${base64EncodedValue !== '' ?
+                `@font-face {
+                    font-family: ${fontName};
+                    font-style: normal;
+                    font-weight: normal;
+                    src: local(${fontName}), url(${base64EncodedValue}) format('woff');
+                }` : ''
+            }
+            
             .previewMain { 
                 background:  ${background.backgroundType === 'COLOR' ?
             `rgba(${background.color.rgba.r}, ${background.color.rgba.g}, ${background.color.rgba.b}, ${background.color.rgba.a})` :
@@ -741,6 +761,7 @@ class GlobalCaptivePortalState extends Component {
                 font-style: ${top && top.textActions.italic === true ? 'italic' : 'normal'};
                 text-decoration: ${top && top.textActions.underline ? 'underline' : 'none'};
                 text-align: ${top && top.alignment};
+                ${fontName && `font-family: ${fontName}, sans-serif`}
             }
             
             .previewContainer > div.section .description {
@@ -750,10 +771,11 @@ class GlobalCaptivePortalState extends Component {
                 font-style: ${description && description.textActions.italic === true ? 'italic' : 'normal'};
                 text-decoration: ${description && description.textActions.underline ? 'underline' : 'none'};
                 text-align: ${description && description.alignment};
-            }
-            
-            .previewContainer .gdprLabel {
-                color: rgba(${gdpr_settings && gdpr_settings.color.rgba.r}, ${gdpr_settings && gdpr_settings.color.rgba.g}, ${gdpr_settings && gdpr_settings.color.rgba.b}, ${gdpr_settings && gdpr_settings.color.rgba.a});
+                ${fontName && `font-family: ${fontName}, sans-serif`}
+                }
+                
+                .previewContainer .gdprLabel {
+                    color: rgba(${gdpr_settings && gdpr_settings.color.rgba.r}, ${gdpr_settings && gdpr_settings.color.rgba.g}, ${gdpr_settings && gdpr_settings.color.rgba.b}, ${gdpr_settings && gdpr_settings.color.rgba.a});
                 font-size: ${gdpr_settings && gdpr_settings.fontSize}px;
                 text-indent 16px;
             }
@@ -774,10 +796,11 @@ class GlobalCaptivePortalState extends Component {
                 font-style: ${footer && footer.textActions.italic === true ? 'italic' : 'normal'};
                 text-decoration: ${footer && footer.textActions.underline ? 'underline' : 'none'};
                 text-align: ${footer && footer.alignment};
-            }
-            
-            .previewContainer .socialsWrap .accept button {
-                border: ${accept_button_border && accept_button_border.thickness}px ${accept_button_border && accept_button_border.type} rgba(${accept_button_border && accept_button_border.color.rgba.r}, ${accept_button_border && accept_button_border.color.rgba.g}, ${accept_button_border && accept_button_border.color.rgba.b}, ${accept_button_border && accept_button_border.color.rgba.a});
+                ${fontName && `font-family: ${fontName}, sans-serif`}
+                }
+                
+                .previewContainer .socialsWrap .accept button {
+                    border: ${accept_button_border && accept_button_border.thickness}px ${accept_button_border && accept_button_border.type} rgba(${accept_button_border && accept_button_border.color.rgba.r}, ${accept_button_border && accept_button_border.color.rgba.g}, ${accept_button_border && accept_button_border.color.rgba.b}, ${accept_button_border && accept_button_border.color.rgba.a});
                 border-radius: ${accept_button_border.radius}px;
                 background-color: rgba(${accept_button_color.rgba.r}, ${accept_button_color.rgba.g}, ${accept_button_color.rgba.b}, ${accept_button_color.rgba.a});
                 color: rgba(${accept_button_font.color.rgba.r}, ${accept_button_font.color.rgba.g}, ${accept_button_font.color.rgba.b}, ${accept_button_font.color.rgba.a});
@@ -825,6 +848,26 @@ class GlobalCaptivePortalState extends Component {
     setTermsFromBE = (data) => {
         const currentState = this.state;
         currentState.dataToExclude.gdprFromBE = data;
+        this.setState(currentState);
+    };
+
+    setFontsCollection = (data) => {
+        const currentState = this.state;
+        currentState.dataToExclude.fontsList = data;
+        this.setState(currentState);
+    };
+
+    setFontData = ({fontName, fontId}) => {
+        const currentState = this.state;
+        currentState.fontId = fontId;
+        currentState.dataToExclude.fontName = fontName;
+        this.setState(currentState);
+    };
+
+    setFontBase64 = (base64EncodedValue) => {
+        console.log('base64EncodedValue', base64EncodedValue);
+        const currentState = this.state;
+        currentState.dataToExclude.base64EncodedValue = base64EncodedValue;
         this.setState(currentState);
     };
 
@@ -884,6 +927,9 @@ class GlobalCaptivePortalState extends Component {
             urlPathHandler: this.urlPathHandler,
             profileHandler: this.profileHandler,
             setTermsFromBE: this.setTermsFromBE,
+            setFontsCollection: this.setFontsCollection,
+            setFontData: this.setFontData,
+            setFontBase64: this.setFontBase64,
         }}
         >{this.props.children}</CaptivePortalContext.Provider>
     }

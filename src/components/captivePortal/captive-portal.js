@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
-import {getPortal, getPortalByUUID, getTemplate, getTermsAndConditionsParams} from "../../api/API";
+import {getPortal, getPortalByUUID, getPublicFonts, getTemplate, getTermsAndConditionsParams} from "../../api/API";
 import Loader from "../../loader";
 
 import {GetBuilderParams} from "./optionsSidebar/getBuilderParams";
@@ -218,11 +218,22 @@ class CaptivePortal extends Component {
         });
     };
 
+    getPublicFonts = async () => {
+        const query = getPublicFonts(!!this.token ? this.token : localStorage.getItem('token'));
+        await query.then(res => {
+            console.log('fonts', res);
+            const {data} = res;
+            const fontsCollection = data.map(item => item);
+            console.log(fontsCollection);
+            console.log(this.context);
+            this.context.setFontsCollection(fontsCollection);
+        });
+    };
+
     async componentDidMount() {
-        console.log('CP MAIN TOKEN', this.token);
-        console.log('CP MAIN TOKEN FROM CONTEXT', this.context.dataToExclude.token);
         await this.findPortal(this.token);
         await this.setGDPRToContext();
+        await this.getPublicFonts();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

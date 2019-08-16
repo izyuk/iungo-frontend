@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Notification from "../additional/notification";
 import {createHotspot, getAllPortals, getHotspotByUUID, updateHotspotById} from "../../api/API";
 import CaptivePortalContext from "../../context/project-context";
-import { Formik } from 'formik';
+import {Formik} from 'formik';
 import * as Yup from 'yup';
 
 const ValidationSchema = Yup.object().shape({
@@ -96,7 +96,7 @@ class HotspotEditor extends Component {
                 currentState.description = description;
                 currentState.id = id;
                 currentState.name = name;
-                if(!!portal) {
+                if (!!portal) {
                     currentState.captivePortalID = portal.id;
                     currentState.portalUrl = portal.externalUrl;
                 }
@@ -145,7 +145,7 @@ class HotspotEditor extends Component {
     };
 
     async componentDidMount() {
-        if(this.props.match.params.uuid === 'new') localStorage.removeItem('HSurl');
+        if (this.props.match.params.uuid === 'new') localStorage.removeItem('HSurl');
         console.log(this.props.match.params.uuid);
         await this.getAllPortalsMethodHandler(localStorage.getItem('token'));
         await this.getHotspotMethodHandler(localStorage.getItem('token'));
@@ -178,66 +178,69 @@ class HotspotEditor extends Component {
                 <div className="wrap wrapFix2">
                     <div className="info">
                         {!!!!localStorage.getItem('HSurl') ? (
-                                <h3>Edit Hotspot</h3>
-                            ) : (
-                                <h3>Create Hotspot</h3>
-                                )
+                            <h3>Edit Hotspot</h3>
+                        ) : (
+                            <h3>Create Hotspot</h3>
+                        )
                         }
                     </div>
                     <div className="contentWrapWithTopBorder hotspot">
                         <Formik ref={el => this._form = el}
-                            initialValues={{ name, address, description }}
-                            validationSchema={ValidationSchema}
-                            validateOnChange={true}
-                            render={({
-                                values,
-                                errors,
-                                touched,
-                                handleChange,
-                                submitForm,
-                                isValid
-                            }) => {
-                                const getErr = fieldName => this.getFieldErrorText(errors, touched, fieldName);
-                                const hasErr = fieldName => Boolean( getErr(fieldName) );
-                                return (
-                                <div className="hotspotForm">
-                                    <label htmlFor={'hotspot-name'} className={hasErr('name') ? 'error' : ''}>
-                                        Name
-                                    </label>
-                                    {getErr('name')}
-                                    <div className={hasErr('name') ? 'errorField' : ''}>
-                                        <input
-                                            id={'hotspot-name'}
-                                            type="text"
-                                            name="name"
-                                            placeholder={"Hostpot name"}
-                                            onChange={(e) => this.handleInputChange(e, handleChange)}
-                                            onBlur={(e) => this.handleInputChange(e, handleChange)}
-                                            value={values.name}
-                                        />
-                                    </div>
+                                initialValues={{name, address, description}}
+                                validationSchema={ValidationSchema}
+                                validateOnChange={true}
+                                render={({
+                                             values,
+                                             errors,
+                                             touched,
+                                             handleChange,
+                                             submitForm,
+                                             isValid
+                                         }) => {
+                                    const getErr = fieldName => this.getFieldErrorText(errors, touched, fieldName);
+                                    const hasErr = fieldName => Boolean(getErr(fieldName));
+                                    return (
+                                        <div className="hotspotForm">
+                                            <label htmlFor={'hotspot-name'} className={hasErr('name') ? 'error' : ''}>
+                                                Name
+                                            </label>
+                                            {getErr('name')}
+                                            <div className={hasErr('name') ? 'errorField' : ''}>
+                                                <input
+                                                    id={'hotspot-name'}
+                                                    type="text"
+                                                    name="name"
+                                                    placeholder={"Hostpot name"}
+                                                    onChange={(e) => this.handleInputChange(e, handleChange)}
+                                                    onBlur={(e) => this.handleInputChange(e, handleChange)}
+                                                    value={values.name}
+                                                />
+                                            </div>
 
-                                    <label htmlFor={'hotspot-address'} className={hasErr('address') ? 'error' : ''}>
-                                        Address or location
-                                    </label>
-                                    {getErr('address')}
-                                    <div className={hasErr('address') ? 'errorField' : ''}>
-                                        <input
-                                            id={'hotspot-address'}
-                                            type="text"
-                                            name="address"
-                                            placeholder={"Hotspot location or address"}
-                                            onChange={(e) => this.handleInputChange(e, handleChange)}
-                                            onBlur={(e) => this.handleInputChange(e, handleChange)}
-                                            value={address}
-                                        />
-                                    </div>
+                                            <label htmlFor={'hotspot-address'}
+                                                   className={hasErr('address') ? 'error' : ''}>
+                                                Address or location
+                                            </label>
+                                            {getErr('address')}
+                                            <div className={hasErr('address') ? 'errorField' : ''}>
+                                                <input
+                                                    id={'hotspot-address'}
+                                                    type="text"
+                                                    name="address"
+                                                    placeholder={"Hotspot location or address"}
+                                                    onChange={(e) => this.handleInputChange(e, handleChange)}
+                                                    onBlur={(e) => this.handleInputChange(e, handleChange)}
+                                                    value={address}
+                                                />
+                                            </div>
 
-                                    <label htmlFor={'hotspot-description'} className={hasErr('description') ? 'error' : ''}>
-                                        Description
-                                    </label>
-                                    {getErr('description')}
-                                    <div className={'withTextarea ' + (hasErr('description') ? 'errorField' : '')}>
+                                            <label htmlFor={'hotspot-description'}
+                                                   className={hasErr('description') ? 'error' : ''}>
+                                                Description
+                                            </label>
+                                            {getErr('description')}
+                                            <div
+                                                className={'withTextarea ' + (hasErr('description') ? 'errorField' : '')}>
                                         <textarea
                                             id={'hotspot-description'}
                                             name="description"
@@ -248,50 +251,52 @@ class HotspotEditor extends Component {
                                         >
 
                                         </textarea>
-                                    </div>
+                                            </div>
 
-                                    <label htmlFor={'select-captive-portal'}>
-                                        Select Captive Portal
-                                    </label>
-                                    <div className={'profileDetails'}>
-                                        <select name="portals"
-                                                id={'select-captive-portal'}
-                                                ref={this.portals}
-                                                onChange={this.selectHandler}>
-                                            <option value="">Choose portal</option>
+                                            <label htmlFor={'select-captive-portal'}>
+                                                Select Captive Portal
+                                            </label>
+                                            <div className={'profileDetails'}>
+                                                <select name="portals"
+                                                        id={'select-captive-portal'}
+                                                        ref={this.portals}
+                                                        onChange={this.selectHandler}>
+                                                    <option value="">Choose portal</option>
+                                                    {
+                                                        portalsList !== '' &&
+                                                        portalsList.map((item, i) => {
+                                                            console.log(item);
+                                                            return <option key={i} dataid={item.id}
+                                                                           selected={captivePortalID === item.id}
+                                                                           portalurl={item.externalUrl}>{item.name}</option>
+                                                        })
+                                                    }
+                                                </select>
+                                                <p className="select">
+                                                    <span>Choose portal</span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
+                                                         viewBox="0 0 24 24">
+                                                        <path fill="#ffffff" fillRule="nonzero"
+                                                              d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
+                                                    </svg>
+                                                </p>
+                                            </div>
+                                            <button onClick={isValid ? this.handleCorrect : submitForm}>Save</button>
+
+
                                             {
-                                                portalsList !== '' &&
-                                                portalsList.map((item, i) => {
-                                                    console.log(item);
-                                                    return <option key={i} dataid={item.id} selected={captivePortalID === item.id}
-                                                                portalurl={item.externalUrl}>{item.name}</option>
-                                                })
-                                            }
-                                        </select>
-                                        <p className="select">
-                                            <span>Choose portal</span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
-                                                <path fill="#ffffff" fillRule="nonzero"
-                                                    d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                                            </svg>
-                                        </p>
-                                    </div>
-                                    <button onClick={isValid ? this.handleCorrect : submitForm}>Save</button>
-
-
-                                    {
-                                        (localStorage.getItem('HSurl') !== 'null' && localStorage.getItem('HSurl')) &&
-                                        <p className="link">
+                                                (localStorage.getItem('HSurl') !== 'null' && localStorage.getItem('HSurl')) &&
+                                                <p className="link">
                                             <span>
-                                                Copy and paste this URL to your device settings<br />
-                                                <br />
+                                                Copy and paste this URL to your device settings<br/>
+                                                <br/>
                                                 {localStorage.getItem('HSurl')}
                                             </span>
-                                            <span onClick={this.copyToClipboard}>
+                                                    <span onClick={this.copyToClipboard}>
                                                 <svg version="1.1" id="Capa_1"
-                                                    x="0px" y="0px" viewBox="0 0 488.3 488.3"
-                                                    style={{enableBackground: 'new 0 0 488.3 488.3'}}
-                                                    width="20px" height="20px" className="">
+                                                     x="0px" y="0px" viewBox="0 0 488.3 488.3"
+                                                     style={{enableBackground: 'new 0 0 488.3 488.3'}}
+                                                     width="20px" height="20px" className="">
                                                     <g>
                                                         <g>
                                                             <g>
@@ -307,14 +312,15 @@ class HotspotEditor extends Component {
                                                 </svg>
 
                                             </span>
-                                        </p>
+                                                </p>
 
-                                    }
+                                            }
 
-                                </div>
+                                        </div>
 
-                            )}}
-                        />  
+                                    )
+                                }}
+                        />
                         <div className={'portalPreviewWrap'}>
                             <div className="portalPreview">
                                 {
