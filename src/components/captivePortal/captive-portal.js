@@ -211,10 +211,7 @@ class CaptivePortal extends Component {
         await query.then(res => {
             console.log('setGDPRToContext', res);
             const {data} = res;
-            const settingsCollection = data.map(item => item);
-            console.log(settingsCollection);
-            console.log(this.context);
-            this.context.setGDPRCollection(settingsCollection);
+            this.context.setGDPRCollection(data);
         });
     };
 
@@ -223,10 +220,7 @@ class CaptivePortal extends Component {
         await query.then(res => {
             console.log('fonts', res);
             const {data} = res;
-            const fontsCollection = data.map(item => item);
-            console.log(fontsCollection);
-            console.log(this.context);
-            this.context.setFontsCollection(fontsCollection);
+            this.context.setFontsCollection(data);
         });
     };
 
