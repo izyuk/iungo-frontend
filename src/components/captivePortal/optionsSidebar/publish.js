@@ -18,7 +18,6 @@ class Publish extends Component {
     };
 
     callPublishMethod = async (e) => {
-        console.log(this.context);
         if (this.context.name.length > 0) {
             const {
                 addPortalName,
@@ -64,11 +63,9 @@ class Publish extends Component {
             } = this.context;
             this.context.loaderHandler(true);
             const portalDataToSend = GetBuilderParams(rest);
-            console.log('GDPR DATA TO SEND: ', portalDataToSend.style.gdpr_settings);
             const data = await PublishPortalMethodHandler(e, portalDataToSend, this.state.id === null ? localStorage.getItem('cpID') : this.state.id);
             this.setState(data);
             if (data.id) {
-                console.log(data.id);
                 localStorage.setItem('cpID', data.id);
             }
             this.context.loaderHandler(false);
@@ -127,19 +124,16 @@ class Publish extends Component {
         } = this.context;
         await this.props.collectData(rest);
 
-
         this.context.loaderHandler(true);
         // const {dataToExclude, ...rest} = this.context;
         const portalDataToSend = GetBuilderParams(rest);
         const token = this.context.dataToExclude.token;
         const query = previewPortal(token, portalDataToSend);
-        console.log(this.context.dataToExclude.token);
         await query.then(res => {
             const {data} = res;
             this.context.loaderHandler(false);
             window.open(data, '_blank');
         });
-        console.log(this.props.allData);
     };
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -161,8 +155,6 @@ class Publish extends Component {
                 <p>
                     <button type="button" onClick={this.callPublishMethod} className="publishBtn">Save
                     </button>
-                    {/* <button type="button" onClick={this.callPublishMethod} disabled={!this.state.id} name={'create-template'} className="publishBtn createTemplateBtn">Create template
-                    </button> */}
                 </p>
                 {this.context.dataToExclude.notification && <Notification/>}
             </div>

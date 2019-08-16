@@ -26,6 +26,7 @@ class GlobalCaptivePortalState extends Component {
                         hex: '#5585ed'
                     },
                     fontSize: 18,
+                    family: '',
                     textActions: {
                         bold: false,
                         italic: false,
@@ -44,6 +45,7 @@ class GlobalCaptivePortalState extends Component {
                         hex: '#5585ed'
                     },
                     fontSize: 18,
+                    family: '',
                     textActions: {
                         bold: false,
                         italic: false,
@@ -63,6 +65,7 @@ class GlobalCaptivePortalState extends Component {
                     hex: '#5585ed'
                 },
                 fontSize: 18,
+                family: '',
                 textActions: {
                     bold: false,
                     italic: false,
@@ -81,6 +84,7 @@ class GlobalCaptivePortalState extends Component {
                     hex: '#5585ed'
                 },
                 fontSize: 14,
+                family: '',
             },
             success_message: {
                 color: {
@@ -93,6 +97,7 @@ class GlobalCaptivePortalState extends Component {
                     hex: '#5585ed'
                 },
                 fontSize: 18,
+                family: '',
                 textActions: {
                     bold: false,
                     italic: false,
@@ -170,6 +175,7 @@ class GlobalCaptivePortalState extends Component {
                     rgba: {r: 85, g: 133, b: 237, a: 1}
                 },
                 fontSize: 18,
+                family: '',
                 textActions: {
                     bold: false,
                     italic: false,
@@ -248,21 +254,13 @@ class GlobalCaptivePortalState extends Component {
 
     setBackgroundPosition = (position, status) => {
         const merged = {...position, inPercentDimension: status};
-        console.log('context position: ', merged);
         const currentState = this.state;
         currentState.style.background_and_logo.background.position = merged;
         this.setState(currentState);
     };
 
-    // setBackgroundAttachment = (attachment) => {
-    //     const currentState = this.state;
-    //     currentState.style.background_and_logo.background.position = attachment;
-    //     this.setState(currentState);
-    // };
-
     setBackgroundSize = (size, status) => {
         const merged = {...size, inPercentDimension: status};
-        console.log('context size: ', merged);
         const currentState = this.state;
         currentState.style.background_and_logo.background.size = merged;
         this.setState(currentState);
@@ -340,7 +338,6 @@ class GlobalCaptivePortalState extends Component {
         })
     };
     setButtonStyles = data => {
-        console.log('GlobalCaptivePortalState => setButtonStyles()');
         const currentState = this.state;
         const {acceptButtonText, acceptButtonBorder, acceptButtonColor, acceptButtonFont, acceptButtonSize} = data;
         currentState.acceptButtonText = acceptButtonText;
@@ -401,22 +398,17 @@ class GlobalCaptivePortalState extends Component {
     setGDPRSettings = (styles) => {
         const currentState = this.state;
         const {setting, agreeWithTermsAndConditionsLabel, allowToUsePersonalInfoLabel, settingId, ...rest} = styles;
-        console.log('GDPR ...REST', rest);
         currentState.style.gdpr_settings = rest;
         currentState.dataToExclude.gdprSettingsSetting = setting;
         currentState.dataToExclude.agreeWithTermsAndConditionsLabel = agreeWithTermsAndConditionsLabel;
         currentState.dataToExclude.allowToUsePersonalInfoLabel = allowToUsePersonalInfoLabel;
-        console.log(typeof settingId);
         currentState.termAndConditionId = settingId;
-        console.log(settingId);
         this.setState(currentState);
-        console.log(currentState);
     };
 
     setGDPRCollection = (array) => {
         const currentState = this.state;
         currentState.dataToExclude.gdprList = array;
-        console.log(array);
         this.setState(currentState);
     };
 
@@ -444,6 +436,7 @@ class GlobalCaptivePortalState extends Component {
                             hex: '#5585ed'
                         },
                         fontSize: 18,
+                        family: '',
                         textActions: {
                             bold: false,
                             italic: false,
@@ -462,6 +455,7 @@ class GlobalCaptivePortalState extends Component {
                             hex: '#5585ed'
                         },
                         fontSize: 18,
+                        family: '',
                         textActions: {
                             bold: false,
                             italic: false,
@@ -481,6 +475,7 @@ class GlobalCaptivePortalState extends Component {
                         hex: '#5585ed'
                     },
                     fontSize: 18,
+                    family: '',
                     textActions: {
                         bold: false,
                         italic: false,
@@ -499,6 +494,7 @@ class GlobalCaptivePortalState extends Component {
                         hex: '#5585ed'
                     },
                     fontSize: 14,
+                    family: '',
                 },
                 success_message: {
                     color: {
@@ -511,6 +507,7 @@ class GlobalCaptivePortalState extends Component {
                         hex: '#5585ed'
                     },
                     fontSize: 18,
+                    family: '',
                     textActions: {
                         bold: false,
                         italic: false,
@@ -588,6 +585,7 @@ class GlobalCaptivePortalState extends Component {
                         rgba: {r: 85, g: 133, b: 237, a: 1}
                     },
                     fontSize: 18,
+                    family: '',
                     textActions: {
                         bold: false,
                         italic: false,
@@ -626,7 +624,7 @@ class GlobalCaptivePortalState extends Component {
                 gdprSettingsStatus: false,
                 gdprSettingsSetting: 'No',
                 gdprList: '',
-                fontName: '',
+                fontName: 'Arial',
                 base64EncodedValue: '',
                 fontsList: '',
                 agreeWithTermsAndConditionsLabel: '',
@@ -690,7 +688,13 @@ class GlobalCaptivePortalState extends Component {
             settingId: data.termAndConditionId,
         });
         await this.setGDPRCollection(data.dataToExclude.gdprList);
-        await this.setTermsFromBE(data.dataToExclude.gdprFromBE)
+        await this.setTermsFromBE(data.dataToExclude.gdprFromBE);
+
+        await this.setFontsCollection(data.dataToExclude.fontsList);
+
+        await this.setFontData({fontName: data.dataToExclude.fontName, fontId: data.fontId});
+
+        await this.setFontBase64(data.dataToExclude.base64EncodedValue);
     };
 
 
@@ -715,7 +719,6 @@ class GlobalCaptivePortalState extends Component {
                 base64EncodedValue
             }
         } = this.state;
-        console.log(gdpr_settings);
         return `
             ${base64EncodedValue !== '' ?
                 `@font-face {
@@ -861,11 +864,16 @@ class GlobalCaptivePortalState extends Component {
         const currentState = this.state;
         currentState.fontId = fontId;
         currentState.dataToExclude.fontName = fontName;
+        currentState.style.header.top.family = fontName;
+        currentState.style.header.description.family = fontName;
+        currentState.style.gdpr_settings.family = fontName;
+        currentState.style.footer.family = fontName;
+        currentState.style.success_message.family = fontName;
+        currentState.style.accept_button_font.family = fontName;
         this.setState(currentState);
     };
 
     setFontBase64 = (base64EncodedValue) => {
-        console.log('base64EncodedValue', base64EncodedValue);
         const currentState = this.state;
         currentState.dataToExclude.base64EncodedValue = base64EncodedValue;
         this.setState(currentState);
@@ -891,6 +899,7 @@ class GlobalCaptivePortalState extends Component {
             acceptButtonText: this.state.acceptButtonText,
             externalCss: this.state.externalCss,
             termAndConditionId: this.state.termAndConditionId,
+            fontId: this.state.fontId,
             addPortalName: this.addPortalName,
             setBackground: this.setBackground,
             setBackgroundRepeating: this.setBackgroundRepeating,

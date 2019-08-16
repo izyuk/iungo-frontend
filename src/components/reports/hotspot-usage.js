@@ -29,7 +29,6 @@ class HotspotUsage extends Component {
         const currentState = this.state;
         await query.then(res => {
             const {data} = res;
-            console.log(data);
             currentState.hotspotList = data;
         });
         this.setState(currentState)
@@ -48,7 +47,6 @@ class HotspotUsage extends Component {
         const query = getSummaryAnalytics(this.token, uuid);
         await query.then(res => {
             const {data} = res;
-            console.log(data);
             this.setState({
                 summaryInfo: data
             })
@@ -61,7 +59,6 @@ class HotspotUsage extends Component {
 
     render() {
         const {hotspotList, summaryInfo} = this.state;
-        console.log(hotspotList);
         return (
             <div className={'container'}>
                 <div className="setInfoLine">

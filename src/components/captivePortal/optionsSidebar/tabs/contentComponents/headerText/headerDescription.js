@@ -39,7 +39,8 @@ class HeaderDescription extends Component {
         fontSize: this.context.style.header.description.fontSize,
         textActions: this.context.style.header.description.textActions,
         text: this.context.description,
-        alignment: this.context.style.header.description.alignment
+        alignment: this.context.style.header.description.alignment,
+        family: this.context.style.header.description.family
     };
 
     onSliderChange = (value) => {

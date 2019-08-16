@@ -96,13 +96,11 @@ class HotspotDetails extends Component {
     };
 
     viewHotspotForm = (params) => {
-        console.log('click', params.data.uuid);
         localStorage.setItem('HSurl', params.data.virtualUrl);
         this.props.history.push(`/hotspot/${params.data.uuid}`);
     };
 
     render() {
-        console.log('Row data', this.state.rowData);
         const colDef = {
             name: 'Static Styles',
             field: 'field1',
