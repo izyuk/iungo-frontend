@@ -707,7 +707,6 @@ context('Starting comparing collected data', function () {
                         acceptTermsLogin: true,
                         successRedirectUrl: "",
                         termAndConditionId: "",
-                        fontId: '',
                         // termAndConditionId: 2,
                         acceptButtonText: "Connect FOR FREE"
                     };
