@@ -420,6 +420,21 @@ export const updateMailerLite = (string, data) => {
         .catch(err => authChecker(err.response));
 };
 
+export const checkMailerLite = (token, data) => {
+    return axios({
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+        },
+        url: `${BACKEND_API}/profile/mailerlite/status`,
+        mode: 'no-cors',
+        data: data
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
+
 /** 
  * Get Ruckus Smart Zone controller Northbound API params
  *  
