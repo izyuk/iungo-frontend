@@ -602,6 +602,7 @@ context('Starting comparing collected data', function () {
                                         hex: "#edaa55"
                                     },
                                     fontSize: 18,
+                                    family: '',
                                     textActions: {bold: false, italic: false, underline: false},
                                     alignment: "center"
                                 },
@@ -611,6 +612,7 @@ context('Starting comparing collected data', function () {
                                         hex: "#edaa55"
                                     },
                                     fontSize: 18,
+                                    family: '',
                                     textActions: {bold: false, italic: false, underline: false},
                                     alignment: "center"
                                 }
@@ -621,6 +623,7 @@ context('Starting comparing collected data', function () {
                                     hex: "#edaa55"
                                 },
                                 fontSize: 18,
+                                family: '',
                                 textActions: {bold: false, italic: false, underline: false},
                                 alignment: "center"
                             },
@@ -629,7 +632,8 @@ context('Starting comparing collected data', function () {
                              */
                             gdpr_settings: {
                                  color: {rgba: {r: 85, g: 133, b: 237, a: 1}, hex: "#5585ed"},
-                                 fontSize: 14
+                                 fontSize: 14,
+                                family: '',
                             },
                             // gdpr_settings: {
                             //      color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
@@ -641,6 +645,7 @@ context('Starting comparing collected data', function () {
                                     hex: "#edaa55"
                                 },
                                 fontSize: 18,
+                                family: '',
                                 textActions: {bold: false, italic: false, underline: false},
                                 alignment: "center"
                             },
@@ -686,6 +691,7 @@ context('Starting comparing collected data', function () {
                                 alignment: "center",
                                 color: {hex: "#edaa55", rgba: {r: 237, g: 170, b: 85, a: 1}},
                                 fontSize: 18,
+                                family: '',
                                 textActions: {bold: false, italic: false, underline: false}
                             },
                             accept_button_color: {

@@ -109,6 +109,18 @@ class CaptivePortal extends Component {
                     width: size.width,
                     height: size.height
                 }, size.inPercentDimension);
+                if(!!data.style.header.top.family) {
+                    this.context.setFontData({
+                        fontName: data.style.header.top.family,
+                        fontId: ''
+                    });
+                } else {
+                    this.context.setFontData({
+                        fontName: data[0].name,
+                        fontId: ''
+                    });
+                }
+
                 if (from !== 'templates') {
                     if (data.externalCss.length > 0) {
                         const styledElements = document.querySelectorAll('.previewWrap [style]');
@@ -221,16 +233,12 @@ class CaptivePortal extends Component {
             console.log('fonts', res);
             const {data} = res;
             this.context.setFontsCollection(data);
-            this.context.setFontData({
-                fontName: data[0].name,
-                fontId: ''
-            });
         });
     };
 
     async componentDidMount() {
-        await this.findPortal(this.token);
         await this.getPublicFonts();
+        await this.findPortal(this.token);
         await this.setGDPRToContext();
     }
 
