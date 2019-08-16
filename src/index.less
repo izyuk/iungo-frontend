@@ -696,6 +696,34 @@ header {
   height: calc(100vh - 65px);
 }
 
+.hotspotEditorWrap {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-evenly;
+}
+
+.hotspotFormCol, .hotspotPreviewCol {
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.hotspotFormCol {
+  max-width: 450px;
+}
+.hotspotPreviewCol {
+  flex: 1;
+  margin-left: 40px;
+  max-width: 640px;
+  .contentWrapWithTopBorder {
+    .portalPreviewWrap {
+      margin-left: 0;
+    }
+  }
+}
+
 .info {
   width: 100%;
   display: flex;
@@ -726,7 +754,7 @@ header {
   h3 {
     .font(@avenir-medium, 24);
     line-height: 1.67;
-    color: @dark-indigo;
+    color: @steel;
   }
 
   input {
