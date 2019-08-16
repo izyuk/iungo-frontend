@@ -221,13 +221,17 @@ class CaptivePortal extends Component {
             console.log('fonts', res);
             const {data} = res;
             this.context.setFontsCollection(data);
+            this.context.setFontData({
+                fontName: data[0].name,
+                fontId: ''
+            });
         });
     };
 
     async componentDidMount() {
         await this.findPortal(this.token);
-        await this.setGDPRToContext();
         await this.getPublicFonts();
+        await this.setGDPRToContext();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

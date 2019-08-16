@@ -23,6 +23,7 @@ export default React.createContext({
                     hex: '#5585ed'
                 },
                 fontSize: 18,
+                family: '',
                 textActions: {
                     bold: false,
                     italic: false,
@@ -41,6 +42,7 @@ export default React.createContext({
                     hex: '#5585ed'
                 },
                 fontSize: 18,
+                family: '',
                 textActions: {
                     bold: false,
                     italic: false,
@@ -60,6 +62,7 @@ export default React.createContext({
                 hex: '#5585ed'
             },
             fontSize: 18,
+            family: '',
             textActions: {
                 bold: false,
                 italic: false,
@@ -78,6 +81,7 @@ export default React.createContext({
                 hex: '#5585ed'
             },
             fontSize: 14,
+            family: '',
         },
         success_message: {
             color: {
@@ -90,6 +94,7 @@ export default React.createContext({
                 hex: '#5585ed'
             },
             fontSize: 18,
+            family: '',
             textActions: {
                 bold: false,
                 italic: false,
@@ -166,6 +171,7 @@ export default React.createContext({
                 rgba: {r: 85, g: 133, b: 237, a: 1}
             },
             fontSize: 18,
+            family: '',
             textActions: {
                 bold: false,
                 italic: false,

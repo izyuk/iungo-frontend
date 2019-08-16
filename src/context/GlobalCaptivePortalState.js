@@ -26,6 +26,7 @@ class GlobalCaptivePortalState extends Component {
                         hex: '#5585ed'
                     },
                     fontSize: 18,
+                    family: '',
                     textActions: {
                         bold: false,
                         italic: false,
@@ -44,6 +45,7 @@ class GlobalCaptivePortalState extends Component {
                         hex: '#5585ed'
                     },
                     fontSize: 18,
+                    family: '',
                     textActions: {
                         bold: false,
                         italic: false,
@@ -63,6 +65,7 @@ class GlobalCaptivePortalState extends Component {
                     hex: '#5585ed'
                 },
                 fontSize: 18,
+                family: '',
                 textActions: {
                     bold: false,
                     italic: false,
@@ -81,6 +84,7 @@ class GlobalCaptivePortalState extends Component {
                     hex: '#5585ed'
                 },
                 fontSize: 14,
+                family: '',
             },
             success_message: {
                 color: {
@@ -93,6 +97,7 @@ class GlobalCaptivePortalState extends Component {
                     hex: '#5585ed'
                 },
                 fontSize: 18,
+                family: '',
                 textActions: {
                     bold: false,
                     italic: false,
@@ -170,6 +175,7 @@ class GlobalCaptivePortalState extends Component {
                     rgba: {r: 85, g: 133, b: 237, a: 1}
                 },
                 fontSize: 18,
+                family: '',
                 textActions: {
                     bold: false,
                     italic: false,
@@ -444,6 +450,7 @@ class GlobalCaptivePortalState extends Component {
                             hex: '#5585ed'
                         },
                         fontSize: 18,
+                        family: '',
                         textActions: {
                             bold: false,
                             italic: false,
@@ -462,6 +469,7 @@ class GlobalCaptivePortalState extends Component {
                             hex: '#5585ed'
                         },
                         fontSize: 18,
+                        family: '',
                         textActions: {
                             bold: false,
                             italic: false,
@@ -481,6 +489,7 @@ class GlobalCaptivePortalState extends Component {
                         hex: '#5585ed'
                     },
                     fontSize: 18,
+                    family: '',
                     textActions: {
                         bold: false,
                         italic: false,
@@ -499,6 +508,7 @@ class GlobalCaptivePortalState extends Component {
                         hex: '#5585ed'
                     },
                     fontSize: 14,
+                    family: '',
                 },
                 success_message: {
                     color: {
@@ -511,6 +521,7 @@ class GlobalCaptivePortalState extends Component {
                         hex: '#5585ed'
                     },
                     fontSize: 18,
+                    family: '',
                     textActions: {
                         bold: false,
                         italic: false,
@@ -588,6 +599,7 @@ class GlobalCaptivePortalState extends Component {
                         rgba: {r: 85, g: 133, b: 237, a: 1}
                     },
                     fontSize: 18,
+                    family: '',
                     textActions: {
                         bold: false,
                         italic: false,
@@ -690,7 +702,13 @@ class GlobalCaptivePortalState extends Component {
             settingId: data.termAndConditionId,
         });
         await this.setGDPRCollection(data.dataToExclude.gdprList);
-        await this.setTermsFromBE(data.dataToExclude.gdprFromBE)
+        await this.setTermsFromBE(data.dataToExclude.gdprFromBE);
+
+        await this.setFontsCollection(data.dataToExclude.fontsList);
+
+        await this.setFontData({...data.dataToExclude.fontName, ...data.fontId});
+
+        await this.setFontBase64(data.dataToExclude.base64EncodedValue);
     };
 
 
@@ -861,6 +879,12 @@ class GlobalCaptivePortalState extends Component {
         const currentState = this.state;
         currentState.fontId = fontId;
         currentState.dataToExclude.fontName = fontName;
+        currentState.style.header.top.family = fontName;
+        currentState.style.header.description.family = fontName;
+        currentState.style.gdpr_settings.family = fontName;
+        currentState.style.footer.family = fontName;
+        currentState.style.success_message.family = fontName;
+        currentState.style.accept_button_font.family = fontName;
         this.setState(currentState);
     };
 
