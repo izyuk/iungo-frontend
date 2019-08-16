@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import HeaderText from './contentComponents/headerText/headertText';
 import LoginMethods from './contentComponents/loginMethods/loginMethods';
 import GDPR from './contentComponents/GDPR/gdprSettings';
+import FontSettings from './contentComponents/fontSettings/fontSettings';
 import SuccessActions from './contentComponents/successMessage/successMessage';
 import FooterEditor from './contentComponents/footerEditor/footerEditor'
 
@@ -41,6 +42,21 @@ class ContentTab extends Component {
     render() {
         return (
             <div className="dropdown">
+                <div className="wrap">
+                    <div
+                        className="head"
+                        data-cy="dropDownFontSettings"
+                        onClick={this.dropDownHandler}>
+                        <span>Font Settings</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="#BFC5D2" fillRule="nonzero"
+                                  d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
+                        </svg>
+                    </div>
+                    {this.state.visible === 'Font Settings' ?
+                        <FontSettings /> :
+                        false}
+                </div>
                 <div className="wrap">
                     <div
                         className="head"

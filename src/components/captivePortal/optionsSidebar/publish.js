@@ -57,6 +57,9 @@ class Publish extends Component {
                 urlPathHandler,
                 profileHandler,
                 setTermsFromBE,
+                setFontsCollection,
+                setFontData,
+                setFontBase64,
                 ...rest
             } = this.context;
             this.context.loaderHandler(true);
@@ -117,6 +120,9 @@ class Publish extends Component {
             urlPathHandler,
             profileHandler,
             setTermsFromBE,
+            setFontsCollection,
+            setFontData,
+            setFontBase64,
             ...rest
         } = this.context;
         await this.props.collectData(rest);

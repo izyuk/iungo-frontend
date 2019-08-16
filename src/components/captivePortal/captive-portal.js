@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
-import {getPortal, getPortalByUUID, getTemplate, getTermsAndConditionsParams} from "../../api/API";
+import {getPortal, getPortalByUUID, getPublicFonts, getTemplate, getTermsAndConditionsParams} from "../../api/API";
 import Loader from "../../loader";
 
 import {GetBuilderParams} from "./optionsSidebar/getBuilderParams";
@@ -211,18 +211,23 @@ class CaptivePortal extends Component {
         await query.then(res => {
             console.log('setGDPRToContext', res);
             const {data} = res;
-            const settingsCollection = data.map(item => item);
-            console.log(settingsCollection);
-            console.log(this.context);
-            this.context.setGDPRCollection(settingsCollection);
+            this.context.setGDPRCollection(data);
+        });
+    };
+
+    getPublicFonts = async () => {
+        const query = getPublicFonts(!!this.token ? this.token : localStorage.getItem('token'));
+        await query.then(res => {
+            console.log('fonts', res);
+            const {data} = res;
+            this.context.setFontsCollection(data);
         });
     };
 
     async componentDidMount() {
-        console.log('CP MAIN TOKEN', this.token);
-        console.log('CP MAIN TOKEN FROM CONTEXT', this.context.dataToExclude.token);
         await this.findPortal(this.token);
         await this.setGDPRToContext();
+        await this.getPublicFonts();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
