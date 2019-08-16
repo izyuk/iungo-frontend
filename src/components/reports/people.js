@@ -32,7 +32,6 @@ class People extends Component {
         const query = getHotspots(str);
         await query.then(res => {
             const {data} = res;
-            console.log(data);
             this.setState({
                 list: data
             })
@@ -52,7 +51,6 @@ class People extends Component {
         const query = getHotspotUsers(this.token, uuid);
         await query.then(res => {
             const {data} = res;
-            console.log(data);
             this.setState({
                 usersList: data
             })

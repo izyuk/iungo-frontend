@@ -41,7 +41,8 @@ class SuccessActions extends Component {
         textActions: this.context.style.success_message.textActions,
         text: this.context.successMessage,
         alignment: this.context.style.success_message.alignment,
-        redirectURL: this.context.successRedirectUrl
+        redirectURL: this.context.successRedirectUrl.length,
+        family: this.context.style.success_message.family
     };
 
     onSliderChange = (value) => {

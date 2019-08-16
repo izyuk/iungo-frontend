@@ -38,7 +38,8 @@ class HeaderTop extends Component {
         fontSize: this.context.style.header.top.fontSize,
         textActions: this.context.style.header.top.textActions,
         text: this.context.header,
-        alignment: this.context.style.header.top.alignment
+        alignment: this.context.style.header.top.alignment,
+        family: this.context.style.header.top.family
     };
 
     onSliderChange = (value) => {

@@ -62,6 +62,10 @@ class FontSettings extends Component {
 
             const svg = this.setting.current.nextSibling.children[0];
             const span = document.createElement('span');
+            currentState.fontName = this.setting.current.options[this.setting.current.selectedIndex].value;
+            this.setState(currentState);
+            const {fontsList, ...rest} = currentState;
+            this.context.setFontData({...rest});
             span.innerText = this.setting.current.options[this.setting.current.selectedIndex].value;
             this.setting.current.nextSibling.insertBefore(span, svg);
         }

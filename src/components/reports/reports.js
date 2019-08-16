@@ -11,7 +11,6 @@ export default class Reports extends Component {
     static defaultProps = {};
 
     render() {
-        console.log(this.props.match.params);
         const param = this.props.match.params;
 
         return (
