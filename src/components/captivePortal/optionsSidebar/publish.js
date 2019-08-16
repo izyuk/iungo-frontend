@@ -161,8 +161,8 @@ class Publish extends Component {
                 <p>
                     <button type="button" onClick={this.callPublishMethod} className="publishBtn">Save
                     </button>
-                    {/*<button type="button" onClick={this.callPublishMethod} disabled={!this.state.id} name={'create-template'} className="publishBtn">Create template*/}
-                    {/*</button>*/}
+                    {/* <button type="button" onClick={this.callPublishMethod} disabled={!this.state.id} name={'create-template'} className="publishBtn createTemplateBtn">Create template
+                    </button> */}
                 </p>
                 {this.context.dataToExclude.notification && <Notification/>}
             </div>
