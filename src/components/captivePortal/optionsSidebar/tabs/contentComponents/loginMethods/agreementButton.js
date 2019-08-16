@@ -43,6 +43,7 @@ class AgreementButton extends Component {
         displayTextColorPicker: false,
         displayBackgroundColorPicker: false,
         displayBorderColorPicker: false,
+        family: this.context.style.accept_button_font.family
     };
 
     onSliderChange = (value) => {

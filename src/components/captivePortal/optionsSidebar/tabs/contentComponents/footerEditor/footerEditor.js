@@ -38,7 +38,8 @@ class FooterEditor extends Component {
         fontSize: this.context.style.footer.fontSize,
         textActions: this.context.style.footer.textActions,
         text: this.context.footer,
-        alignment: this.context.style.footer.alignment
+        alignment: this.context.style.footer.alignment,
+        family: this.context.style.footer.family
     };
 
     onSliderChange = (value) => {

@@ -157,10 +157,10 @@ context('Style tab', function () {
                 .click({force: true});
             cy.get('[data-cy="backgroundImageItem0"')
                 .dblclick({force: true}).then(elem => {
-                    const element = Cypress.$(elem);
-                    loadedDataForExpectedStore.backgroundId = element.attr('dataid');
-                    loadedDataForExpectedStore.backgroundUrl = element.attr('dataurl');
-                });
+                const element = Cypress.$(elem);
+                loadedDataForExpectedStore.backgroundId = element.attr('dataid');
+                loadedDataForExpectedStore.backgroundUrl = element.attr('dataurl');
+            });
         });
         it('Setting background repeating', () => {
             cy.get('[data-cy="backgroundRepeating"]')
@@ -190,10 +190,10 @@ context('Style tab', function () {
                 .click({force: true});
             cy.get('[data-cy="backgroundImageItem0"')
                 .dblclick({force: true}).then(elem => {
-                    const element = Cypress.$(elem);
-                    loadedDataForExpectedStore.logoId = element.attr('dataid');
-                    loadedDataForExpectedStore.logoUrl = element.attr('dataurl');
-                });
+                const element = Cypress.$(elem);
+                loadedDataForExpectedStore.logoId = element.attr('dataid');
+                loadedDataForExpectedStore.logoUrl = element.attr('dataurl');
+            });
         });
 
         it('Checking workability of all alignment options', () => {
@@ -299,7 +299,7 @@ context('Content tab', function () {
 
     /**
      * TODO fix GDPR tests - they are passed or failed random
-     * 
+     *
      */
 
     // describe('GDPR drop-down', () => {
@@ -511,7 +511,7 @@ var deepDiffMapper = function () {
         VALUE_UPDATED: 'updated',
         VALUE_DELETED: 'deleted',
         VALUE_UNCHANGED: 'unchanged',
-        map: function(obj1, obj2) {
+        map: function (obj1, obj2) {
             if (this.isFunction(obj1) || this.isFunction(obj2)) {
                 throw 'Invalid argument. Function given, object expected.';
             }
@@ -533,10 +533,10 @@ var deepDiffMapper = function () {
                 diff[key] = this.map(obj1[key], value2);
             }
             for (var key in obj2) {
-            if (this.isFunction(obj2[key]) || diff[key] !== undefined) {
-                continue;
-            }
-            diff[key] = this.map(undefined, obj2[key]);
+                if (this.isFunction(obj2[key]) || diff[key] !== undefined) {
+                    continue;
+                }
+                diff[key] = this.map(undefined, obj2[key]);
             }
             return diff;
         },
@@ -571,10 +571,10 @@ var deepDiffMapper = function () {
             return !this.isObject(x) && !this.isArray(x);
         }
     }
-  }();
+}();
 
 context('Starting comparing collected data', function () {
-    
+
     beforeEach(function () {
         cy.viewport('macbook-11')
     });
@@ -602,7 +602,7 @@ context('Starting comparing collected data', function () {
                                         hex: "#edaa55"
                                     },
                                     fontSize: 18,
-                                    family: '',
+                                    family: 'Arial',
                                     textActions: {bold: false, italic: false, underline: false},
                                     alignment: "center"
                                 },
@@ -612,7 +612,7 @@ context('Starting comparing collected data', function () {
                                         hex: "#edaa55"
                                     },
                                     fontSize: 18,
-                                    family: '',
+                                    family: 'Arial',
                                     textActions: {bold: false, italic: false, underline: false},
                                     alignment: "center"
                                 }
@@ -623,7 +623,7 @@ context('Starting comparing collected data', function () {
                                     hex: "#edaa55"
                                 },
                                 fontSize: 18,
-                                family: '',
+                                family: 'Arial',
                                 textActions: {bold: false, italic: false, underline: false},
                                 alignment: "center"
                             },
@@ -631,21 +631,17 @@ context('Starting comparing collected data', function () {
                              * TODO fix gdpr tests
                              */
                             gdpr_settings: {
-                                 color: {rgba: {r: 85, g: 133, b: 237, a: 1}, hex: "#5585ed"},
-                                 fontSize: 14,
-                                family: '',
+                                color: {rgba: {r: 85, g: 133, b: 237, a: 1}, hex: "#5585ed"},
+                                fontSize: 14,
+                                family: 'Arial',
                             },
-                            // gdpr_settings: {
-                            //      color: {rgba: {r: 237, g: 170, b: 85, a: 1}, hex: "#edaa55"},
-                            //      fontSize: 23
-                            // },
                             success_message: {
                                 color: {
                                     rgba: {r: 237, g: 170, b: 85, a: 1},
                                     hex: "#edaa55"
                                 },
                                 fontSize: 18,
-                                family: '',
+                                family: 'Arial',
                                 textActions: {bold: false, italic: false, underline: false},
                                 alignment: "center"
                             },
@@ -691,7 +687,7 @@ context('Starting comparing collected data', function () {
                                 alignment: "center",
                                 color: {hex: "#edaa55", rgba: {r: 237, g: 170, b: 85, a: 1}},
                                 fontSize: 18,
-                                family: '',
+                                family: 'Arial',
                                 textActions: {bold: false, italic: false, underline: false}
                             },
                             accept_button_color: {
@@ -706,6 +702,7 @@ context('Starting comparing collected data', function () {
                                 }, radius: 5, type: "solid", thickness: 1
                             }
                         },
+                        fontId: '',
                         googleLogin: true,
                         facebookLogin: true,
                         twitterLogin: false,
@@ -713,7 +710,6 @@ context('Starting comparing collected data', function () {
                         acceptTermsLogin: true,
                         successRedirectUrl: "",
                         termAndConditionId: "",
-                        // termAndConditionId: 2,
                         acceptButtonText: "Connect FOR FREE"
                     };
                     const store = {...win.__store__.collectDataToTest};

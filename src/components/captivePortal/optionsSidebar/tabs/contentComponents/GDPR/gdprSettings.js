@@ -45,7 +45,8 @@ class GDPR extends Component {
         agreeWithTermsAndConditionsLabel: this.context.dataToExclude.agreeWithTermsAndConditionsLabel,
         allowToUsePersonalInfoLabel: this.context.dataToExclude.allowToUsePersonalInfoLabel,
         settingId: this.context.termAndConditionId,
-        settingsCollection: this.context.dataToExclude.gdprList
+        settingsCollection: this.context.dataToExclude.gdprList,
+        family:  this.context.style.gdpr_settings.family
     };
 
     setting = React.createRef();
@@ -87,7 +88,6 @@ class GDPR extends Component {
         if (e) {
             const currentState = this.state;
             currentState.setting = e.currentTarget.options[e.currentTarget.selectedIndex].value;
-            console.log(e.currentTarget.options[e.currentTarget.selectedIndex].getAttribute('dataid'));
             const dataid = e.currentTarget.options[e.currentTarget.selectedIndex].getAttribute('dataid');
             const gdprContent = currentState.settingsCollection.reduce((obj, item) => {
                 if (item.id === parseInt(dataid)) {
@@ -109,8 +109,6 @@ class GDPR extends Component {
         } else {
             const currentState = this.state;
             const gdprFromBE = this.context.dataToExclude.gdprFromBE;
-            console.log(currentState.setting);
-            console.log('gdprFromBE: ', gdprFromBE);
             if (!!gdprFromBE && (gdprFromBE.name === 'GDPR default')) {
                 this.setting.current.value = 'Yes';
                 currentState.agreeWithTermsAndConditionsLabel = gdprFromBE.agreeWithTermsAndConditionsLabel;

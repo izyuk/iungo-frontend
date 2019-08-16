@@ -40,7 +40,6 @@ class Login extends Component {
     componentDidUpdate() {
         const {register} = this.props;
         let {email, password, confirmedPassword} = this.state;
-        console.log(email, password, confirmedPassword);
         if(register){
             if (email.length > 0 && password.length >= 8 && password === confirmedPassword) {
                 this.props.setLoginData(this.state)

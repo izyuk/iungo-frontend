@@ -39,21 +39,14 @@ class CaptivePortal extends Component {
             localStorage.removeItem('cpID', null);
         }
         let id = localStorage.getItem('cpID') || localStorage.getItem('templateID');
-        console.log(id);
-        console.log(uuid);
         if (!!!str) {
             str = localStorage.getItem('token');
         }
-        console.log('TOKEN findPortal on CP DID MOUNT: ', str);
         if (!!id || (!!uuid && uuid !== 'new')) {
-            console.log('PASSED');
-            console.log('ID', id);
-            console.log('FROM', from);
             let query = !!id ? (from === 'templates' ? getTemplate(str, id) : getPortal(str, id)) : getPortalByUUID(str, uuid);
             this.context.loaderHandler(true);
             await query.then(res => {
                 const {data} = res;
-                console.log(data);
                 this.context.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.background.color, data.style.background_and_logo.background.backgroundType);
                 this.context.setLogo(data.logo !== null ? data.logo.externalUrl : '', data.style.background_and_logo.logo.position);
                 this.context.setBorderStyle(data.style.container_border);
@@ -131,7 +124,6 @@ class CaptivePortal extends Component {
                         Object.keys(styledElements).map((item) => {
                             styledElements[item].removeAttribute('style');
                         });
-                        // console.log(styledElements);
                         this.context.setExternalCssInfo(data.externalCss, true, styledElements, stylesArray);
                         const STYLE = document.getElementsByTagName('STYLE')[0];
                         if (!!STYLE) {
@@ -221,7 +213,6 @@ class CaptivePortal extends Component {
     setGDPRToContext = async () => {
         const query = getTermsAndConditionsParams(!!this.token ? this.token : localStorage.getItem('token'));
         await query.then(res => {
-            console.log('setGDPRToContext', res);
             const {data} = res;
             this.context.setGDPRCollection(data);
         });
@@ -230,7 +221,6 @@ class CaptivePortal extends Component {
     getPublicFonts = async () => {
         const query = getPublicFonts(!!this.token ? this.token : localStorage.getItem('token'));
         await query.then(res => {
-            console.log('fonts', res);
             const {data} = res;
             this.context.setFontsCollection(data);
         });
@@ -243,7 +233,7 @@ class CaptivePortal extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(this.context);
+        // console.log(this.context);
     }
 
     render() {

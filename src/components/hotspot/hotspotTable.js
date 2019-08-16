@@ -44,7 +44,6 @@ class HotspotTable extends Component {
 
     render() {
         const {hotspotList} = this.props;
-        console.log(hotspotList);
         return (
             <table className={"hotspotTable"} rules="rows">
                 <thead>
