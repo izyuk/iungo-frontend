@@ -3,6 +3,7 @@ import {getHotspots, getSummaryAnalytics} from "../../api/API";
 import CaptivePortalContext from "../../context/project-context";
 
 // import {dateISO} from "../../modules/dateISO";
+import moment from 'moment';
 
 
 class HotspotUsage extends Component {
@@ -57,6 +58,14 @@ class HotspotUsage extends Component {
         this.getAllHotspotsMethodHandler(this.token);
     }
 
+    formatSessionDuration(s = 0) {
+        const h = (s-(s%=3600))/3600;
+        const m = (s-(s%=60))/60;
+        return <span className={'count'}>
+            {h}<span className={'count-sm'}> h</span> {(9<m ?'':'0') + m}<span className={'count-sm'}> m</span> {(9<s ?'':'0') + s} <span className={'count-sm'}> s</span>
+        </span>;
+    }
+
     render() {
         const {hotspotList, summaryInfo} = this.state;
         return (
@@ -90,7 +99,7 @@ class HotspotUsage extends Component {
                             <p className="info">
                                 <span
                                     className={'count'}>
-                                    {!!summaryInfo ? (summaryInfo.newDevices !== null ? summaryInfo.newDevices : '0') : '0'}
+                                    {(summaryInfo && summaryInfo.newDevices !== null) ? summaryInfo.newDevices : '0'}
                                 </span>
                             </p>
                         </div>
@@ -99,17 +108,14 @@ class HotspotUsage extends Component {
                             <p className="info">
                                 <span
                                     className={'count'}>
-                                    {!!summaryInfo ? (summaryInfo.uniqueDevices !== null ? summaryInfo.uniqueDevices : '0') : '0'}
+                                    {(summaryInfo && summaryInfo.uniqueDevices !== null) ? summaryInfo.uniqueDevices : '0'}
                                 </span>
                             </p>
                         </div>
                         <div className="infoCell">
                             <span className={'name'}>Average Visits</span>
                             <p className="info">
-                                <span
-                                    className={'count'}>
-                                    {!!summaryInfo ? (summaryInfo.averageSessionDuration !== null ? summaryInfo.averageSessionDuration : '0') : '0'}
-                                    min</span>
+                                {this.formatSessionDuration((summaryInfo && summaryInfo.averageSessionDuration) || 0)}
                             </p>
                         </div>
                         <div className="infoCell">
@@ -117,7 +123,7 @@ class HotspotUsage extends Component {
                             <p className="info">
                                 <span
                                     className={'count'}>
-                                    {!!summaryInfo ? (summaryInfo.totalSessions !== null ? summaryInfo.totalSessions : 0) : '0'}
+                                    {(summaryInfo && summaryInfo.totalSessions !== null) ? summaryInfo.totalSessions : '0'}
                                 </span>
                             </p>
                         </div>
