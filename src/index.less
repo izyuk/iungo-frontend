@@ -857,6 +857,7 @@ header {
 }
 
 .previewWrap {
+  flex-grow: 1;
   width: 100%;
   height: auto;
   background: @w;
@@ -870,6 +871,7 @@ header {
 .previewMain {
   width: 100%;
   height: auto;
+  min-height: 100%;
   border: 1px solid @pale-grey-three;
   border-radius: 4px;
   background: @pale-grey-two;
@@ -3041,29 +3043,6 @@ table {
       .font(@avenir-medium, 16);
       color: @dark-grey-blue;
     }
-  }
-}
-
-/*
-    Main Preview look style
-*/
-
-.previewMain {
-  width: 100%;
-  height: auto;
-  border: 1px solid @pale-grey-three;
-  border-radius: 4px;
-  background: @pale-grey-two;
-  display: flex;
-  margin: auto;
-  //align-items: center;
-  flex-direction: column;
-  transition: width 0.3s linear;
-  position: relative;
-
-  &.mobile {
-    width: 400px;
-    transition: width 0.3s linear;
   }
 }
 
