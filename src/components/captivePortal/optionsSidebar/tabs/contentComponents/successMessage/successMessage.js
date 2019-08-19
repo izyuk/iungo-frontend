@@ -41,7 +41,7 @@ class SuccessActions extends Component {
         textActions: this.context.style.success_message.textActions,
         text: this.context.successMessage,
         alignment: this.context.style.success_message.alignment,
-        redirectURL: this.context.successRedirectUrl.length,
+        redirectURL: this.context.successRedirectUrl,
         family: this.context.style.success_message.family
     };
 
@@ -130,7 +130,7 @@ class SuccessActions extends Component {
         const url = e.currentTarget.value;
         const currentState = this.state;
         if(url.length > 0){
-            if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0) {
+            if (url.indexOf("http://") === 0 || url.indexOf("https://") === 0) {
                 currentState.redirectURL = url;
                 this.setState(currentState)
             } else {
