@@ -291,13 +291,13 @@ class GlobalCaptivePortalState extends Component {
     };
     setHeaderTopData = (text, styles) => {
         const currentState = this.state;
-        currentState.header = text || '';
+        if (text || text === '') currentState.header = text;
         currentState.style.header.top = styles;
         this.setState(currentState)
     };
     setHeaderDescriptionData = (text, styles) => {
         const currentState = this.state;
-        currentState.description = text || '';
+        if (text || text === '') currentState.description = text;
         currentState.style.header.description = styles;
         this.setState(currentState)
     };
@@ -313,7 +313,7 @@ class GlobalCaptivePortalState extends Component {
     };
     setFooterData = (text, styles) => {
         const currentState = this.state;
-        if (text) currentState.footer = text;
+        if (text || text === '') currentState.footer = text;
         currentState.style.footer = styles;
         this.setState(currentState)
     };
