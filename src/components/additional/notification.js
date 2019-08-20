@@ -19,7 +19,7 @@ class Notification extends Component {
     render() {
         return ReactDOM.createPortal(
             <div ref={this.notification} className={'notification'}>
-                <p style={{textAlign: 'center'}}>{this.context.dataToExclude.publishedType}</p>
+                <p style={{textAlign: 'center'}}>{this.context.dataToExclude.publishedType || this.props.text || ''}</p>
             </div>,
             place
         )

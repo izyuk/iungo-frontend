@@ -1,62 +1,8 @@
 import React, {Component} from 'react';
-import {getHotspots, getSummaryAnalytics} from "../../api/API";
-import CaptivePortalContext from "../../context/project-context";
 
 // import {dateISO} from "../../modules/dateISO";
-import moment from 'moment';
-
 
 class HotspotUsage extends Component {
-
-    static contextType = CaptivePortalContext;
-
-    state = {
-        hotspotList: '',
-        uuid: '',
-        captivePortalID: '',
-        summaryInfo: ''
-    };
-
-    token = localStorage.getItem('token');
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return (this.state.hotspotList !== nextState.list) ||
-            (this.state.uuid !== nextState.uuid) ||
-            (this.state.captivePortalID !== nextState.captivePortalID);
-    }
-
-    getAllHotspotsMethodHandler = async (str) => {
-        const query = getHotspots(str);
-        const currentState = this.state;
-        await query.then(res => {
-            const {data} = res;
-            currentState.hotspotList = data;
-        });
-        this.setState(currentState)
-    };
-
-    toggleCPSelectorActive = (e) => {
-        e.currentTarget.classList.toggle("active");
-    };
-
-    setHSId = async (e, uuid, id) => {
-        this.setState({
-            uuid: uuid
-        });
-        document.getElementsByClassName('selectedPortal')[0].childNodes[0].innerText = e.currentTarget.innerText;
-        this.setState({captivePortalID: id ? id : ''});
-        const query = getSummaryAnalytics(this.token, uuid);
-        await query.then(res => {
-            const {data} = res;
-            this.setState({
-                summaryInfo: data
-            })
-        });
-    };
-
-    componentDidMount() {
-        this.getAllHotspotsMethodHandler(this.token);
-    }
 
     formatSessionDuration(s = 0) {
         const h = (s-(s%=3600))/3600;
@@ -67,31 +13,8 @@ class HotspotUsage extends Component {
     }
 
     render() {
-        const {hotspotList, summaryInfo} = this.state;
+        const {summaryInfo} = this.props;
         return (
-            <div className={'container'}>
-                <div className="setInfoLine">
-                    <div className={"hsSelectorHead"}>
-                        <div className="hsSelector" onClick={this.toggleCPSelectorActive}>
-                            <p className={'selectedPortal'}>
-                                <span>
-                                    Select Hotspot
-                                </span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#FFF" fillRule="nonzero"
-                                          d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                                </svg>
-
-                            </p>
-                            <div className="list">
-                                {!!hotspotList && hotspotList.map((item, i) =>
-                                    <p onClick={(e) => this.setHSId(e, item.uuid, item.id)} key={i}
-                                       dataid={item.id}>{item.name}</p>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div className={'mainGraph'}>
                     <div className="numericRow">
                         <div className="infoCell">
@@ -129,7 +52,6 @@ class HotspotUsage extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
         )
     }
 }
