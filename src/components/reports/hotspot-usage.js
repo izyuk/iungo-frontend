@@ -156,8 +156,17 @@ class HotspotUsage extends Component {
     }
 
     makeChartStyle(obj, isBarChart) {
+        let lineChartBackground = 'rgba(85,133,237,0.1)';
+        const canvas = document.getElementById('dailyVisitsChart');
+        if (!isBarChart && canvas) {
+            const ctx = canvas.getContext('2d');
+            const gradient = ctx.createLinearGradient(0, 0, 0, 230)
+            gradient.addColorStop(0, 'rgba(85,133,237,0.4)')
+            gradient.addColorStop(1, 'rgba(85,133,237,0.02)');
+            lineChartBackground = gradient;
+        }
         return {
-            ...obj, borderColor: '#5585ed', backgroundColor: isBarChart ? '#5585ed' : 'rgba(85,133,237,0.1)',
+            ...obj, borderColor: '#5585ed', backgroundColor: isBarChart ? '#5585ed' : lineChartBackground,
             pointBackgroundColor: '#fff', pointHoverBackgroundColor: '#fff',
             pointBorderColor: '#5585ed', pointHoverBorderColor: '#5585ed'
         }
@@ -209,7 +218,7 @@ class HotspotUsage extends Component {
                     <div className="reportChartWrap daily">
                         <p className="reportChartTitle">Daily Visits</p>
                         <div className="reportChart">
-                            {renderChart && <Line height={280}
+                            {renderChart && <Line id='dailyVisitsChart' height={280}
                                 data={{ labels: dailyVisitsData.labels, datasets: dailyVisitsData.dataset.map(obj => this.makeChartStyle(obj)) }}
                                 options={dailyVisitsData.options}
                             />}
