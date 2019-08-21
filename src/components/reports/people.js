@@ -1,22 +1,40 @@
 import React, {Component} from 'react';
 import Notification from "../additional/notification";
-import {exportHotspotUsersCSV} from "../../api/API";
+import {exportHotspotUsersCSV, getHotspotUsers} from "../../api/API";
 import {dateISO} from '../../modules/dateISO';
+import {withRouter} from "react-router-dom";
 
 class People extends Component {
     state = {
+        usersList: [],
         UUIDChecker: false,
         notificationText: 'Nothing to export'
     };
     token = localStorage.getItem('token');
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return (this.state.UUIDChecker !== nextProps.UUIDChecker) ||
-                (this.state.notificationText !== nextProps.notificationText);
+    componentDidMount(){
+        if (this.props.match.params.uuid) {
+            this.getUserList(this.props.match.params.uuid);
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.match.params.uuid !== this.props.match.params.uuid) {
+            this.getUserList(nextProps.match.params.uuid);
+        }
+    }
+
+    getUserList = async (uuid) => {
+        const query = getHotspotUsers(this.token, uuid);
+        await query.then(res => {
+            const {data} = res;
+            this.setState({
+                usersList: data
+            })
+        });
     }
 
     exportCSV = async () => {
-        const { uuid } = this.props;
+        const uuid = this.props.match.params.uuid;
         if (uuid) {
             this.setState({UUIDChecker: false});
             const query = exportHotspotUsersCSV(this.token, uuid);
@@ -61,8 +79,9 @@ class People extends Component {
     };
 
     render() {
-        const { usersList } = this.props;
+        const { usersList } = this.state;
         return (
+            <div>
                 <table className={"peopleTable"} rules="rows">
                     <thead>
                     <tr>
@@ -92,9 +111,22 @@ class People extends Component {
                     </tbody>
                     {this.state.UUIDChecker && <Notification type={'info'} text={this.state.notificationText}/>}
                 </table>
+            </div>
         )
     }
 }
 
 // export default People;
-export default People;
+const withRouterAndRef = (WrappedComponent) => {
+    class InnerComponentWithRef extends React.Component {    
+        render() {
+            const { forwardRef, ...rest } = this.props;
+            return <WrappedComponent {...rest} ref={forwardRef} />;
+        }
+    }
+    const ComponentWithRouter = withRouter(InnerComponentWithRef, { withRef: true });
+    return React.forwardRef((props, ref) => {
+        return <ComponentWithRouter {...props} forwardRef={ref} />;
+    });
+}
+export default withRouterAndRef(People);
