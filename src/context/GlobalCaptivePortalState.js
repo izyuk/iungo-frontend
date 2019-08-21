@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import CaptivePortalContext from './project-context';
 
+const PALE_GREY_THREE = {
+    rgba: { r: 229, g: 233, b: 242, a: 1, },
+    hex: '#e5e9f2'
+};
+
 class GlobalCaptivePortalState extends Component {
 
     state = {
@@ -108,15 +113,7 @@ class GlobalCaptivePortalState extends Component {
             background_and_logo: {
                 background: {
                     url: '',
-                    color: {
-                        rgba: {
-                            r: 229,
-                            g: 233,
-                            b: 242,
-                            a: 1,
-                        },
-                        hex: '#e5e9f2'
-                    },
+                    color: PALE_GREY_THREE,
                     backgroundType: 'COLOR',
                     repeat: 'repeat',
                     position: {
@@ -151,15 +148,7 @@ class GlobalCaptivePortalState extends Component {
                 opacity: 100,
             },
             container_border: {
-                color: {
-                    rgba: {
-                        r: 229,
-                        g: 233,
-                        b: 242,
-                        a: 1,
-                    },
-                    hex: '#e5e9f2'
-                },
+                color: PALE_GREY_THREE,
                 type: 'solid',
                 thickness: 1,
                 radius: 4,
@@ -518,15 +507,7 @@ class GlobalCaptivePortalState extends Component {
                 background_and_logo: {
                     background: {
                         url: '',
-                        color: {
-                            rgba: {
-                                r: 229,
-                                g: 233,
-                                b: 242,
-                                a: 1,
-                            },
-                            hex: '#e5e9f2'
-                        },
+                        color: PALE_GREY_THREE,
                         backgroundType: 'COLOR',
                         repeat: 'repeat',
                         position: {
@@ -561,15 +542,7 @@ class GlobalCaptivePortalState extends Component {
                     opacity: 100,
                 },
                 container_border: {
-                    color: {
-                        rgba: {
-                            r: 229,
-                            g: 233,
-                            b: 242,
-                            a: 1,
-                        },
-                        hex: '#e5e9f2'
-                    },
+                    color: PALE_GREY_THREE,
                     type: 'solid',
                     thickness: 1,
                     radius: 4,
@@ -830,10 +803,8 @@ class GlobalCaptivePortalState extends Component {
 
     removeBackground = () => {
         const currentState = this.state;
-        currentState.backgroundId = '';
-        currentState.style.background_and_logo.background.url = '';
-        currentState.style.background_and_logo.background.backgroundType = '';
-        this.setState(currentState);
+        const color = currentState.style.background_and_logo.background.color || PALE_GREY_THREE;
+        this.setBackground(null, color, 'COLOR');
     };
 
     urlPathHandler = url => {
