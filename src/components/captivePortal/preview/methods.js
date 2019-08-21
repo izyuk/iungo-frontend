@@ -81,7 +81,7 @@ class Methods extends Component {
         } = this.context;
         return (
             <div className="socialsWrap" ref={this.socials}>
-                <div className="fb" ref={this.facebook}>
+                <div className="fb" ref={this.facebook} data-cy="loginMethodFacebookPreview">
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                             <path fill="#FFF" fillRule="nonzero"
@@ -89,7 +89,7 @@ class Methods extends Component {
                         </svg>
                     </span>
                     <input type="button" value="Continue with Facebook"/></div>
-                <div className="google" ref={this.google}>
+                <div className="google" ref={this.google} data-cy="loginMethodGooglePreview">
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
                             <path fill="#FFF" fillRule="nonzero"
@@ -97,7 +97,7 @@ class Methods extends Component {
                         </svg>
                     </span>
                     <input type="button" value="Continue with Google"/></div>
-                <div className="tw" ref={this.twitter}>
+                <div className="tw" ref={this.twitter} data-cy="loginMethodTwitterPreview">
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14">
                             <path fill="#FFF" fillRule="nonzero"
@@ -105,7 +105,7 @@ class Methods extends Component {
                         </svg>
                     </span>
                     <input type="button" value="Continue with Twitter"/></div>
-                <div className="phone_number" ref={this.phone}>
+                <div className="phone_number" ref={this.phone} data-cy="loginMethodPhonePreview">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                                 <path fill="#8D98B0" fillRule="nonzero"
@@ -116,7 +116,7 @@ class Methods extends Component {
                         <button type={'button'}>Send</button>
                 </div>
                 <div className="accept" ref={this.button}>
-                    <button>
+                    <button data-cy="loginMethodConnectButtonPreview">
                         {acceptButtonText}
                     </button>
                 </div>

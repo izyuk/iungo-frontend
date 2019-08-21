@@ -5,6 +5,13 @@ const loadedDataForExpectedStore = {
     logoUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/google_logo.svg",
 };
 
+function clearFields(selector) {
+    cy.get(selector)
+        .focus()
+        .clear({force: true})
+        .blur({force: true});
+}
+
 function fillingFields(selector, text) {
     cy.get(selector)
         .focus()
@@ -135,7 +142,6 @@ context('Start and going to CP', function () {
 
         it('Setting name', () => {
             fillingFields('[data-cy="captivePortalName"]', 'CP TEST NAME');
-            // fillingFields('[id="portalName"]', 'CP TEST NAME');
         });
 
         it('Device toggle', () => {
@@ -259,8 +265,18 @@ context('Content tab', function () {
                 .check({force: true});
         });
 
+        it('Clear default top text', () => {
+            clearFields('[data-cy="headerTopText"]');
+        });
+        it('Check cleared top text on Preview', () => {
+            cy.get('[data-cy="headerTopTextPreview"]').should('have.text', '');
+        });
+
         it('Enter top text', () => {
             fillingFields('[data-cy="headerTopText"]', 'CP TEST HEADER TEXT');
+        });
+        it('Check entered top text on Preview', () => {
+            cy.get('[data-cy="headerTopTextPreview"]').should('have.text', 'CP TEST HEADER TEXT');
         });
 
         it('Set top text color', () => {
@@ -284,8 +300,18 @@ context('Content tab', function () {
                 .check({force: true});
         });
 
+        it('Clear default description text', () => {
+            clearFields('[data-cy="headerDescriptionText"]');
+        });
+        it('Check cleared description text on Preview', () => {
+            cy.get('[data-cy="headerDescriptionTextPreview"]').should('have.text', '');
+        });
+
         it('Enter description text', () => {
             fillingFields('[data-cy="headerDescriptionText"]', 'CP TEST DESCRIPTION TEXT');
+        });
+        it('Check entered description text on Preview', () => {
+            cy.get('[data-cy="headerDescriptionTextPreview"]').should('have.text', 'CP TEST DESCRIPTION TEXT');
         });
 
         it('Set description text color', () => {
@@ -337,6 +363,13 @@ context('Content tab', function () {
                 .click({force: true});
         });
 
+        it('Check all metods on Preview', () => {
+            cy.get('[data-cy="loginMethodFacebookPreview"]');
+            cy.get('[data-cy="loginMethodGooglePreview"]');
+            cy.get('[data-cy="loginMethodPhonePreview"]');
+            cy.get('[data-cy="loginMethodConnectButtonPreview"]');
+        });
+
         it('Remove all', () => {
             cy.get('[data-cy="loginMethodFacebook"]')
                 .click({force: true});
@@ -380,6 +413,10 @@ context('Content tab', function () {
 
         it('Enter connect button text', () => {
             fillingFields('[data-cy="connectButtonText"]', 'Connect FOR FREE');
+        });
+
+        it('Check connect button text on Preview', () => {
+            cy.get('[data-cy="loginMethodConnectButtonPreview"]').should('have.text', 'Connect FOR FREE');
         });
 
         it('Set connect button text color', () => {
@@ -433,8 +470,18 @@ context('Content tab', function () {
                 .check({force: true});
         });
 
+        it('Clear default footer text', () => {
+            clearFields('[data-cy="footerText"]');
+        });
+        it('Check cleared footer text on Preview', () => {
+            cy.get('[data-cy="footerTextPreview"]').should('have.text', '');
+        });
+
         it('Enter footer text', () => {
             fillingFields('[data-cy="footerText"]', 'TEST FOOTER TEXT');
+        });
+        it('Check entered footer text on Preview', () => {
+            cy.get('[data-cy="footerTextPreview"]').should('have.text', 'TEST FOOTER TEXT');
         });
 
         it('Set footer text color', () => {
@@ -467,6 +514,9 @@ context('Content tab', function () {
 
         it('Enter success text', () => {
             fillingFields('[data-cy="successText"]', 'CP TEST SOME SUCCESS MESSAGE TEXT');
+        });
+        it('Check entered success text on Preview', () => {
+            cy.get('[data-cy="successTextPreview"]').should('have.text', 'CP TEST SOME SUCCESS MESSAGE TEXT');
         });
 
         it('Set success text color', () => {
