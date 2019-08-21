@@ -356,7 +356,7 @@ class BackgroundAndLogo extends Component {
                             }
                             {
                                 this.props.type === "background" &&
-                                ((background.url !== '' && this.context.backgroundId !== '') &&
+                                ((background.url && background.url !== '' && this.context.backgroundId && this.context.backgroundId !== '') &&
                                     <span className="removeLogo" onClick={this.removeBackgroundHandler}>
                                         Remove
                                     </span>)
