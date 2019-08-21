@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import Border from './border';
 import Background from './background';
 import Size from './size';
+import VerticalAlignment from './verticalAlignment';
 
 class Container extends Component {
     render() {
@@ -11,6 +12,7 @@ class Container extends Component {
                 <Background/>
                 <Size/>
                 <Border/>
+                <VerticalAlignment/>
             </div>
         )
     }

@@ -131,7 +131,8 @@ export default React.createContext({
             },
             logo: {
                 url: '',
-                position: 'center',
+                horizontalPosition: 'center',
+                verticalPosition: 'margin: auto;',
             }
         },
         container_background: {
@@ -163,6 +164,9 @@ export default React.createContext({
         container_size: {
             width: 720,
             padding: 20
+        },
+        container_position: {
+            vertical: 'middle'
         },
         accept_button_font: {
             alignment: 'center',
@@ -215,6 +219,7 @@ export default React.createContext({
     setBorderStyle: () => {},
     setBackgroundStyle: () => {},
     setSizeStyle: () => {},
+    setContainerVerticalPosition: () => {},
     setHeaderTopData: () => {},
     setHeaderDescriptionData: () => {},
     setLoginMethods: () => {},

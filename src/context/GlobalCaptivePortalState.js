@@ -135,7 +135,8 @@ class GlobalCaptivePortalState extends Component {
                 },
                 logo: {
                     url: '',
-                    position: 'center',
+                    horizontalPosition: 'center',
+                    verticalPosition: 'middle',
                 }
             },
             container_background: {
@@ -167,6 +168,9 @@ class GlobalCaptivePortalState extends Component {
             container_size: {
                 width: 720,
                 padding: 20
+            },
+            container_position: {
+                vertical: 'middle'
             },
             accept_button_font: {
                 alignment: 'center',
@@ -266,10 +270,11 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState);
     };
 
-    setLogo = (path, position) => {
+    setLogo = (path, horizontalPosition, verticalPosition) => {
         const currentState = this.state;
         currentState.style.background_and_logo.logo.url = path;
-        currentState.style.background_and_logo.logo.position = position;
+        currentState.style.background_and_logo.logo.horizontalPosition = horizontalPosition;
+        currentState.style.background_and_logo.logo.verticalPosition = verticalPosition;
         this.setState(currentState)
     };
     setBorderStyle = data => {
@@ -287,6 +292,11 @@ class GlobalCaptivePortalState extends Component {
     setSizeStyle = data => {
         const currentState = this.state;
         currentState.style.container_size = data;
+        this.setState(currentState)
+    };
+    setContainerVerticalPosition = (vertical) => {
+        const currentState = this.state;
+        currentState.style.container_position.vertical = vertical;
         this.setState(currentState)
     };
     setHeaderTopData = (text, styles) => {
@@ -545,7 +555,8 @@ class GlobalCaptivePortalState extends Component {
                     },
                     logo: {
                         url: '',
-                        position: 'center',
+                        horizontalPosition: 'center',
+                        verticalPosition: 'middle',
                     }
                 },
                 container_background: {
@@ -577,6 +588,9 @@ class GlobalCaptivePortalState extends Component {
                 container_size: {
                     width: 720,
                     padding: 20
+                },
+                container_position: {
+                    vertical: 'middle'
                 },
                 accept_button_font: {
                     alignment: 'center',
@@ -643,10 +657,11 @@ class GlobalCaptivePortalState extends Component {
         };
         await this.loaderHandler(true);
         await this.setBackground(data.background !== null ? data.style.background_and_logo.background.url : '', data.style.background_and_logo.background.color, data.style.background_and_logo.background.backgroundType);
-        await this.setLogo(data.logo !== null ? data.style.background_and_logo.logo.url : '', data.style.background_and_logo.logo.position);
+        await this.setLogo(data.logo !== null ? data.style.background_and_logo.logo.url : '', data.style.background_and_logo.logo.horizontalPosition, data.style.background_and_logo.logo.verticalPosition);
         await this.setBorderStyle(data.style.container_border);
         await this.setBackgroundStyle(data.style.container_background);
         await this.setSizeStyle(data.style.container_size);
+        await this.setContainerVerticalPosition(data.style.container_position.vertical);
         await this.setHeaderTopData(data.header, data.style.header.top);
         await this.setHeaderDescriptionData(data.description, data.style.header.description);
         await this.setLoginMethods({
@@ -706,6 +721,7 @@ class GlobalCaptivePortalState extends Component {
                 container_background,
                 container_border,
                 container_size,
+                container_position,
                 background_and_logo: {background, logo},
                 success_message,
                 accept_button_border,
@@ -719,9 +735,37 @@ class GlobalCaptivePortalState extends Component {
                 base64EncodedValue
             }
         } = this.state;
+
+        let containerVerticalPosition;
+        let logoVerticalPosition;
+
+        switch (container_position.vertical) {
+            case "top":
+                containerVerticalPosition = 'margin: 0 auto auto auto';
+                break;
+            case "middle":
+                containerVerticalPosition = 'margin: auto';
+                break;
+            case "bottom":
+                containerVerticalPosition = 'margin: auto auto 0 auto';
+                break;
+        }
+
+        switch (logo.verticalPosition) {
+            case "top":
+                logoVerticalPosition = 'margin-bottom: auto';
+                break;
+            case "middle":
+                logoVerticalPosition = 'margin: auto 0';
+                break;
+            case "bottom":
+                logoVerticalPosition = 'margin-top: auto';
+                break;
+        }
+
         return `
             ${base64EncodedValue !== '' ?
-                `@font-face {
+            `@font-face {
                     font-family: ${fontName};
                     font-style: normal;
                     font-weight: normal;
@@ -744,7 +788,11 @@ class GlobalCaptivePortalState extends Component {
             }
             
             .previewLogoPlace {
-                justify-content: ${logo.position};
+                justify-content: ${logo.horizontalPosition};
+            }
+            
+            .previewContainer > .header {
+                ${logoVerticalPosition};
             }
            
             .previewContainer > div.section {
@@ -755,6 +803,8 @@ class GlobalCaptivePortalState extends Component {
                 max-width: ${container_size.width}px;
                 padding: ${container_size.padding}px;
                 ${container_border.type === 'none' ? 'box-shadow: none;' : 'box-shadow: 0 1px 9px 0 rgba(191, 197, 210, 0.25);'}
+                
+                ${containerVerticalPosition};
             }
             
             .previewContainer > div.section .head {
@@ -910,6 +960,7 @@ class GlobalCaptivePortalState extends Component {
             setBorderStyle: this.setBorderStyle,
             setBackgroundStyle: this.setBackgroundStyle,
             setSizeStyle: this.setSizeStyle,
+            setContainerVerticalPosition: this.setContainerVerticalPosition,
             setHeaderTopData: this.setHeaderTopData,
             setHeaderDescriptionData: this.setHeaderDescriptionData,
             setLoginMethods: this.setLoginMethods,
