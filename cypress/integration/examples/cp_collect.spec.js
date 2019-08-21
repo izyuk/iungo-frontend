@@ -667,7 +667,8 @@ context('Starting comparing collected data', function () {
                                 },
                                 logo: {
                                     url: loadedDataForExpectedStore.logoUrl,
-                                    position: "center"
+                                    horizontalPosition: 'center',
+                                    verticalPosition: 'middle'
                                 }
                             },
                             container_background: {
@@ -683,6 +684,9 @@ context('Starting comparing collected data', function () {
                                 }, type: "solid", thickness: 3, radius: 2
                             },
                             container_size: {width: 1920, padding: 20},
+                            container_position: {
+                                vertical: 'middle'
+                            },
                             accept_button_font: {
                                 alignment: "center",
                                 color: {hex: "#edaa55", rgba: {r: 237, g: 170, b: 85, a: 1}},

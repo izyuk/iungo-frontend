@@ -48,7 +48,11 @@ class CaptivePortal extends Component {
             await query.then(res => {
                 const {data} = res;
                 this.context.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.background.color, data.style.background_and_logo.background.backgroundType);
-                this.context.setLogo(data.logo !== null ? data.logo.externalUrl : '', data.style.background_and_logo.logo.position);
+                this.context.setLogo(
+                    data.logo !== null ? data.logo.externalUrl : '',
+                    !!data.style.background_and_logo.logo.horizontalPosition ? data.style.background_and_logo.logo.horizontalPosition : this.context.style.background_and_logo.logo.horizontalPosition,
+                    !!data.style.background_and_logo.logo.verticalPosition ? data.style.background_and_logo.logo.verticalPosition : this.context.style.background_and_logo.logo.verticalPosition,
+                );
                 this.context.setBorderStyle(data.style.container_border);
                 this.context.setBackgroundStyle(data.style.container_background);
                 this.context.setSizeStyle(data.style.container_size);

@@ -523,8 +523,8 @@
           width: 60px;
           min-width: 60px;
           height: 40px;
-          border: 1px solid @bluey-grey;
-          background: @bluey-grey;
+          border: 1px solid @blue-grey;
+          background: @blue-grey;
           color: @w;
           .font(@avenir-medium, 12);
           font-weight: bold;
@@ -1977,8 +1977,11 @@ header {
 .previewContainer {
   width: 90%;
   min-width: 320px;
-  display: block;
-  margin: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1;
+  margin: 0 auto;
   transition: all 0.3s linear;
   //&.mobile{
   //  width: 320px;
@@ -1991,7 +1994,6 @@ header {
   display: flex;
   justify-content: center;
   transition: all 0.3s linear;
-  margin-bottom: 30px;
 
   img {
     //width: 100%;

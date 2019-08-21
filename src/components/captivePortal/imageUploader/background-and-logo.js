@@ -31,7 +31,8 @@ class BackgroundAndLogo extends Component {
         },
         background: '',
         logo: this.context.style.background_and_logo.logo.url,
-        logoPosition: 'center',
+        logoHorizontalPosition: this.context.style.background_and_logo.logo.horizontalPosition,
+        logoVerticalPosition: this.context.style.background_and_logo.logo.verticalPosition,
         fileInfo: '',
         fileAdditional: {
             width: '',
@@ -147,7 +148,7 @@ class BackgroundAndLogo extends Component {
             case "logo":
                 this.setState({logo: e.currentTarget.getAttribute('dataurl')});
                 logo.url = e.currentTarget.getAttribute('dataurl');
-                logo.position = this.state.logoPosition;
+                logo.horizontalPosition = this.state.logoHorizontalPosition;
                 this.context.setLogoID(e.currentTarget.getAttribute('dataid'));
                 break;
             case "background":
@@ -175,7 +176,7 @@ class BackgroundAndLogo extends Component {
             case "logo":
                 this.setState({logo: externalUrl});
                 logo.url = externalUrl;
-                logo.position = this.state.logoPosition;
+                logo.horizontalPosition = this.state.logoHorizontalPosition;
                 this.context.setLogoID(id);
                 break;
             case "background":
@@ -250,10 +251,28 @@ class BackgroundAndLogo extends Component {
         this.setState({displayColorPicker: false});
     };
 
-    alignment = (e) => {
-        this.context.setLogo(this.state.logo, e.target.getAttribute('datatype'));
+    horizontalAlignment = (e) => {
+        this.context.setLogo(this.state.logo, e.target.getAttribute('datatype'), this.state.logoVerticalPosition);
         this.setState({
-            logoPosition: e.target.getAttribute('datatype')
+            logoHorizontalPosition: e.target.getAttribute('datatype')
+        })
+    };
+
+    verticalAlignment = (e) => {
+
+        switch (e.target.getAttribute('datatype')) {
+            case "margin-bottom: auto":
+                this.context.setLogo(this.state.logo, this.state.logoHorizontalPosition, 'top');
+                break;
+            case "margin: auto 0":
+                this.context.setLogo(this.state.logo, this.state.logoHorizontalPosition, 'middle');
+                break;
+            case "margin-top: auto":
+                this.context.setLogo(this.state.logo, this.state.logoHorizontalPosition, 'bottom');
+                break;
+        }
+        this.setState({
+            logoVerticalPosition: e.target.getAttribute('datatype')
         })
     };
 
@@ -295,11 +314,25 @@ class BackgroundAndLogo extends Component {
             }
         }
         if (this.props.type === 'logo') {
-            let position = this.context.style.background_and_logo.logo.position;
+            const {horizontalPosition, verticalPosition} = this.context.style.background_and_logo.logo;
             this.setState({
-                logoPosition: position
+                logoHorizontalPosition: horizontalPosition,
+                logoVerticalPosition: verticalPosition
             });
-            document.getElementById((position ? (position === 'flex-start' ? 'left' : (position === 'flex-end' ? 'right' : 'center')) : this.state.logoPosition)).checked = true;
+
+            switch (verticalPosition) {
+                case "top":
+                    document.querySelector(`[datatype='margin-bottom: auto']`).checked = true;
+                    break;
+                case "middle":
+                    document.querySelector(`[datatype='margin: auto 0']`).checked = true;
+                    break;
+                case "bottom":
+                    document.querySelector(`[datatype='margin-top: auto']`).checked = true;
+                    break;
+            }
+
+            document.getElementById((horizontalPosition ? (horizontalPosition === 'flex-start' ? 'left' : (horizontalPosition === 'flex-end' ? 'right' : 'center')) : this.state.logoHorizontalPosition)).checked = true;
         }
         console.log("TYPE", this.props.type);
         console.log("IMAGE UPLOADER TOKEN on DID MOUNT", localStorage.getItem('token'));
@@ -399,41 +432,79 @@ class BackgroundAndLogo extends Component {
                     </div> :
                     false}
                 {this.props.type === "logo" ?
-                    <div className="row">
-                        <div className="logoLeft">
+                    <React.Fragment>
+                        <div className="row">
+                            <div className="logoLeft">
                                 <span className="descr position">
-                                    Image position
+                                    Image horizontal position
                                 </span>
-                        </div>
-                        <div className="right">
-                            <div className="innerCol">
-                                <label htmlFor="left">Left
-                                    <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='left' datatype={'flex-start'}
-                                               type="radio"
-                                               name='alignment'/>
-                                        <span className="radio"> </span>
-                                    </div>
-                                </label>
-                                <label htmlFor="center">Center
-                                    <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='center' datatype={'center'}
-                                               type="radio"
-                                               name='alignment'/>
-                                        <span className="radio"> </span>
-                                    </div>
-                                </label>
-                                <label htmlFor="right">Right
-                                    <div className="inputRadioWrap">
-                                        <input onChange={this.alignment} id='right' datatype={'flex-end'}
-                                               type="radio"
-                                               name='alignment'/>
-                                        <span className="radio"> </span>
-                                    </div>
-                                </label>
+                            </div>
+                            <div className="right">
+                                <div className="innerCol">
+                                    <label htmlFor="left">Left
+                                        <div className="inputRadioWrap">
+                                            <input onChange={this.horizontalAlignment} id='left' datatype={'flex-start'}
+                                                   type="radio"
+                                                   name='h-alignment'/>
+                                            <span className="radio"> </span>
+                                        </div>
+                                    </label>
+                                    <label htmlFor="center">Center
+                                        <div className="inputRadioWrap">
+                                            <input onChange={this.horizontalAlignment} id='center' datatype={'center'}
+                                                   type="radio"
+                                                   name='h-alignment'/>
+                                            <span className="radio"> </span>
+                                        </div>
+                                    </label>
+                                    <label htmlFor="right">Right
+                                        <div className="inputRadioWrap">
+                                            <input onChange={this.horizontalAlignment} id='right' datatype={'flex-end'}
+                                                   type="radio"
+                                                   name='h-alignment'/>
+                                            <span className="radio"> </span>
+                                        </div>
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                    </div> :
+                        <div className="row">
+                            <div className="logoLeft">
+                                <span className="descr position">
+                                    Image vertical position
+                                </span>
+                            </div>
+                            <div className="right">
+                                <div className="innerCol">
+                                    <label htmlFor="top">Top
+                                        <div className="inputRadioWrap">
+                                            <input onChange={this.verticalAlignment} id='top' datatype={'margin-bottom: auto'}
+                                                   type="radio"
+                                                   name='v-alignment'/>
+                                            <span className="radio"> </span>
+                                        </div>
+                                    </label>
+                                    <label htmlFor="middle">Middle
+                                        <div className="inputRadioWrap">
+                                            <input onChange={this.verticalAlignment} id='middle' datatype={'margin: auto 0'}
+                                                   type="radio"
+                                                   name='v-alignment'/>
+                                            <span className="radio"> </span>
+                                        </div>
+                                    </label>
+                                    <label htmlFor="bottom">Bottom
+                                        <div className="inputRadioWrap">
+                                            <input onChange={this.verticalAlignment} id='bottom' datatype={'margin-top: auto'}
+                                                   type="radio"
+                                                   name='v-alignment'/>
+                                            <span className="radio"> </span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </React.Fragment>
+                    :
                     false}
                 {
                     this.state.isModalOpen &&
