@@ -100,25 +100,25 @@ class Preview extends Component {
                         <div className="section"
                              ref={this.ContainerMain}>
                             {this.context.dataToExclude.successMessageStatus ?
-                                <div className="contentPlace">
+                                <div className="contentPlace" data-cy="successTextPreview">
                                     <p className="text">
                                         {this.context.successMessage && this.context.successMessage}
                                     </p>
                                 </div>
                                 : <div className="contentPlace">
                                     <div className="textPlace">
-                                        <p className="head">
+                                        <p className="head" data-cy="headerTopTextPreview">
                                             {this.context.header && this.context.header}
                                         </p>
 
-                                        <p className="description">
+                                        <p className="description" data-cy="headerDescriptionTextPreview">
                                             {this.context.description && this.context.description}
                                         </p>
                                     </div>
                                     {gdprSettingsStatus ?
                                         <div className="contentPlace">
                                             {gdprSettingsSetting !== 'No' &&
-                                            <div>
+                                            <div data-cy="gdprPreview">
                                                 {agreeWithTermsAndConditionsLabel &&
                                                 <p className={'gdprLabel'}>
                                                     <input type="checkbox"/>
@@ -145,7 +145,7 @@ class Preview extends Component {
                     </div>
                     <div className="footer">
                         <div className="contentPlace">
-                            <p className="text" ref={this.FooterText}>
+                            <p className="text" ref={this.FooterText} data-cy="footerTextPreview">
                                 {this.context.footer && this.context.footer}
                             </p>
                         </div>
