@@ -3408,6 +3408,9 @@ table {
   background: @w;
   border: 1px solid @pale-grey-three;
   box-shadow: 0 1px 2px 0 @cloudy-blue-15;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 30px;
 
   .numericRow {
     display: flex;
@@ -3439,9 +3442,47 @@ table {
       }
 
       .count-sm {
-        .font(@avenir-medium, 16);
+        .font(@avenir-medium, 22);
       }
     }
+  }
+}
+.reportsDateRange {
+  color: @steel;
+  .font(@avenir-medium, 14);
+  input {
+    border: none;
+    box-shadow: none;
+    width: 120px;
+    text-align: center;
+    color: @steel;
+  }
+  .react-datepicker-wrapper:first-child {
+    input {
+      width: 100px;
+    }
+  }
+}
+.reportChartsRow {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  .mainGraph:not(:first-child) {
+    margin-left: 30px;
+  }
+}
+.reportChartWrap {
+  padding: 20px 0;
+  background: @w;
+  &.daily {
+    border-top: 1px solid @pale-grey-three;
+  }
+  .reportChartTitle {
+    .font(@avenir-medium, 14);
+    padding: 0 30px 25px;
+  }
+  .reportChart {
+    height: 280px;
   }
 }
 
