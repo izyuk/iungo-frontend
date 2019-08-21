@@ -136,7 +136,7 @@ class GlobalCaptivePortalState extends Component {
                 logo: {
                     url: '',
                     horizontalPosition: 'center',
-                    verticalPosition: 'middle',
+                    verticalPosition: 'middle'
                 }
             },
             container_background: {
@@ -556,7 +556,7 @@ class GlobalCaptivePortalState extends Component {
                     logo: {
                         url: '',
                         horizontalPosition: 'center',
-                        verticalPosition: 'middle',
+                        verticalPosition: 'middle'
                     }
                 },
                 container_background: {

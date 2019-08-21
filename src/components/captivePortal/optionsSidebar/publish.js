@@ -59,6 +59,7 @@ class Publish extends Component {
                 setFontsCollection,
                 setFontData,
                 setFontBase64,
+                setContainerVerticalPosition,
                 ...rest
             } = this.context;
             this.context.loaderHandler(true);
@@ -120,6 +121,7 @@ class Publish extends Component {
             setFontsCollection,
             setFontData,
             setFontBase64,
+            setContainerVerticalPosition,
             ...rest
         } = this.context;
         await this.props.collectData(rest);
