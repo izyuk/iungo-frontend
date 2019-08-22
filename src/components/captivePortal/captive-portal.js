@@ -53,6 +53,7 @@ class CaptivePortal extends Component {
                     !!data.style.background_and_logo.logo.horizontalPosition ? data.style.background_and_logo.logo.horizontalPosition : this.context.style.background_and_logo.logo.horizontalPosition,
                     !!data.style.background_and_logo.logo.verticalPosition ? data.style.background_and_logo.logo.verticalPosition : this.context.style.background_and_logo.logo.verticalPosition,
                 );
+                this.context.setContainerVerticalPosition(data.style.container_position.vertical || this.context.style.container_position.vertical);
                 this.context.setBorderStyle(data.style.container_border);
                 this.context.setBackgroundStyle(data.style.container_background);
                 this.context.setSizeStyle(data.style.container_size);
