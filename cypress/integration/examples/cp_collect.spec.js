@@ -1,3 +1,7 @@
+const APPLICATION_HOST = Cypress.env('APPLICATION_HOST') || 'http://localhost:9000';
+const LOGIN_EMAIL = Cypress.env('LOGIN_EMAIL') || 'dmitriy.izyuk@gmail.com';
+const LOGIN_PASSWORD = Cypress.env('LOGIN_PASSWORD') || 'Izyuk8968';
+
 const loadedDataForExpectedStore = {
     backgroundId: "331",
     backgroundUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/nasa-53884-unsplash.jpg",
@@ -93,9 +97,9 @@ context('Start and going to CP', function () {
 
     describe('Inputs login form (wrong creds)', function () {
         it('Checking reset route', () => {
-            cy.visit('http://localhost:9000');
-            cy.visit('http://localhost:9000/reset');
-            cy.visit('http://localhost:9000');
+            cy.visit(APPLICATION_HOST);
+            cy.visit(`${APPLICATION_HOST}/reset`);
+            cy.visit(APPLICATION_HOST);
         });
     });
 
@@ -108,9 +112,9 @@ context('Start and going to CP', function () {
         });
 
         it('Filling login inputs with correct data', () => {
-            cy.visit('http://localhost:9000');
-            fillingFieldsWithFindOption('.email', 'input', 'dmitriy.izyuk@gmail.com');
-            fillingFieldsWithFindOption('.password', 'input', 'Izyuk8968');
+            cy.visit(APPLICATION_HOST);
+            fillingFieldsWithFindOption('.email', 'input', LOGIN_EMAIL);
+            fillingFieldsWithFindOption('.password', 'input', LOGIN_PASSWORD);
             cy.get('.login')
                 .click({force: true});
         });
