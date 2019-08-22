@@ -736,6 +736,12 @@ class GlobalCaptivePortalState extends Component {
                 break;
         }
 
+        if (container_position.vertical === 'top' && logo.verticalPosition === 'top') {
+            logoVerticalPosition = 'margin-bottom: 0';
+        } else if (container_position.vertical === 'bottom' && logo.verticalPosition === 'bottom') {
+            containerVerticalPosition = 'margin: 0 auto 0 auto';
+        }
+
         return `
             ${base64EncodedValue !== '' ?
             `@font-face {
