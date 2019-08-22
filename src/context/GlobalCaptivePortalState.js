@@ -809,7 +809,8 @@ class GlobalCaptivePortalState extends Component {
                 .previewContainer .gdprLabel {
                     color: rgba(${gdpr_settings && gdpr_settings.color.rgba.r}, ${gdpr_settings && gdpr_settings.color.rgba.g}, ${gdpr_settings && gdpr_settings.color.rgba.b}, ${gdpr_settings && gdpr_settings.color.rgba.a});
                 font-size: ${gdpr_settings && gdpr_settings.fontSize}px;
-                text-indent 16px;
+                text-indent: 16px;
+                ${fontName && `font-family: ${fontName}, sans-serif`}
             }
             
             .previewContainer > div.section .text {
@@ -845,6 +846,7 @@ class GlobalCaptivePortalState extends Component {
                 width: 100%;
                 padding: ${accept_button_size.padding}px;
                 word-break: 'break-all';
+                ${fontName && `font-family: ${fontName}, sans-serif`}
             }
            
         `;
