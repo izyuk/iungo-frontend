@@ -830,11 +830,12 @@ class GlobalCaptivePortalState extends Component {
                 .previewContainer .gdprLabel {
                     color: rgba(${gdpr_settings && gdpr_settings.color.rgba.r}, ${gdpr_settings && gdpr_settings.color.rgba.g}, ${gdpr_settings && gdpr_settings.color.rgba.b}, ${gdpr_settings && gdpr_settings.color.rgba.a});
                 font-size: ${gdpr_settings && gdpr_settings.fontSize}px;
-                text-indent 16px;
-            }
-            
-            .previewContainer > div.section .text {
-                color: rgba(${success_message && success_message.color.rgba.r}, ${success_message && success_message.color.rgba.g}, ${success_message && success_message.color.rgba.b}, ${success_message && success_message.color.rgba.a});
+                text-indent: 16px;
+                ${fontName && `font-family: ${fontName}, sans-serif`}
+                }
+                
+                .previewContainer > div.section .text {
+                    color: rgba(${success_message && success_message.color.rgba.r}, ${success_message && success_message.color.rgba.g}, ${success_message && success_message.color.rgba.b}, ${success_message && success_message.color.rgba.a});
                 font-size: ${success_message && success_message.fontSize}px;
                 font-weight: ${success_message && success_message.textActions.bold ? 'bold' : '100'};
                 font-style: ${success_message && success_message.textActions.italic === true ? 'italic' : 'normal'};
@@ -866,9 +867,10 @@ class GlobalCaptivePortalState extends Component {
                 width: 100%;
                 padding: ${accept_button_size.padding}px;
                 word-break: 'break-all';
-            }
-           
-        `;
+                ${fontName && `font-family: ${fontName}, sans-serif`}
+                }
+               
+`;
     };
 
     removeLogo = () => {
