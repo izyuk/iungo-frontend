@@ -132,7 +132,7 @@ export default React.createContext({
             logo: {
                 url: '',
                 horizontalPosition: 'center',
-                verticalPosition: 'margin: auto;',
+                verticalPosition: 'middle',
             }
         },
         container_background: {

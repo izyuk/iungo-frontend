@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import CaptivePortalContext from './project-context';
 
+const PALE_GREY_THREE = {
+    rgba: { r: 229, g: 233, b: 242, a: 1, },
+    hex: '#e5e9f2'
+};
+
 class GlobalCaptivePortalState extends Component {
 
     state = {
@@ -108,15 +113,7 @@ class GlobalCaptivePortalState extends Component {
             background_and_logo: {
                 background: {
                     url: '',
-                    color: {
-                        rgba: {
-                            r: 229,
-                            g: 233,
-                            b: 242,
-                            a: 1,
-                        },
-                        hex: '#e5e9f2'
-                    },
+                    color: PALE_GREY_THREE,
                     backgroundType: 'COLOR',
                     repeat: 'repeat',
                     position: {
@@ -152,15 +149,7 @@ class GlobalCaptivePortalState extends Component {
                 opacity: 100,
             },
             container_border: {
-                color: {
-                    rgba: {
-                        r: 229,
-                        g: 233,
-                        b: 242,
-                        a: 1,
-                    },
-                    hex: '#e5e9f2'
-                },
+                color: PALE_GREY_THREE,
                 type: 'solid',
                 thickness: 1,
                 radius: 4,
@@ -528,15 +517,7 @@ class GlobalCaptivePortalState extends Component {
                 background_and_logo: {
                     background: {
                         url: '',
-                        color: {
-                            rgba: {
-                                r: 229,
-                                g: 233,
-                                b: 242,
-                                a: 1,
-                            },
-                            hex: '#e5e9f2'
-                        },
+                        color: PALE_GREY_THREE,
                         backgroundType: 'COLOR',
                         repeat: 'repeat',
                         position: {
@@ -572,15 +553,7 @@ class GlobalCaptivePortalState extends Component {
                     opacity: 100,
                 },
                 container_border: {
-                    color: {
-                        rgba: {
-                            r: 229,
-                            g: 233,
-                            b: 242,
-                            a: 1,
-                        },
-                        hex: '#e5e9f2'
-                    },
+                    color: PALE_GREY_THREE,
                     type: 'solid',
                     thickness: 1,
                     radius: 4,
@@ -763,6 +736,12 @@ class GlobalCaptivePortalState extends Component {
                 break;
         }
 
+        if (container_position.vertical === 'top' && logo.verticalPosition === 'top') {
+            logoVerticalPosition = 'margin-bottom: 0';
+        } else if (container_position.vertical === 'bottom' && logo.verticalPosition === 'bottom') {
+            containerVerticalPosition = 'margin: 0 auto 0 auto';
+        }
+
         return `
             ${base64EncodedValue !== '' ?
             `@font-face {
@@ -825,15 +804,14 @@ class GlobalCaptivePortalState extends Component {
                 text-decoration: ${description && description.textActions.underline ? 'underline' : 'none'};
                 text-align: ${description && description.alignment};
                 ${fontName && `font-family: ${fontName}, sans-serif`}
-            }
+                }
                 
-            .previewContainer .gdprLabel {
+                .previewContainer .gdprLabel {
                     color: rgba(${gdpr_settings && gdpr_settings.color.rgba.r}, ${gdpr_settings && gdpr_settings.color.rgba.g}, ${gdpr_settings && gdpr_settings.color.rgba.b}, ${gdpr_settings && gdpr_settings.color.rgba.a});
                 font-size: ${gdpr_settings && gdpr_settings.fontSize}px;
-                text-indent: 16px;
-                ${fontName && `font-family: ${fontName}, sans-serif`}
+                text-indent 16px;
             }
-                
+            
             .previewContainer > div.section .text {
                 color: rgba(${success_message && success_message.color.rgba.r}, ${success_message && success_message.color.rgba.g}, ${success_message && success_message.color.rgba.b}, ${success_message && success_message.color.rgba.a});
                 font-size: ${success_message && success_message.fontSize}px;
@@ -851,10 +829,10 @@ class GlobalCaptivePortalState extends Component {
                 text-decoration: ${footer && footer.textActions.underline ? 'underline' : 'none'};
                 text-align: ${footer && footer.alignment};
                 ${fontName && `font-family: ${fontName}, sans-serif`}
-            }
+                }
                 
-            .previewContainer .socialsWrap .accept button {
-                border: ${accept_button_border && accept_button_border.thickness}px ${accept_button_border && accept_button_border.type} rgba(${accept_button_border && accept_button_border.color.rgba.r}, ${accept_button_border && accept_button_border.color.rgba.g}, ${accept_button_border && accept_button_border.color.rgba.b}, ${accept_button_border && accept_button_border.color.rgba.a});
+                .previewContainer .socialsWrap .accept button {
+                    border: ${accept_button_border && accept_button_border.thickness}px ${accept_button_border && accept_button_border.type} rgba(${accept_button_border && accept_button_border.color.rgba.r}, ${accept_button_border && accept_button_border.color.rgba.g}, ${accept_button_border && accept_button_border.color.rgba.b}, ${accept_button_border && accept_button_border.color.rgba.a});
                 border-radius: ${accept_button_border.radius}px;
                 background-color: rgba(${accept_button_color.rgba.r}, ${accept_button_color.rgba.g}, ${accept_button_color.rgba.b}, ${accept_button_color.rgba.a});
                 color: rgba(${accept_button_font.color.rgba.r}, ${accept_button_font.color.rgba.g}, ${accept_button_font.color.rgba.b}, ${accept_button_font.color.rgba.a});
@@ -867,10 +845,9 @@ class GlobalCaptivePortalState extends Component {
                 width: 100%;
                 padding: ${accept_button_size.padding}px;
                 word-break: 'break-all';
-                ${fontName && `font-family: ${fontName}, sans-serif`}
             }
-               
-`;
+           
+        `;
     };
 
     removeLogo = () => {
@@ -882,10 +859,8 @@ class GlobalCaptivePortalState extends Component {
 
     removeBackground = () => {
         const currentState = this.state;
-        currentState.backgroundId = '';
-        currentState.style.background_and_logo.background.url = '';
-        currentState.style.background_and_logo.background.backgroundType = '';
-        this.setState(currentState);
+        const color = currentState.style.background_and_logo.background.color || PALE_GREY_THREE;
+        this.setBackground(null, color, 'COLOR');
     };
 
     urlPathHandler = url => {

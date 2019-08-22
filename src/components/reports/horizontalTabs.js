@@ -11,16 +11,17 @@ export default class HorizontalTabs extends Component {
     static defaultProps = {};
 
     render() {
+        const { uuid } = this.props;
         return (
             <div className="tabsLine">
                 <div className="row">
                     <div className="line">
-                        <NavLink to={'/reports/hotspot-usage'} activeClassName={'active'}>
+                        <NavLink to={'/reports/hotspot-usage' + (uuid ? `/${uuid}` : '')} activeClassName={'active'}>
                             <span>
                                 Hotspot Usage
                             </span>
                         </NavLink>
-                        <NavLink to={'/reports/people'} activeClassName={'active'}>
+                        <NavLink to={'/reports/people' + (uuid ? `/${uuid}` : '')} activeClassName={'active'}>
                             <span>
                                 People
                             </span>

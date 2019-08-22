@@ -359,6 +359,51 @@ export const getSummaryAnalytics = (string, hotSpotUUID) => {
         .catch(err => console.log(err));
 };
 
+export const getDailyVisitsAnalytics = (token, options) => {
+    return axios({
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+        },
+        url: `${ANALYTICS_API}/analytics/visits/${options.uuid}?startDate=${options.startDate}&endDate=${options.endDate}&granularity=DAILY`,
+        mode: 'no-cors'
+    })
+        .then(res => res)
+        // .catch(err => authChecker(err.response));
+        .catch(err => console.log(err));
+};
+
+export const getPopularHoursAnalytics = (token, options) => {
+    return axios({
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+        },
+        url: `${ANALYTICS_API}/analytics/popular_hours/${options.uuid}?startDate=${options.startDate}&endDate=${options.endDate}`,
+        mode: 'no-cors'
+    })
+        .then(res => res)
+        // .catch(err => authChecker(err.response));
+        .catch(err => console.log(err));
+};
+
+export const getNewVisitsAnalytics = (token, options) => {
+    return axios({
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+        },
+        url: `${ANALYTICS_API}/analytics/new_visits/${options.uuid}?startDate=${options.startDate}&endDate=${options.endDate}&granularity=DAILY`,
+        mode: 'no-cors'
+    })
+        .then(res => res)
+        // .catch(err => authChecker(err.response));
+        .catch(err => console.log(err));
+};
+
 export const getAllPublicTemplates = (string) => {
     return axios({
         method: 'get',
