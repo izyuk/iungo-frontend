@@ -8,21 +8,9 @@ class VerticalAlignment extends Component {
     };
 
     verticalAlignment = (e) => {
-        switch (e.target.getAttribute('datatype')) {
-            case "margin: 0 auto auto auto":
-                this.context.setContainerVerticalPosition('top');
-                break;
-            case "margin: auto":
-                this.context.setContainerVerticalPosition('middle');
-                break;
-            case "margin: auto auto 0 auto":
-                this.context.setContainerVerticalPosition('bottom');
-                break;
-        }
-
-        this.setState({
-            verticalPosition: e.target.getAttribute('datatype')
-        })
+        const verticalPosition = e.target.getAttribute('datatype');
+        this.context.setContainerVerticalPosition(verticalPosition);
+        this.setState({ verticalPosition });
     };
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -31,20 +19,8 @@ class VerticalAlignment extends Component {
 
     componentDidMount() {
         const {vertical} = this.context.style.container_position;
-        this.setState({
-            verticalPosition: vertical
-        });
-        switch (vertical) {
-            case "top":
-                document.querySelector(`[datatype='margin: 0 auto auto auto']`).checked = true;
-                break;
-            case "middle":
-                document.querySelector(`[datatype='margin: auto']`).checked = true;
-                break;
-            case "bottom":
-                document.querySelector(`[datatype='margin: auto auto 0 auto']`).checked = true;
-                break;
-        }
+        this.setState({ verticalPosition: vertical });
+        document.querySelector(`[datatype='${vertical}']`).checked = true;
     }
 
     render() {
@@ -65,7 +41,7 @@ class VerticalAlignment extends Component {
                         <div className="innerCol">
                             <label htmlFor="top">Top
                                 <div className="inputRadioWrap">
-                                    <input onChange={this.verticalAlignment} id='top' datatype={'margin: 0 auto auto auto'}
+                                    <input onChange={this.verticalAlignment} id='top' datatype='top'
                                            type="radio"
                                            name='v-alignment'/>
                                     <span className="radio"> </span>
@@ -73,7 +49,7 @@ class VerticalAlignment extends Component {
                             </label>
                             <label htmlFor="middle">Middle
                                 <div className="inputRadioWrap">
-                                    <input onChange={this.verticalAlignment} id='middle' datatype={'margin: auto'}
+                                    <input onChange={this.verticalAlignment} id='middle' datatype='middle'
                                            type="radio"
                                            name='v-alignment'/>
                                     <span className="radio"> </span>
@@ -81,7 +57,7 @@ class VerticalAlignment extends Component {
                             </label>
                             <label htmlFor="bottom">Bottom
                                 <div className="inputRadioWrap">
-                                    <input onChange={this.verticalAlignment} id='bottom' datatype={'margin: auto auto 0 auto'}
+                                    <input onChange={this.verticalAlignment} id='bottom' datatype='bottom'
                                            type="radio"
                                            name='v-alignment'/>
                                     <span className="radio"> </span>

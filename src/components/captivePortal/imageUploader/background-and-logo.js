@@ -259,21 +259,9 @@ class BackgroundAndLogo extends Component {
     };
 
     verticalAlignment = (e) => {
-
-        switch (e.target.getAttribute('datatype')) {
-            case "margin-bottom: auto":
-                this.context.setLogo(this.state.logo, this.state.logoHorizontalPosition, 'top');
-                break;
-            case "margin: auto 0":
-                this.context.setLogo(this.state.logo, this.state.logoHorizontalPosition, 'middle');
-                break;
-            case "margin-top: auto":
-                this.context.setLogo(this.state.logo, this.state.logoHorizontalPosition, 'bottom');
-                break;
-        }
-        this.setState({
-            logoVerticalPosition: e.target.getAttribute('datatype')
-        })
+        const logoVerticalPosition = e.target.getAttribute('datatype');
+        this.context.setLogo(this.state.logo, this.state.logoHorizontalPosition, logoVerticalPosition);
+        this.setState({ logoVerticalPosition })
     };
 
     handleChange = (color) => {
@@ -319,19 +307,7 @@ class BackgroundAndLogo extends Component {
                 logoHorizontalPosition: horizontalPosition,
                 logoVerticalPosition: verticalPosition
             });
-
-            switch (verticalPosition) {
-                case "top":
-                    document.querySelector(`[datatype='margin-bottom: auto']`).checked = true;
-                    break;
-                case "middle":
-                    document.querySelector(`[datatype='margin: auto 0']`).checked = true;
-                    break;
-                case "bottom":
-                    document.querySelector(`[datatype='margin-top: auto']`).checked = true;
-                    break;
-            }
-
+            document.querySelector(`[datatype='${verticalPosition}']`).checked = true;
             document.getElementById((horizontalPosition ? (horizontalPosition === 'flex-start' ? 'left' : (horizontalPosition === 'flex-end' ? 'right' : 'center')) : this.state.logoHorizontalPosition)).checked = true;
         }
         console.log("TYPE", this.props.type);
@@ -434,9 +410,14 @@ class BackgroundAndLogo extends Component {
                 {this.props.type === "logo" ?
                     <React.Fragment>
                         <div className="row">
-                            <div className="logoLeft">
+                            <div className="logoLeft logoLeftFull">
+                                <span className="header">Position</span>
+                            </div>
+                        </div>
+                        <div className="row spaceBottom">
+                            <div className="logoLeft ">
                                 <span className="descr position">
-                                    Image horizontal position
+                                    Horizontal
                                 </span>
                             </div>
                             <div className="right">
@@ -471,14 +452,14 @@ class BackgroundAndLogo extends Component {
                         <div className="row">
                             <div className="logoLeft">
                                 <span className="descr position">
-                                    Image vertical position
+                                    Vertical
                                 </span>
                             </div>
                             <div className="right">
                                 <div className="innerCol">
                                     <label htmlFor="top">Top
                                         <div className="inputRadioWrap">
-                                            <input onChange={this.verticalAlignment} id='top' datatype={'margin-bottom: auto'}
+                                            <input onChange={this.verticalAlignment} id='top' datatype='top'
                                                    type="radio"
                                                    name='v-alignment'/>
                                             <span className="radio"> </span>
@@ -486,7 +467,7 @@ class BackgroundAndLogo extends Component {
                                     </label>
                                     <label htmlFor="middle">Middle
                                         <div className="inputRadioWrap">
-                                            <input onChange={this.verticalAlignment} id='middle' datatype={'margin: auto 0'}
+                                            <input onChange={this.verticalAlignment} id='middle' datatype='middle'
                                                    type="radio"
                                                    name='v-alignment'/>
                                             <span className="radio"> </span>
@@ -494,7 +475,7 @@ class BackgroundAndLogo extends Component {
                                     </label>
                                     <label htmlFor="bottom">Bottom
                                         <div className="inputRadioWrap">
-                                            <input onChange={this.verticalAlignment} id='bottom' datatype={'margin-top: auto'}
+                                            <input onChange={this.verticalAlignment} id='bottom' datatype='bottom'
                                                    type="radio"
                                                    name='v-alignment'/>
                                             <span className="radio"> </span>
