@@ -17,7 +17,6 @@ class StyleTab extends Component {
     render(){
         const { activeTab } = this.state;
         const type = this.context.previewDeviceType;
-        console.log('!#! activeTab', activeTab === 'logo');
         return(
             <div className="dropdown">
                 <div className="wrap">
