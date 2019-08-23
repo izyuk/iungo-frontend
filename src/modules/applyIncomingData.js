@@ -6,7 +6,7 @@ export const ApplyIncomingData = async (data, id) => {
     await query.then(res => {
         const {data} = res;
         console.log(data);
-        this.props.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.background.color, data.style.background_and_logo.background.backgroundType);
+        this.props.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.desktopBackground.color, data.style.background_and_logo.desktopBackground.backgroundType);
         this.props.setLogo(data.logo !== null ? data.logo.externalUrl : '', data.style.background_and_logo.logo.position);
         this.props.setBorderStyle(data.style.container_border);
         this.props.setBackgroundStyle(data.style.container_background);
@@ -42,8 +42,8 @@ export const ApplyIncomingData = async (data, id) => {
         button.acceptButtonSize = data.style.accept_button_size;
         this.setState({
             type: 'background',
-            backgroundType: data.style.background_and_logo.background.backgroundType,
-            backgrName: data.background !== null ? data.background.externalUrl : data.style.background_and_logo.background.color,
+            backgroundType: data.style.background_and_logo.desktopBackground.backgroundType,
+            backgrName: data.background !== null ? data.background.externalUrl : data.style.background_and_logo.desktopBackground.color,
             logoName: data.logo !== null ? data.logo.externalUrl : '',
             alignment: data.style.background_and_logo.logo.position,
             container: {

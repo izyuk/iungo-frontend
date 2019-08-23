@@ -122,6 +122,8 @@ class Publish extends Component {
             setFontData,
             setFontBase64,
             setContainerVerticalPosition,
+            previewMobile,
+            setPreviewMobile,
             ...rest
         } = this.context;
         await this.props.collectData(rest);

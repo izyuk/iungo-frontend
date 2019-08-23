@@ -137,7 +137,8 @@ class BackgroundAndLogo extends Component {
             list[i].classList.remove('active');
         }
         e.currentTarget.classList.add('active');
-        const {style: {background_and_logo: {background, logo}}} = this.context;
+        const {style: {background_and_logo: {desktopBackground, mobileBackground, logo}}, previewMobile} = this.context;
+        const background = !previewMobile ? desktopBackground : mobileBackground;
         this.newUploadedImageData = {
             data: {
                 id: e.currentTarget.getAttribute('dataid'),
@@ -154,10 +155,8 @@ class BackgroundAndLogo extends Component {
             case "background":
                 this.setState({background: e.currentTarget.getAttribute('dataurl')});
                 const colorData = this.state.color;
-                background.url = e.currentTarget.getAttribute('dataurl');
-                background.color = colorData;
-                background.backgroundType = 'IMAGE';
                 this.context.setBackgroundID(e.currentTarget.getAttribute('dataid'));
+                this.context.setBackground(e.currentTarget.getAttribute('dataurl'), colorData, 'IMAGE');
                 break;
         }
         this.setState({
@@ -171,7 +170,8 @@ class BackgroundAndLogo extends Component {
     applyOnUpload = () => {
         console.log(this.newUploadedImageData);
         const {data: {id, externalUrl}} = this.newUploadedImageData;
-        const {style: {background_and_logo: {background, logo}}} = this.context;
+        const {style: {background_and_logo: {desktopBackground, mobileBackground, logo}}, previewMobile} = this.context;
+        const background = !previewMobile ? desktopBackground : mobileBackground;
         switch (this.props.type) {
             case "logo":
                 this.setState({logo: externalUrl});
@@ -182,10 +182,8 @@ class BackgroundAndLogo extends Component {
             case "background":
                 this.setState({background: externalUrl});
                 const colorData = this.state.color;
-                background.url = externalUrl;
-                background.color = colorData;
-                background.backgroundType = 'IMAGE';
                 this.context.setBackgroundID(id);
+                this.context.setBackground(externalUrl, colorData, 'IMAGE');
                 break;
         }
         this.toggleModal();
@@ -288,19 +286,7 @@ class BackgroundAndLogo extends Component {
     };
 
     componentDidMount() {
-        if (this.props.type === "background") {
-            if (this.context.style.background_and_logo.background) {
-                let currentState = this.state;
-                currentState.color = this.context.style.background_and_logo.background.color;
-                this.setState(currentState);
-                let red = this.state.color.rgba.r,
-                    green = this.state.color.rgba.g,
-                    blue = this.state.color.rgba.b,
-                    alpha = this.state.color.rgba.a;
-                this.cpbButton.current.removeAttribute('style');
-                this.cpbButton.current.setAttribute('style', `background-color: rgba(${red}, ${green}, ${blue}, ${alpha})`);
-            }
-        }
+        this.updateBackground();
         if (this.props.type === 'logo') {
             const {horizontalPosition, verticalPosition} = this.context.style.background_and_logo.logo;
             this.setState({
@@ -322,6 +308,31 @@ class BackgroundAndLogo extends Component {
         else return true;
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextContext.previewMobile !== this.context.previewMobile) {
+            this.updateBackground()
+        }
+    }
+
+    updateBackground(nextContext) {
+        if (this.props.type === "background") {
+            const context = nextContext || this.context;
+            const {style: { background_and_logo }, previewMobile} = context;
+            const background = previewMobile && background_and_logo.mobileBackground || background_and_logo.desktopBackground;
+            if (background) {
+                let currentState = this.state;
+                currentState.color = background.color;
+                this.setState(currentState);
+                let red = this.state.color.rgba.r,
+                    green = this.state.color.rgba.g,
+                    blue = this.state.color.rgba.b,
+                    alpha = this.state.color.rgba.a;
+                this.cpbButton.current.removeAttribute('style');
+                this.cpbButton.current.setAttribute('style', `background-color: rgba(${red}, ${green}, ${blue}, ${alpha})`);
+            }
+        }
+    }
+
     render() {
         const popover = {
             position: 'absolute',
@@ -337,7 +348,10 @@ class BackgroundAndLogo extends Component {
             left: '0px',
         };
 
-        const {style: {background_and_logo: {background, logo}}} = this.context;
+        const {style: { background_and_logo }, previewMobile, desktopBackgroundId, mobileBackgroundId} = this.context;
+        const logo = background_and_logo.logo;
+        const background = previewMobile && background_and_logo.mobileBackground || background_and_logo.desktopBackground;
+        const backgroundId = previewMobile ? mobileBackgroundId : desktopBackgroundId;
         return (
             <div
                 className={this.props.type === "background" ? "container active" : "container"}>
@@ -365,7 +379,7 @@ class BackgroundAndLogo extends Component {
                             }
                             {
                                 this.props.type === "background" &&
-                                ((background.url && background.url !== '' && this.context.backgroundId && this.context.backgroundId !== '') &&
+                                ((background.url && background.url !== '' && backgroundId && backgroundId !== '') &&
                                     <span className="removeLogo" onClick={this.removeBackgroundHandler}>
                                         Remove
                                     </span>)

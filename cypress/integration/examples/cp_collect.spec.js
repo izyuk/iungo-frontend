@@ -3,7 +3,7 @@ const LOGIN_EMAIL = Cypress.env('LOGIN_EMAIL') || 'dmitriy.izyuk@gmail.com';
 const LOGIN_PASSWORD = Cypress.env('LOGIN_PASSWORD') || 'Izyuk8968';
 
 const loadedDataForExpectedStore = {
-    backgroundId: "331",
+    desktopBackgroundId: "331",
     backgroundUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/nasa-53884-unsplash.jpg",
     logoId: "330",
     logoUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/google_logo.svg",
@@ -168,7 +168,7 @@ context('Style tab', function () {
             cy.get('[data-cy="backgroundImageItem0"')
                 .dblclick({force: true}).then(elem => {
                 const element = Cypress.$(elem);
-                loadedDataForExpectedStore.backgroundId = element.attr('dataid');
+                loadedDataForExpectedStore.desktopBackgroundId = element.attr('dataid');
                 loadedDataForExpectedStore.backgroundUrl = element.attr('dataurl');
             });
         });
@@ -561,9 +561,9 @@ context('Tests finished', function () {
 
 var deepDiffMapper = function () {
     return {
-        VALUE_CREATED: 'created',
-        VALUE_UPDATED: 'updated',
-        VALUE_DELETED: 'deleted',
+        VALUE_CREATED: '!DIFF!# created #!DIFF!',
+        VALUE_UPDATED: '!DIFF!# updated #!DIFF!',
+        VALUE_DELETED: '!DIFF!# deleted #!DIFF!',
         VALUE_UNCHANGED: 'unchanged',
         map: function (obj1, obj2) {
             if (this.isFunction(obj1) || this.isFunction(obj2)) {
@@ -639,11 +639,12 @@ context('Starting comparing collected data', function () {
                 cy.window().then(win => {
                     // const store = GetBuilderParams(Object.assign({}, win.__store__));
                     const expectedStore = {
-                        background: null,
+                        background: loadedDataForExpectedStore.backgroundUrl,
                         name: "CP TEST NAME",
                         externalCss: "",
                         logoId: loadedDataForExpectedStore.logoId,
-                        backgroundId: loadedDataForExpectedStore.backgroundId,
+                        desktopBackgroundId: loadedDataForExpectedStore.desktopBackgroundId,
+                        mobileBackgroundId: "",
                         header: "CP TEST HEADER TEXT",
                         description: "CP TEST DESCRIPTION TEXT",
                         footer: "TEST FOOTER TEXT",
@@ -700,7 +701,26 @@ context('Starting comparing collected data', function () {
                                 alignment: "center"
                             },
                             background_and_logo: {
-                                background: {
+                                desktopBackground: {
+                                    url: loadedDataForExpectedStore.backgroundUrl,
+                                    color: {rgba: {r: 229, g: 233, b: 242, a: 1,}, hex: '#e5e9f2'},
+                                    backgroundType: 'IMAGE',
+                                    repeat: 'no-repeat',
+                                    position: {
+                                        inPercentDimension: false,
+                                        posX: 0,
+                                        posY: 0,
+                                        option: 'left top'
+                                    },
+                                    attachment: "scroll",
+                                    size: {
+                                        inPercentDimension: true,
+                                        width: 50,
+                                        height: 50,
+                                        option: '50% 50%'
+                                    },
+                                },
+                                mobileBackground: {
                                     url: loadedDataForExpectedStore.backgroundUrl,
                                     color: {rgba: {r: 229, g: 233, b: 242, a: 1,}, hex: '#e5e9f2'},
                                     backgroundType: 'IMAGE',
@@ -768,7 +788,7 @@ context('Starting comparing collected data', function () {
                         acceptTermsLogin: true,
                         successRedirectUrl: "",
                         termAndConditionId: "",
-                        acceptButtonText: "Connect FOR FREE"
+                        acceptButtonText: "Connect FOR FREE",
                     };
                     const store = {...win.__store__.collectDataToTest};
                     console.log('Store', store);

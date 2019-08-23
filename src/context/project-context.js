@@ -5,7 +5,8 @@ export default React.createContext({
     name: '',
     externalCss: '',
     logoId: '',
-    backgroundId: '',
+    desktopBackgroundId: '',
+    mobileBackgroundId: '',
     header: 'Company name',
     description: 'Venue description',
     footer: 'Footer content',
@@ -103,7 +104,7 @@ export default React.createContext({
             alignment: 'center'
         },
         background_and_logo: {
-            background: {
+            desktopBackground: {
                 url: '',
                 color: {
                     rgba: {
@@ -267,4 +268,7 @@ export default React.createContext({
     setFontsCollection: () => {},
     setFontData: () => {},
     setFontBase64: () => {},
+
+    previewMobile: false,
+    setPreviewMobile: () => {},
 });

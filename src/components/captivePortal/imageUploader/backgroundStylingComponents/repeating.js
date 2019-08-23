@@ -23,13 +23,32 @@ export default class Repeating extends Component {
         this.setState(currentState);
     };
 
-    componentDidMount() {
-        const {style: {background_and_logo: {background: {repeat}}}} = this.context;
+    componentDidMount(){
+        this.getRepeatingSettings();
+    }
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextContext.previewMobile !== this.context.previewMobile) {
+            this.getRepeatingSettings(nextContext);
+        }
+    }
+
+    getRepeatingSettings(nextContext) {
+        const context = nextContext || this.context;
+        const {style: { background_and_logo }, previewMobile} = context;
+        const background = previewMobile && background_and_logo.mobileBackground || background_and_logo.desktopBackground;
+        const repeat = background.repeat;
         this.repeating.current.value = repeat;
-        let svg = this.repeating.current.nextSibling.children[0];
+
         let span = document.createElement('span');
+        const children = this.repeating.current.nextSibling.children;
+        if (children.length > 1) {
+            span = children[0];
+        } else {
+            let svg = children[0];
+            this.repeating.current.nextSibling.insertBefore(span, svg);
+        }
         span.innerText = this.repeating.current.options[this.repeating.current.selectedIndex].value;
-        this.repeating.current.nextSibling.insertBefore(span, svg);
     }
 
     render() {

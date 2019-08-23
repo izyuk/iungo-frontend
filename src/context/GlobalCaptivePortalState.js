@@ -13,7 +13,8 @@ class GlobalCaptivePortalState extends Component {
         name: '',
         externalCss: '',
         logoId: '',
-        backgroundId: '',
+        desktopBackgroundId: '',
+        mobileBackgroundId: '',
         header: 'Company name',
         description: 'Venue description',
         footer: 'Footer content',
@@ -111,7 +112,7 @@ class GlobalCaptivePortalState extends Component {
                 alignment: 'center'
             },
             background_and_logo: {
-                background: {
+                desktopBackground: {
                     url: '',
                     color: PALE_GREY_THREE,
                     backgroundType: 'COLOR',
@@ -222,40 +223,61 @@ class GlobalCaptivePortalState extends Component {
             token: '',
             urlPath: '',
             gdprFromBE: ''
-        }
+        },
+
+        previewMobile: false,
     };
 
     addPortalName = name => {
         this.setState({name: name})
     };
 
-    setBackground = (path, color, type) => {
+    getDesktopOrMobileBackground = (state, forMobile) => {
+        const mobile = state.previewMobile || forMobile;
+        let background = state.style.background_and_logo.desktopBackground;
+        if (mobile) {
+            const mobileBackground = state.style.background_and_logo.mobileBackground;
+            if (!mobileBackground) {
+                state.style.background_and_logo.mobileBackground = Object.assign({}, state.style.background_and_logo.desktopBackground);
+                background = state.style.background_and_logo.mobileBackground;
+            } else {
+                background = mobileBackground;
+            }
+        }
+        return background;
+    }
+
+    setBackground = (path, color, type, forMobile) => {
         const currentState = this.state;
-        currentState.background = 'COLOR' ? null : path;
-        currentState.backgroundId = 'COLOR' && null;
-        currentState.style.background_and_logo.background.url = type === 'COLOR' ? null : path;
-        currentState.style.background_and_logo.background.color = color;
-        currentState.style.background_and_logo.background.backgroundType = type;
+        const mobile = currentState.previewMobile || forMobile;
+        const background = this.getDesktopOrMobileBackground(currentState, forMobile);
+        currentState.background = (type === 'COLOR') ? null : path;
+        background.url = (type === 'COLOR') ? null : path;
+        background.color = color;
+        background.backgroundType = type;
         this.setState(currentState)
     };
 
-    setBackgroundRepeating = (repeating) => {
+    setBackgroundRepeating = (repeating, forMobile) => {
         const currentState = this.state;
-        currentState.style.background_and_logo.background.repeat = repeating;
+        const background = this.getDesktopOrMobileBackground(currentState, forMobile);
+        background.repeat = repeating;
         this.setState(currentState);
     };
 
-    setBackgroundPosition = (position, status) => {
+    setBackgroundPosition = (position, status, forMobile) => {
         const merged = {...position, inPercentDimension: status};
         const currentState = this.state;
-        currentState.style.background_and_logo.background.position = merged;
+        const background = this.getDesktopOrMobileBackground(currentState, forMobile);
+        background.position = merged;
         this.setState(currentState);
     };
 
-    setBackgroundSize = (size, status) => {
+    setBackgroundSize = (size, status, forMobile) => {
         const merged = {...size, inPercentDimension: status};
         const currentState = this.state;
-        currentState.style.background_and_logo.background.size = merged;
+        const background = this.getDesktopOrMobileBackground(currentState, forMobile);
+        background.size = merged;
         this.setState(currentState);
     };
 
@@ -321,10 +343,11 @@ class GlobalCaptivePortalState extends Component {
             logoId: id
         })
     };
-    setBackgroundID = id => {
-        this.setState({
-            backgroundId: id
-        })
+    setBackgroundID = (id, forMobile) => {
+        const currentState = this.state;
+        const mobile = currentState.previewMobile || forMobile;
+        currentState[mobile ? 'mobileBackgroundId' : 'desktopBackgroundId'] = id;
+        this.setState(currentState);
     };
     setCSS = str => {
         this.setState({
@@ -417,7 +440,8 @@ class GlobalCaptivePortalState extends Component {
             name: '',
             externalCss: '',
             logoId: '',
-            backgroundId: '',
+            desktopBackgroundId: '',
+            mobileBackgroundId: '',
             header: 'Company name',
             description: 'Venue description',
             footer: 'Footer content',
@@ -515,7 +539,7 @@ class GlobalCaptivePortalState extends Component {
                     alignment: 'center'
                 },
                 background_and_logo: {
-                    background: {
+                    desktopBackground: {
                         url: '',
                         color: PALE_GREY_THREE,
                         backgroundType: 'COLOR',
@@ -629,7 +653,7 @@ class GlobalCaptivePortalState extends Component {
             }
         };
         await this.loaderHandler(true);
-        await this.setBackground(data.background !== null ? data.style.background_and_logo.background.url : '', data.style.background_and_logo.background.color, data.style.background_and_logo.background.backgroundType);
+        await this.setBackground(data.background !== null ? data.style.background_and_logo.desktopBackground.url : '', data.style.background_and_logo.desktopBackground.color, data.style.background_and_logo.desktopBackground.backgroundType);
         await this.setLogo(data.logo !== null ? data.style.background_and_logo.logo.url : '', data.style.background_and_logo.logo.horizontalPosition, data.style.background_and_logo.logo.verticalPosition);
         await this.setBorderStyle(data.style.container_border);
         await this.setBackgroundStyle(data.style.container_background);
@@ -683,6 +707,8 @@ class GlobalCaptivePortalState extends Component {
         await this.setFontData({fontName: data.dataToExclude.fontName, fontId: data.fontId});
 
         await this.setFontBase64(data.dataToExclude.base64EncodedValue);
+
+        await this.setPreviewMobile(false);
     };
 
 
@@ -695,7 +721,7 @@ class GlobalCaptivePortalState extends Component {
                 container_border,
                 container_size,
                 container_position,
-                background_and_logo: {background, logo},
+                background_and_logo,
                 success_message,
                 accept_button_border,
                 accept_button_color,
@@ -706,8 +732,11 @@ class GlobalCaptivePortalState extends Component {
             dataToExclude: {
                 fontName,
                 base64EncodedValue
-            }
+            },
+            previewMobile,
         } = this.state;
+        const logo = background_and_logo.logo;
+        const background = (previewMobile && background_and_logo.mobileBackground) || background_and_logo.desktopBackground;
 
         let containerVerticalPosition;
         let logoVerticalPosition;
@@ -859,7 +888,8 @@ class GlobalCaptivePortalState extends Component {
 
     removeBackground = () => {
         const currentState = this.state;
-        const color = currentState.style.background_and_logo.background.color || PALE_GREY_THREE;
+        const background = this.getDesktopOrMobileBackground(currentState);
+        const color = background.color || PALE_GREY_THREE;
         this.setBackground(null, color, 'COLOR');
     };
 
@@ -906,12 +936,17 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState);
     };
 
+    setPreviewMobile = (isMobile) => {
+        this.setState({ previewMobile: isMobile });
+    }
+
     render() {
         return <CaptivePortalContext.Provider value={{
             background: this.state.background,
             name: this.state.name,
             logoId: this.state.logoId,
-            backgroundId: this.state.backgroundId,
+            desktopBackgroundId: this.state.desktopBackgroundId,
+            mobileBackgroundId: this.state.mobileBackgroundId,
             header: this.state.header,
             description: this.state.description,
             footer: this.state.footer,
@@ -967,6 +1002,8 @@ class GlobalCaptivePortalState extends Component {
             setFontsCollection: this.setFontsCollection,
             setFontData: this.setFontData,
             setFontBase64: this.setFontBase64,
+            previewMobile: this.state.previewMobile,
+            setPreviewMobile: this.setPreviewMobile,
         }}
         >{this.props.children}</CaptivePortalContext.Provider>
     }
