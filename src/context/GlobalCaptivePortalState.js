@@ -13,7 +13,8 @@ class GlobalCaptivePortalState extends Component {
         name: '',
         externalCss: '',
         logoId: '',
-        backgroundId: '',
+        desktopBackgroundId: '',
+        mobileBackgroundId: '',
         header: 'Company name',
         description: 'Venue description',
         footer: 'Footer content',
@@ -111,7 +112,26 @@ class GlobalCaptivePortalState extends Component {
                 alignment: 'center'
             },
             background_and_logo: {
-                background: {
+                desktopBackground: {
+                    url: '',
+                    color: PALE_GREY_THREE,
+                    backgroundType: 'COLOR',
+                    repeat: 'repeat',
+                    position: {
+                        inPercentDimension: true,
+                        posX: 0,
+                        posY: 0,
+                        option: ''
+                    },
+                    attachment: 'scroll',
+                    size: {
+                        inPercentDimension: false,
+                        width: 0,
+                        height: 0,
+                        option: 'auto'
+                    },
+                },
+                mobileBackground: {
                     url: '',
                     color: PALE_GREY_THREE,
                     backgroundType: 'COLOR',
@@ -222,40 +242,77 @@ class GlobalCaptivePortalState extends Component {
             token: '',
             urlPath: '',
             gdprFromBE: ''
-        }
+        },
+
+        previewDeviceType: 'desktop',
+        mobileSettingsTouched: false,
     };
 
     addPortalName = name => {
         this.setState({name: name})
     };
 
-    setBackground = (path, color, type) => {
-        const currentState = this.state;
-        currentState.background = 'COLOR' ? null : path;
-        currentState.backgroundId = 'COLOR' && null;
-        currentState.style.background_and_logo.background.url = type === 'COLOR' ? null : path;
-        currentState.style.background_and_logo.background.color = color;
-        currentState.style.background_and_logo.background.backgroundType = type;
-        this.setState(currentState)
-    };
+    getDeviceTypesToUpdate = (state, deviceType) => {
+        let deviceTypes = [];
+        if (deviceType) {
+            deviceTypes = [deviceType];
+        } else {
+            const type = state.previewDeviceType;
+            if (type === 'desktop' && !state.mobileSettingsTouched) {
+                deviceTypes = ['desktop', 'mobile'];
+            } else {
+                deviceTypes = [type];
+                if (type === 'mobile') { state.mobileSettingsTouched = true; }
+            }
+        }
+        return deviceTypes;
+    }
 
-    setBackgroundRepeating = (repeating) => {
+    getBackgroundsByDeviceType = (state, deviceType) => {
+        const bgl = state.style.background_and_logo;
+        const backgrounds = [];
+        this.getDeviceTypesToUpdate(state, deviceType).map(type => {
+            let background = bgl[`${type}Background`];
+            background && backgrounds.push(background);
+        })
+        return backgrounds;
+    }
+
+    setBackground = (path, color, type, deviceType) => {
         const currentState = this.state;
-        currentState.style.background_and_logo.background.repeat = repeating;
+        this.getBackgroundsByDeviceType(currentState, deviceType).map(background => {
+            currentState.background = (type === 'COLOR') ? null : path;
+            background.url = (type === 'COLOR') ? null : path;
+            background.color = color;
+            background.backgroundType = type;
+            (type === 'COLOR') && this.setBackgroundID('', deviceType);
+        });
         this.setState(currentState);
     };
 
-    setBackgroundPosition = (position, status) => {
+    setBackgroundRepeating = (repeating, deviceType) => {
+        const currentState = this.state;
+        this.getBackgroundsByDeviceType(currentState, deviceType).map(background => {
+            background.repeat = repeating;
+        });
+        this.setState(currentState);
+    };
+
+    setBackgroundPosition = (position, status, deviceType) => {
         const merged = {...position, inPercentDimension: status};
         const currentState = this.state;
-        currentState.style.background_and_logo.background.position = merged;
+        this.getBackgroundsByDeviceType(currentState, deviceType).map(background => {
+            background.position = merged;
+        });
         this.setState(currentState);
     };
 
-    setBackgroundSize = (size, status) => {
+    setBackgroundSize = (size, status, deviceType) => {
         const merged = {...size, inPercentDimension: status};
         const currentState = this.state;
-        currentState.style.background_and_logo.background.size = merged;
+        this.getBackgroundsByDeviceType(currentState, deviceType).map(background => {
+            background.size = merged;
+        });
         this.setState(currentState);
     };
 
@@ -321,10 +378,12 @@ class GlobalCaptivePortalState extends Component {
             logoId: id
         })
     };
-    setBackgroundID = id => {
-        this.setState({
-            backgroundId: id
-        })
+    setBackgroundID = (id, deviceType) => {
+        const currentState = this.state;
+        this.getDeviceTypesToUpdate(currentState, deviceType).map(type => {
+            currentState[`${type}BackgroundId`] = id;
+        });
+        this.setState(currentState);
     };
     setCSS = str => {
         this.setState({
@@ -417,7 +476,8 @@ class GlobalCaptivePortalState extends Component {
             name: '',
             externalCss: '',
             logoId: '',
-            backgroundId: '',
+            desktopBackgroundId: '',
+            mobileBackgroundId: '',
             header: 'Company name',
             description: 'Venue description',
             footer: 'Footer content',
@@ -515,7 +575,26 @@ class GlobalCaptivePortalState extends Component {
                     alignment: 'center'
                 },
                 background_and_logo: {
-                    background: {
+                    desktopBackground: {
+                        url: '',
+                        color: PALE_GREY_THREE,
+                        backgroundType: 'COLOR',
+                        repeat: 'repeat',
+                        position: {
+                            inPercentDimension: true,
+                            posX: 0,
+                            posY: 0,
+                            option: ''
+                        },
+                        attachment: 'scroll',
+                        size: {
+                            inPercentDimension: false,
+                            width: 0,
+                            height: 0,
+                            option: 'auto'
+                        },
+                    },
+                    mobileBackground: {
                         url: '',
                         color: PALE_GREY_THREE,
                         backgroundType: 'COLOR',
@@ -629,7 +708,7 @@ class GlobalCaptivePortalState extends Component {
             }
         };
         await this.loaderHandler(true);
-        await this.setBackground(data.background !== null ? data.style.background_and_logo.background.url : '', data.style.background_and_logo.background.color, data.style.background_and_logo.background.backgroundType);
+        await this.setBackground(data.background !== null ? data.style.background_and_logo.desktopBackground.url : '', data.style.background_and_logo.desktopBackground.color, data.style.background_and_logo.desktopBackground.backgroundType);
         await this.setLogo(data.logo !== null ? data.style.background_and_logo.logo.url : '', data.style.background_and_logo.logo.horizontalPosition, data.style.background_and_logo.logo.verticalPosition);
         await this.setBorderStyle(data.style.container_border);
         await this.setBackgroundStyle(data.style.container_background);
@@ -683,6 +762,9 @@ class GlobalCaptivePortalState extends Component {
         await this.setFontData({fontName: data.dataToExclude.fontName, fontId: data.fontId});
 
         await this.setFontBase64(data.dataToExclude.base64EncodedValue);
+
+        await this.setPreviewDeviceType('desktop');
+        await this.setDeviceTypeSettingsTouched('mobile', false);
     };
 
 
@@ -695,7 +777,7 @@ class GlobalCaptivePortalState extends Component {
                 container_border,
                 container_size,
                 container_position,
-                background_and_logo: {background, logo},
+                background_and_logo,
                 success_message,
                 accept_button_border,
                 accept_button_color,
@@ -706,8 +788,11 @@ class GlobalCaptivePortalState extends Component {
             dataToExclude: {
                 fontName,
                 base64EncodedValue
-            }
+            },
+            previewDeviceType,
         } = this.state;
+        const logo = background_and_logo.logo;
+        const background = background_and_logo[`${previewDeviceType}Background`] || background_and_logo.desktopBackground;
 
         let containerVerticalPosition;
         let logoVerticalPosition;
@@ -861,8 +946,13 @@ class GlobalCaptivePortalState extends Component {
 
     removeBackground = () => {
         const currentState = this.state;
-        const color = currentState.style.background_and_logo.background.color || PALE_GREY_THREE;
-        this.setBackground(null, color, 'COLOR');
+        this.getBackgroundsByDeviceType(currentState).map(background => {
+            const color = background.color || PALE_GREY_THREE;
+            background.url = null;
+            background.color = color;
+            background.backgroundType = 'COLOR';
+        });
+        this.setBackgroundID('');
     };
 
     urlPathHandler = url => {
@@ -908,12 +998,33 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState);
     };
 
+    setPreviewDeviceType = (deviceType) => {
+        this.setState({ previewDeviceType: deviceType });
+    }
+    setDeviceTypeSettingsTouched = (deviceType, touched) => {
+        const currentState = this.state;
+        currentState[`${deviceType}SettingsTouched`] = touched;
+        this.setState(currentState);
+    }
+    checkDeviceTypeBackgroundChanged = (deviceType, data) => {
+        const currentState = this.state;
+        let changed = false;
+        if (deviceType !== 'desktop') {
+            const backgroundsEqual = (JSON.stringify(data.desktopBackground) === JSON.stringify(data[`${deviceType}Background`]));
+            const stylesEqual = (JSON.stringify(data.style.background_and_logo.desktopBackground) === JSON.stringify(data.style.background_and_logo[`${deviceType}Background`]));
+            changed = !backgroundsEqual || !stylesEqual;
+        }
+        currentState[`${deviceType}SettingsTouched`] = changed;
+        this.setState(currentState);
+    }
+
     render() {
         return <CaptivePortalContext.Provider value={{
             background: this.state.background,
             name: this.state.name,
             logoId: this.state.logoId,
-            backgroundId: this.state.backgroundId,
+            desktopBackgroundId: this.state.desktopBackgroundId,
+            mobileBackgroundId: this.state.mobileBackgroundId,
             header: this.state.header,
             description: this.state.description,
             footer: this.state.footer,
@@ -969,6 +1080,11 @@ class GlobalCaptivePortalState extends Component {
             setFontsCollection: this.setFontsCollection,
             setFontData: this.setFontData,
             setFontBase64: this.setFontBase64,
+            previewDeviceType: this.state.previewDeviceType,
+            mobileSettingsTouched: this.state.mobileSettingsTouched,
+            setPreviewDeviceType: this.setPreviewDeviceType,
+            setDeviceTypeSettingsTouched: this.setDeviceTypeSettingsTouched,
+            checkDeviceTypeBackgroundChanged: this.checkDeviceTypeBackgroundChanged,
         }}
         >{this.props.children}</CaptivePortalContext.Provider>
     }

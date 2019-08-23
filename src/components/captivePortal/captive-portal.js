@@ -18,7 +18,6 @@ class CaptivePortal extends Component {
 
 
     state = {
-        mobile: false,
         publishedType: '',
         failed: false,
         notification: false,
@@ -47,7 +46,27 @@ class CaptivePortal extends Component {
             this.context.loaderHandler(true);
             await query.then(res => {
                 const {data} = res;
-                this.context.setBackground(data.background !== null ? data.background.externalUrl : '', data.style.background_and_logo.background.color, data.style.background_and_logo.background.backgroundType);
+                const deviceTypes = ['desktop', 'mobile'];
+                deviceTypes.map(deviceType => {
+                    const bgProp = `${deviceType}Background`;
+                    this.context.setBackground(data[bgProp] ? data[bgProp].externalUrl : '', data.style.background_and_logo[bgProp].color, data.style.background_and_logo[bgProp].backgroundType, deviceType);
+                    this.context.setBackgroundID(data[bgProp] ? data[bgProp].id : '', deviceType);
+                    const background = data.style.background_and_logo[bgProp];
+                    this.context.setBackgroundRepeating(background.repeat, deviceType);
+                    const position = background.position;
+                    this.context.setBackgroundPosition({
+                        option: position.option,
+                        posX: position.posX,
+                        posY: position.posY
+                    }, position.inPercentDimension, deviceType);
+                    const size = background.size;
+                    this.context.setBackgroundSize({
+                        option: size.option,
+                        width: size.width,
+                        height: size.height
+                    }, size.inPercentDimension, deviceType);
+                    this.context.checkDeviceTypeBackgroundChanged(deviceType, data);
+                });
                 this.context.setLogo(
                     data.logo !== null ? data.logo.externalUrl : '',
                     !!data.style.background_and_logo.logo.horizontalPosition ? data.style.background_and_logo.logo.horizontalPosition : this.context.style.background_and_logo.logo.horizontalPosition,
@@ -68,7 +87,6 @@ class CaptivePortal extends Component {
                 });
                 this.context.setFooterData(data.footer, data.style.footer);
                 this.context.setLogoID(data.logo === null ? '' : data.logo.id);
-                this.context.setBackgroundID(data.background === null ? '' : data.background.id);
                 this.context.addPortalName(data.name);
                 this.context.redirectURLChanger(data.successRedirectUrl);
                 this.context.setSuccessMessageData(data.successMessage, data.style.success_message);
@@ -94,29 +112,16 @@ class CaptivePortal extends Component {
                     }
                 }
 
-                this.context.setBackgroundRepeating(data.style.background_and_logo.background.repeat);
-                const position = data.style.background_and_logo.background.position;
-                this.context.setBackgroundPosition({
-                    option: position.option,
-                    posX: position.posX,
-                    posY: position.posY
-                }, position.inPercentDimension);
-                const size = data.style.background_and_logo.background.size;
-                this.context.setBackgroundSize({
-                    option: size.option,
-                    width: size.width,
-                    height: size.height
-                }, size.inPercentDimension);
                 if(!!data.style.header.top.family) {
                     this.context.setFontData({
                         fontName: data.style.header.top.family,
                         fontId: ''
                     });
                 } else {
-                    this.context.setFontData({
-                        fontName: data[0].name,
-                        fontId: ''
-                    });
+                    // this.context.setFontData({
+                    //     fontName: data[0].name,
+                    //     fontId: ''
+                    // });
                 }
 
                 if (from !== 'templates') {
@@ -141,7 +146,8 @@ class CaptivePortal extends Component {
                     }
                 }
                 this.context.addPortalName(data.name);
-            });
+            })
+            .catch(err => console.log(err));
             this.context.loaderHandler(false);
         } else {
             this.context.loaderHandler(true);
@@ -150,30 +156,8 @@ class CaptivePortal extends Component {
         }
     };
 
-
-    trigger = (data) => {
-        document.querySelectorAll('[data-id]')[0].classList.remove('active');
-        document.querySelectorAll('[data-id]')[1].classList.remove('active');
-        if (data.target.nodeName === 'A') {
-            data.target.classList.add('active');
-        } else if (data.target.closest('a').getAttribute('data-id')) {
-            data.target.closest('a').classList.add('active');
-        }
-        if (data.target.getAttribute('data-id') === 'mobile' || data.target.closest('a').getAttribute('data-id') === 'mobile') {
-            this.setState({
-                mobile: true
-            });
-        } else {
-            this.setState({
-                mobile: false
-            });
-        }
-    };
-
-
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return (this.state.mobile !== nextState.mobile)
-            || (this.state.loader !== nextState.loader)
+        return (this.state.loader !== nextState.loader)
             || (this.state.publishedType !== nextState.publishedType)
             || (this.state.failed !== nextState.failed)
             || (this.state.styledElements !== nextState.styledElements)
@@ -241,7 +225,13 @@ class CaptivePortal extends Component {
         // console.log(this.context);
     }
 
+    setPreviewType(deviceType) {
+        this.context.setPreviewDeviceType(deviceType);
+    }
+
     render() {
+        const deviceType = this.context.previewDeviceType || 'desktop';
+
         // if (!this.context.dataToExclude.loader) {
             return (
                 <div className="container">
@@ -262,7 +252,7 @@ class CaptivePortal extends Component {
                                     <span></span>
                                     <div className="toggles">
                                         <a href="javascript:void(0)" data-id="desktop"
-                                           className="active" onClick={(data) => this.trigger(data)}>
+                                           className={(deviceType === 'desktop') ? 'active' : ''} onClick={() => this.setPreviewType('desktop')}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                  viewBox="0 0 24 24">
                                                 <path fill="#BFC6D3" fillRule="nonzero"
@@ -270,8 +260,8 @@ class CaptivePortal extends Component {
                                             </svg>
                                             <span>Desktop</span>
                                         </a>
-                                        <a href="javascript:void(0)" data-id="mobile"
-                                           onClick={(data) => this.trigger(data)}>
+                                        <a href="javascript:void(0)" data-id="mobile" className={(deviceType === 'mobile') ? 'active' : ''}
+                                           onClick={() => this.setPreviewType('mobile')}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                  viewBox="0 0 24 24">
                                                 <path fill="#AFB7C8" fillRule="nonzero"
@@ -282,10 +272,7 @@ class CaptivePortal extends Component {
                                         </a>
                                     </div>
                                 </div>
-                                <Preview
-                                    state={this.state}
-                                />
-
+                                <Preview />
                             </div>
                         </div>
                         <Options/>

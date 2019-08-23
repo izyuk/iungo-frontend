@@ -5,7 +5,8 @@ export default React.createContext({
     name: '',
     externalCss: '',
     logoId: '',
-    backgroundId: '',
+    desktopBackgroundId: '',
+    mobileBackgroundId: '',
     header: 'Company name',
     description: 'Venue description',
     footer: 'Footer content',
@@ -103,7 +104,33 @@ export default React.createContext({
             alignment: 'center'
         },
         background_and_logo: {
-            background: {
+            desktopBackground: {
+                url: '',
+                color: {
+                    rgba: {
+                        r: 229,
+                        g: 233,
+                        b: 242,
+                        a: 1,
+                    },
+                    hex: '#e5e9f2'
+                },
+                backgroundType: 'COLOR',
+                repeat: 'repeat',
+                position: {
+                    inPercentDimension: true,
+                    posX: 0,
+                    posY: 0,
+                    option: ''
+                },
+                size: {
+                    inPercentDimension: false,
+                    width: 0,
+                    height: 0,
+                    option: 'auto'
+                },
+            },
+            mobileBackground: {
                 url: '',
                 color: {
                     rgba: {
@@ -267,4 +294,10 @@ export default React.createContext({
     setFontsCollection: () => {},
     setFontData: () => {},
     setFontBase64: () => {},
+
+    previewDeviceType: 'desktop',
+    mobileSettingsTouched: false,
+    setPreviewDeviceType: () => {},
+    setDeviceTypeSettingsTouched: () => {},
+    checkDeviceTypeBackgroundChanged: () => {},
 });
