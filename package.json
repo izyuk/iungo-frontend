@@ -31,6 +31,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --mode development --open ---hot",
+    "start-for-tests": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
     "cypress": "cypress open"
   },
