@@ -356,7 +356,7 @@ class BackgroundAndLogo extends Component {
         const backgroundId = this.context[`${previewDeviceType}BackgroundId`];
         return (
             <div
-                className={this.props.type === "background" ? "container active" : "container"}>
+                className="container active">
                 <div className="row">
                     <div className={this.props.type === "logo" ? "logoLeft" : "left"}>
                         <span className="descr">

@@ -8,7 +8,7 @@ import VerticalAlignment from './verticalAlignment';
 class Container extends Component {
     render() {
         return (
-            <div className="container">
+            <div className="container active">
                 <Background/>
                 <Size/>
                 <Border/>
