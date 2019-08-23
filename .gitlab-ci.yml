@@ -29,7 +29,6 @@ cypress-testing:
    - npm install --save-dev cypress
    - $(npm bin)/cypress verify
    - $(npm bin)/cypress run "cypress/integration/examples/cp_collect.spec.js"
-   - lsof -i:9000 | grep node | awk {'print $2'} | xargs kill
 
 deploy-to-s3:
   only:
