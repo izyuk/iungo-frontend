@@ -5,7 +5,7 @@ export default class Position extends Component {
 
 
     static contextType = CaptivePortalContext;
-
+    
     state = {
         option: this.context.style.background_and_logo.desktopBackground.position.option,
         posX: this.context.style.background_and_logo.desktopBackground.position.posX,
@@ -43,13 +43,11 @@ export default class Position extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        if (nextContext.previewDeviceType !== this.context.previewDeviceType) {
+        if (nextContext.previewDeviceType !== this.context.previewDeviceType ||
+            nextContext.name !== this.context.name ||
+            nextContext.style !== this.context.style) {
             this.getPositionSettings(nextContext);
         }
-    }
-
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return (this.state.option !== nextState.option)
     }
 
     backgroundPosition = (e) => {
@@ -79,13 +77,11 @@ export default class Position extends Component {
         const {style: { background_and_logo }, previewDeviceType} = context;
         const background = background_and_logo[`${previewDeviceType}Background`] || background_and_logo.desktopBackground;
         const position = background.position;
-        console.log(position.inPercentDimension);
         if (position.inPercentDimension) {
             this.position.current.value = 'custom-position';
             console.log(this.position.current.value);
             this.custom.current.style.display = 'flex'
         } else {
-            this.position.current.value = position.option;
             this.custom.current.style.display = 'none';
             this.position.current.value = position.option;
         }
@@ -99,6 +95,8 @@ export default class Position extends Component {
             this.position.current.nextSibling.insertBefore(span, svg);
         }
         span.innerText = this.position.current.options[this.position.current.selectedIndex].value;
+        
+        this.setState({ option: position.option, posX: position.posX, posY: position.posY });
     }
 
     render() {
@@ -146,7 +144,7 @@ export default class Position extends Component {
                                            type="number"
                                            placeholder={'By axis X'}
                                            step={'1'}
-                                           defaultValue={this.state.posX}/>
+                                           value={this.state.posX}/>
                                     &nbsp;%
                                 </div>
                                 <div className="inputRadioWrap">
@@ -159,7 +157,7 @@ export default class Position extends Component {
                                            type="number"
                                            placeholder={'By axis Y'}
                                            step={'1'}
-                                           defaultValue={this.state.posY}/>
+                                           value={this.state.posY}/>
                                     &nbsp;%
                                 </div>
                             </label>
