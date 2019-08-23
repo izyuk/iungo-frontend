@@ -7,7 +7,7 @@ class FontSettings extends Component {
     static contextType = CaptivePortalContext;
 
     state = {
-        fontName: this.context.dataToExclude.fontName,
+        fontName: this.context.style.header.top.family,
         fontsList: this.context.dataToExclude.fontsList,
         fontId: '',
         base64EncodedValue: ''
@@ -59,7 +59,7 @@ class FontSettings extends Component {
         } else {
             const currentState = this.state;
             const fontFromBE = this.context.dataToExclude.fontName;
-
+            this.setting.current.value = fontFromBE;
             const svg = this.setting.current.nextSibling.children[0];
             const span = document.createElement('span');
             currentState.fontName = this.setting.current.options[this.setting.current.selectedIndex].value;
