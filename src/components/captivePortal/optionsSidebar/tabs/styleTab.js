@@ -41,7 +41,7 @@ class StyleTab extends Component {
     };
 
     render(){
-        const mobile = this.context.previewDeviceType;
+        const type = this.context.previewDeviceType;
         return(
             <div className="dropdown">
                 <div className="wrap">
@@ -50,7 +50,7 @@ class StyleTab extends Component {
                         data-cy="backgroundDropDown"
                         onClick={this.dropDownHandler}
                         ref={this.Background}>
-                        <span>{!mobile ? 'Desktop' : 'Mobile'} background</span>
+                        <span>{(type === 'desktop') ? 'Desktop' : 'Mobile'} background</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <path fill="#BFC5D2" fillRule="nonzero" d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
                         </svg>
