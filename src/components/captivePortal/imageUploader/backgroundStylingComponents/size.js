@@ -7,9 +7,9 @@ export default class Size extends Component {
     static contextType = CaptivePortalContext;
 
     state = {
-        option: this.context.style.background_and_logo.background.size.option,
-        width: this.context.style.background_and_logo.background.size.width,
-        height: this.context.style.background_and_logo.background.size.height
+        option: this.context.style.background_and_logo.desktopBackground.size.option,
+        width: this.context.style.background_and_logo.desktopBackground.size.width,
+        height: this.context.style.background_and_logo.desktopBackground.size.height
     };
 
     widthInput = React.createRef();
@@ -49,8 +49,42 @@ export default class Size extends Component {
         this.context.setBackgroundSize(currentState, true);
     };
 
+    componentDidMount(){
+        this.getSizeSettings();
+    }
+
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         return (this.state.option !== nextState.option)
+    }
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextContext.previewDeviceType !== this.context.previewDeviceType) {
+            this.getSizeSettings(nextContext);
+        }
+    }
+
+    getSizeSettings(nextContext) {
+        const context = nextContext || this.context;
+        const {style: { background_and_logo }, previewDeviceType} = context;
+        const background = background_and_logo[`${previewDeviceType}Background`] || background_and_logo.desktopBackground;
+        const size = background.size;
+        if (size.inPercentDimension) {
+            this.size.current.value = 'custom-size';
+            this.custom.current.style.display = 'flex'
+
+        } else {
+            this.size.current.value = size.option;
+            this.custom.current.style.display = 'none'
+        }
+        let span = document.createElement('span');
+        const children = this.size.current.nextSibling.children;
+        if (children.length > 1) {
+            span = children[0];
+        } else {
+            let svg = children[0];
+            this.size.current.nextSibling.insertBefore(span, svg);
+        }
+        span.innerText = this.size.current.options[this.size.current.selectedIndex].value;
     }
 
     backgroundSize = (e) => {
@@ -73,22 +107,6 @@ export default class Size extends Component {
         this.setState(currentState);
 
     };
-
-    componentDidMount() {
-        const {style: {background_and_logo: {background: {size}}}} = this.context;
-        if (size.inPercentDimension) {
-            this.size.current.value = 'custom-size';
-            this.custom.current.style.display = 'flex'
-
-        } else {
-            this.size.current.value = size.option;
-            this.custom.current.style.display = 'none'
-        }
-        let svg = this.size.current.nextSibling.children[0];
-        let span = document.createElement('span');
-        span.innerText = this.size.current.options[this.size.current.selectedIndex].value;
-        this.size.current.nextSibling.insertBefore(span, svg);
-    }
 
     render() {
         return (

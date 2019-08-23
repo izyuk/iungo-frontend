@@ -7,9 +7,9 @@ export default class Position extends Component {
     static contextType = CaptivePortalContext;
 
     state = {
-        option: this.context.style.background_and_logo.background.position.option,
-        posX: this.context.style.background_and_logo.background.position.posX,
-        posY: this.context.style.background_and_logo.background.position.posY,
+        option: this.context.style.background_and_logo.desktopBackground.position.option,
+        posX: this.context.style.background_and_logo.desktopBackground.position.posX,
+        posY: this.context.style.background_and_logo.desktopBackground.position.posY,
     };
 
     posXInput = React.createRef();
@@ -38,6 +38,16 @@ export default class Position extends Component {
         this.context.setBackgroundPosition(currentState, true);
     };
 
+    componentDidMount(){
+        this.getPositionSettings();
+    }
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextContext.previewDeviceType !== this.context.previewDeviceType) {
+            this.getPositionSettings(nextContext);
+        }
+    }
+
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         return (this.state.option !== nextState.option)
     }
@@ -64,8 +74,11 @@ export default class Position extends Component {
 
     };
 
-    componentDidMount() {
-        const {style: {background_and_logo: {background: {position}}}} = this.context;
+    getPositionSettings(nextContext) {
+        const context = nextContext || this.context;
+        const {style: { background_and_logo }, previewDeviceType} = context;
+        const background = background_and_logo[`${previewDeviceType}Background`] || background_and_logo.desktopBackground;
+        const position = background.position;
         console.log(position.inPercentDimension);
         if (position.inPercentDimension) {
             this.position.current.value = 'custom-position';
@@ -76,13 +89,16 @@ export default class Position extends Component {
             this.custom.current.style.display = 'none';
             this.position.current.value = position.option;
         }
-        let svg = this.position.current.nextSibling.children[0];
+
         let span = document.createElement('span');
-        span.innerText = position.option;
-        console.log(this.position.current.options);
-        console.log(this.position.current.selectedIndex);
+        const children = this.position.current.nextSibling.children;
+        if (children.length > 1) {
+            span = children[0];
+        } else {
+            let svg = children[0];
+            this.position.current.nextSibling.insertBefore(span, svg);
+        }
         span.innerText = this.position.current.options[this.position.current.selectedIndex].value;
-        this.position.current.nextSibling.insertBefore(span, svg);
     }
 
     render() {

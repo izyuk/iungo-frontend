@@ -67,9 +67,7 @@ class Preview extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        if (this.props.state.mobile !== nextProps.state.mobile) return true;
-        else if (this.context !== nextContext) return true;
-        else return false;
+        return (this.context !== nextContext);
     }
 
     render() {
@@ -88,7 +86,7 @@ class Preview extends Component {
 
         return (
             <div className="previewWrap">
-                <div className={this.props.state.mobile ? "previewMain mobile" : "previewMain"}
+                <div className={(this.context.previewDeviceType === 'mobile') ? "previewMain mobile" : "previewMain"}
                      ref={this.PreviewMain}>
                     <div className="previewContainer">
                         <div className="header">
