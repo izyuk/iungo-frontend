@@ -43,7 +43,7 @@ export default class Position extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        if (nextContext.previewMobile !== this.context.previewMobile) {
+        if (nextContext.previewDeviceType !== this.context.previewDeviceType) {
             this.getPositionSettings(nextContext);
         }
     }
@@ -76,8 +76,8 @@ export default class Position extends Component {
 
     getPositionSettings(nextContext) {
         const context = nextContext || this.context;
-        const {style: { background_and_logo }, previewMobile} = context;
-        const background = previewMobile && background_and_logo.mobileBackground || background_and_logo.desktopBackground;
+        const {style: { background_and_logo }, previewDeviceType} = context;
+        const background = background_and_logo[`${previewDeviceType}Background`] || background_and_logo.desktopBackground;
         const position = background.position;
         console.log(position.inPercentDimension);
         if (position.inPercentDimension) {

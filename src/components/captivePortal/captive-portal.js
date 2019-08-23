@@ -46,10 +46,27 @@ class CaptivePortal extends Component {
             this.context.loaderHandler(true);
             await query.then(res => {
                 const {data} = res;
-                this.context.setBackground(data.desktopBackground ? data.desktopBackground.externalUrl : '', data.style.background_and_logo.desktopBackground.color, data.style.background_and_logo.desktopBackground.backgroundType);
-                this.context.setBackground(data.mobileBackground ? data.mobileBackground.externalUrl : '', data.style.background_and_logo.mobileBackground.color, data.style.background_and_logo.mobileBackground.backgroundType, true);
-                this.context.setBackgroundID(data.desktopBackground ? data.desktopBackground.id : '');
-                this.context.setBackgroundID(data.mobileBackground ? data.mobileBackground.id : '', true);
+                const deviceTypes = ['desktop', 'mobile'];
+                deviceTypes.map(deviceType => {
+                    const bgProp = `${deviceType}Background`;
+                    this.context.setBackground(data[bgProp] ? data[bgProp].externalUrl : '', data.style.background_and_logo[bgProp].color, data.style.background_and_logo[bgProp].backgroundType, deviceType);
+                    this.context.setBackgroundID(data[bgProp] ? data[bgProp].id : '', deviceType);
+                    const background = data.style.background_and_logo[bgProp];
+                    this.context.setBackgroundRepeating(background.repeat, deviceType);
+                    const position = background.position;
+                    this.context.setBackgroundPosition({
+                        option: position.option,
+                        posX: position.posX,
+                        posY: position.posY
+                    }, position.inPercentDimension, deviceType);
+                    const size = background.size;
+                    this.context.setBackgroundSize({
+                        option: size.option,
+                        width: size.width,
+                        height: size.height
+                    }, size.inPercentDimension, deviceType);
+                    this.context.checkDeviceTypeBackgroundChanged(deviceType, data);
+                });
                 this.context.setLogo(
                     data.logo !== null ? data.logo.externalUrl : '',
                     !!data.style.background_and_logo.logo.horizontalPosition ? data.style.background_and_logo.logo.horizontalPosition : this.context.style.background_and_logo.logo.horizontalPosition,
@@ -92,38 +109,6 @@ class CaptivePortal extends Component {
                     if (this.context.termAndConditionId) {
                         this.context.setGDPRSettingsStatus(true);
                     }
-                }
-                const desktopBackground = data.style.background_and_logo.desktopBackground;
-                this.context.setBackgroundRepeating(desktopBackground.repeat);
-                const position = desktopBackground.position;
-                this.context.setBackgroundPosition({
-                    option: position.option,
-                    posX: position.posX,
-                    posY: position.posY
-                }, position.inPercentDimension);
-                const size = desktopBackground.size;
-                this.context.setBackgroundSize({
-                    option: size.option,
-                    width: size.width,
-                    height: size.height
-                }, size.inPercentDimension);
-
-                const mobileBackground = data.style.background_and_logo.mobileBackground;
-                if (mobileBackground) {
-                    const forMobile = true;
-                    this.context.setBackgroundRepeating(mobileBackground.repeat, forMobile);
-                    const position = mobileBackground.position;
-                    this.context.setBackgroundPosition({
-                        option: position.option,
-                        posX: position.posX,
-                        posY: position.posY
-                    }, position.inPercentDimension, forMobile);
-                    const size = mobileBackground.size;
-                    this.context.setBackgroundSize({
-                        option: size.option,
-                        width: size.width,
-                        height: size.height
-                    }, size.inPercentDimension, forMobile);
                 }
 
                 if(!!data.style.header.top.family) {
@@ -239,12 +224,12 @@ class CaptivePortal extends Component {
         // console.log(this.context);
     }
 
-    setPreviewType(isMobile) {
-        this.context.setPreviewMobile(isMobile);
+    setPreviewType(deviceType) {
+        this.context.setPreviewDeviceType(deviceType);
     }
 
     render() {
-        const mobile = this.context.previewMobile;
+        const deviceType = this.context.previewDeviceType || 'desktop';
 
         // if (!this.context.dataToExclude.loader) {
             return (
@@ -266,7 +251,7 @@ class CaptivePortal extends Component {
                                     <span></span>
                                     <div className="toggles">
                                         <a href="javascript:void(0)" data-id="desktop"
-                                           className={!mobile ? 'active' : ''} onClick={() => this.setPreviewType(false)}>
+                                           className={(deviceType === 'desktop') ? 'active' : ''} onClick={() => this.setPreviewType('desktop')}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                  viewBox="0 0 24 24">
                                                 <path fill="#BFC6D3" fillRule="nonzero"
@@ -274,8 +259,8 @@ class CaptivePortal extends Component {
                                             </svg>
                                             <span>Desktop</span>
                                         </a>
-                                        <a href="javascript:void(0)" data-id="mobile" className={mobile ? 'active' : ''}
-                                           onClick={() => this.setPreviewType(true)}>
+                                        <a href="javascript:void(0)" data-id="mobile" className={(deviceType === 'mobile') ? 'active' : ''}
+                                           onClick={() => this.setPreviewType('mobile')}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                  viewBox="0 0 24 24">
                                                 <path fill="#AFB7C8" fillRule="nonzero"

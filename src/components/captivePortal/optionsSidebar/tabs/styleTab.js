@@ -41,7 +41,7 @@ class StyleTab extends Component {
     };
 
     render(){
-        const mobile = this.context.previewMobile;
+        const mobile = this.context.previewDeviceType;
         return(
             <div className="dropdown">
                 <div className="wrap">

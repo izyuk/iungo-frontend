@@ -131,6 +131,25 @@ class GlobalCaptivePortalState extends Component {
                         option: 'auto'
                     },
                 },
+                mobileBackground: {
+                    url: '',
+                    color: PALE_GREY_THREE,
+                    backgroundType: 'COLOR',
+                    repeat: 'repeat',
+                    position: {
+                        inPercentDimension: true,
+                        posX: 0,
+                        posY: 0,
+                        option: ''
+                    },
+                    attachment: 'scroll',
+                    size: {
+                        inPercentDimension: false,
+                        width: 0,
+                        height: 0,
+                        option: 'auto'
+                    },
+                },
                 logo: {
                     url: '',
                     horizontalPosition: 'center',
@@ -225,59 +244,75 @@ class GlobalCaptivePortalState extends Component {
             gdprFromBE: ''
         },
 
-        previewMobile: false,
+        previewDeviceType: 'desktop',
+        mobileSettingsTouched: false,
     };
 
     addPortalName = name => {
         this.setState({name: name})
     };
 
-    getDesktopOrMobileBackground = (state, forMobile) => {
-        const mobile = state.previewMobile || forMobile;
-        let background = state.style.background_and_logo.desktopBackground;
-        if (mobile) {
-            const mobileBackground = state.style.background_and_logo.mobileBackground;
-            if (!mobileBackground) {
-                state.style.background_and_logo.mobileBackground = Object.assign({}, state.style.background_and_logo.desktopBackground);
-                background = state.style.background_and_logo.mobileBackground;
+    getDeviceTypesToUpdate = (state, deviceType) => {
+        let deviceTypes = [];
+        if (deviceType) {
+            deviceTypes = [deviceType];
+        } else {
+            const type = state.previewDeviceType;
+            if (type === 'desktop' && !state.mobileSettingsTouched) {
+                deviceTypes = ['desktop', 'mobile'];
             } else {
-                background = mobileBackground;
+                deviceTypes = [type];
+                if (type === 'mobile') { state.mobileSettingsTouched = true; }
             }
         }
-        return background;
+        return deviceTypes;
     }
 
-    setBackground = (path, color, type, forMobile) => {
-        const currentState = this.state;
-        const mobile = currentState.previewMobile || forMobile;
-        const background = this.getDesktopOrMobileBackground(currentState, forMobile);
-        currentState.background = (type === 'COLOR') ? null : path;
-        background.url = (type === 'COLOR') ? null : path;
-        background.color = color;
-        background.backgroundType = type;
-        this.setState(currentState)
-    };
+    getBackgroundsByDeviceType = (state, deviceType) => {
+        const bgl = state.style.background_and_logo;
+        const backgrounds = [];
+        this.getDeviceTypesToUpdate(state, deviceType).map(type => {
+            let background = bgl[`${type}Background`];
+            background && backgrounds.push(background);
+        })
+        return backgrounds;
+    }
 
-    setBackgroundRepeating = (repeating, forMobile) => {
+    setBackground = (path, color, type, deviceType) => {
         const currentState = this.state;
-        const background = this.getDesktopOrMobileBackground(currentState, forMobile);
-        background.repeat = repeating;
+        this.getBackgroundsByDeviceType(currentState, deviceType).map(background => {
+            currentState.background = (type === 'COLOR') ? null : path;
+            background.url = (type === 'COLOR') ? null : path;
+            background.color = color;
+            background.backgroundType = type;
+            (type === 'COLOR') && this.setBackgroundID('', deviceType);
+        });
         this.setState(currentState);
     };
 
-    setBackgroundPosition = (position, status, forMobile) => {
+    setBackgroundRepeating = (repeating, deviceType) => {
+        const currentState = this.state;
+        this.getBackgroundsByDeviceType(currentState, deviceType).map(background => {
+            background.repeat = repeating;
+        });
+        this.setState(currentState);
+    };
+
+    setBackgroundPosition = (position, status, deviceType) => {
         const merged = {...position, inPercentDimension: status};
         const currentState = this.state;
-        const background = this.getDesktopOrMobileBackground(currentState, forMobile);
-        background.position = merged;
+        this.getBackgroundsByDeviceType(currentState, deviceType).map(background => {
+            background.position = merged;
+        });
         this.setState(currentState);
     };
 
-    setBackgroundSize = (size, status, forMobile) => {
+    setBackgroundSize = (size, status, deviceType) => {
         const merged = {...size, inPercentDimension: status};
         const currentState = this.state;
-        const background = this.getDesktopOrMobileBackground(currentState, forMobile);
-        background.size = merged;
+        this.getBackgroundsByDeviceType(currentState, deviceType).map(background => {
+            background.size = merged;
+        });
         this.setState(currentState);
     };
 
@@ -343,10 +378,11 @@ class GlobalCaptivePortalState extends Component {
             logoId: id
         })
     };
-    setBackgroundID = (id, forMobile) => {
+    setBackgroundID = (id, deviceType) => {
         const currentState = this.state;
-        const mobile = currentState.previewMobile || forMobile;
-        currentState[mobile ? 'mobileBackgroundId' : 'desktopBackgroundId'] = id;
+        this.getDeviceTypesToUpdate(currentState, deviceType).map(type => {
+            currentState[`${type}BackgroundId`] = id;
+        });
         this.setState(currentState);
     };
     setCSS = str => {
@@ -558,6 +594,25 @@ class GlobalCaptivePortalState extends Component {
                             option: 'auto'
                         },
                     },
+                    mobileBackground: {
+                        url: '',
+                        color: PALE_GREY_THREE,
+                        backgroundType: 'COLOR',
+                        repeat: 'repeat',
+                        position: {
+                            inPercentDimension: true,
+                            posX: 0,
+                            posY: 0,
+                            option: ''
+                        },
+                        attachment: 'scroll',
+                        size: {
+                            inPercentDimension: false,
+                            width: 0,
+                            height: 0,
+                            option: 'auto'
+                        },
+                    },
                     logo: {
                         url: '',
                         horizontalPosition: 'center',
@@ -708,7 +763,8 @@ class GlobalCaptivePortalState extends Component {
 
         await this.setFontBase64(data.dataToExclude.base64EncodedValue);
 
-        await this.setPreviewMobile(false);
+        await this.setPreviewDeviceType('desktop');
+        await this.setDeviceTypeSettingsTouched('mobile', false);
     };
 
 
@@ -733,10 +789,10 @@ class GlobalCaptivePortalState extends Component {
                 fontName,
                 base64EncodedValue
             },
-            previewMobile,
+            previewDeviceType,
         } = this.state;
         const logo = background_and_logo.logo;
-        const background = (previewMobile && background_and_logo.mobileBackground) || background_and_logo.desktopBackground;
+        const background = background_and_logo[`${previewDeviceType}Background`] || background_and_logo.desktopBackground;
 
         let containerVerticalPosition;
         let logoVerticalPosition;
@@ -888,9 +944,13 @@ class GlobalCaptivePortalState extends Component {
 
     removeBackground = () => {
         const currentState = this.state;
-        const background = this.getDesktopOrMobileBackground(currentState);
-        const color = background.color || PALE_GREY_THREE;
-        this.setBackground(null, color, 'COLOR');
+        this.getBackgroundsByDeviceType(currentState).map(background => {
+            const color = background.color || PALE_GREY_THREE;
+            background.url = null;
+            background.color = color;
+            background.backgroundType = 'COLOR';
+        });
+        this.setBackgroundID('');
     };
 
     urlPathHandler = url => {
@@ -936,8 +996,24 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState);
     };
 
-    setPreviewMobile = (isMobile) => {
-        this.setState({ previewMobile: isMobile });
+    setPreviewDeviceType = (deviceType) => {
+        this.setState({ previewDeviceType: deviceType });
+    }
+    setDeviceTypeSettingsTouched = (deviceType, touched) => {
+        const currentState = this.state;
+        currentState[`${deviceType}SettingsTouched`] = touched;
+        this.setState(currentState);
+    }
+    checkDeviceTypeBackgroundChanged = (deviceType, data) => {
+        const currentState = this.state;
+        let changed = false;
+        if (deviceType !== 'desktop') {
+            const backgroundsEqual = (JSON.stringify(data.desktopBackground) === JSON.stringify(data[`${deviceType}Background`]));
+            const stylesEqual = (JSON.stringify(data.style.background_and_logo.desktopBackground) === JSON.stringify(data.style.background_and_logo[`${deviceType}Background`]));
+            changed = !backgroundsEqual || !stylesEqual;
+        }
+        currentState[`${deviceType}SettingsTouched`] = changed;
+        this.setState(currentState);
     }
 
     render() {
@@ -1002,8 +1078,11 @@ class GlobalCaptivePortalState extends Component {
             setFontsCollection: this.setFontsCollection,
             setFontData: this.setFontData,
             setFontBase64: this.setFontBase64,
-            previewMobile: this.state.previewMobile,
-            setPreviewMobile: this.setPreviewMobile,
+            previewDeviceType: this.state.previewDeviceType,
+            mobileSettingsTouched: this.state.mobileSettingsTouched,
+            setPreviewDeviceType: this.setPreviewDeviceType,
+            setDeviceTypeSettingsTouched: this.setDeviceTypeSettingsTouched,
+            checkDeviceTypeBackgroundChanged: this.checkDeviceTypeBackgroundChanged,
         }}
         >{this.props.children}</CaptivePortalContext.Provider>
     }

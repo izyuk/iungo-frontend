@@ -58,15 +58,15 @@ export default class Size extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        if (nextContext.previewMobile !== this.context.previewMobile) {
+        if (nextContext.previewDeviceType !== this.context.previewDeviceType) {
             this.getSizeSettings(nextContext);
         }
     }
 
     getSizeSettings(nextContext) {
         const context = nextContext || this.context;
-        const {style: { background_and_logo }, previewMobile} = context;
-        const background = previewMobile && background_and_logo.mobileBackground || background_and_logo.desktopBackground;
+        const {style: { background_and_logo }, previewDeviceType} = context;
+        const background = background_and_logo[`${previewDeviceType}Background`] || background_and_logo.desktopBackground;
         const size = background.size;
         if (size.inPercentDimension) {
             this.size.current.value = 'custom-size';

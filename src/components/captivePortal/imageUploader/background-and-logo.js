@@ -137,8 +137,9 @@ class BackgroundAndLogo extends Component {
             list[i].classList.remove('active');
         }
         e.currentTarget.classList.add('active');
-        const {style: {background_and_logo: {desktopBackground, mobileBackground, logo}}, previewMobile} = this.context;
-        const background = !previewMobile ? desktopBackground : mobileBackground;
+        const {style: {background_and_logo}, previewDeviceType} = this.context;
+        const logo = background_and_logo.logo;
+        const background = background_and_logo[`${previewDeviceType}Background`];
         this.newUploadedImageData = {
             data: {
                 id: e.currentTarget.getAttribute('dataid'),
@@ -170,8 +171,9 @@ class BackgroundAndLogo extends Component {
     applyOnUpload = () => {
         console.log(this.newUploadedImageData);
         const {data: {id, externalUrl}} = this.newUploadedImageData;
-        const {style: {background_and_logo: {desktopBackground, mobileBackground, logo}}, previewMobile} = this.context;
-        const background = !previewMobile ? desktopBackground : mobileBackground;
+        const {style: {background_and_logo}, previewDeviceType} = this.context;
+        const logo = background_and_logo.logo;
+        const background = background_and_logo[`${previewDeviceType}Background`];
         switch (this.props.type) {
             case "logo":
                 this.setState({logo: externalUrl});
@@ -309,7 +311,7 @@ class BackgroundAndLogo extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        if (nextContext.previewMobile !== this.context.previewMobile) {
+        if (nextContext.previewDeviceType !== this.context.previewDeviceType) {
             this.updateBackground()
         }
     }
@@ -317,8 +319,8 @@ class BackgroundAndLogo extends Component {
     updateBackground(nextContext) {
         if (this.props.type === "background") {
             const context = nextContext || this.context;
-            const {style: { background_and_logo }, previewMobile} = context;
-            const background = previewMobile && background_and_logo.mobileBackground || background_and_logo.desktopBackground;
+            const {style: { background_and_logo }, previewDeviceType} = context;
+            const background = background_and_logo[`${previewDeviceType}Background`];
             if (background) {
                 let currentState = this.state;
                 currentState.color = background.color;
@@ -348,10 +350,10 @@ class BackgroundAndLogo extends Component {
             left: '0px',
         };
 
-        const {style: { background_and_logo }, previewMobile, desktopBackgroundId, mobileBackgroundId} = this.context;
+        const {style: { background_and_logo }, previewDeviceType} = this.context;
         const logo = background_and_logo.logo;
-        const background = previewMobile && background_and_logo.mobileBackground || background_and_logo.desktopBackground;
-        const backgroundId = previewMobile ? mobileBackgroundId : desktopBackgroundId;
+        const background = background_and_logo[`${previewDeviceType}Background`];
+        const backgroundId = this.context[`${previewDeviceType}BackgroundId`];
         return (
             <div
                 className={this.props.type === "background" ? "container active" : "container"}>

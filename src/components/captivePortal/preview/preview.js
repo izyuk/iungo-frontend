@@ -86,7 +86,7 @@ class Preview extends Component {
 
         return (
             <div className="previewWrap">
-                <div className={this.context.previewMobile ? "previewMain mobile" : "previewMain"}
+                <div className={(this.context.previewDeviceType === 'mobile') ? "previewMain mobile" : "previewMain"}
                      ref={this.PreviewMain}>
                     <div className="previewContainer">
                         <div className="header">
