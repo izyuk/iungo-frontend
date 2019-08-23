@@ -644,7 +644,7 @@ context('Starting comparing collected data', function () {
                         externalCss: "",
                         logoId: loadedDataForExpectedStore.logoId,
                         desktopBackgroundId: loadedDataForExpectedStore.desktopBackgroundId,
-                        mobileBackgroundId: "",
+                        mobileBackgroundId: loadedDataForExpectedStore.desktopBackgroundId,
                         header: "CP TEST HEADER TEXT",
                         description: "CP TEST DESCRIPTION TEXT",
                         footer: "TEST FOOTER TEXT",
