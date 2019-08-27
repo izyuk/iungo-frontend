@@ -4,7 +4,9 @@ const LOGIN_PASSWORD = Cypress.env('LOGIN_PASSWORD') || 'Izyuk8968';
 
 const loadedDataForExpectedStore = {
     desktopBackgroundId: "331",
-    backgroundUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/nasa-53884-unsplash.jpg",
+    desktopBackgroundUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/nasa-53884-unsplash.jpg",
+    mobileBackgroundId: "331",
+    mobileBackgroundUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/nasa-53884-unsplash.jpg",
     logoId: "330",
     logoUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/google_logo.svg",
 };
@@ -161,7 +163,7 @@ context('Style tab', function () {
     beforeEach(function () {
         cy.viewport('macbook-11')
     });
-    describe('Changing background', function () {
+    describe('Changing background desktop', function () {
         it('Choosing and applying image', () => {
             cy.get('.upload')
                 .click({force: true});
@@ -169,7 +171,7 @@ context('Style tab', function () {
                 .dblclick({force: true}).then(elem => {
                 const element = Cypress.$(elem);
                 loadedDataForExpectedStore.desktopBackgroundId = element.attr('dataid');
-                loadedDataForExpectedStore.backgroundUrl = element.attr('dataurl');
+                loadedDataForExpectedStore.desktopBackgroundUrl = element.attr('dataurl');
             });
         });
         it('Setting background repeating', () => {
@@ -185,6 +187,41 @@ context('Style tab', function () {
                 .select('custom-size', {force: true});
             fillingFields('[data-cy="backgroundWidth"', '50');
             fillingFields('[data-cy="backgroundHeight"', '50');
+        });
+    });
+
+    describe('Changing background mobile', function () {
+        it('Switch device type to mobile', () => {
+            cy.get('[data-id="mobile"] span')
+                .click({force: true});
+        });
+        it('Choosing and applying image', () => {
+            cy.get('.upload')
+                .click({force: true});
+            cy.get('[data-cy="backgroundImageItem1"')
+                .dblclick({force: true}).then(elem => {
+                const element = Cypress.$(elem);
+                loadedDataForExpectedStore.mobileBackgroundId = element.attr('dataid');
+                loadedDataForExpectedStore.mobileBackgroundUrl = element.attr('dataurl');
+            });
+        });
+        it('Setting background repeating', () => {
+            cy.get('[data-cy="backgroundRepeating"]')
+                .select('repeat-y', {force: true});
+        });
+        it('Setting background position', () => {
+            cy.get('[data-cy="backgroundPosition"]')
+                .select('center top', {force: true});
+        });
+        it('Setting background size', () => {
+            cy.get('[data-cy="backgroundSize"]')
+                .select('custom-size', {force: true});
+            fillingFields('[data-cy="backgroundWidth"', '80');
+            fillingFields('[data-cy="backgroundHeight"', '80');
+        });
+        it('Switch device type to desktop', () => {
+            cy.get('[data-id="desktop"] span')
+                .click({force: true})
         });
     });
 
@@ -639,12 +676,12 @@ context('Starting comparing collected data', function () {
                 cy.window().then(win => {
                     // const store = GetBuilderParams(Object.assign({}, win.__store__));
                     const expectedStore = {
-                        background: loadedDataForExpectedStore.backgroundUrl,
+                        background: loadedDataForExpectedStore.mobileBackgroundUrl,
                         name: "CP TEST NAME",
                         externalCss: "",
                         logoId: loadedDataForExpectedStore.logoId,
                         desktopBackgroundId: loadedDataForExpectedStore.desktopBackgroundId,
-                        mobileBackgroundId: loadedDataForExpectedStore.desktopBackgroundId,
+                        mobileBackgroundId: loadedDataForExpectedStore.mobileBackgroundId,
                         header: "CP TEST HEADER TEXT",
                         description: "CP TEST DESCRIPTION TEXT",
                         footer: "TEST FOOTER TEXT",
@@ -702,7 +739,7 @@ context('Starting comparing collected data', function () {
                             },
                             background_and_logo: {
                                 desktopBackground: {
-                                    url: loadedDataForExpectedStore.backgroundUrl,
+                                    url: loadedDataForExpectedStore.desktopBackgroundUrl,
                                     color: {rgba: {r: 229, g: 233, b: 242, a: 1,}, hex: '#e5e9f2'},
                                     backgroundType: 'IMAGE',
                                     repeat: 'no-repeat',
@@ -721,22 +758,22 @@ context('Starting comparing collected data', function () {
                                     },
                                 },
                                 mobileBackground: {
-                                    url: loadedDataForExpectedStore.backgroundUrl,
+                                    url: loadedDataForExpectedStore.mobileBackgroundUrl,
                                     color: {rgba: {r: 229, g: 233, b: 242, a: 1,}, hex: '#e5e9f2'},
                                     backgroundType: 'IMAGE',
-                                    repeat: 'no-repeat',
+                                    repeat: 'repeat-y',
                                     position: {
                                         inPercentDimension: false,
                                         posX: 0,
                                         posY: 0,
-                                        option: 'left top'
+                                        option: 'center top'
                                     },
                                     attachment: "scroll",
                                     size: {
                                         inPercentDimension: true,
-                                        width: 50,
-                                        height: 50,
-                                        option: '50% 50%'
+                                        width: 80,
+                                        height: 80,
+                                        option: '80% 80%'
                                     },
                                 },
                                 logo: {
