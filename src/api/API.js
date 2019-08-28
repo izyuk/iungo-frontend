@@ -344,14 +344,14 @@ export const getTermsAndConditionsParams = (string) => {
         .catch(err => authChecker(err.response));
 };
 
-export const getSummaryAnalytics = (string, hotSpotUUID) => {
+export const getSummaryAnalytics = (token, options) => {
     return axios({
         method: 'get',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `${string}`
+            'Authorization': `${token}`
         },
-        url: `${ANALYTICS_API}/analytics/summary/${hotSpotUUID}`,
+        url: `${ANALYTICS_API}/analytics/summary/${options.uuid}?startDate=${options.startDate}&endDate=${options.endDate}`,
         mode: 'no-cors'
     })
         .then(res => res)
