@@ -170,7 +170,7 @@ class SuccessActions extends Component {
             left: '0px',
         };
         return (
-            <div className="container">
+            <div className="container active">
                 <div className="row">
                     <div className="right">
                         <div className="innerRow">

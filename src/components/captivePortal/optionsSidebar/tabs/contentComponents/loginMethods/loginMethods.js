@@ -51,7 +51,7 @@ class LoginMethods extends Component {
 
     render() {
         return (
-            <div className="container methodList">
+            <div className="container active methodList">
                 <div className="row">
                     <div className="socialsWrap">
                         <label htmlFor="facebook">

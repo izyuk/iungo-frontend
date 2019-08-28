@@ -10,129 +10,94 @@ class ContentTab extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            event: '',
-            visible: 'Header',
+            activeTab: 'header'
         };
-        this.Header = React.createRef();
     }
-
-    componentDidMount() {
-        this.setState({
-            event: this.Header.current
-        });
-    }
-
-    componentDidUpdate() {
-        this.state.event.closest(".head").classList.add("active");
-        this.state.event.closest(".head").nextSibling.classList.add("active");
-    }
-
-    dropDownHandler = (e) => {
-        this.setState({
-            event: e.currentTarget
-        });
-        for (let i = 0; i < document.querySelectorAll(".head").length; i++) {
-            document.querySelectorAll(".head")[i].classList.remove("active");
-        }
-        this.setState({
-            visible: e.currentTarget.childNodes[0].innerHTML
-        });
-    };
 
     render() {
+        const { activeTab } = this.state;
         return (
             <div className="dropdown">
                 <div className="wrap">
-                    <div
-                        className="head"
+                    <div className={'head ' + ((activeTab === 'font_settings') ? 'active' : '')}
                         data-cy="dropDownFontSettings"
-                        onClick={this.dropDownHandler}>
+                        onClick={() => this.setState({ activeTab: 'font_settings' })}
+                    >
                         <span>Font Settings</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <path fill="#BFC5D2" fillRule="nonzero"
                                   d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
                         </svg>
                     </div>
-                    {this.state.visible === 'Font Settings' ?
-                        <FontSettings /> :
-                        false}
+                    {(activeTab === 'font_settings') ? <FontSettings /> : false}
                 </div>
                 <div className="wrap">
-                    <div
-                        className="head"
+                    <div className={'head ' + ((activeTab === 'header') ? 'active' : '')}
                         data-cy="dropDownHeader"
-                        onClick={this.dropDownHandler}
-                        ref={this.Header}>
+                        onClick={() => this.setState({ activeTab: 'header' })}
+                    >
                         <span>Header</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <path fill="#BFC5D2" fillRule="nonzero"
                                   d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
                         </svg>
                     </div>
-                    {this.state.visible === 'Header' ?
-                        <HeaderText /> :
-                        false}
+                    {(activeTab === 'header') ? <HeaderText /> : false}
                 </div>
                 <div className="wrap">
-                    <div className="head"
+                    <div className={'head ' + ((activeTab === 'gdpr') ? 'active' : '')}
                          data-cy="dropDownGDPR"
-                         onClick={this.dropDownHandler}>
+                         onClick={() => this.setState({ activeTab: 'gdpr' })}
+                    >
                         <span>GDPR</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <path fill="#BFC5D2" fillRule="nonzero"
                                   d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
                         </svg>
                     </div>
-                    {this.state.visible === 'GDPR' ?
-                        <GDPR/> :
-                        false}
+                    {(activeTab === 'gdpr') ? <GDPR/> : false}
                 </div>
                 <div className="wrap">
-                    <div className="head"
+                    <div className={'head ' + ((activeTab === 'login_methods') ? 'active' : '')}
                          data-cy="dropDownLoginMethods"
-                         onClick={this.dropDownHandler}>
+                         onClick={() => this.setState({ activeTab: 'login_methods' })}
+                    >
                         <span>Login Methods</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <path fill="#BFC5D2" fillRule="nonzero"
                                   d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
                         </svg>
                     </div>
-                    {this.state.visible === 'Login Methods' ?
-                        <LoginMethods handler={this.props.handler}
-                                      methods={this.props.methods}
-                                      acceptButton={this.props.acceptButton}
-                        /> :
-                        false}
+                    {(activeTab === 'login_methods') ? <LoginMethods handler={this.props.handler}
+                        methods={this.props.methods}
+                        acceptButton={this.props.acceptButton}
+                    /> : false}
                 </div>
                 <div className="wrap">
-                    <div
-                        className="head"
+                    <div className={'head ' + ((activeTab === 'footer') ? 'active' : '')}
                         data-cy="dropDownFooter"
-                        onClick={this.dropDownHandler}>
+                        onClick={() => this.setState({ activeTab: 'footer' })}
+                    >
                         <span>Footer</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <path fill="#BFC5D2" fillRule="nonzero"
                                   d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
                         </svg>
                     </div>
-                    {this.state.visible === 'Footer' ?
-                        <FooterEditor /> :
-                        false}
+                    {(activeTab === 'footer') ? <FooterEditor /> : false}
                 </div>
                 <div className="wrap">
-                    <div
-                        className="head"
+                    <div className={'head ' + ((activeTab === 'success_actions') ? 'active' : '')}
                         data-cy="dropDownSuccessActions"
-                        onClick={this.dropDownHandler}>
+                        onClick={() => this.setState({ activeTab: 'success_actions' })}
+                    >
                         <span>Success Actions</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <path fill="#BFC5D2" fillRule="nonzero"
                                   d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
                         </svg>
                     </div>
-                    {this.state.visible === 'Success Actions' ?
-                        <SuccessActions /> :
-                        false}
+                    {(activeTab === 'success_actions') ? <SuccessActions /> : false}
                 </div>
             </div>
         )

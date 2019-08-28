@@ -1,13 +1,8 @@
+
+import Palette from '../static/styles/palette';
+
 const INITIAL = {
-    color: {
-        rgba: {
-            r: 229,
-            g: 233,
-            b: 242,
-            a: 1,
-        },
-        hex: '#e5e9f2'
-    },
+    color: Palette.PALE_GREY_THREE,
     type: 'solid',
     thickness: 1,
     radius: 4

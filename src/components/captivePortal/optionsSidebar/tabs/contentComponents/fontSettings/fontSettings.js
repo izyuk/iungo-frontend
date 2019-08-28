@@ -74,7 +74,7 @@ class FontSettings extends Component {
     render() {
         const {fontsList} = this.state;
         return (
-            <div className={'container'}>
+            <div className={'container active'}>
                 <div className="row">
                     <div className="logoLeft">
                     <span className="descr position">

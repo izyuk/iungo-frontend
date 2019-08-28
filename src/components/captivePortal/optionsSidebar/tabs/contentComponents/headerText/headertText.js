@@ -10,7 +10,7 @@ class HeaderText extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container active">
                 <HeaderTop/>
                 <HeaderDescription/>
             </div>

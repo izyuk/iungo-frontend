@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 import CaptivePortalContext from './project-context';
-
-const PALE_GREY_THREE = {
-    rgba: { r: 229, g: 233, b: 242, a: 1, },
-    hex: '#e5e9f2'
-};
+import Palette from '../static/styles/palette';
 
 class GlobalCaptivePortalState extends Component {
 
@@ -22,15 +18,7 @@ class GlobalCaptivePortalState extends Component {
         style: {
             header: {
                 top: {
-                    color: {
-                        rgba: {
-                            r: 85,
-                            g: 133,
-                            b: 237,
-                            a: 1,
-                        },
-                        hex: '#5585ed'
-                    },
+                    color: Palette.BLUE,
                     fontSize: 18,
                     family: '',
                     textActions: {
@@ -41,15 +29,7 @@ class GlobalCaptivePortalState extends Component {
                     alignment: 'center'
                 },
                 description: {
-                    color: {
-                        rgba: {
-                            r: 85,
-                            g: 133,
-                            b: 237,
-                            a: 1,
-                        },
-                        hex: '#5585ed'
-                    },
+                    color: Palette.BLUE,
                     fontSize: 18,
                     family: '',
                     textActions: {
@@ -61,15 +41,7 @@ class GlobalCaptivePortalState extends Component {
                 },
             },
             footer: {
-                color: {
-                    rgba: {
-                        r: 85,
-                        g: 133,
-                        b: 237,
-                        a: 1,
-                    },
-                    hex: '#5585ed'
-                },
+                color: Palette.BLUE,
                 fontSize: 18,
                 family: '',
                 textActions: {
@@ -80,28 +52,12 @@ class GlobalCaptivePortalState extends Component {
                 alignment: 'center'
             },
             gdpr_settings: {
-                color: {
-                    rgba: {
-                        r: 85,
-                        g: 133,
-                        b: 237,
-                        a: 1,
-                    },
-                    hex: '#5585ed'
-                },
+                color: Palette.BLUE,
                 fontSize: 14,
                 family: '',
             },
             success_message: {
-                color: {
-                    rgba: {
-                        r: 85,
-                        g: 133,
-                        b: 237,
-                        a: 1,
-                    },
-                    hex: '#5585ed'
-                },
+                color: Palette.BLUE,
                 fontSize: 18,
                 family: '',
                 textActions: {
@@ -114,7 +70,7 @@ class GlobalCaptivePortalState extends Component {
             background_and_logo: {
                 desktopBackground: {
                     url: '',
-                    color: PALE_GREY_THREE,
+                    color: Palette.PALE_GREY_THREE,
                     backgroundType: 'COLOR',
                     repeat: 'repeat',
                     position: {
@@ -133,7 +89,7 @@ class GlobalCaptivePortalState extends Component {
                 },
                 mobileBackground: {
                     url: '',
-                    color: PALE_GREY_THREE,
+                    color: Palette.PALE_GREY_THREE,
                     backgroundType: 'COLOR',
                     repeat: 'repeat',
                     position: {
@@ -157,19 +113,11 @@ class GlobalCaptivePortalState extends Component {
                 }
             },
             container_background: {
-                color: {
-                    rgba: {
-                        r: 255,
-                        g: 255,
-                        b: 255,
-                        a: 1,
-                    },
-                    hex: '#ffffff'
-                },
+                color: Palette.WHITE,
                 opacity: 100,
             },
             container_border: {
-                color: PALE_GREY_THREE,
+                color: Palette.PALE_GREY_THREE,
                 type: 'solid',
                 thickness: 1,
                 radius: 4,
@@ -183,10 +131,7 @@ class GlobalCaptivePortalState extends Component {
             },
             accept_button_font: {
                 alignment: 'center',
-                color: {
-                    hex: '#5585ed',
-                    rgba: {r: 85, g: 133, b: 237, a: 1}
-                },
+                color: Palette.BLUE,
                 fontSize: 18,
                 family: '',
                 textActions: {
@@ -195,19 +140,13 @@ class GlobalCaptivePortalState extends Component {
                     underline: false
                 }
             },
-            accept_button_color: {
-                hex: "#ffffff",
-                rgba: {r: 255, g: 255, b: 255, a: 1}
-            },
+            accept_button_color: Palette.WHITE,
             accept_button_size: {
                 width: 145,
                 padding: 10
             },
             accept_button_border: {
-                color: {
-                    hex: '#5585ed',
-                    rgba: {r: 85, g: 133, b: 237, a: 1}
-                },
+                color: Palette.BLUE,
                 radius: 5,
                 type: "solid",
                 thickness: 1
@@ -245,24 +184,26 @@ class GlobalCaptivePortalState extends Component {
         },
 
         previewDeviceType: 'desktop',
-        mobileSettingsTouched: false,
+        mobileSettingsTouched: [],
     };
 
     addPortalName = name => {
         this.setState({name: name})
     };
 
-    getDeviceTypesToUpdate = (state, deviceType) => {
+    getDeviceTypesToUpdate = (state, deviceType, settingsType) => {
         let deviceTypes = [];
         if (deviceType) {
             deviceTypes = [deviceType];
         } else {
             const type = state.previewDeviceType;
-            if (type === 'desktop' && !state.mobileSettingsTouched) {
+            if (type === 'desktop' && !state.mobileSettingsTouched.includes(settingsType)) {
                 deviceTypes = ['desktop', 'mobile'];
             } else {
                 deviceTypes = [type];
-                if (type === 'mobile') { state.mobileSettingsTouched = true; }
+                if (state[`${type}SettingsTouched`]) {
+                    state[`${type}SettingsTouched`].push(settingsType);
+                }
             }
         }
         return deviceTypes;
@@ -271,7 +212,7 @@ class GlobalCaptivePortalState extends Component {
     getBackgroundsByDeviceType = (state, deviceType) => {
         const bgl = state.style.background_and_logo;
         const backgrounds = [];
-        this.getDeviceTypesToUpdate(state, deviceType).map(type => {
+        this.getDeviceTypesToUpdate(state, deviceType, 'background').map(type => {
             let background = bgl[`${type}Background`];
             background && backgrounds.push(background);
         })
@@ -380,7 +321,7 @@ class GlobalCaptivePortalState extends Component {
     };
     setBackgroundID = (id, deviceType) => {
         const currentState = this.state;
-        this.getDeviceTypesToUpdate(currentState, deviceType).map(type => {
+        this.getDeviceTypesToUpdate(currentState, deviceType, 'background').map(type => {
             currentState[`${type}BackgroundId`] = id;
         });
         this.setState(currentState);
@@ -485,15 +426,7 @@ class GlobalCaptivePortalState extends Component {
             style: {
                 header: {
                     top: {
-                        color: {
-                            rgba: {
-                                r: 85,
-                                g: 133,
-                                b: 237,
-                                a: 1,
-                            },
-                            hex: '#5585ed'
-                        },
+                        color: Palette.BLUE,
                         fontSize: 18,
                         family: '',
                         textActions: {
@@ -504,15 +437,7 @@ class GlobalCaptivePortalState extends Component {
                         alignment: 'center'
                     },
                     description: {
-                        color: {
-                            rgba: {
-                                r: 85,
-                                g: 133,
-                                b: 237,
-                                a: 1,
-                            },
-                            hex: '#5585ed'
-                        },
+                        color: Palette.BLUE,
                         fontSize: 18,
                         family: '',
                         textActions: {
@@ -524,15 +449,7 @@ class GlobalCaptivePortalState extends Component {
                     },
                 },
                 footer: {
-                    color: {
-                        rgba: {
-                            r: 85,
-                            g: 133,
-                            b: 237,
-                            a: 1,
-                        },
-                        hex: '#5585ed'
-                    },
+                    color: Palette.BLUE,
                     fontSize: 18,
                     family: '',
                     textActions: {
@@ -543,28 +460,12 @@ class GlobalCaptivePortalState extends Component {
                     alignment: 'center'
                 },
                 gdpr_settings: {
-                    color: {
-                        rgba: {
-                            r: 85,
-                            g: 133,
-                            b: 237,
-                            a: 1,
-                        },
-                        hex: '#5585ed'
-                    },
+                    color: Palette.BLUE,
                     fontSize: 14,
                     family: '',
                 },
                 success_message: {
-                    color: {
-                        rgba: {
-                            r: 85,
-                            g: 133,
-                            b: 237,
-                            a: 1,
-                        },
-                        hex: '#5585ed'
-                    },
+                    color: Palette.BLUE,
                     fontSize: 18,
                     family: '',
                     textActions: {
@@ -577,7 +478,7 @@ class GlobalCaptivePortalState extends Component {
                 background_and_logo: {
                     desktopBackground: {
                         url: '',
-                        color: PALE_GREY_THREE,
+                        color: Palette.PALE_GREY_THREE,
                         backgroundType: 'COLOR',
                         repeat: 'repeat',
                         position: {
@@ -596,7 +497,7 @@ class GlobalCaptivePortalState extends Component {
                     },
                     mobileBackground: {
                         url: '',
-                        color: PALE_GREY_THREE,
+                        color: Palette.PALE_GREY_THREE,
                         backgroundType: 'COLOR',
                         repeat: 'repeat',
                         position: {
@@ -620,19 +521,11 @@ class GlobalCaptivePortalState extends Component {
                     }
                 },
                 container_background: {
-                    color: {
-                        rgba: {
-                            r: 255,
-                            g: 255,
-                            b: 255,
-                            a: 1,
-                        },
-                        hex: '#ffffff'
-                    },
+                    color: Palette.WHITE,
                     opacity: 100,
                 },
                 container_border: {
-                    color: PALE_GREY_THREE,
+                    color: Palette.PALE_GREY_THREE,
                     type: 'solid',
                     thickness: 1,
                     radius: 4,
@@ -646,10 +539,7 @@ class GlobalCaptivePortalState extends Component {
                 },
                 accept_button_font: {
                     alignment: 'center',
-                    color: {
-                        hex: '#5585ed',
-                        rgba: {r: 85, g: 133, b: 237, a: 1}
-                    },
+                    color: Palette.BLUE,
                     fontSize: 18,
                     family: '',
                     textActions: {
@@ -658,19 +548,13 @@ class GlobalCaptivePortalState extends Component {
                         underline: false
                     }
                 },
-                accept_button_color: {
-                    hex: "#ffffff",
-                    rgba: {r: 255, g: 255, b: 255, a: 1}
-                },
+                accept_button_color: Palette.WHITE,
                 accept_button_size: {
                     width: 145,
                     padding: 10
                 },
                 accept_button_border: {
-                    color: {
-                        hex: '#5585ed',
-                        rgba: {r: 85, g: 133, b: 237, a: 1}
-                    },
+                    color: Palette.BLUE,
                     radius: 5,
                     type: "solid",
                     thickness: 1
@@ -739,15 +623,7 @@ class GlobalCaptivePortalState extends Component {
         await this.addPortalName(data.name);
         await this.setGDPRSettingsStatus(false);
         await this.setGDPRSettings({
-            color: {
-                rgba: {
-                    r: 85,
-                    g: 133,
-                    b: 237,
-                    a: 1,
-                },
-                hex: '#5585ed'
-            },
+            color: Palette.BLUE,
             fontSize: 14,
             setting: data.dataToExclude.gdprSettingsSetting,
             agreeWithTermsAndConditionsLabel: data.dataToExclude.gdprSettingsSetting,
@@ -764,7 +640,7 @@ class GlobalCaptivePortalState extends Component {
         await this.setFontBase64(data.dataToExclude.base64EncodedValue);
 
         await this.setPreviewDeviceType('desktop');
-        await this.setDeviceTypeSettingsTouched('mobile', false);
+        await this.setDeviceTypeSettingsTouched('mobile', []);
     };
 
 
@@ -947,7 +823,7 @@ class GlobalCaptivePortalState extends Component {
     removeBackground = () => {
         const currentState = this.state;
         this.getBackgroundsByDeviceType(currentState).map(background => {
-            const color = background.color || PALE_GREY_THREE;
+            const color = background.color || Palette.PALE_GREY_THREE;
             background.url = null;
             background.color = color;
             background.backgroundType = 'COLOR';
