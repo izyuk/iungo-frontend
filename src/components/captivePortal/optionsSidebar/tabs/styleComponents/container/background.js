@@ -34,8 +34,8 @@ class ContentBackground extends Component {
     static contextType = CaptivePortalContext;
     state = {
         displayColorPicker: false,
-        color: this.context.style.container_background.color,
-        opacity: this.context.style.container_background.opacity
+        color: this.context.style.desktop_container.background.color,
+        opacity: this.context.style.desktop_container.background.opacity
     };
 
     handleClick = () => {
@@ -64,36 +64,28 @@ class ContentBackground extends Component {
     };
 
     onSliderChange = (value) => {
-        this.setState({
-            opacity: value
-        });
+        this.setState({ opacity: value });
         let {displayColorPicker, ...rest} = this.state;
         this.context.setBackgroundStyle(rest)
     };
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.opacity !== nextState.opacity) {
-            return true;
-        } else if (this.state.color.hex !== nextState.color.hex) {
-            return true;
-        } else if (this.state.color.rgba !== nextState.color.rgba) {
-            return true;
-        } else if (this.state.displayColorPicker !== nextState.displayColorPicker) {
-            return true;
-        } else
-            return false;
+    componentDidMount() {
+        this.getBackgroundSettings();
     }
 
-    componentDidMount() {
-        let select = document.querySelectorAll('[ data-component="ContentBackground"]');
-        for (let i = 0; i < select.length; i++) {
-            let svg = select[i].nextSibling.children[0];
-            let span = document.createElement('span');
-            span.innerText = select[i].options[select[i].selectedIndex].value;
-            select[i].nextSibling.insertBefore(span, svg);
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextContext.previewDeviceType !== this.context.previewDeviceType ||
+            nextContext.name !== this.context.name ||
+            nextContext.style !== this.context.style) {
+            this.getBackgroundSettings(nextContext);
         }
-        let {displayColorPicker, ...rest} = this.state;
-        this.context.setBackgroundStyle(rest)
+    }
+
+    getBackgroundSettings(nextContext){
+        const context = nextContext || this.context;
+        const {style, previewDeviceType} = context;
+        const background = (style[`${previewDeviceType}_container`] || style.desktop_container).background;
+        this.setState({ color: background.color , opacity: background.opacity });
     }
 
     render() {
@@ -149,7 +141,7 @@ class ContentBackground extends Component {
                             <div style={style}>
                                 <Slider min={0}
                                         max={100}
-                                        defaultValue={parseInt(this.state.opacity)}
+                                        value={parseInt(this.state.opacity)}
                                         handle={handle}
                                         trackStyle={{
                                             backgroundColor: '#5585ED',

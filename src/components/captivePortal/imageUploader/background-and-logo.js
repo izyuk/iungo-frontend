@@ -30,9 +30,9 @@ class BackgroundAndLogo extends Component {
             hex: '#f9f9fc'
         },
         background: '',
-        logo: this.context.style.background_and_logo.logo.url,
-        logoHorizontalPosition: this.context.style.background_and_logo.logo.horizontalPosition,
-        logoVerticalPosition: this.context.style.background_and_logo.logo.verticalPosition,
+        logo: this.context.style.background_and_logo.desktopLogo.url,
+        logoHorizontalPosition: this.context.style.background_and_logo.desktopLogo.horizontalPosition,
+        logoVerticalPosition: this.context.style.background_and_logo.desktopLogo.verticalPosition,
         fileInfo: '',
         fileAdditional: {
             width: '',
@@ -137,9 +137,6 @@ class BackgroundAndLogo extends Component {
             list[i].classList.remove('active');
         }
         e.currentTarget.classList.add('active');
-        const {style: {background_and_logo}, previewDeviceType} = this.context;
-        const logo = background_and_logo.logo;
-        const background = background_and_logo[`${previewDeviceType}Background`];
         this.newUploadedImageData = {
             data: {
                 id: e.currentTarget.getAttribute('dataid'),
@@ -149,8 +146,7 @@ class BackgroundAndLogo extends Component {
         switch (this.props.type) {
             case "logo":
                 this.setState({logo: e.currentTarget.getAttribute('dataurl')});
-                logo.url = e.currentTarget.getAttribute('dataurl');
-                logo.horizontalPosition = this.state.logoHorizontalPosition;
+                this.context.setLogo(e.currentTarget.getAttribute('dataurl'), this.state.logoHorizontalPosition, this.state.logoVerticalPosition);
                 this.context.setLogoID(e.currentTarget.getAttribute('dataid'));
                 break;
             case "background":
@@ -171,14 +167,10 @@ class BackgroundAndLogo extends Component {
     applyOnUpload = () => {
         console.log(this.newUploadedImageData);
         const {data: {id, externalUrl}} = this.newUploadedImageData;
-        const {style: {background_and_logo}, previewDeviceType} = this.context;
-        const logo = background_and_logo.logo;
-        const background = background_and_logo[`${previewDeviceType}Background`];
         switch (this.props.type) {
             case "logo":
                 this.setState({logo: externalUrl});
-                logo.url = externalUrl;
-                logo.horizontalPosition = this.state.logoHorizontalPosition;
+                this.context.setLogo(externalUrl, this.state.logoHorizontalPosition, this.state.logoVerticalPosition);
                 this.context.setLogoID(id);
                 break;
             case "background":
@@ -288,18 +280,8 @@ class BackgroundAndLogo extends Component {
     };
 
     componentDidMount() {
+        this.updateLogo();
         this.updateBackground();
-        if (this.props.type === 'logo') {
-            const {horizontalPosition, verticalPosition} = this.context.style.background_and_logo.logo;
-            this.setState({
-                logoHorizontalPosition: horizontalPosition,
-                logoVerticalPosition: verticalPosition
-            });
-            document.querySelector(`[datatype='${verticalPosition}']`).checked = true;
-            document.getElementById((horizontalPosition ? (horizontalPosition === 'flex-start' ? 'left' : (horizontalPosition === 'flex-end' ? 'right' : 'center')) : this.state.logoHorizontalPosition)).checked = true;
-        }
-        console.log("TYPE", this.props.type);
-        console.log("IMAGE UPLOADER TOKEN on DID MOUNT", localStorage.getItem('token'));
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -312,7 +294,23 @@ class BackgroundAndLogo extends Component {
 
     componentWillReceiveProps(nextProps, nextContext) {
         if (nextContext.previewDeviceType !== this.context.previewDeviceType) {
-            this.updateBackground()
+            this.updateLogo(nextContext);
+            this.updateBackground(nextContext);
+        }
+    }
+
+    updateLogo(nextContext) {
+        if (this.props.type === 'logo') {
+            const context = nextContext || this.context;
+            const {style: { background_and_logo }, previewDeviceType} = context;
+            const logo = background_and_logo[`${previewDeviceType}Logo`];
+            const {horizontalPosition, verticalPosition} = logo;
+            this.setState({
+                logoHorizontalPosition: horizontalPosition,
+                logoVerticalPosition: verticalPosition
+            });
+            document.querySelector(`[datatype='${verticalPosition}']`).checked = true;
+            document.getElementById((horizontalPosition ? (horizontalPosition === 'flex-start' ? 'left' : (horizontalPosition === 'flex-end' ? 'right' : 'center')) : this.state.logoHorizontalPosition)).checked = true;
         }
     }
 
@@ -351,7 +349,8 @@ class BackgroundAndLogo extends Component {
         };
 
         const {style: { background_and_logo }, previewDeviceType} = this.context;
-        const logo = background_and_logo.logo;
+        const logo = background_and_logo[`${previewDeviceType}Logo`];
+        const logoId = this.context[`${previewDeviceType}LogoId`];
         const background = background_and_logo[`${previewDeviceType}Background`];
         const backgroundId = this.context[`${previewDeviceType}BackgroundId`];
         return (
@@ -374,7 +373,7 @@ class BackgroundAndLogo extends Component {
                             </div>
                             {
                                 this.props.type === "logo" &&
-                                ((logo.url !== '' && this.context.logoId !== '') &&
+                                ((logo.url && logo.url !== '' && logoId && logoId !== '') &&
                                     <span className="removeLogo" onClick={this.removeLogoHandler}>
                                         Remove
                                     </span>)

@@ -5,7 +5,8 @@ export default React.createContext({
     background: '',
     name: '',
     externalCss: '',
-    logoId: '',
+    desktopLogoId: '',
+    mobileLogoId: '',
     desktopBackgroundId: '',
     mobileBackgroundId: '',
     header: 'Company name',
@@ -101,28 +102,54 @@ export default React.createContext({
                     option: 'auto'
                 },
             },
-            logo: {
+            desktopLogo: {
                 url: '',
                 horizontalPosition: 'center',
                 verticalPosition: 'middle',
-            }
+            },
+            mobileLogo: {
+                url: '',
+                horizontalPosition: 'center',
+                verticalPosition: 'middle',
+            },
         },
-        container_background: {
-            color: Palette.WHITE,
-            opacity: 100,
+        desktop_container: {
+            background: {
+                color: Palette.WHITE,
+                opacity: 100,
+            },
+            border: {
+                color: Palette.PALE_GREY_THREE,
+                type: 'solid',
+                thickness: 1,
+                radius: 4,
+            },
+            size: {
+                width: 720,
+                padding: 20
+            },
+            position: {
+                vertical: 'middle'
+            },
         },
-        container_border: {
-            color: Palette.PALE_GREY_THREE,
-            type: 'solid',
-            thickness: 1,
-            radius: 4,
-        },
-        container_size: {
-            width: 720,
-            padding: 20
-        },
-        container_position: {
-            vertical: 'middle'
+        mobile_container: {
+            background: {
+                color: Palette.WHITE,
+                opacity: 100,
+            },
+            border: {
+                color: Palette.PALE_GREY_THREE,
+                type: 'solid',
+                thickness: 1,
+                radius: 4,
+            },
+            size: {
+                width: 720,
+                padding: 20
+            },
+            position: {
+                vertical: 'middle'
+            },
         },
         accept_button_font: {
             alignment: 'center',
@@ -219,5 +246,5 @@ export default React.createContext({
     mobileSettingsTouched: [],
     setPreviewDeviceType: () => {},
     setDeviceTypeSettingsTouched: () => {},
-    checkDeviceTypeBackgroundChanged: () => {},
+    checkDeviceTypeDataChanged: () => {},
 });
