@@ -1,15 +1,10 @@
+
+import Palette from '../static/styles/palette';
+
 const INITIAL = {
     text: 'Default success message',
     styles: {
-        color: {
-            rgba: {
-                r: 85,
-                g: 133,
-                b: 237,
-                a: 1,
-            },
-            hex: '#5585ed'
-        },
+        color: Palette.BLUE,
         fontSize: 18,
         textActions: {
             bold: false,

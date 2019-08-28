@@ -461,7 +461,7 @@ context('Content tab', function () {
         });
 
         it('Set connect button text color', () => {
-            fillColorHEX('[ data-cy="connectButtonTextColor"]', 'edaa55');
+            fillColorHEX('[data-cy="connectButtonTextColor"]', 'edaa55');
         });
 
         it('Set connect button background color', () => {
@@ -469,7 +469,7 @@ context('Content tab', function () {
         });
 
         it('Set connect button border color', () => {
-            fillColorHEX('[ data-cy="connectButtonBorderColor"]', '5585ed');
+            fillColorHEX('[ data-cy="connectButtonBorderColor"]', 'edaa55');
         });
 
         it('Set connect button border thickness', () => {
@@ -723,7 +723,10 @@ context('Starting comparing collected data', function () {
                              * TODO fix gdpr tests
                              */
                             gdpr_settings: {
-                                color: {rgba: {r: 85, g: 133, b: 237, a: 1}, hex: "#5585ed"},
+                                color: {
+                                    rgba: {r: 237, g: 170, b: 85, a: 1},
+                                    hex: "#edaa55"
+                                },
                                 fontSize: 14,
                                 family: 'Arial',
                             },
@@ -811,10 +814,8 @@ context('Starting comparing collected data', function () {
                             },
                             accept_button_size: {width: 320, padding: 10},
                             accept_button_border: {
-                                color: {
-                                    hex: "#5585ed",
-                                    rgba: {r: 85, g: 133, b: 237, a: 1}
-                                }, radius: 5, type: "solid", thickness: 1
+                                color: {hex: "#edaa55", rgba: {r: 237, g: 170, b: 85, a: 1}},
+                                radius: 5, type: "solid", thickness: 1
                             }
                         },
                         fontId: '',

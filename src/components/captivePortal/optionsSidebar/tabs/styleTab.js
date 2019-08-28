@@ -9,14 +9,13 @@ class StyleTab extends Component {
     static contextType = CaptivePortalContext;
     constructor(props){
         super(props);
-        this.state={
+        this.state = {
             activeTab: 'background'
         };
     }
 
     render(){
         const { activeTab } = this.state;
-        const type = this.context.previewDeviceType;
         return(
             <div className="dropdown">
                 <div className="wrap">
@@ -24,7 +23,7 @@ class StyleTab extends Component {
                         data-cy="backgroundDropDown"
                         onClick={() => this.setState({ activeTab: 'background' })}
                     >
-                        <span>{(type === 'desktop') ? 'Desktop' : 'Mobile'} background</span>
+                        <span>Background</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <path fill="#BFC5D2" fillRule="nonzero" d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
                         </svg>

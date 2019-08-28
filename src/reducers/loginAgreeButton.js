@@ -1,15 +1,12 @@
+
+import Palette from '../static/styles/palette';
+
 const INITIAL = {
     acceptButtonText: 'Connect',
-    acceptButtonColor: {
-        hex: "#ffffff",
-        rgba: {r: 255, g: 255, b: 255, a: 1}
-    },
+    acceptButtonColor: Palette.WHITE,
     acceptButtonFont: {
         alignment: 'center',
-        color: {
-            hex: '#5585ed',
-            rgba: {r: 85, g: 133, b: 237, a: 1}
-        },
+        color: Palette.BLUE,
         fontSize: 18,
         textActions: {
             bold: false,
@@ -22,10 +19,7 @@ const INITIAL = {
         padding: 10
     },
     acceptButtonBorder: {
-        color: {
-            hex: '#5585ed',
-            rgba: {r: 85, g: 133, b: 237, a: 1}
-        },
+        color: Palette.BLUE,
         radius: 5,
         type: "solid",
         thickness: 1

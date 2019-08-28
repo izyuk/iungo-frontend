@@ -1,13 +1,8 @@
+
+import Palette from '../static/styles/palette';
+
 const INITIAL = {
-    color: {
-        rgba: {
-            r: 255,
-            g: 255,
-            b: 255,
-            a: 1,
-        },
-        hex: '#ffffff'
-    },
+    color: Palette.WHITE,
     opacity: 100
 };
 
