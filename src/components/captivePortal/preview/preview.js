@@ -113,21 +113,21 @@ class Preview extends Component {
                                         <div className="contentPlace">
                                             {gdprSettingsSetting !== 'No' &&
                                             <div data-cy="gdprPreview">
-                                                {agreeWithTermsAndConditionsLabel &&
-                                                <p className={'gdprLabel'}>
-                                                    <input type="checkbox"/>
-                                                    <span ref={this.agree}
-                                                          dangerouslySetInnerHTML={{__html: agreeWithTermsAndConditionsLabel}}>
-                                                    </span>
-                                                </p>
-                                                }
                                                 {allowToUsePersonalInfoLabel &&
-                                                <p className={'gdprLabel'}>
-                                                    <input type="checkbox"/>
-                                                    <span ref={this.allow}
-                                                          dangerouslySetInnerHTML={{__html: allowToUsePersonalInfoLabel}}>
-                                                    </span>
-                                                </p>
+                                                    <p className={'gdprLabel'}>
+                                                        <input type="checkbox"/>
+                                                        <span ref={this.allow}
+                                                            dangerouslySetInnerHTML={{__html: allowToUsePersonalInfoLabel}}>
+                                                        </span>
+                                                    </p>
+                                                }
+                                                {agreeWithTermsAndConditionsLabel &&
+                                                    <p className={'gdprLabel'}>
+                                                        <input type="checkbox"/>
+                                                        <span ref={this.agree}
+                                                            dangerouslySetInnerHTML={{__html: agreeWithTermsAndConditionsLabel}}>
+                                                        </span>
+                                                    </p>
                                                 }
                                             </div>
                                             }
