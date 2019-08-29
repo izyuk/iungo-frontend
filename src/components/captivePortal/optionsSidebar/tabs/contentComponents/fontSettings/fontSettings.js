@@ -78,8 +78,6 @@ class FontSettings extends Component {
 
     render() {
         const {fontsList} = this.state;
-        console.log(this.context.dataToExclude.fontsList);
-        console.log(fontsList);
         return (
             <div className={'container active'}>
                 <div className="row">
