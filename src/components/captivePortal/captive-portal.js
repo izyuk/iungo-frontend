@@ -35,7 +35,7 @@ class CaptivePortal extends Component {
         const uuid = this.props.match.params.uuid;
         const from = localStorage.getItem('from');
         if(uuid === 'new' && from === 'templates'){
-            localStorage.removeItem('cpID', null);
+            localStorage.removeItem('cpID');
         }
         let id = localStorage.getItem('cpID') || localStorage.getItem('templateID');
         if (!!!str) {
@@ -118,17 +118,11 @@ class CaptivePortal extends Component {
                         this.context.setGDPRSettingsStatus(true);
                     }
                 }
-
                 if(!!data.style.header.top.family) {
                     this.context.setFontData({
                         fontName: data.style.header.top.family,
                         fontId: ''
                     });
-                } else {
-                    // this.context.setFontData({
-                    //     fontName: data[0].name,
-                    //     fontId: ''
-                    // });
                 }
 
                 if (from !== 'templates') {
@@ -218,6 +212,11 @@ class CaptivePortal extends Component {
         const query = getPublicFonts(!!this.token ? this.token : localStorage.getItem('token'));
         await query.then(res => {
             const {data} = res;
+            this.context.setFontData({
+                fontName: data[0].name,
+                fontId: data[0].id
+            });
+            console.log(data);
             this.context.setFontsCollection(data);
         });
     };

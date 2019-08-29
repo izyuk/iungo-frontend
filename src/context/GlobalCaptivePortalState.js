@@ -692,7 +692,7 @@ class GlobalCaptivePortalState extends Component {
         await this.loaderHandler(true);
         await this.setPreviewDeviceType('desktop');
         await this.setDeviceTypeSettingsTouched('mobile', []);
-        
+
         await this.setBackground(data.background !== null ? data.style.background_and_logo.desktopBackground.url : '', data.style.background_and_logo.desktopBackground.color, data.style.background_and_logo.desktopBackground.backgroundType);
         await this.setLogo(data.logo !== null ? data.style.background_and_logo.desktopLogo.url : '', data.style.background_and_logo.desktopLogo.horizontalPosition, data.style.background_and_logo.desktopLogo.verticalPosition);
         await this.setBorderStyle(data.style.desktop_container.border);
@@ -929,8 +929,10 @@ class GlobalCaptivePortalState extends Component {
 
     setFontsCollection = (data) => {
         const currentState = this.state;
-        currentState.dataToExclude.fontsList = data;
-        this.setState(currentState);
+        if (data !== '' && data !== null) {
+            currentState.dataToExclude.fontsList = data;
+            this.setState(currentState);
+        }
     };
 
     setFontData = ({fontName, fontId}) => {
@@ -953,8 +955,8 @@ class GlobalCaptivePortalState extends Component {
     };
 
     setPreviewDeviceType = (deviceType) => {
-        this.setState({ previewDeviceType: deviceType });
-    }
+        this.setState({previewDeviceType: deviceType});
+    };
     setDeviceTypeSettingsTouched = (deviceType, touched) => {
         const currentState = this.state;
         currentState[`${deviceType}SettingsTouched`] = touched;
@@ -977,7 +979,7 @@ class GlobalCaptivePortalState extends Component {
         }
         currentState[`${deviceType}SettingsTouched`] = changed;
         this.setState(currentState);
-    }
+    };
 
     render() {
         return <CaptivePortalContext.Provider value={{
