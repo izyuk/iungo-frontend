@@ -9,7 +9,7 @@ class FontSettings extends Component {
     state = {
         fontName: this.context.style.header.top.family,
         fontsList: this.context.dataToExclude.fontsList,
-        fontId: '',
+        fontId: this.context.dataToExclude.fontId,
         base64EncodedValue: ''
     };
 
@@ -55,21 +55,26 @@ class FontSettings extends Component {
             span.innerText = e.currentTarget.options[e.currentTarget.selectedIndex].value;
             const {fontsList, ...rest} = currentState;
             this.context.setFontData({...rest});
-            this.context.setFontBase64(data.base64EncodedValue);
         } else {
             const currentState = this.state;
-            const fontFromBE = this.context.dataToExclude.fontName;
-            this.setting.current.value = fontFromBE;
+            this.setting.current.value = currentState.fontName;
             const svg = this.setting.current.nextSibling.children[0];
             const span = document.createElement('span');
-            currentState.fontName = this.setting.current.options[this.setting.current.selectedIndex].value;
-            this.setState(currentState);
+            // currentState.fontName = this.setting.current.options[this.setting.current.selectedIndex].value;
+            // this.setState(currentState);
             const {fontsList, ...rest} = currentState;
             this.context.setFontData({...rest});
-            span.innerText = this.setting.current.options[this.setting.current.selectedIndex].value;
+            span.innerText = currentState.fontName;
             this.setting.current.nextSibling.insertBefore(span, svg);
         }
     };
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return (this.state.fontName !== nextState.fontName) ||
+            (this.state.fontsList !== nextState.fontsList) ||
+            (this.state.fontId !== nextState.fontId) ||
+            (this.state.base64EncodedValue !== nextState.base64EncodedValue);
+    }
 
     render() {
         const {fontsList} = this.state;
