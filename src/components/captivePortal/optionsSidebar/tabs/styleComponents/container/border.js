@@ -7,10 +7,10 @@ class ContentBorder extends Component {
 
     state = {
         displayColorPicker: false,
-        color: this.context.style.container_border.color,
-        type: this.context.style.container_border.type,
-        thickness: this.context.style.container_border.thickness,
-        radius: this.context.style.container_border.radius
+        color: this.context.style.desktop_container.border.color,
+        type: this.context.style.desktop_container.border.type,
+        thickness: this.context.style.desktop_container.border.thickness,
+        radius: this.context.style.desktop_container.border.radius
     };
 
     handleClick = () => {
@@ -49,29 +49,38 @@ class ContentBorder extends Component {
         this.context.setBorderStyle(rest);
     };
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return (this.state.type !== nextState.type) ||
-            (this.state.thickness !== nextState.thickness) ||
-            (this.state.radius !== nextState.radius) ||
-            (this.state.color !== nextState.color) ||
-            (this.state.displayColorPicker !== nextState.displayColorPicker) ||
-            (this.context !== nextContext);
-
+    componentDidMount() {
+        this.getBorderSettings();
     }
 
-    componentDidMount() {
-        let select = document.querySelectorAll('[data-component="ContentBorder"]');
-        for (let i = 0; i < select.length; i++) {
-            let svg = select[i].nextSibling.children[0];
-            select[0].value = this.state.type;
-            select[1].value = this.state.thickness;
-            select[2].value = this.state.radius;
-            let span = document.createElement('span');
-            span.innerText = select[i].options[select[i].selectedIndex].value;
-            select[i].nextSibling.insertBefore(span, svg);
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextContext.previewDeviceType !== this.context.previewDeviceType ||
+            nextContext.name !== this.context.name ||
+            nextContext.style !== this.context.style) {
+            this.getBorderSettings(nextContext);
         }
-        const {displayColorPicker, ...rest} = this.state;
-        this.context.setBorderStyle(rest);
+    }
+
+    getBorderSettings(nextContext) {
+        const context = nextContext || this.context;
+        const {style, previewDeviceType} = context;
+        const { color, type, thickness, radius } = (style[`${previewDeviceType}_container`] || style.desktop_container).border;
+        this.setState({ color, type, thickness, radius });
+        let select = document.querySelectorAll('[data-component="ContentBorder"]');
+        select[0].value = type;
+        select[1].value = thickness;
+        select[2].value = radius;
+        for (let i = 0; i < select.length; i++) {
+            let span = document.createElement('span');
+            const children = select[i].nextSibling.children;
+            if (children.length > 1) {
+                span = children[0];
+            } else {
+                let svg = children[0];
+                select[i].nextSibling.insertBefore(span, svg);
+            }
+            span.innerText = (select[i].options[select[i].selectedIndex] && select[i].options[select[i].selectedIndex].value) || '';
+        }
 
     };
 

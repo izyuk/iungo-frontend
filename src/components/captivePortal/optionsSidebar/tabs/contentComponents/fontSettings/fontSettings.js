@@ -81,7 +81,7 @@ class FontSettings extends Component {
         console.log(this.context.dataToExclude.fontsList);
         console.log(fontsList);
         return (
-            <div className={'container'}>
+            <div className={'container active'}>
                 <div className="row">
                     <div className="logoLeft">
                     <span className="descr position">

@@ -16,17 +16,6 @@ export default class Size extends Component {
     custom = React.createRef();
     size = React.createRef();
 
-    // backgroundSize = (e) => {
-    //     const currentState = this.state;
-    //     if (e.currentTarget.getAttribute('datatype') === 'custom') {
-    //         this.widthInput.current.focus();
-    //     } else {
-    //         currentState.option = e.currentTarget.getAttribute('datatype');
-    //         this.context.setBackgroundSize(currentState, false);
-    //         this.setState(currentState);
-    //     }
-    // };
-
     onFocusHandler = () => {
         const currentState = this.state;
         this.custom.current.checked = true;
@@ -53,12 +42,10 @@ export default class Size extends Component {
         this.getSizeSettings();
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return (this.state.option !== nextState.option)
-    }
-
     componentWillReceiveProps(nextProps, nextContext) {
-        if (nextContext.previewDeviceType !== this.context.previewDeviceType) {
+        if (nextContext.previewDeviceType !== this.context.previewDeviceType ||
+            nextContext.name !== this.context.name ||
+            nextContext.style !== this.context.style) {
             this.getSizeSettings(nextContext);
         }
     }
@@ -85,6 +72,8 @@ export default class Size extends Component {
             this.size.current.nextSibling.insertBefore(span, svg);
         }
         span.innerText = this.size.current.options[this.size.current.selectedIndex].value;
+
+        this.setState({ option: size.option, width: size.width, height: size.height });
     }
 
     backgroundSize = (e) => {
@@ -148,7 +137,7 @@ export default class Size extends Component {
                                            type="number"
                                            placeholder={'Width'}
                                            step={'1'}
-                                           defaultValue={this.state.width}/>
+                                           value={this.state.width}/>
                                     &nbsp;%
                                 </div>
                                 <div className="inputRadioWrap">
@@ -162,7 +151,7 @@ export default class Size extends Component {
                                            type="number"
                                            placeholder={'Height'}
                                            step={'1'}
-                                           defaultValue={this.state.height}/>
+                                           value={this.state.height}/>
                                     &nbsp;%
                                 </div>
                             </label>

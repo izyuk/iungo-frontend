@@ -1,16 +1,11 @@
+
+import Palette from '../static/styles/palette';
+
 const INITIAL = {
     top: {
         text: 'Company name',
         styles: {
-            color: {
-                rgba: {
-                    r: 85,
-                    g: 133,
-                    b: 237,
-                    a: 1,
-                },
-                hex: '#5585ed'
-            },
+            color: Palette.BLUE,
             fontSize: 18,
             textActions: {
                 bold: false,
@@ -23,15 +18,7 @@ const INITIAL = {
     description: {
         text: 'Venue description',
         styles: {
-            color: {
-                rgba: {
-                    r: 85,
-                    g: 133,
-                    b: 237,
-                    a: 1,
-                },
-                hex: '#5585ed'
-            },
+            color: Palette.BLUE,
             fontSize: 18,
             textActions: {
                 bold: false,

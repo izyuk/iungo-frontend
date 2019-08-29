@@ -1,8 +1,12 @@
+
+import Palette from '../static/styles/palette';
+
 const INITIAL = {
     background: '',
     name: '',
     externalCss: '',
-    logoId: '',
+    desktopLogoId: '',
+    mobileLogoId: '',
     desktopBackgroundId: '',
     mobileBackgroundId: '',
     header: 'Company name',
@@ -12,15 +16,7 @@ const INITIAL = {
     style: {
         header: {
             top: {
-                color: {
-                    rgba: {
-                        r: 85,
-                        g: 133,
-                        b: 237,
-                        a: 1,
-                    },
-                    hex: '#5585ed'
-                },
+                color: Palette.BLUE,
                 fontSize: 18,
                 textActions: {
                     bold: false,
@@ -30,15 +26,7 @@ const INITIAL = {
                 alignment: 'center'
             },
             description: {
-                color: {
-                    rgba: {
-                        r: 85,
-                        g: 133,
-                        b: 237,
-                        a: 1,
-                    },
-                    hex: '#5585ed'
-                },
+                color: Palette.BLUE,
                 fontSize: 18,
                 textActions: {
                     bold: false,
@@ -49,15 +37,7 @@ const INITIAL = {
             },
         },
         footer: {
-            color: {
-                rgba: {
-                    r: 85,
-                    g: 133,
-                    b: 237,
-                    a: 1,
-                },
-                hex: '#5585ed'
-            },
+            color: Palette.BLUE,
             fontSize: 18,
             textActions: {
                 bold: false,
@@ -67,15 +47,7 @@ const INITIAL = {
             alignment: 'center'
         },
         success_message: {
-            color: {
-                rgba: {
-                    r: 85,
-                    g: 133,
-                    b: 237,
-                    a: 1,
-                },
-                hex: '#5585ed'
-            },
+            color: Palette.BLUE,
             fontSize: 18,
             textActions: {
                 bold: false,
@@ -87,15 +59,7 @@ const INITIAL = {
         background_and_logo: {
             background: {
                 url: '',
-                color: {
-                    rgba: {
-                        r: 229,
-                        g: 233,
-                        b: 242,
-                        a: 1,
-                    },
-                    hex: '#e5e9f2'
-                },
+                color: Palette.PALE_GREY_THREE,
                 backgroundType: 'COLOR'
             },
             logo: {
@@ -104,27 +68,11 @@ const INITIAL = {
             }
         },
         container_background: {
-            color: {
-                rgba: {
-                    r: 255,
-                    g: 255,
-                    b: 255,
-                    a: 1,
-                },
-                hex: '#ffffff'
-            },
+            color: Palette.WHITE,
             opacity: 100,
         },
         container_border: {
-            color: {
-                rgba: {
-                    r: 229,
-                    g: 233,
-                    b: 242,
-                    a: 1,
-                },
-                hex: '#e5e9f2'
-            },
+            color: Palette.PALE_GREY_THREE,
             type: 'solid',
             thickness: 1,
             radius: 4,
@@ -135,10 +83,7 @@ const INITIAL = {
         },
         accept_button_font: {
             alignment: 'center',
-            color: {
-                hex: '#5585ed',
-                rgba: {r: 85, g: 133, b: 237, a: 1}
-            },
+            color: Palette.BLUE,
             fontSize: 18,
             textActions: {
                 bold: false,
@@ -146,19 +91,13 @@ const INITIAL = {
                 underline: false
             }
         },
-        accept_button_color: {
-            hex: "#ffffff",
-            rgba: {r: 255, g: 255, b: 255, a: 1}
-        },
+        accept_button_color: Palette.WHITE,
         accept_button_size: {
             width: 145,
             padding: 10
         },
         accept_button_border: {
-            color: {
-                hex: '#5585ed',
-                rgba: {r: 85, g: 133, b: 237, a: 1}
-            },
+            color: Palette.BLUE,
             radius: 5,
             type: "solid",
             thickness: 1

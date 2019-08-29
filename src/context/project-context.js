@@ -1,10 +1,12 @@
 import React from 'react';
+import Palette from '../static/styles/palette';
 
 export default React.createContext({
     background: '',
     name: '',
     externalCss: '',
-    logoId: '',
+    desktopLogoId: '',
+    mobileLogoId: '',
     desktopBackgroundId: '',
     mobileBackgroundId: '',
     header: 'Company name',
@@ -14,15 +16,7 @@ export default React.createContext({
     style: {
         header: {
             top: {
-                color: {
-                    rgba: {
-                        r: 85,
-                        g: 133,
-                        b: 237,
-                        a: 1,
-                    },
-                    hex: '#5585ed'
-                },
+                color: Palette.BLUE,
                 fontSize: 18,
                 family: '',
                 textActions: {
@@ -33,15 +27,7 @@ export default React.createContext({
                 alignment: 'center'
             },
             description: {
-                color: {
-                    rgba: {
-                        r: 85,
-                        g: 133,
-                        b: 237,
-                        a: 1,
-                    },
-                    hex: '#5585ed'
-                },
+                color: Palette.BLUE,
                 fontSize: 18,
                 family: '',
                 textActions: {
@@ -53,15 +39,7 @@ export default React.createContext({
             },
         },
         footer: {
-            color: {
-                rgba: {
-                    r: 85,
-                    g: 133,
-                    b: 237,
-                    a: 1,
-                },
-                hex: '#5585ed'
-            },
+            color: Palette.BLUE,
             fontSize: 18,
             family: '',
             textActions: {
@@ -72,28 +50,12 @@ export default React.createContext({
             alignment: 'center'
         },
         gdpr_settings: {
-            color: {
-                rgba: {
-                    r: 85,
-                    g: 133,
-                    b: 237,
-                    a: 1,
-                },
-                hex: '#5585ed'
-            },
+            color: Palette.BLUE,
             fontSize: 14,
             family: '',
         },
         success_message: {
-            color: {
-                rgba: {
-                    r: 85,
-                    g: 133,
-                    b: 237,
-                    a: 1,
-                },
-                hex: '#5585ed'
-            },
+            color: Palette.BLUE,
             fontSize: 18,
             family: '',
             textActions: {
@@ -106,15 +68,7 @@ export default React.createContext({
         background_and_logo: {
             desktopBackground: {
                 url: '',
-                color: {
-                    rgba: {
-                        r: 229,
-                        g: 233,
-                        b: 242,
-                        a: 1,
-                    },
-                    hex: '#e5e9f2'
-                },
+                color: Palette.PALE_GREY_THREE,
                 backgroundType: 'COLOR',
                 repeat: 'repeat',
                 position: {
@@ -132,15 +86,7 @@ export default React.createContext({
             },
             mobileBackground: {
                 url: '',
-                color: {
-                    rgba: {
-                        r: 229,
-                        g: 233,
-                        b: 242,
-                        a: 1,
-                    },
-                    hex: '#e5e9f2'
-                },
+                color: Palette.PALE_GREY_THREE,
                 backgroundType: 'COLOR',
                 repeat: 'repeat',
                 position: {
@@ -156,51 +102,58 @@ export default React.createContext({
                     option: 'auto'
                 },
             },
-            logo: {
+            desktopLogo: {
                 url: '',
                 horizontalPosition: 'center',
                 verticalPosition: 'middle',
-            }
-        },
-        container_background: {
-            color: {
-                rgba: {
-                    r: 255,
-                    g: 255,
-                    b: 255,
-                    a: 1,
-                },
-                hex: '#ffffff'
             },
-            opacity: 100,
-        },
-        container_border: {
-            color: {
-                rgba: {
-                    r: 229,
-                    g: 233,
-                    b: 242,
-                    a: 1,
-                },
-                hex: '#e5e9f2'
+            mobileLogo: {
+                url: '',
+                horizontalPosition: 'center',
+                verticalPosition: 'middle',
             },
-            type: 'solid',
-            thickness: 1,
-            radius: 4,
         },
-        container_size: {
-            width: 720,
-            padding: 20
+        desktop_container: {
+            background: {
+                color: Palette.WHITE,
+                opacity: 100,
+            },
+            border: {
+                color: Palette.PALE_GREY_THREE,
+                type: 'solid',
+                thickness: 1,
+                radius: 4,
+            },
+            size: {
+                width: 720,
+                padding: 20
+            },
+            position: {
+                vertical: 'middle'
+            },
         },
-        container_position: {
-            vertical: 'middle'
+        mobile_container: {
+            background: {
+                color: Palette.WHITE,
+                opacity: 100,
+            },
+            border: {
+                color: Palette.PALE_GREY_THREE,
+                type: 'solid',
+                thickness: 1,
+                radius: 4,
+            },
+            size: {
+                width: 720,
+                padding: 20
+            },
+            position: {
+                vertical: 'middle'
+            },
         },
         accept_button_font: {
             alignment: 'center',
-            color: {
-                hex: '#5585ed',
-                rgba: {r: 85, g: 133, b: 237, a: 1}
-            },
+            color: Palette.BLUE,
             fontSize: 18,
             family: '',
             textActions: {
@@ -209,19 +162,13 @@ export default React.createContext({
                 underline: false
             }
         },
-        accept_button_color: {
-            hex: "#ffffff",
-            rgba: {r: 255, g: 255, b: 255, a: 1}
-        },
+        accept_button_color: Palette.WHITE,
         accept_button_size: {
             width: 145,
             padding: 10
         },
         accept_button_border: {
-            color: {
-                hex: '#5585ed',
-                rgba: {r: 85, g: 133, b: 237, a: 1}
-            },
+            color: Palette.BLUE,
             radius: 5,
             type: "solid",
             thickness: 1
@@ -296,8 +243,8 @@ export default React.createContext({
     setFontBase64: () => {},
 
     previewDeviceType: 'desktop',
-    mobileSettingsTouched: false,
+    mobileSettingsTouched: [],
     setPreviewDeviceType: () => {},
     setDeviceTypeSettingsTouched: () => {},
-    checkDeviceTypeBackgroundChanged: () => {},
+    checkDeviceTypeDataChanged: () => {},
 });

@@ -60,6 +60,11 @@ class Publish extends Component {
                 setFontData,
                 setFontBase64,
                 setContainerVerticalPosition,
+                previewDeviceType,
+                mobileSettingsTouched,
+                setPreviewDeviceType,
+                setDeviceTypeSettingsTouched,
+                checkDeviceTypeDataChanged,
                 ...rest
             } = this.context;
             this.context.loaderHandler(true);
@@ -126,7 +131,7 @@ class Publish extends Component {
             mobileSettingsTouched,
             setPreviewDeviceType,
             setDeviceTypeSettingsTouched,
-            checkDeviceTypeBackgroundChanged,
+            checkDeviceTypeDataChanged,
             ...rest
         } = this.context;
         await this.props.collectData(rest);

@@ -52,7 +52,8 @@ class HotspotUsage extends Component {
     }
 
     getSummaryInfo = async (uuid) => {
-        const query = getSummaryAnalytics(this.token, uuid);
+        const { startDate, endDate } = this.state;
+        const query = getSummaryAnalytics(this.token, { uuid, startDate, endDate });
         await query.then(res => {
             this.setState({ summaryInfo: res.data })
         });

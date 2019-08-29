@@ -4,8 +4,8 @@ import CaptivePortalContext from "../../../../../../context/project-context";
 class ContainerSize extends Component {
     static contextType = CaptivePortalContext;
     state = {
-        width: this.context.style.container_size.width,
-        padding: this.context.style.container_size.padding
+        width: this.context.style.desktop_container.size.width,
+        padding: this.context.style.desktop_container.size.padding
     };
 
     valueWidth = (e) => {
@@ -39,14 +39,23 @@ class ContainerSize extends Component {
         this.context.setSizeStyle(this.state);
     };
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return (this.state.width !== nextState.width) ||
-            (this.state.padding !== nextState.padding) ||
-            (this.context !== nextContext);
+    componentDidMount() {
+        this.getContainerSizeSettings();
     }
 
-    componentDidMount() {
-        this.context.setSizeStyle(this.state);
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextContext.previewDeviceType !== this.context.previewDeviceType ||
+            nextContext.name !== this.context.name ||
+            nextContext.style !== this.context.style) {
+            this.getContainerSizeSettings(nextContext);
+        }
+    }
+
+    getContainerSizeSettings(nextContext){
+        const context = nextContext || this.context;
+        const {style, previewDeviceType} = context;
+        const size = (style[`${previewDeviceType}_container`] || style.desktop_container).size;
+        this.setState({ width: size.width , padding: size.padding });
     }
 
     render() {
@@ -63,8 +72,11 @@ class ContainerSize extends Component {
                     </div>
                     <div className="right">
                         <div className="inputSelect">
-                            <input type="number" data-cy="containerWidth" onBlur={this.valueWidth}
-                                   defaultValue={this.state.width}/>
+                            <input type="number" data-cy="containerWidth"
+                                value={this.state.width}
+                                onChange={(e) => this.setState({ width: e.target.value })}
+                                onBlur={this.valueWidth}
+                            />
                             <select name="" id="" disabled>
                                 <option value="px">px</option>
                                 <option value="%">%</option>
@@ -80,7 +92,11 @@ class ContainerSize extends Component {
                     <div className="right">
 
                         <div className="inputSelect">
-                            <input type="number" onBlur={this.valuePadding} defaultValue={this.state.padding}/>
+                            <input type="number" 
+                                value={this.state.padding}
+                                onChange={(e) => this.setState({ padding: e.target.value })}
+                                onBlur={this.valuePadding}
+                            />
                             <select name="" id="" disabled>
                                 <option value="px">px</option>
                                 <option value="%">%</option>

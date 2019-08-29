@@ -4,7 +4,7 @@ import CaptivePortalContext from "../../../../../../context/project-context";
 class VerticalAlignment extends Component {
     static contextType = CaptivePortalContext;
     state = {
-        verticalPosition: this.context.style.container_position.vertical
+        verticalPosition: this.context.style.desktop_container.position.vertical
     };
 
     verticalAlignment = (e) => {
@@ -13,12 +13,22 @@ class VerticalAlignment extends Component {
         this.setState({ verticalPosition });
     };
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return (this.state.verticalPosition !== nextState.verticalPosition);
+    componentDidMount() {
+        this.getContainerPositionSettings();
     }
 
-    componentDidMount() {
-        const {vertical} = this.context.style.container_position;
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextContext.previewDeviceType !== this.context.previewDeviceType ||
+            nextContext.name !== this.context.name ||
+            nextContext.style !== this.context.style) {
+            this.getContainerPositionSettings(nextContext);
+        }
+    }
+
+    getContainerPositionSettings(nextContext) {
+        const context = nextContext || this.context;
+        const {style, previewDeviceType} = context;
+        const vertical = (style[`${previewDeviceType}_container`] || style.desktop_container).position.vertical;
         this.setState({ verticalPosition: vertical });
         document.querySelector(`[datatype='${vertical}']`).checked = true;
     }

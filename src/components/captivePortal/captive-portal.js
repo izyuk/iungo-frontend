@@ -48,6 +48,7 @@ class CaptivePortal extends Component {
                 const {data} = res;
                 const deviceTypes = ['desktop', 'mobile'];
                 deviceTypes.map(deviceType => {
+                    // background
                     const bgProp = `${deviceType}Background`;
                     this.context.setBackground(data[bgProp] ? data[bgProp].externalUrl : '', data.style.background_and_logo[bgProp].color, data.style.background_and_logo[bgProp].backgroundType, deviceType);
                     this.context.setBackgroundID(data[bgProp] ? data[bgProp].id : '', deviceType);
@@ -65,17 +66,24 @@ class CaptivePortal extends Component {
                         width: size.width,
                         height: size.height
                     }, size.inPercentDimension, deviceType);
-                    this.context.checkDeviceTypeBackgroundChanged(deviceType, data);
+                    // logo
+                    const logoProp = `${deviceType}Logo`;
+                    this.context.setLogo(
+                        data[logoProp] !== null ? data[logoProp].externalUrl : '',
+                        !!data.style.background_and_logo[logoProp].horizontalPosition ? data.style.background_and_logo[logoProp].horizontalPosition : this.context.style.background_and_logo[logoProp].horizontalPosition,
+                        !!data.style.background_and_logo[logoProp].verticalPosition ? data.style.background_and_logo[logoProp].verticalPosition : this.context.style.background_and_logo[logoProp].verticalPosition,
+                        deviceType,
+                    );
+                    this.context.setLogoID(data[logoProp] ? data[logoProp].id : '', deviceType);
+                    // container
+                    const container = data.style[`${deviceType}_container`];
+                    this.context.setBackgroundStyle(container.background, deviceType);
+                    this.context.setBorderStyle(container.border, deviceType);
+                    this.context.setSizeStyle(container.size, deviceType);
+                    this.context.setContainerVerticalPosition(container.position.vertical || this.context.style.desktop_container.position.vertical, deviceType);
+                    // general
+                    this.context.checkDeviceTypeDataChanged(deviceType, data);
                 });
-                this.context.setLogo(
-                    data.logo !== null ? data.logo.externalUrl : '',
-                    !!data.style.background_and_logo.logo.horizontalPosition ? data.style.background_and_logo.logo.horizontalPosition : this.context.style.background_and_logo.logo.horizontalPosition,
-                    !!data.style.background_and_logo.logo.verticalPosition ? data.style.background_and_logo.logo.verticalPosition : this.context.style.background_and_logo.logo.verticalPosition,
-                );
-                this.context.setContainerVerticalPosition(data.style.container_position.vertical || this.context.style.container_position.vertical);
-                this.context.setBorderStyle(data.style.container_border);
-                this.context.setBackgroundStyle(data.style.container_background);
-                this.context.setSizeStyle(data.style.container_size);
                 this.context.setHeaderTopData(data.header, data.style.header.top);
                 this.context.setHeaderDescriptionData(data.description, data.style.header.description);
                 this.context.setLoginMethods({
@@ -86,7 +94,6 @@ class CaptivePortal extends Component {
                     button: data.acceptTermsLogin
                 });
                 this.context.setFooterData(data.footer, data.style.footer);
-                this.context.setLogoID(data.logo === null ? '' : data.logo.id);
                 this.context.addPortalName(data.name);
                 this.context.redirectURLChanger(data.successRedirectUrl);
                 this.context.setSuccessMessageData(data.successMessage, data.style.success_message);
@@ -141,7 +148,7 @@ class CaptivePortal extends Component {
                 }
                 this.context.addPortalName(data.name);
             })
-            .catch(err => console.log(err));
+            .catch(err => console.error(err));
             this.context.loaderHandler(false);
         } else {
             this.context.loaderHandler(true);
