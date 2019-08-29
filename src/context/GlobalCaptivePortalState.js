@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import CaptivePortalContext from './project-context';
 
 const PALE_GREY_THREE = {
-    rgba: { r: 229, g: 233, b: 242, a: 1, },
+    rgba: {r: 229, g: 233, b: 242, a: 1,},
     hex: '#e5e9f2'
 };
 
@@ -262,7 +262,9 @@ class GlobalCaptivePortalState extends Component {
                 deviceTypes = ['desktop', 'mobile'];
             } else {
                 deviceTypes = [type];
-                if (type === 'mobile') { state.mobileSettingsTouched = true; }
+                if (type === 'mobile') {
+                    state.mobileSettingsTouched = true;
+                }
             }
         }
         return deviceTypes;
@@ -975,8 +977,10 @@ class GlobalCaptivePortalState extends Component {
 
     setFontsCollection = (data) => {
         const currentState = this.state;
-        currentState.dataToExclude.fontsList = data;
-        this.setState(currentState);
+        if (data !== '' && data !== null) {
+            currentState.dataToExclude.fontsList = data;
+            this.setState(currentState);
+        }
     };
 
     setFontData = ({fontName, fontId}) => {
@@ -999,13 +1003,13 @@ class GlobalCaptivePortalState extends Component {
     };
 
     setPreviewDeviceType = (deviceType) => {
-        this.setState({ previewDeviceType: deviceType });
-    }
+        this.setState({previewDeviceType: deviceType});
+    };
     setDeviceTypeSettingsTouched = (deviceType, touched) => {
         const currentState = this.state;
         currentState[`${deviceType}SettingsTouched`] = touched;
         this.setState(currentState);
-    }
+    };
     checkDeviceTypeBackgroundChanged = (deviceType, data) => {
         const currentState = this.state;
         let changed = false;
@@ -1016,7 +1020,7 @@ class GlobalCaptivePortalState extends Component {
         }
         currentState[`${deviceType}SettingsTouched`] = changed;
         this.setState(currentState);
-    }
+    };
 
     render() {
         return <CaptivePortalContext.Provider value={{
