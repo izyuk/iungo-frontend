@@ -7,8 +7,10 @@ const loadedDataForExpectedStore = {
     desktopBackgroundUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/nasa-53884-unsplash.jpg",
     mobileBackgroundId: "331",
     mobileBackgroundUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/nasa-53884-unsplash.jpg",
-    logoId: "330",
-    logoUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/google_logo.svg",
+    desktopLogoId: "330",
+    desktopLogoUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/google_logo.svg",
+    mobileLogoId: "330",
+    mobileLogoUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/google_logo.svg",
 };
 
 function clearFields(selector) {
@@ -226,7 +228,7 @@ context('Style tab', function () {
     });
 
 
-    describe('Changing logo', function () {
+    describe('Changing logo desktop', function () {
         it('Setting color', () => {
             cy.get('[data-cy="logoDropDown"]')
                 .click({force: true});
@@ -235,11 +237,11 @@ context('Style tab', function () {
         it('Choosing and applying image', () => {
             cy.get('.upload')
                 .click({force: true});
-            cy.get('[data-cy="backgroundImageItem0"')
+            cy.get('[data-cy="backgroundImageItem1"')
                 .dblclick({force: true}).then(elem => {
                 const element = Cypress.$(elem);
-                loadedDataForExpectedStore.logoId = element.attr('dataid');
-                loadedDataForExpectedStore.logoUrl = element.attr('dataurl');
+                loadedDataForExpectedStore.desktopLogoId = element.attr('dataid');
+                loadedDataForExpectedStore.desktopLogoUrl = element.attr('dataurl');
             });
         });
 
@@ -258,7 +260,49 @@ context('Style tab', function () {
         })
     });
 
-    describe('Container', function () {
+
+    describe('Changing logo mobile', function () {
+        it('Switch device type to mobile', () => {
+            cy.get('[data-id="mobile"] span')
+                .click({force: true});
+        });
+        it('Setting color', () => {
+            cy.get('[data-cy="logoDropDown"]')
+                .click({force: true});
+        });
+
+        it('Choosing and applying image', () => {
+            cy.get('.upload')
+                .click({force: true});
+            cy.get('[data-cy="backgroundImageItem0"')
+                .dblclick({force: true}).then(elem => {
+                const element = Cypress.$(elem);
+                loadedDataForExpectedStore.mobileLogoId = element.attr('dataid');
+                loadedDataForExpectedStore.mobileLogoUrl = element.attr('dataurl');
+            });
+        });
+
+        it('Checking workability of all alignment options', () => {
+            cy.get('[for=left]')
+                .click({force: true});
+            cy.get('[for=center]')
+                .click({force: true});
+            cy.get('[for=right]')
+                .click({force: true});
+        });
+
+        it('Choosing alignment which wee need', () => {
+            cy.get('[for=right]')
+                .click({force: true});
+        });
+
+        it('Switch device type to desktop', () => {
+            cy.get('[data-id="desktop"] span')
+                .click({force: true})
+        });
+    });
+
+    describe('Container desktop', function () {
         it('Border', () => {
             cy.get('[data-cy="containerDropDown"]')
                 .click({force: true});
@@ -275,6 +319,35 @@ context('Style tab', function () {
         });
         it('Size', () => {
             fillingFields('[data-cy="containerWidth"]', 1920);
+        });
+    });
+
+    describe('Container mobile', function () {
+        it('Switch device type to mobile', () => {
+            cy.get('[data-id="mobile"] span')
+                .click({force: true});
+        });
+        it('Border', () => {
+            cy.get('[data-cy="containerDropDown"]')
+                .click({force: true});
+
+            fillColorHEX('[data-cy="borderColor"]', 'ff0000');
+
+            cy.get('[data-cy="thickness"]')
+                .select('1', {force: true});
+            cy.get('[data-cy="radius"]')
+                .select('5', {force: true});
+        });
+        it('Background', () => {
+            fillColorHEXWithOpacity('[data-cy="containerBackground"', 'ff0000', '10');
+        });
+        it('Size', () => {
+            fillingFields('[data-cy="containerWidth"]', 320);
+        });
+
+        it('Switch device type to desktop', () => {
+            cy.get('[data-id="desktop"] span')
+                .click({force: true})
         });
     });
 });
@@ -679,7 +752,8 @@ context('Starting comparing collected data', function () {
                         background: loadedDataForExpectedStore.mobileBackgroundUrl,
                         name: "CP TEST NAME",
                         externalCss: "",
-                        logoId: loadedDataForExpectedStore.logoId,
+                        desktopLogoId: loadedDataForExpectedStore.desktopLogoId,
+                        mobileLogoId: loadedDataForExpectedStore.mobileLogoId,
                         desktopBackgroundId: loadedDataForExpectedStore.desktopBackgroundId,
                         mobileBackgroundId: loadedDataForExpectedStore.mobileBackgroundId,
                         header: "CP TEST HEADER TEXT",
@@ -779,27 +853,54 @@ context('Starting comparing collected data', function () {
                                         option: '80% 80%'
                                     },
                                 },
-                                logo: {
-                                    url: loadedDataForExpectedStore.logoUrl,
+                                desktopLogo: {
+                                    url: loadedDataForExpectedStore.desktopLogoUrl,
                                     horizontalPosition: 'center',
+                                    verticalPosition: 'middle'
+                                },
+                                mobileLogo: {
+                                    url: loadedDataForExpectedStore.mobileLogoUrl,
+                                    horizontalPosition: 'flex-end',
                                     verticalPosition: 'middle'
                                 }
                             },
-                            container_background: {
-                                color: {
-                                    rgba: {r: 92, g: 64, b: 64, a: 0},
-                                    hex: "#5c4040"
-                                }, opacity: 100
+                            desktop_container: {
+                                background: {
+                                    color: { rgba: {r: 92, g: 64, b: 64, a: 0}, hex: "#5c4040" },
+                                    opacity: 100
+                                },
+                                border: {
+                                    color: { rgba: {r: 255, g: 105, b: 0, a: 1}, hex: "#ff6900" },
+                                    type: "solid",
+                                    thickness: 3,
+                                    radius: 2
+                                },
+                                size: {
+                                    width: 1920,
+                                    padding: 20
+                                },
+                                position: {
+                                    vertical: 'middle'
+                                },
                             },
-                            container_border: {
-                                color: {
-                                    rgba: {r: 255, g: 105, b: 0, a: 1},
-                                    hex: "#ff6900"
-                                }, type: "solid", thickness: 3, radius: 2
-                            },
-                            container_size: {width: 1920, padding: 20},
-                            container_position: {
-                                vertical: 'middle'
+                            mobile_container: {
+                                background: {
+                                    color: { rgba: {r: 255, g: 0, b: 0, a: 0.1}, hex: "#ff0000" },
+                                    opacity: 100
+                                },
+                                border: {
+                                    color: { rgba: {r: 255, g: 0, b: 0, a: 1}, hex: "#ff0000" },
+                                    type: "solid",
+                                    thickness: 1,
+                                    radius: 5
+                                },
+                                size: {
+                                    width: 320,
+                                    padding: 20
+                                },
+                                position: {
+                                    vertical: 'middle'
+                                },
                             },
                             accept_button_font: {
                                 alignment: "center",

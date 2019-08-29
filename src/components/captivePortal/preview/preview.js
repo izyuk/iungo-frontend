@@ -74,16 +74,12 @@ class Preview extends Component {
         const {
             style: {
                 header: {top, description},
-                footer,
-                container_background,
-                container_border,
-                container_size,
-                background_and_logo: {background},
-                success_message
+                background_and_logo,
             },
-            dataToExclude: {gdprSettingsStatus, gdprSettingsSetting, agreeWithTermsAndConditionsLabel, allowToUsePersonalInfoLabel}
+            dataToExclude: {gdprSettingsStatus, gdprSettingsSetting, agreeWithTermsAndConditionsLabel, allowToUsePersonalInfoLabel},
+            previewDeviceType,
         } = this.context;
-
+        const logo = background_and_logo[`${previewDeviceType}Logo`] || background_and_logo.desktopLogo;
         return (
             <div className="previewWrap">
                 <div className={(this.context.previewDeviceType === 'mobile') ? "previewMain mobile" : "previewMain"}
@@ -91,8 +87,8 @@ class Preview extends Component {
                     <div className="previewContainer">
                         <div className="header">
                             <div className="previewLogoPlace">
-                                {this.context.style.background_and_logo.logo.url !== '' ?
-                                    <img src={`${this.context.style.background_and_logo.logo.url}`} alt=""/> : ''}
+                                {(logo && logo.url !== '') ?
+                                    <img src={`${logo.url}`} alt=""/> : ''}
                             </div>
                         </div>
                         <div className="section"
