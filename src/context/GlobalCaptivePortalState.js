@@ -861,13 +861,17 @@ class GlobalCaptivePortalState extends Component {
                 text-decoration: ${description && description.textActions.underline ? 'underline' : 'none'};
                 text-align: ${description && description.alignment};
                 ${fontName && `font-family: ${fontName}, sans-serif`}
-                }
+            }
                 
-                .previewContainer .gdprLabel {
-                    color: rgba(${gdpr_settings && gdpr_settings.color.rgba.r}, ${gdpr_settings && gdpr_settings.color.rgba.g}, ${gdpr_settings && gdpr_settings.color.rgba.b}, ${gdpr_settings && gdpr_settings.color.rgba.a});
+            .previewContainer .gdprLabel {
+                color: rgba(${gdpr_settings && gdpr_settings.color.rgba.r}, ${gdpr_settings && gdpr_settings.color.rgba.g}, ${gdpr_settings && gdpr_settings.color.rgba.b}, ${gdpr_settings && gdpr_settings.color.rgba.a});
                 font-size: ${gdpr_settings && gdpr_settings.fontSize}px;
-                text-indent: 16px;
+                display: flex;
                 ${fontName && `font-family: ${fontName}, sans-serif`}
+            }
+
+            .previewContainer .gdprLabel input {
+                height: 1.3em;
             }
             
             .previewContainer > div.section .text {
