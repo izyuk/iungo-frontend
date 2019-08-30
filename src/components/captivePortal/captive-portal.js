@@ -121,7 +121,7 @@ class CaptivePortal extends Component {
                 if(!!data.style.header.top.family) {
                     this.context.setFontData({
                         fontName: data.style.header.top.family,
-                        fontId: ''
+                        fontIds: []
                     });
                 }
 
@@ -212,9 +212,10 @@ class CaptivePortal extends Component {
         const query = getPublicFonts(!!this.token ? this.token : localStorage.getItem('token'));
         await query.then(res => {
             const {data} = res;
+            const defaultFont = data[0];
             this.context.setFontData({
-                fontName: data[0].name,
-                fontId: data[0].id
+                fontName: defaultFont.name,
+                fontIds: !defaultFont.webSafe ? [defaultFont.id] : []
             });
             console.log(data);
             this.context.setFontsCollection(data);

@@ -181,7 +181,7 @@ export default React.createContext({
     acceptTermsLogin: false,
     successRedirectUrl: '',
     termAndConditionId: '',
-    fontId: '',
+    fontIds: [],
     acceptButtonText: 'Connect',
     addPortalName: () => {},
     setBackground: () => {},

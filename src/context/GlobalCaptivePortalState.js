@@ -180,7 +180,7 @@ class GlobalCaptivePortalState extends Component {
             }
         },
         termAndConditionId: '',
-        fontId: '',
+        fontIds: [],
         googleLogin: false,
         facebookLogin: false,
         twitterLogin: false,
@@ -659,7 +659,7 @@ class GlobalCaptivePortalState extends Component {
                 }
             },
             termAndConditionId: '',
-            fontId: '',
+            fontIds: [],
             googleLogin: false,
             facebookLogin: false,
             twitterLogin: false,
@@ -736,7 +736,7 @@ class GlobalCaptivePortalState extends Component {
 
         await this.setFontsCollection(data.dataToExclude.fontsList);
 
-        await this.setFontData({fontName: data.dataToExclude.fontName, fontId: data.fontId});
+        await this.setFontData({fontName: data.dataToExclude.fontName, fontIds: data.fontIds});
 
         await this.setFontBase64(data.dataToExclude.base64EncodedValue);
         await this.loaderHandler(false);
@@ -939,9 +939,9 @@ class GlobalCaptivePortalState extends Component {
         }
     };
 
-    setFontData = ({fontName, fontId}) => {
+    setFontData = ({fontName, fontIds}) => {
         const currentState = this.state;
-        currentState.fontId = fontId;
+        currentState.fontIds = fontIds;
         currentState.dataToExclude.fontName = fontName;
         currentState.style.header.top.family = fontName;
         currentState.style.header.description.family = fontName;
@@ -1007,7 +1007,7 @@ class GlobalCaptivePortalState extends Component {
             acceptButtonText: this.state.acceptButtonText,
             externalCss: this.state.externalCss,
             termAndConditionId: this.state.termAndConditionId,
-            fontId: this.state.fontId,
+            fontIds: this.state.fontIds,
             addPortalName: this.addPortalName,
             setBackground: this.setBackground,
             setBackgroundRepeating: this.setBackgroundRepeating,

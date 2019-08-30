@@ -916,7 +916,7 @@ context('Starting comparing collected data', function () {
                                 radius: 5, type: "solid", thickness: 1
                             }
                         },
-                        fontId: '',
+                        fontIds: [],
                         googleLogin: true,
                         facebookLogin: true,
                         twitterLogin: false,
