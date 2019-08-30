@@ -19,7 +19,7 @@ class GlobalCaptivePortalState extends Component {
         style: {
             header: {
                 top: {
-                    color: Palette.BLUE,
+                    color: Palette.getColor('BLUE'),
                     fontSize: 18,
                     family: '',
                     textActions: {
@@ -30,7 +30,7 @@ class GlobalCaptivePortalState extends Component {
                     alignment: 'center'
                 },
                 description: {
-                    color: Palette.BLUE,
+                    color: Palette.getColor('BLUE'),
                     fontSize: 18,
                     family: '',
                     textActions: {
@@ -42,7 +42,7 @@ class GlobalCaptivePortalState extends Component {
                 },
             },
             footer: {
-                color: Palette.BLUE,
+                color: Palette.getColor('BLUE'),
                 fontSize: 18,
                 family: '',
                 textActions: {
@@ -53,12 +53,12 @@ class GlobalCaptivePortalState extends Component {
                 alignment: 'center'
             },
             gdpr_settings: {
-                color: Palette.BLUE,
+                color: Palette.getColor('BLUE'),
                 fontSize: 14,
                 family: '',
             },
             success_message: {
-                color: Palette.BLUE,
+                color: Palette.getColor('BLUE'),
                 fontSize: 18,
                 family: '',
                 textActions: {
@@ -71,7 +71,7 @@ class GlobalCaptivePortalState extends Component {
             background_and_logo: {
                 desktopBackground: {
                     url: '',
-                    color: Palette.PALE_GREY_THREE,
+                    color: Palette.getColor('PALE_GREY_THREE'),
                     backgroundType: 'COLOR',
                     repeat: 'repeat',
                     position: {
@@ -90,7 +90,7 @@ class GlobalCaptivePortalState extends Component {
                 },
                 mobileBackground: {
                     url: '',
-                    color: Palette.PALE_GREY_THREE,
+                    color: Palette.getColor('PALE_GREY_THREE'),
                     backgroundType: 'COLOR',
                     repeat: 'repeat',
                     position: {
@@ -120,11 +120,11 @@ class GlobalCaptivePortalState extends Component {
             },
             desktop_container: {
                 background: {
-                    color: Palette.WHITE,
+                    color: Palette.getColor('WHITE'),
                     opacity: 100,
                 },
                 border: {
-                    color: Palette.PALE_GREY_THREE,
+                    color: Palette.getColor('PALE_GREY_THREE'),
                     type: 'solid',
                     thickness: 1,
                     radius: 4,
@@ -139,11 +139,11 @@ class GlobalCaptivePortalState extends Component {
             },
             mobile_container: {
                 background: {
-                    color: Palette.WHITE,
+                    color: Palette.getColor('WHITE'),
                     opacity: 100,
                 },
                 border: {
-                    color: Palette.PALE_GREY_THREE,
+                    color: Palette.getColor('PALE_GREY_THREE'),
                     type: 'solid',
                     thickness: 1,
                     radius: 4,
@@ -158,7 +158,7 @@ class GlobalCaptivePortalState extends Component {
             },
             accept_button_font: {
                 alignment: 'center',
-                color: Palette.BLUE,
+                color: Palette.getColor('BLUE'),
                 fontSize: 18,
                 family: '',
                 textActions: {
@@ -167,13 +167,13 @@ class GlobalCaptivePortalState extends Component {
                     underline: false
                 }
             },
-            accept_button_color: Palette.WHITE,
+            accept_button_color: Palette.getColor('WHITE'),
             accept_button_size: {
                 width: 145,
                 padding: 10
             },
             accept_button_border: {
-                color: Palette.BLUE,
+                color: Palette.getColor('BLUE'),
                 radius: 5,
                 type: "solid",
                 thickness: 1
@@ -288,7 +288,7 @@ class GlobalCaptivePortalState extends Component {
     removeBackground = () => {
         const currentState = this.state;
         this.getBackgroundsByDeviceType(currentState).map(background => {
-            const color = background.color || Palette.PALE_GREY_THREE;
+            const color = background.color || Palette.getColor('PALE_GREY_THREE');
             background.url = null;
             background.color = color;
             background.backgroundType = 'COLOR';
@@ -498,7 +498,7 @@ class GlobalCaptivePortalState extends Component {
             style: {
                 header: {
                     top: {
-                        color: Palette.BLUE,
+                        color: Palette.getColor('BLUE'),
                         fontSize: 18,
                         family: '',
                         textActions: {
@@ -509,7 +509,7 @@ class GlobalCaptivePortalState extends Component {
                         alignment: 'center'
                     },
                     description: {
-                        color: Palette.BLUE,
+                        color: Palette.getColor('BLUE'),
                         fontSize: 18,
                         family: '',
                         textActions: {
@@ -521,7 +521,7 @@ class GlobalCaptivePortalState extends Component {
                     },
                 },
                 footer: {
-                    color: Palette.BLUE,
+                    color: Palette.getColor('BLUE'),
                     fontSize: 18,
                     family: '',
                     textActions: {
@@ -532,12 +532,12 @@ class GlobalCaptivePortalState extends Component {
                     alignment: 'center'
                 },
                 gdpr_settings: {
-                    color: Palette.BLUE,
+                    color: Palette.getColor('BLUE'),
                     fontSize: 14,
                     family: '',
                 },
                 success_message: {
-                    color: Palette.BLUE,
+                    color: Palette.getColor('BLUE'),
                     fontSize: 18,
                     family: '',
                     textActions: {
@@ -550,7 +550,7 @@ class GlobalCaptivePortalState extends Component {
                 background_and_logo: {
                     desktopBackground: {
                         url: '',
-                        color: Palette.PALE_GREY_THREE,
+                        color: Palette.getColor('PALE_GREY_THREE'),
                         backgroundType: 'COLOR',
                         repeat: 'repeat',
                         position: {
@@ -569,7 +569,7 @@ class GlobalCaptivePortalState extends Component {
                     },
                     mobileBackground: {
                         url: '',
-                        color: Palette.PALE_GREY_THREE,
+                        color: Palette.getColor('PALE_GREY_THREE'),
                         backgroundType: 'COLOR',
                         repeat: 'repeat',
                         position: {
@@ -599,11 +599,11 @@ class GlobalCaptivePortalState extends Component {
                 },
                 desktop_container: {
                     background: {
-                        color: Palette.WHITE,
+                        color: Palette.getColor('WHITE'),
                         opacity: 100,
                     },
                     border: {
-                        color: Palette.PALE_GREY_THREE,
+                        color: Palette.getColor('PALE_GREY_THREE'),
                         type: 'solid',
                         thickness: 1,
                         radius: 4,
@@ -618,11 +618,11 @@ class GlobalCaptivePortalState extends Component {
                 },
                 mobile_container: {
                     background: {
-                        color: Palette.WHITE,
+                        color: Palette.getColor('WHITE'),
                         opacity: 100,
                     },
                     border: {
-                        color: Palette.PALE_GREY_THREE,
+                        color: Palette.getColor('PALE_GREY_THREE'),
                         type: 'solid',
                         thickness: 1,
                         radius: 4,
@@ -637,7 +637,7 @@ class GlobalCaptivePortalState extends Component {
                 },
                 accept_button_font: {
                     alignment: 'center',
-                    color: Palette.BLUE,
+                    color: Palette.getColor('BLUE'),
                     fontSize: 18,
                     family: '',
                     textActions: {
@@ -646,13 +646,13 @@ class GlobalCaptivePortalState extends Component {
                         underline: false
                     }
                 },
-                accept_button_color: Palette.WHITE,
+                accept_button_color: Palette.getColor('WHITE'),
                 accept_button_size: {
                     width: 145,
                     padding: 10
                 },
                 accept_button_border: {
-                    color: Palette.BLUE,
+                    color: Palette.getColor('BLUE'),
                     radius: 5,
                     type: "solid",
                     thickness: 1
@@ -724,7 +724,7 @@ class GlobalCaptivePortalState extends Component {
         await this.addPortalName(data.name);
         await this.setGDPRSettingsStatus(false);
         await this.setGDPRSettings({
-            color: Palette.BLUE,
+            color: Palette.getColor('BLUE'),
             fontSize: 14,
             setting: data.dataToExclude.gdprSettingsSetting,
             agreeWithTermsAndConditionsLabel: data.dataToExclude.gdprSettingsSetting,

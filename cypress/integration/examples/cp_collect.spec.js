@@ -797,10 +797,7 @@ context('Starting comparing collected data', function () {
                              * TODO fix gdpr tests
                              */
                             gdpr_settings: {
-                                color: {
-                                    rgba: {r: 237, g: 170, b: 85, a: 1},
-                                    hex: "#edaa55"
-                                },
+                                color: {rgba: {r: 85, g: 133, b: 237, a: 1}, hex: "#5585ed"},
                                 fontSize: 14,
                                 family: 'Arial',
                             },

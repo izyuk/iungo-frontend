@@ -4,7 +4,7 @@ import Palette from '../static/styles/palette';
 const INITIAL = {
     text: 'Default success message',
     styles: {
-        color: Palette.BLUE,
+        color: Palette.getColor('BLUE'),
         fontSize: 18,
         textActions: {
             bold: false,

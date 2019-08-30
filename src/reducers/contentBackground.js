@@ -2,7 +2,7 @@
 import Palette from '../static/styles/palette';
 
 const INITIAL = {
-    color: Palette.WHITE,
+    color: Palette.getColor('WHITE'),
     opacity: 100
 };
 
