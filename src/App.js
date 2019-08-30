@@ -1,35 +1,19 @@
 import React, {Component} from 'react';
-import {Redirect, Route, Switch} from 'react-router-dom';
+import {withRouter, Redirect, Route, Switch} from 'react-router-dom';
 
 import Index from './components';
 import Tool from './components/tool/tool'
 import GlobalCaptivePortalState from "./context/GlobalCaptivePortalState";
 
 class MainRouter extends Component {
-    state = {
-        unauthorized: false
-    };
-
-    componentDidMount() {
-        if (!localStorage.getItem('token') && (window.location.pathname !== '/') && (window.location.pathname !== '/reset')) {
-
-            this.setState({
-                unauthorized: true
-            });
-        }
-        setTimeout(() => {
-            this.setState({unauthorized: false});
-        });
-
-
-    }
 
     render() {
+        const authorized = Boolean(localStorage.getItem('token'));
         return (
             <GlobalCaptivePortalState>
                 <Switch>
-                    {this.state.unauthorized && <Redirect to={'/'}/>}
-                    <Route exact path="/(|register|reset)" component={Index}/>
+                    <Redirect exact from="/" to={authorized ? '/captive-portals' : '/login'} />
+                    <Route exact path="/(login|register|reset)" component={Index}/>
                     <Route component={Tool}/>
                 </Switch>
             </GlobalCaptivePortalState>
@@ -37,4 +21,4 @@ class MainRouter extends Component {
     }
 }
 
-export default MainRouter;
+export default withRouter(MainRouter);
