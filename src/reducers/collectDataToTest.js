@@ -16,7 +16,7 @@ const INITIAL = {
     style: {
         header: {
             top: {
-                color: Palette.BLUE,
+                color: Palette.getColor('BLUE'),
                 fontSize: 18,
                 textActions: {
                     bold: false,
@@ -26,7 +26,7 @@ const INITIAL = {
                 alignment: 'center'
             },
             description: {
-                color: Palette.BLUE,
+                color: Palette.getColor('BLUE'),
                 fontSize: 18,
                 textActions: {
                     bold: false,
@@ -37,7 +37,7 @@ const INITIAL = {
             },
         },
         footer: {
-            color: Palette.BLUE,
+            color: Palette.getColor('BLUE'),
             fontSize: 18,
             textActions: {
                 bold: false,
@@ -47,7 +47,7 @@ const INITIAL = {
             alignment: 'center'
         },
         success_message: {
-            color: Palette.BLUE,
+            color: Palette.getColor('BLUE'),
             fontSize: 18,
             textActions: {
                 bold: false,
@@ -59,7 +59,7 @@ const INITIAL = {
         background_and_logo: {
             background: {
                 url: '',
-                color: Palette.PALE_GREY_THREE,
+                color: Palette.getColor('PALE_GREY_THREE'),
                 backgroundType: 'COLOR'
             },
             logo: {
@@ -68,11 +68,11 @@ const INITIAL = {
             }
         },
         container_background: {
-            color: Palette.WHITE,
+            color: Palette.getColor('WHITE'),
             opacity: 100,
         },
         container_border: {
-            color: Palette.PALE_GREY_THREE,
+            color: Palette.getColor('PALE_GREY_THREE'),
             type: 'solid',
             thickness: 1,
             radius: 4,
@@ -83,7 +83,7 @@ const INITIAL = {
         },
         accept_button_font: {
             alignment: 'center',
-            color: Palette.BLUE,
+            color: Palette.getColor('BLUE'),
             fontSize: 18,
             textActions: {
                 bold: false,
@@ -91,13 +91,13 @@ const INITIAL = {
                 underline: false
             }
         },
-        accept_button_color: Palette.WHITE,
+        accept_button_color: Palette.getColor('WHITE'),
         accept_button_size: {
             width: 145,
             padding: 10
         },
         accept_button_border: {
-            color: Palette.BLUE,
+            color: Palette.getColor('BLUE'),
             radius: 5,
             type: "solid",
             thickness: 1

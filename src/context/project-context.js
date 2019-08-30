@@ -16,7 +16,7 @@ export default React.createContext({
     style: {
         header: {
             top: {
-                color: Palette.BLUE,
+                color: Palette.getColor('BLUE'),
                 fontSize: 18,
                 family: '',
                 textActions: {
@@ -27,7 +27,7 @@ export default React.createContext({
                 alignment: 'center'
             },
             description: {
-                color: Palette.BLUE,
+                color: Palette.getColor('BLUE'),
                 fontSize: 18,
                 family: '',
                 textActions: {
@@ -39,7 +39,7 @@ export default React.createContext({
             },
         },
         footer: {
-            color: Palette.BLUE,
+            color: Palette.getColor('BLUE'),
             fontSize: 18,
             family: '',
             textActions: {
@@ -50,12 +50,12 @@ export default React.createContext({
             alignment: 'center'
         },
         gdpr_settings: {
-            color: Palette.BLUE,
+            color: Palette.getColor('BLUE'),
             fontSize: 14,
             family: '',
         },
         success_message: {
-            color: Palette.BLUE,
+            color: Palette.getColor('BLUE'),
             fontSize: 18,
             family: '',
             textActions: {
@@ -68,7 +68,7 @@ export default React.createContext({
         background_and_logo: {
             desktopBackground: {
                 url: '',
-                color: Palette.PALE_GREY_THREE,
+                color: Palette.getColor('PALE_GREY_THREE'),
                 backgroundType: 'COLOR',
                 repeat: 'repeat',
                 position: {
@@ -86,7 +86,7 @@ export default React.createContext({
             },
             mobileBackground: {
                 url: '',
-                color: Palette.PALE_GREY_THREE,
+                color: Palette.getColor('PALE_GREY_THREE'),
                 backgroundType: 'COLOR',
                 repeat: 'repeat',
                 position: {
@@ -115,11 +115,11 @@ export default React.createContext({
         },
         desktop_container: {
             background: {
-                color: Palette.WHITE,
+                color: Palette.getColor('WHITE'),
                 opacity: 100,
             },
             border: {
-                color: Palette.PALE_GREY_THREE,
+                color: Palette.getColor('PALE_GREY_THREE'),
                 type: 'solid',
                 thickness: 1,
                 radius: 4,
@@ -134,11 +134,11 @@ export default React.createContext({
         },
         mobile_container: {
             background: {
-                color: Palette.WHITE,
+                color: Palette.getColor('WHITE'),
                 opacity: 100,
             },
             border: {
-                color: Palette.PALE_GREY_THREE,
+                color: Palette.getColor('PALE_GREY_THREE'),
                 type: 'solid',
                 thickness: 1,
                 radius: 4,
@@ -153,7 +153,7 @@ export default React.createContext({
         },
         accept_button_font: {
             alignment: 'center',
-            color: Palette.BLUE,
+            color: Palette.getColor('BLUE'),
             fontSize: 18,
             family: '',
             textActions: {
@@ -162,13 +162,13 @@ export default React.createContext({
                 underline: false
             }
         },
-        accept_button_color: Palette.WHITE,
+        accept_button_color: Palette.getColor('WHITE'),
         accept_button_size: {
             width: 145,
             padding: 10
         },
         accept_button_border: {
-            color: Palette.BLUE,
+            color: Palette.getColor('BLUE'),
             radius: 5,
             type: "solid",
             thickness: 1

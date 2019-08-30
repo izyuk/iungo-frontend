@@ -5,7 +5,7 @@ const INITIAL = {
     top: {
         text: 'Company name',
         styles: {
-            color: Palette.BLUE,
+            color: Palette.getColor('BLUE'),
             fontSize: 18,
             textActions: {
                 bold: false,
@@ -18,7 +18,7 @@ const INITIAL = {
     description: {
         text: 'Venue description',
         styles: {
-            color: Palette.BLUE,
+            color: Palette.getColor('BLUE'),
             fontSize: 18,
             textActions: {
                 bold: false,

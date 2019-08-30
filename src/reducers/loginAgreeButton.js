@@ -3,10 +3,10 @@ import Palette from '../static/styles/palette';
 
 const INITIAL = {
     acceptButtonText: 'Connect',
-    acceptButtonColor: Palette.WHITE,
+    acceptButtonColor: Palette.getColor('WHITE'),
     acceptButtonFont: {
         alignment: 'center',
-        color: Palette.BLUE,
+        color: Palette.getColor('BLUE'),
         fontSize: 18,
         textActions: {
             bold: false,
@@ -19,7 +19,7 @@ const INITIAL = {
         padding: 10
     },
     acceptButtonBorder: {
-        color: Palette.BLUE,
+        color: Palette.getColor('BLUE'),
         radius: 5,
         type: "solid",
         thickness: 1
