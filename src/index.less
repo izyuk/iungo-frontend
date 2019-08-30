@@ -188,6 +188,11 @@
     color: @steel;
   }
 
+  .loginForm {
+    display: flex;
+    flex-direction: column;
+  }
+
   .login {
     .font(@avenir-heavy, 12);
     color: @w;
@@ -198,6 +203,7 @@
     border: 1px solid @cornflower-blue;
     background: @soft-blue;
     cursor: pointer;
+    align-self: center;
 
     &:hover {
       background: @cornflower-blue;
@@ -246,12 +252,6 @@
 
 .fieldsWrap {
   width: 100%;
-}
-
-.loginPage {
-  .inputsWrap {
-    margin-bottom: 16px;
-  }
 }
 
 .contentPlace, .formWrap {
@@ -323,12 +323,8 @@
   width: 100%;
   margin: 15px 0 0 0;
 
-  .email {
+  .email, .password, .confirmPassword  {
     margin-bottom: 16px;
-  }
-
-  .confirmPassword {
-    margin-top: 16px;
   }
 
   .agreement {
@@ -433,6 +429,15 @@
       color: #ff4d5d;
       text-align: center;
     }
+  }
+
+  .authErrorText {
+    .font(@avenir-heavy, 12);
+    line-height: 1.2;
+    color: #ff4d5d;
+    margin: -16px 0 16px;
+    padding: 5px 0;
+    text-align: left;
   }
 }
 
