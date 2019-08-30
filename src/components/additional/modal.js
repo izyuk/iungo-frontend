@@ -18,7 +18,7 @@ class Modal extends Component {
 
     render() {
         return ReactDOM.createPortal(
-            <div className={"modal"}>
+            <div className={'modal ' + (this.props.className || '')}>
                 <div className="modalContent">
                     <div className="modalHead">
                         <p>Image Uploader</p>

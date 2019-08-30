@@ -504,7 +504,8 @@ class BackgroundAndLogo extends Component {
                     false}
                 {
                     this.state.isModalOpen &&
-                    <Modal onClose={this.toggleModal}
+                    <Modal className="imagesModal"
+                           onClose={this.toggleModal}
                            uploadHandler={this.fileSelectedHandler}
                            progress={this.state.progress}
                            fileInfo={this.state.fileInfo.file}
