@@ -9,7 +9,7 @@ class FontSettings extends Component {
     state = {
         fontName: this.context.style.header.top.family,
         fontsList: this.context.dataToExclude.fontsList,
-        fontId: this.context.dataToExclude.fontId,
+        fontIds: this.context.dataToExclude.fontIds,
         base64EncodedValue: ''
     };
 
@@ -41,7 +41,7 @@ class FontSettings extends Component {
                 if (item.id === parseInt(dataid)) {
                     obj['base64EncodedValue'] = '';
                     obj['fontName'] = item.name;
-                    obj['fontId'] = item.id;
+                    obj['fontIds'] = !item.webSafe ? [item.id] : [];
                     if (!item.webSafe) {
                         this.getFontById(item.id);
                     }
@@ -49,7 +49,7 @@ class FontSettings extends Component {
                 return obj;
             }, {});
             currentState.fontName = fontColection.fontName;
-            currentState.fontId = fontColection.fontId;
+            currentState.fontIds = fontColection.fontIds;
             this.setState(currentState);
             const span = e.currentTarget.nextSibling.children[0];
             span.innerText = e.currentTarget.options[e.currentTarget.selectedIndex].value;
@@ -72,7 +72,7 @@ class FontSettings extends Component {
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         return (this.state.fontName !== nextState.fontName) ||
             (this.state.fontsList !== nextState.fontsList) ||
-            (this.state.fontId !== nextState.fontId) ||
+            (this.state.fontIds !== nextState.fontIds) ||
             (this.state.base64EncodedValue !== nextState.base64EncodedValue);
     }
 
