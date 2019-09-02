@@ -8,7 +8,7 @@ const INITIAL = {
     },
     background: {
         url: '',
-        color: Palette.PALE_GREY_THREE,
+        color: Palette.getColor('PALE_GREY_THREE'),
         type: ''
     }
 };

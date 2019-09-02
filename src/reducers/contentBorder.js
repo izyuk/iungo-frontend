@@ -2,7 +2,7 @@
 import Palette from '../static/styles/palette';
 
 const INITIAL = {
-    color: Palette.PALE_GREY_THREE,
+    color: Palette.getColor('PALE_GREY_THREE'),
     type: 'solid',
     thickness: 1,
     radius: 4
