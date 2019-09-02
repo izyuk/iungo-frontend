@@ -92,7 +92,7 @@ class CaptivePortalTemplates extends Component {
                                     <p>{item.name}</p>
                                     <img src={item.externalUrl} alt=""/>
                                     <Link onClick={() => this.addNewCPWithTemplate(item.id)} className={"addNewCPButton"}
-                                          to={`/captive-portals/${item.uuid}`}>Use Template</Link>
+                                          to={`/captive-portals/new`}>Use Template</Link>
                                 </div>
                             })
                         }

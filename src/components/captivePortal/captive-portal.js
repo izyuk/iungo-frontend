@@ -181,8 +181,10 @@ class CaptivePortal extends Component {
                 const portalDataToSend = GetBuilderParams(rest);
                 this.context.loaderHandler(true);
                 let data = await PublishPortalMethodHandler(portalDataToSend, localStorage.getItem('cpID'));
-                if (data.id) {
-                    localStorage.setItem('cpID', data.id)
+                if (data.id) { localStorage.setItem('cpID', data.id) }
+                if (data.uuid && window.location.pathname === '/captive-portals/new') {
+                    window.history.pushState(null, null, `/captive-portals/${data.uuid}`);
+                    localStorage.setItem('from', 'cp-list');
                 }
                 this.context.loaderHandler(false);
                 this.context.setNotification(data.publishedType, false, data.notification);

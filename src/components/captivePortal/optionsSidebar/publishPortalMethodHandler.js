@@ -15,6 +15,7 @@ export const PublishPortalMethodHandler = async (event, portalDataToSend, cpID) 
             await createPortal(token, portalDataToSend)
                 .then(res => {
                     collectData.id = res.data.id;
+                    collectData.uuid = res.data.uuid;
                     collectData.notification = true;
                     collectData.publishedType = 'created and published';
                 })
