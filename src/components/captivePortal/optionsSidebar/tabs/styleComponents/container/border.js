@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
-import CaptivePortalContext from "../../../../../../context/project-context";
+import Palette from '~/static/styles/palette';
+import CaptivePortalContext from "~/context/project-context";
 
 class ContentBorder extends Component {
     static contextType = CaptivePortalContext;
@@ -32,6 +33,7 @@ class ContentBorder extends Component {
             },
             hex: color.hex
         };
+        Palette.addUserColor(color.hex);
         this.setState(currentState);
         const {displayColorPicker, ...rest} = this.state;
         this.context.setBorderStyle(rest);
@@ -141,7 +143,10 @@ class ContentBorder extends Component {
                                         onClick={this.handleClick} data-cy="borderColor"></button>
                                 {this.state.displayColorPicker ? <div style={popover}>
                                     <div style={cover} onClick={this.handleClose}/>
-                                    <SketchPicker color={this.state.color.rgba} onChange={this.handleChange}/>
+                                    <SketchPicker color={this.state.color.rgba}
+                                                  onChange={this.handleChange}
+                                                  presetColors={Palette.getUserColors()}
+                                    />
                                 </div> : null}
                             </div>
                         </div>

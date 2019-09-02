@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
+import Palette from '~/static/styles/palette';
 import Tooltip from 'rc-tooltip';
 import Slider from 'rc-slider';
-import CaptivePortalContext from "../../../../../../context/project-context";
+import CaptivePortalContext from "~/context/project-context";
 
 const style = {
     marginRight: 16,
@@ -105,6 +106,7 @@ class AgreementButton extends Component {
         const currentState = this.state;
         currentState.acceptButtonFont.color.rgba = color.rgb;
         currentState.acceptButtonFont.color.hex = color.hex;
+        Palette.addUserColor(color.hex);
         this.setState(currentState);
         const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, fontInputData, ...rest} = currentState;
         this.context.setButtonStyles(rest);
@@ -122,6 +124,7 @@ class AgreementButton extends Component {
         const currentState = this.state;
         currentState.acceptButtonColor.rgba = color.rgb;
         currentState.acceptButtonColor.hex = color.hex;
+        Palette.addUserColor(color.hex);
         this.setState(currentState);
         const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, fontInputData, ...rest} = currentState;
         this.context.setButtonStyles(rest);
@@ -139,6 +142,7 @@ class AgreementButton extends Component {
         const currentState = this.state;
         currentState.acceptButtonBorder.color.rgba = color.rgb;
         currentState.acceptButtonBorder.color.hex = color.hex;
+        Palette.addUserColor(color.hex);
         this.setState(currentState);
         const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, fontInputData, ...rest} = currentState;
         this.context.setButtonStyles(rest);
@@ -378,7 +382,9 @@ class AgreementButton extends Component {
                                         <div style={popover}>
                                             <div style={cover} onClick={this.handleTextColorClose}/>
                                             <SketchPicker color={acceptButtonFont.color.rgba}
-                                                          onChange={this.handleTextColorChange}/>
+                                                          onChange={this.handleTextColorChange}
+                                                          presetColors={Palette.getUserColors()}
+                                            />
                                         </div>
                                         : null
                                 }
@@ -409,7 +415,9 @@ class AgreementButton extends Component {
                                         <div style={popover}>
                                             <div style={cover} onClick={this.handleBackgroundColorClose}/>
                                             <SketchPicker color={acceptButtonColor.rgba}
-                                                          onChange={this.handleBackgroundColorChange}/>
+                                                          onChange={this.handleBackgroundColorChange}
+                                                          presetColors={Palette.getUserColors()}
+                                            />
                                         </div>
                                         : null
                                 }
@@ -463,7 +471,9 @@ class AgreementButton extends Component {
                                         <div style={popover}>
                                             <div style={cover} onClick={this.handleBorderColorClose}/>
                                             <SketchPicker color={acceptButtonBorder.color.rgba}
-                                                          onChange={this.handleBorderColorChange}/>
+                                                          onChange={this.handleBorderColorChange}
+                                                          presetColors={Palette.getUserColors()}
+                                            />
                                         </div>
                                         : null
                                 }
