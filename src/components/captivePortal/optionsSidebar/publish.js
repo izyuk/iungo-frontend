@@ -71,8 +71,10 @@ class Publish extends Component {
             const portalDataToSend = GetBuilderParams(rest);
             const data = await PublishPortalMethodHandler(e, portalDataToSend, this.state.id === null ? localStorage.getItem('cpID') : this.state.id);
             this.setState(data);
-            if (data.id) {
-                localStorage.setItem('cpID', data.id);
+            if (data.id) { localStorage.setItem('cpID', data.id); }
+            if (data.uuid && window.location.pathname === '/captive-portals/new') {
+                window.history.pushState(null, null, `/captive-portals/${data.uuid}`);
+                localStorage.setItem('from', 'cp-list');
             }
             this.context.loaderHandler(false);
             this.context.setNotification(data.publishedType, false, data.notification);
