@@ -3,20 +3,47 @@ import Notification from "../additional/notification";
 import {exportHotspotUsersCSV, getHotspotUsers} from "../../api/API";
 import {dateISO} from '../../modules/dateISO';
 import {withRouter} from "react-router-dom";
+import {AgGridReact} from "ag-grid-react";
 
 class People extends Component {
     state = {
-        usersList: [],
+        rowData: [],
         UUIDChecker: false,
-        notificationText: 'Nothing to export'
+        notificationText: 'Nothing to export',
+        filterText: '',
+        gridOptions: {
+            defaultColDef: {
+                resizable: true,
+                sortable: true
+            },
+            columnDefs: [{
+                headerName: "Email Address",
+                field: "email",
+                filter: "agTextColumnFilter",
+            }, {
+                headerName: "First Seen",
+                valueFormatter: (data) => dateISO(data.value),
+                field: "firstVisit"
+            }, {
+                headerName: "Last Seen",
+                field: "latestVisit",
+                valueFormatter: (data) => dateISO(data.value),
+                sort: 'desc'
+            }, {
+                headerName: "Visits",
+                field: "totalVisit",
+                valueFormatter: (data) => dateISO(data.value)
+            }]
+        }
     };
     token = localStorage.getItem('token');
 
-    componentDidMount(){
+    componentDidMount() {
         if (this.props.match.params.uuid) {
             this.getUserList(this.props.match.params.uuid);
         }
     }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.match.params.uuid !== this.props.match.params.uuid) {
             this.getUserList(nextProps.match.params.uuid);
@@ -25,13 +52,15 @@ class People extends Component {
 
     getUserList = async (uuid) => {
         const query = getHotspotUsers(this.token, uuid);
+        let rows = [];
         await query.then(res => {
             const {data} = res;
-            this.setState({
-                usersList: data
-            })
+            rows = data;
         });
-    }
+        this.setState({
+            rowData: rows
+        })
+    };
 
     exportCSV = async () => {
         const uuid = this.props.match.params.uuid;
@@ -75,58 +104,66 @@ class People extends Component {
                 this.setState({UUIDChecker: false});
             }, 2000)
         }
+    };
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return (this.state.rowData !== nextState.rowData);
+    }
+
+    onFirstDataRendered(params) {
+        this.gridApi = params.api;
+        this.gridColumnApi = params.columnApi;
+        params.api.sizeColumnsToFit();
+    }
+
+    onFilterTextBoxChanged = (event) => {
+        this.setState({filterText: event.target.value});
+        this.gridApi.setQuickFilter(event.target.value);
     };
 
     render() {
-        const { usersList } = this.state;
+        console.log(this.state.rowData);
         return (
-            <div>
-                <table className={"peopleTable"} rules="rows">
-                    <thead>
-                    <tr>
-                        {/*<th><input type="checkbox"/></th>*/}
-                        <th>Email Address</th>
-                        <th>First Seen</th>
-                        <th>Last Seen</th>
-                        <th>Visits</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        (usersList && usersList.length) ? usersList.map((item, i) => {
-                            return (
-                                <tr key={i}>
-                                    {/*<td><input type="checkbox"/></td>*/}
-                                    <td>{item.email}</td>
-                                    <td>{dateISO(item.firstVisit)}</td>
-                                    <td>{dateISO(item.latestVisit)}</td>
-                                    <td>{item.totalVisit}</td>
-                                </tr>
-                            )
-                        }) : <tr>
-                            <td colSpan='4'>Nothing to show</td>
-                        </tr>
-                    }
-                    </tbody>
-                    {this.state.UUIDChecker && <Notification type={'info'} text={this.state.notificationText}/>}
-                </table>
-            </div>
+            <React.Fragment>
+                <div className="contentWrapWithTopBorder">
+                    <div
+                        className="ag-theme-material"
+                        style={{
+                            width: '100%',
+                            height: 'calc(100% - 70px)'
+                        }}>
+                        <div className={'filterRow'}>
+                            Filter:
+                            <div>
+                                <input type="text" placeholder="Filter..." value={this.state.filterText}
+                                       onChange={this.onFilterTextBoxChanged} autoFocus/>
+                            </div>
+                        </div>
+                        <AgGridReact
+                            gridOptions={this.state.gridOptions}
+                            rowData={this.state.rowData}
+                            onFirstDataRendered={this.onFirstDataRendered.bind(this)}
+                        >
+                        </AgGridReact>
+                        {this.state.UUIDChecker && <Notification type={'info'} text={this.state.notificationText}/>}
+                    </div>
+                </div>
+            </React.Fragment>
         )
     }
 }
 
-// export default People;
 const withRouterAndRef = (WrappedComponent) => {
-    class InnerComponentWithRef extends React.Component {    
+    class InnerComponentWithRef extends React.Component {
         render() {
-            const { forwardRef, ...rest } = this.props;
-            return <WrappedComponent {...rest} ref={forwardRef} />;
+            const {forwardRef, ...rest} = this.props;
+            return <WrappedComponent {...rest} ref={forwardRef}/>;
         }
     }
-    const ComponentWithRouter = withRouter(InnerComponentWithRef, { withRef: true });
+
+    const ComponentWithRouter = withRouter(InnerComponentWithRef, {withRef: true});
     return React.forwardRef((props, ref) => {
-        return <ComponentWithRouter {...props} forwardRef={ref} />;
+        return <ComponentWithRouter {...props} forwardRef={ref}/>;
     });
-}
+};
 export default withRouterAndRef(People);
