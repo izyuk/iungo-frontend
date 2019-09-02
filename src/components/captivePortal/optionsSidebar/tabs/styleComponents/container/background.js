@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
+import Palette from '~/static/styles/palette';
 import Tooltip from 'rc-tooltip';
 import Slider from 'rc-slider';
-import CaptivePortalContext from "../../../../../../context/project-context";
+import CaptivePortalContext from "~/context/project-context";
 
 const style = {
     marginRight: 16,
@@ -58,6 +59,7 @@ class ContentBackground extends Component {
             },
             hex: color.hex
         };
+        Palette.addUserColor(color.hex);
         this.setState(currentState);
         let {displayColorPicker, ...rest} = this.state;
         this.context.setBackgroundStyle(rest)
@@ -125,7 +127,10 @@ class ContentBackground extends Component {
                                         data-cy="containerBackground"></button>
                                 {this.state.displayColorPicker ? <div style={popover}>
                                     <div style={cover} onClick={this.handleClose}/>
-                                    <SketchPicker color={this.state.color.rgba} onChange={this.handleChange}/>
+                                    <SketchPicker color={this.state.color.rgba}
+                                                  onChange={this.handleChange}
+                                                  presetColors={Palette.getUserColors()}
+                                    />
                                 </div> : null}
                             </div>
                         </div>

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import CaptivePortalContext from "../../../../../../context/project-context";
+import CaptivePortalContext from "~/context/project-context";
 import Slider from "rc-slider";
 import {SketchPicker} from "react-color";
+import Palette from '~/static/styles/palette';
 import Tooltip from 'rc-tooltip';
 import {Link} from "react-router-dom";
 
@@ -137,6 +138,7 @@ class GDPR extends Component {
         const currentState = this.state;
         currentState.color.rgba = color.rgb;
         currentState.color.hex = color.hex;
+        Palette.addUserColor(color.hex);
         this.setState(currentState);
         const {displayColorPicker, fontInputData, settingsCollection, ...rest} = currentState;
         this.context.setGDPRSettings(rest);
@@ -279,7 +281,9 @@ class GDPR extends Component {
                                             <div style={popover}>
                                                 <div style={cover} onClick={this.handleClose}/>
                                                 <SketchPicker color={this.state.color.rgba}
-                                                              onChange={this.handleChange}/>
+                                                              onChange={this.handleChange}
+                                                              presetColors={Palette.getUserColors()}
+                                                />
                                             </div>
                                             : null
                                     }

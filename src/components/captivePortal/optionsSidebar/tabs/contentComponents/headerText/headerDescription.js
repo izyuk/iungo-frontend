@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
+import Palette from '~/static/styles/palette';
 import {connect} from 'react-redux';
 import Tooltip from 'rc-tooltip';
 import Slider from "rc-slider";
-import CaptivePortalContext from "../../../../../../context/project-context";
+import CaptivePortalContext from "~/context/project-context";
 
 const style = {
     marginRight: 16,
@@ -96,6 +97,7 @@ class HeaderDescription extends Component {
         const currentState = this.state;
         currentState.color.rgba = color.rgb;
         currentState.color.hex = color.hex;
+        Palette.addUserColor(color.hex);
         this.setState(currentState);
         const {displayColorPicker, fontInputData, text, ...rest} = this.state;
         this.context.setHeaderDescriptionData(text, {color: this.state.color, ...rest});
@@ -266,7 +268,10 @@ class HeaderDescription extends Component {
                                         onClick={this.handleClick} data-cy="headerDescriptionColor"></button>
                                 {this.state.displayColorPicker ? <div style={popover}>
                                     <div style={cover} onClick={this.handleClose}/>
-                                    <SketchPicker color={this.state.color.rgba} onChange={this.handleChange}/>
+                                    <SketchPicker color={this.state.color.rgba}
+                                                  onChange={this.handleChange}
+                                                  presetColors={Palette.getUserColors()}
+                                    />
                                 </div> : null}
                             </div>
                         </div>

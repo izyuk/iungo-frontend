@@ -94,5 +94,15 @@ module.exports = {
                 collapseWhitespace: true
             }
         })
-    ]
+    ],
+    resolve: {
+        extensions: ['.js'],
+        modules: [
+          'node_modules', 
+          path.resolve(__dirname + '/src')
+        ],
+        alias: {
+          ['~']: path.resolve(__dirname + '/src')
+        }
+    }
 };

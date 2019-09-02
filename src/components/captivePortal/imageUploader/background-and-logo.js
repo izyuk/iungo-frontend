@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {SketchPicker} from 'react-color';
-import {getAllImages} from '../../../api/API';
+import Palette from '~/static/styles/palette';
+import {getAllImages} from '~/api/API';
 
 import Modal from '../../additional/modal';
 import axios from "axios";
-import CaptivePortalContext from "../../../context/project-context";
+import CaptivePortalContext from "~/context/project-context";
 import Repeating from "./backgroundStylingComponents/repeating";
 import Position from "./backgroundStylingComponents/position";
 import Size from "./backgroundStylingComponents/size";
@@ -267,6 +268,7 @@ class BackgroundAndLogo extends Component {
             },
             hex: color.hex
         };
+        Palette.addUserColor(color.hex);
         this.state.backgroundColor = true;
         this.context.setBackground(this.state.background, this.state.color, 'COLOR');
     };
@@ -406,7 +408,10 @@ class BackgroundAndLogo extends Component {
                                                 data-cy="openColorPicker"></button>
                                         {this.state.displayColorPicker ? <div style={popover}>
                                             <div style={cover} onClick={this.handleClose}/>
-                                            <SketchPicker color={background.color.rgba} onChange={this.handleChange}/>
+                                            <SketchPicker color={background.color.rgba}
+                                                          onChange={this.handleChange}
+                                                          presetColors={Palette.getUserColors()}
+                                            />
                                         </div> : null}
                                     </div>
                                 </div>
