@@ -245,19 +245,33 @@ context('Style tab', function () {
             });
         });
 
-        it('Checking workability of all alignment options', () => {
-            cy.get('[for=left]')
+        it('Checking workability of all horizontal alignment options', () => {
+            cy.get('[data-cy="logoHorizontalAlignment_Left"]')
                 .click({force: true});
-            cy.get('[for=center]')
+            cy.get('[data-cy="logoHorizontalAlignment_Center"]')
                 .click({force: true});
-            cy.get('[for=right]')
+            cy.get('[data-cy="logoHorizontalAlignment_Right"]')
                 .click({force: true});
         });
 
-        it('Choosing alignment which wee need', () => {
-            cy.get('[for=center]')
+        it('Choosing horizontal alignment which wee need', () => {
+            cy.get('[data-cy="logoHorizontalAlignment_Center"]')
                 .click({force: true});
-        })
+        });
+
+        it('Checking workability of all vertical alignment options', () => {
+            cy.get('[data-cy="logoVerticalAlignment_Top"]')
+                .click({force: true});
+            cy.get('[data-cy="logoVerticalAlignment_Middle"]')
+                .click({force: true});
+            cy.get('[data-cy="logoVerticalAlignment_Bottom"]')
+                .click({force: true});
+        });
+
+        it('Choosing vertical alignment which wee need', () => {
+            cy.get('[data-cy="logoVerticalAlignment_Middle"]')
+                .click({force: true});
+        });
     });
 
 
@@ -282,17 +296,31 @@ context('Style tab', function () {
             });
         });
 
-        it('Checking workability of all alignment options', () => {
-            cy.get('[for=left]')
+        it('Checking workability of all horizontal alignment options', () => {
+            cy.get('[data-cy="logoHorizontalAlignment_Left"]')
                 .click({force: true});
-            cy.get('[for=center]')
+            cy.get('[data-cy="logoHorizontalAlignment_Center"]')
                 .click({force: true});
-            cy.get('[for=right]')
+            cy.get('[data-cy="logoHorizontalAlignment_Right"]')
                 .click({force: true});
         });
 
-        it('Choosing alignment which wee need', () => {
-            cy.get('[for=right]')
+        it('Choosing horizontal alignment which wee need', () => {
+            cy.get('[data-cy="logoHorizontalAlignment_Right"]')
+                .click({force: true});
+        });
+
+        it('Checking workability of all vertical alignment options', () => {
+            cy.get('[data-cy="logoVerticalAlignment_Top"]')
+                .click({force: true});
+            cy.get('[data-cy="logoVerticalAlignment_Middle"]')
+                .click({force: true});
+            cy.get('[data-cy="logoVerticalAlignment_Bottom"]')
+                .click({force: true});
+        });
+
+        it('Choosing vertical alignment which wee need', () => {
+            cy.get('[data-cy="logoVerticalAlignment_Top"]')
                 .click({force: true});
         });
 
@@ -317,6 +345,21 @@ context('Style tab', function () {
         it('Background', () => {
             fillColorHEXWithOpacity('[data-cy="containerBackground"', '5c4040', '0');
         });
+
+        it('Checking workability of all vertical alignment options', () => {
+            cy.get('[data-cy="containerVerticalAlignment_Top"]')
+                .click({force: true});
+            cy.get('[data-cy="containerVerticalAlignment_Middle"]')
+                .click({force: true});
+            cy.get('[data-cy="containerVerticalAlignment_Bottom"]')
+                .click({force: true});
+        });
+
+        it('Choosing vertical alignment which wee need', () => {
+            cy.get('[data-cy="containerVerticalAlignment_Middle"]')
+                .click({force: true});
+        });
+
         it('Size', () => {
             fillingFields('[data-cy="containerWidth"]', 1920);
         });
@@ -343,6 +386,20 @@ context('Style tab', function () {
         });
         it('Size', () => {
             fillingFields('[data-cy="containerWidth"]', 320);
+        });
+
+        it('Checking workability of all vertical alignment options', () => {
+            cy.get('[data-cy="containerVerticalAlignment_Top"]')
+                .click({force: true});
+            cy.get('[data-cy="containerVerticalAlignment_Middle"]')
+                .click({force: true});
+            cy.get('[data-cy="containerVerticalAlignment_Bottom"]')
+                .click({force: true});
+        });
+
+        it('Choosing vertical alignment which wee need', () => {
+            cy.get('[data-cy="containerVerticalAlignment_Top"]')
+                .click({force: true});
         });
 
         it('Switch device type to desktop', () => {
@@ -858,7 +915,7 @@ context('Starting comparing collected data', function () {
                                 mobileLogo: {
                                     url: loadedDataForExpectedStore.mobileLogoUrl,
                                     horizontalPosition: 'flex-end',
-                                    verticalPosition: 'middle'
+                                    verticalPosition: 'top'
                                 }
                             },
                             desktop_container: {
@@ -896,7 +953,7 @@ context('Starting comparing collected data', function () {
                                     padding: 20
                                 },
                                 position: {
-                                    vertical: 'middle'
+                                    vertical: 'top'
                                 },
                             },
                             accept_button_font: {

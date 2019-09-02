@@ -442,7 +442,7 @@ class BackgroundAndLogo extends Component {
                             </div>
                             <div className="right">
                                 <div className="innerCol">
-                                    <label htmlFor="left">Left
+                                    <label htmlFor="left" data-cy="logoHorizontalAlignment_Left">Left
                                         <div className="inputRadioWrap">
                                             <input onChange={this.horizontalAlignment} id='left' datatype={'flex-start'}
                                                    type="radio"
@@ -450,7 +450,7 @@ class BackgroundAndLogo extends Component {
                                             <span className="radio"> </span>
                                         </div>
                                     </label>
-                                    <label htmlFor="center">Center
+                                    <label htmlFor="center" data-cy="logoHorizontalAlignment_Center">Center
                                         <div className="inputRadioWrap">
                                             <input onChange={this.horizontalAlignment} id='center' datatype={'center'}
                                                    type="radio"
@@ -458,7 +458,7 @@ class BackgroundAndLogo extends Component {
                                             <span className="radio"> </span>
                                         </div>
                                     </label>
-                                    <label htmlFor="right">Right
+                                    <label htmlFor="right" data-cy="logoHorizontalAlignment_Right">Right
                                         <div className="inputRadioWrap">
                                             <input onChange={this.horizontalAlignment} id='right' datatype={'flex-end'}
                                                    type="radio"
@@ -477,7 +477,7 @@ class BackgroundAndLogo extends Component {
                             </div>
                             <div className="right">
                                 <div className="innerCol">
-                                    <label htmlFor="top">Top
+                                    <label htmlFor="top" data-cy="logoVerticalAlignment_Top">Top
                                         <div className="inputRadioWrap">
                                             <input onChange={this.verticalAlignment} id='top' datatype='top'
                                                    type="radio"
@@ -485,7 +485,7 @@ class BackgroundAndLogo extends Component {
                                             <span className="radio"> </span>
                                         </div>
                                     </label>
-                                    <label htmlFor="middle">Middle
+                                    <label htmlFor="middle" data-cy="logoVerticalAlignment_Middle">Middle
                                         <div className="inputRadioWrap">
                                             <input onChange={this.verticalAlignment} id='middle' datatype='middle'
                                                    type="radio"
@@ -493,7 +493,7 @@ class BackgroundAndLogo extends Component {
                                             <span className="radio"> </span>
                                         </div>
                                     </label>
-                                    <label htmlFor="bottom">Bottom
+                                    <label htmlFor="bottom" data-cy="logoVerticalAlignment_Bottom">Bottom
                                         <div className="inputRadioWrap">
                                             <input onChange={this.verticalAlignment} id='bottom' datatype='bottom'
                                                    type="radio"
