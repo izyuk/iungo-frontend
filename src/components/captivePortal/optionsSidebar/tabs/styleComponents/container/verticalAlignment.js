@@ -49,7 +49,7 @@ class VerticalAlignment extends Component {
                     </div>
                     <div className="right">
                         <div className="innerCol">
-                            <label htmlFor="top">Top
+                            <label htmlFor="top" data-cy="containerVerticalAlignment_Top">Top
                                 <div className="inputRadioWrap">
                                     <input onChange={this.verticalAlignment} id='top' datatype='top'
                                            type="radio"
@@ -57,7 +57,7 @@ class VerticalAlignment extends Component {
                                     <span className="radio"> </span>
                                 </div>
                             </label>
-                            <label htmlFor="middle">Middle
+                            <label htmlFor="middle" data-cy="containerVerticalAlignment_Middle">Middle
                                 <div className="inputRadioWrap">
                                     <input onChange={this.verticalAlignment} id='middle' datatype='middle'
                                            type="radio"
@@ -65,7 +65,7 @@ class VerticalAlignment extends Component {
                                     <span className="radio"> </span>
                                 </div>
                             </label>
-                            <label htmlFor="bottom">Bottom
+                            <label htmlFor="bottom" data-cy="containerVerticalAlignment_Bottom">Bottom
                                 <div className="inputRadioWrap">
                                     <input onChange={this.verticalAlignment} id='bottom' datatype='bottom'
                                            type="radio"
