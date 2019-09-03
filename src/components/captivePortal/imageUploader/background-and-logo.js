@@ -3,14 +3,14 @@ import {SketchPicker} from 'react-color';
 import Palette from '~/static/styles/palette';
 import {getAllImages} from '~/api/API';
 
-import Modal from '../../additional/modal';
+import Modal from '~/components/additional/modal';
 import axios from "axios";
 import CaptivePortalContext from "~/context/project-context";
 import Repeating from "./backgroundStylingComponents/repeating";
 import Position from "./backgroundStylingComponents/position";
 import Size from "./backgroundStylingComponents/size";
 
-const BACKEND_API = 'https://backend.bravofy.com';
+const BACKEND_API = process.env.BACKEND_API;
 
 class BackgroundAndLogo extends Component {
 

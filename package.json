@@ -30,9 +30,9 @@
     "yup": "^0.27.0"
   },
   "scripts": {
-    "start": "webpack-dev-server --mode development --open ---hot",
-    "start-for-tests": "webpack-dev-server --mode development",
-    "build": "webpack --mode production",
+    "start": "webpack-dev-server --mode development --open ---hot --env.ENVIRONMENT=development",
+    "start-for-tests": "webpack-dev-server --mode development --env.ENVIRONMENT=development",
+    "build": "webpack --mode production --env.ENVIRONMENT=production",
     "cypress": "cypress open"
   },
   "devDependencies": {
@@ -51,6 +51,7 @@
     "css-loader": "^1.0.1",
     "cypress": "^3.4.1",
     "cypress-react-unit-test": "^2.4.1",
+    "dotenv": "^8.1.0",
     "file-loader": "^1.1.11",
     "font-loader": "^0.1.2",
     "gh-pages": "^1.2.0",
