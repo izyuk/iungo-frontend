@@ -80,6 +80,9 @@ class Preview extends Component {
             previewDeviceType,
         } = this.context;
         const logo = background_and_logo[`${previewDeviceType}Logo`] || background_and_logo.desktopLogo;
+
+        const language = this.context.dataToExclude.activeLocale || null;
+        const translation = this.context.translations[language] || {};
         return (
             <div className="previewWrap">
                 <div className={(this.context.previewDeviceType === 'mobile') ? "previewMain mobile" : "previewMain"}
@@ -96,17 +99,17 @@ class Preview extends Component {
                             {this.context.dataToExclude.successMessageStatus ?
                                 <div className="contentPlace" data-cy="successTextPreview">
                                     <p className="text">
-                                        {this.context.successMessage && this.context.successMessage}
+                                        {translation.successMessageText || this.context.successMessage}
                                     </p>
                                 </div>
                                 : <div className="contentPlace">
                                     <div className="textPlace">
                                         <p className="head" data-cy="headerTopTextPreview">
-                                            {this.context.header && this.context.header}
+                                            {translation.name || this.context.header}
                                         </p>
 
                                         <p className="description" data-cy="headerDescriptionTextPreview">
-                                            {this.context.description && this.context.description}
+                                            {translation.description || this.context.description}
                                         </p>
                                     </div>
                                     {gdprSettingsStatus ?
@@ -140,7 +143,7 @@ class Preview extends Component {
                     <div className="footer">
                         <div className="contentPlace">
                             <p className="text" ref={this.FooterText} data-cy="footerTextPreview">
-                                {this.context.footer && this.context.footer}
+                                {translation.footer || this.context.footer}
                             </p>
                         </div>
                     </div>

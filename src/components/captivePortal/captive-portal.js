@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 
 import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
-import {getPortal, getPortalByUUID, getPublicFonts, getTemplate, getTermsAndConditionsParams} from "../../api/API";
-import Loader from "../../loader";
+import {getPortal, getPortalByUUID, getPublicFonts, getTemplate, getTermsAndConditionsParams, getAllLocale, getDefaultLocale} from "~/api/API";
+import Loader from "~/loader";
 
 import {GetBuilderParams} from "./optionsSidebar/getBuilderParams";
 import {PublishPortalMethodHandler} from "./optionsSidebar/publishPortalMethodHandler";
 import Notification from "../additional/notification";
 
-import CaptivePortalContext from '../../context/project-context';
+import CaptivePortalContext from '~/context/project-context';
 
 
 class CaptivePortal extends Component {
@@ -32,15 +32,24 @@ class CaptivePortal extends Component {
 
 
     findPortal = async (str) => {
+        if (!!!str) { str = localStorage.getItem('token'); }
+        let defaultLocale = null, localeData = {};
+        await getDefaultLocale(str).then(res => {
+            defaultLocale = res.data.language;
+            this.context.setActiveLocale(defaultLocale);
+        });
+        await getAllLocale(str).then(res => {
+            localeData = {};
+            res.data.map(locale => {
+                localeData[locale.language] = locale;
+            });
+        });
         const uuid = this.props.match.params.uuid;
         const from = localStorage.getItem('from');
         if(uuid === 'new' && from === 'templates'){
             localStorage.removeItem('cpID');
         }
         let id = localStorage.getItem('cpID') || localStorage.getItem('templateID');
-        if (!!!str) {
-            str = localStorage.getItem('token');
-        }
         if (!!id || (!!uuid && uuid !== 'new')) {
             let query = !!id ? (from === 'templates' ? getTemplate(str, id) : getPortal(str, id)) : getPortalByUUID(str, uuid);
             this.context.loaderHandler(true);
@@ -146,13 +155,14 @@ class CaptivePortal extends Component {
                         HEAD.appendChild(style);
                     }
                 }
+                this.context.setLocaleData(localeData, Boolean(from === 'templates'));
                 this.context.addPortalName(data.name);
             })
             .catch(err => console.error(err));
             this.context.loaderHandler(false);
         } else {
             this.context.loaderHandler(true);
-            this.context.resetGlobalState();
+            this.context.resetGlobalState(localeData);
             this.context.loaderHandler(false);
         }
     };

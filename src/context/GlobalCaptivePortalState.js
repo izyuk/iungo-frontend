@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import CaptivePortalContext from './project-context';
-import Palette from '../static/styles/palette';
+import Palette from '~/static/styles/palette';
 
 class GlobalCaptivePortalState extends Component {
 
@@ -188,6 +188,7 @@ class GlobalCaptivePortalState extends Component {
         acceptTermsLogin: false,
         successRedirectUrl: '',
         acceptButtonText: 'Connect',
+        translations: {},
         dataToExclude: {
             successMessageStatus: false,
             gdprSettingsStatus: false,
@@ -207,7 +208,10 @@ class GlobalCaptivePortalState extends Component {
             stylesArray: '',
             token: '',
             urlPath: '',
-            gdprFromBE: ''
+            gdprFromBE: '',
+            localeData: {},
+            locales: [],
+            activeLocale: null,
         },
 
         previewDeviceType: 'desktop',
@@ -482,7 +486,9 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState);
     };
 
-    resetGlobalState = async () => {
+    resetGlobalState = async (localeData = {}) => {
+        const activeLocale =  this.state.dataToExclude.activeLocale;
+        const portalData = (localeData[activeLocale] && localeData[activeLocale].portalData) || null;
         const data = {
             background: '',
             name: '',
@@ -491,10 +497,10 @@ class GlobalCaptivePortalState extends Component {
             mobileLogoId: '',
             desktopBackgroundId: '',
             mobileBackgroundId: '',
-            header: 'Company name',
-            description: 'Venue description',
-            footer: 'Footer content',
-            successMessage: 'Default success message',
+            header: portalData ? portalData.name : 'Company name',
+            description: portalData ? portalData.description : 'Venue description',
+            footer: portalData ? portalData.footer : 'Footer content',
+            successMessage: portalData ? portalData.successMessageText : 'Default success message',
             style: {
                 header: {
                     top: {
@@ -666,7 +672,8 @@ class GlobalCaptivePortalState extends Component {
             phoneLogin: false,
             acceptTermsLogin: false,
             successRedirectUrl: '',
-            acceptButtonText: 'Connect',
+            acceptButtonText: portalData ? portalData.connectButtonText : 'Connect',
+            translations: {},
             dataToExclude: {
                 successMessageStatus: false,
                 gdprSettingsStatus: false,
@@ -686,7 +693,9 @@ class GlobalCaptivePortalState extends Component {
                 stylesArray: '',
                 token: '',
                 urlPath: '',
-                gdprFromBE: ''
+                gdprFromBE: '',
+                localeData,
+                activeLocale,
             }
         };
         await this.loaderHandler(true);
@@ -739,6 +748,7 @@ class GlobalCaptivePortalState extends Component {
         await this.setFontData({fontName: data.dataToExclude.fontName, fontIds: data.fontIds});
 
         await this.setFontBase64(data.dataToExclude.base64EncodedValue);
+        await this.setLocaleData(data.dataToExclude.localeData, true);
         await this.loaderHandler(false);
     };
 
@@ -956,6 +966,45 @@ class GlobalCaptivePortalState extends Component {
         currentState.dataToExclude.base64EncodedValue = base64EncodedValue;
         this.setState(currentState);
     };
+    setLocaleData = (localeData, setDefaultContentData) => {
+        const currentState = this.state;
+        currentState.dataToExclude.localeData = localeData;
+        const activeLocale = currentState.dataToExclude.activeLocale;
+        const portalData = (localeData && localeData[activeLocale] && localeData[activeLocale].portalData) || null;
+        if (setDefaultContentData && portalData){
+            this.setTranslations(activeLocale, portalData);
+        }
+        currentState.dataToExclude.locales = [];
+        for (let locale in localeData) {
+            currentState.dataToExclude.locales.push(locale);
+        }
+        this.setState(currentState);
+    }
+
+    setTranslations = (locale, translations = {}) => {
+        const currentState = this.state;
+        const currentTranslation = currentState.translations[locale] || {};
+        const defaultTranslation = currentState.dataToExclude.localeData[locale] || {};
+        currentState.translations[locale] = {
+            name: translations.name || currentTranslation.name || defaultTranslation.name || 'Company name',
+            description: translations.description || currentTranslation.description || defaultTranslation.description || 'Venue description',
+            footer: translations.footer || currentTranslation.footer || defaultTranslation.footer || 'Footer content',
+            successMessageText: translations.successMessageText || currentTranslation.successMessageText || defaultTranslation.successMessageText || 'Default success message',
+            connectButtonText: translations.connectButtonText || currentTranslation.connectButtonText || defaultTranslation.connectButtonText || 'Connect',
+        };
+        this.setState(currentState);
+    }
+
+    setActiveLocale = (activeLocale) => {
+        const currentState = this.state;
+        currentState.dataToExclude.activeLocale = activeLocale;
+        this.setState(currentState);
+        if (!currentState.translations[activeLocale]) {
+            const localeData = currentState.dataToExclude.localeData;
+            const portalData = (localeData && localeData[activeLocale] && localeData[activeLocale].portalData) || {};
+            this.setTranslations(activeLocale, portalData);
+        }
+    }
 
     setPreviewDeviceType = (deviceType) => {
         this.setState({previewDeviceType: deviceType});
@@ -1047,6 +1096,10 @@ class GlobalCaptivePortalState extends Component {
             setFontsCollection: this.setFontsCollection,
             setFontData: this.setFontData,
             setFontBase64: this.setFontBase64,
+            translations: this.state.translations,
+            setLocaleData: this.setLocaleData,
+            setActiveLocale: this.setActiveLocale,
+            setTranslations: this.setTranslations,
             previewDeviceType: this.state.previewDeviceType,
             mobileSettingsTouched: this.state.mobileSettingsTouched,
             setPreviewDeviceType: this.setPreviewDeviceType,

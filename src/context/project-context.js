@@ -1,5 +1,5 @@
 import React from 'react';
-import Palette from '../static/styles/palette';
+import Palette from '~/static/styles/palette';
 
 export default React.createContext({
     background: '',
@@ -183,6 +183,7 @@ export default React.createContext({
     termAndConditionId: '',
     fontIds: [],
     acceptButtonText: 'Connect',
+    translations: {},
     addPortalName: () => {},
     setBackground: () => {},
     setBackgroundRepeating: () => {},
@@ -225,7 +226,10 @@ export default React.createContext({
         styledElements: '',
         stylesArray: '',
         token: '',
-        urlPath: ''
+        urlPath: '',
+        localeData: {},
+        locales: [],
+        activeLocale: null,
     },
     loaderHandler: () => {},
     setSuccessMessageStatus: () => {},
@@ -241,6 +245,9 @@ export default React.createContext({
     setFontsCollection: () => {},
     setFontData: () => {},
     setFontBase64: () => {},
+    setLocaleData: () => {},
+    setActiveLocale: () => {},
+    setTranslations: () => {},
 
     previewDeviceType: 'desktop',
     mobileSettingsTouched: [],
