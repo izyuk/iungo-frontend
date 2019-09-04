@@ -10,6 +10,8 @@ import Repeating from "./backgroundStylingComponents/repeating";
 import Position from "./backgroundStylingComponents/position";
 import Size from "./backgroundStylingComponents/size";
 
+import {EXIF} from 'exif-js';
+
 const BACKEND_API = process.env.BACKEND_API;
 
 class BackgroundAndLogo extends Component {
@@ -90,31 +92,66 @@ class BackgroundAndLogo extends Component {
 
     };
 
+    imgToBase64 = (img) => {
+        const reader = new FileReader();
+        var base64 = '';
+        reader.onloadend = function () {
+             return base64 = reader.result;
+        };
+        reader.readAsDataURL(img);
+        console.log(base64);
+        return base64;
+    };
+
+
+    getExif = async (data) => {
+
+        this.imgToBase64(data[0]);
+
+        // var img1 = document.getElementById("img1");
+        EXIF.getData(data, () => {
+            const make = EXIF.getTag(this, "Make");
+            const model = EXIF.getTag(this, "Model");
+            console.log(`${make} ${model}`);
+        });
+
+        // var img2 = document.getElementById("img2");
+        EXIF.getData(data, () => {
+            const allMetaData = EXIF.getAllTags(this);
+            const json = JSON.stringify(allMetaData, null, "\t");
+            console.log(json);
+        });
+    };
+
     fileSelectedHandler = async (files) => {
         this.state.backgroundColor = false;
         this.state.alignment = true;
+
         if ((files.type === "image/jpeg") ||
+            (files.type === "image/jpg") ||
             (files.type === "image/png") ||
             (files.type === "image/gif") ||
             (files.type === "image/svg+xml")) {
-            if (files.file.size < 5120000) {
-                this.setState({
-                    fileInfo: files
-                });
-                this.imageLoad(this.state.fileInfo.base64);
-                let img = document.createElement('img');
-                img.setAttribute('src', this.state.fileInfo.base64);
-                document.getElementsByTagName('BODY')[0].appendChild(img);
-                img.style.opacity = 0;
-                img.style.position = 'absolute';
-                img.style.top = 0;
-                img.style.left = 0;
-                img.style.zIndex = -100;
-                img.style.zoom = 0.1;
-                let query = this.uploadImage(localStorage.getItem('token'), this.state.fileInfo.name, this.state.fileInfo.base64, img);
-                await query.then(res => {
-                    this.getImages();
-                });
+            if (files.size < 5120000) {
+
+
+                // this.setState({
+                //     fileInfo: files
+                // });
+                // this.imageLoad(this.state.fileInfo.base64);
+                // const img = document.createElement('img');
+                // img.setAttribute('src', this.state.fileInfo.base64);
+                // document.getElementsByTagName('BODY')[0].appendChild(img);
+                // img.style.opacity = 0;
+                // img.style.position = 'absolute';
+                // img.style.top = 0;
+                // img.style.left = 0;
+                // img.style.zIndex = -100;
+                // img.style.zoom = 0.1;
+                // let query = this.uploadImage(localStorage.getItem('token'), this.state.fileInfo.name, this.state.fileInfo.base64, img);
+                // await query.then(res => {
+                //     this.getImages();
+                // });
             } else {
                 await this.context.setNotification('File shouldn`t be larger than 5.12 MB', true, true);
                 setTimeout(() => {
@@ -510,6 +547,7 @@ class BackgroundAndLogo extends Component {
                     <Modal className="imagesModal"
                            onClose={this.toggleModal}
                            uploadHandler={this.fileSelectedHandler}
+                           getExif={this.getExif}
                            progress={this.state.progress}
                            fileInfo={this.state.fileInfo.file}
                            applyOnUpload={this.applyOnUpload}
