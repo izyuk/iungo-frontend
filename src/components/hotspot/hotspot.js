@@ -9,7 +9,7 @@ export default class Hotspot extends Component {
                 <div className="wrap wrapFix2">
                     <div className="info">
                         <h3>Hotspots</h3>
-                        <Link className={"addNewCPButton"} to={`/hotspot/new`}>Create new hotspot</Link>
+                        <Link className={"addNewCPButton"} to={`/hotspot/new`} data-cy='addNewHotspot'>Create new hotspot</Link>
                     </div>
                     <HotspotDetails/>
                 </div>

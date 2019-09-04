@@ -21,7 +21,7 @@ class Sidebar extends Component {
     render() {
         return (
             <nav className={this.props.status ? 'sidebar opened' : 'sidebar'}>
-                <NavLink to="/captive-portals" activeClassName='active'>
+                <NavLink to="/captive-portals" activeClassName='active' data-cy='linkCP'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="#BFC5D2" fillRule="nonzero"
                               d="M16 4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-1 11H9v-2h6v2zm0-4H9V9h6v2z"/>
@@ -30,7 +30,7 @@ class Sidebar extends Component {
                         Captive Portals
                     </span>
                 </NavLink>
-                <NavLink to="/hotspot" activeClassName='active'>
+                <NavLink to="/hotspot" activeClassName='active' data-cy='linkHotspots'>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" enableBackground="new 0 0 26 26" width="512px" height="512px">
                         <g fill="#BFC5D2" fillRule="nonzero">
                             <path
@@ -46,7 +46,7 @@ class Sidebar extends Component {
                         Hotspots
                     </span>
                 </NavLink>
-                <NavLink to="/reports/" isActive={this.pageEvent} activeClassName='active'>
+                <NavLink to="/reports/" isActive={this.pageEvent} activeClassName='active' data-cy='linkReports'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <g fill="#BFC5D2" fillRule="nonzero">
                             <path
@@ -58,7 +58,7 @@ class Sidebar extends Component {
                         Reports
                     </span>
                 </NavLink>
-                <NavLink to="/settings/profile" activeClassName='active'>
+                <NavLink to="/settings/profile" activeClassName='active' data-cy='linkSettings'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <g fill="#BFC5D2" fillRule="nonzero">
                         <path d="M13.3,5.2 L14.4,3.1 L13,1.7 L10.9,2.8 C10.6,2.6 10.2,2.5 9.8,2.4 L9,0 L7,0 L6.2,2.3 C5.9,2.4 5.5,2.5 5.2,2.7 L3.1,1.6 L1.6,3.1 L2.7,5.2 C2.5,5.5 2.4,5.9 2.3,6.2 L0,7 L0,9 L2.3,9.8 C2.4,10.2 2.6,10.5 2.7,10.9 L1.6,13 L3,14.4 L5.1,13.3 C5.4,13.5 5.8,13.6 6.2,13.7 L7,16 L9,16 L9.8,13.7 C10.2,13.6 10.5,13.4 10.9,13.3 L13,14.4 L14.4,13 L13.3,10.9 C13.5,10.6 13.6,10.2 13.7,9.8 L16,9 L16,7 L13.7,6.2 C13.6,5.9 13.5,5.5 13.3,5.2 Z M8,11 C6.3,11 5,9.7 5,8 C5,6.3 6.3,5 8,5 C9.7,5 11,6.3 11,8 C11,9.7 9.7,11 8,11 Z" id="Shape"></path>

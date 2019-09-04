@@ -92,7 +92,7 @@ class CaptivePortalList extends Component {
                     <div className="wrap wrapFix2">
                         <div className="info">
                             <h3>Captive Portals</h3>
-                            <Link className={"addNewCPButton"} to={`/captive-portals/templates`}>Get started</Link>
+                            <Link className={"addNewCPButton"} to={`/captive-portals/templates`} data-cy='addNewCP'>Get started</Link>
                         </div>
                         <div className="contentWrapWithTopBorder">
                             <div
