@@ -3,14 +3,14 @@ import {SketchPicker} from 'react-color';
 import Palette from '~/static/styles/palette';
 import {getAllImages} from '~/api/API';
 
-import Modal from '../../additional/modal';
+import Modal from '~/components/additional/modal';
 import axios from "axios";
 import CaptivePortalContext from "~/context/project-context";
 import Repeating from "./backgroundStylingComponents/repeating";
 import Position from "./backgroundStylingComponents/position";
 import Size from "./backgroundStylingComponents/size";
 
-const BACKEND_API = 'https://backend.bravofy.com';
+const BACKEND_API = process.env.BACKEND_API;
 
 class BackgroundAndLogo extends Component {
 
@@ -65,7 +65,7 @@ class BackgroundAndLogo extends Component {
         }
     };
 
-    uploadImage = (string, name, base64) => {
+    uploadImage = (string, name, base64, data) => {
         return axios({
             method: 'post',
             headers: {
@@ -75,7 +75,7 @@ class BackgroundAndLogo extends Component {
             },
             url: `${BACKEND_API}/image`,
             mode: 'no-cors',
-            data: {"name": name, "base64Content": base64},
+            data: {"name": name, "base64Content": base64, "width": data.clientWidth, "height": data.clientHeight},
             onUploadProgress: progressEvent => {
                 this.setState({
                     progress: Math.round(progressEvent.loaded / progressEvent.total * 100)
@@ -93,7 +93,6 @@ class BackgroundAndLogo extends Component {
     fileSelectedHandler = async (files) => {
         this.state.backgroundColor = false;
         this.state.alignment = true;
-        console.log(files);
         if ((files.type === "image/jpeg") ||
             (files.type === "image/png") ||
             (files.type === "image/gif") ||
@@ -103,7 +102,6 @@ class BackgroundAndLogo extends Component {
                     fileInfo: files
                 });
                 this.imageLoad(this.state.fileInfo.base64);
-                console.log(files);
                 let img = document.createElement('img');
                 img.setAttribute('src', this.state.fileInfo.base64);
                 document.getElementsByTagName('BODY')[0].appendChild(img);
@@ -113,7 +111,7 @@ class BackgroundAndLogo extends Component {
                 img.style.left = 0;
                 img.style.zIndex = -100;
                 img.style.zoom = 0.1;
-                let query = this.uploadImage(localStorage.getItem('token'), this.state.fileInfo.name, this.state.fileInfo.base64);
+                let query = this.uploadImage(localStorage.getItem('token'), this.state.fileInfo.name, this.state.fileInfo.base64, img);
                 await query.then(res => {
                     this.getImages();
                 });
@@ -254,7 +252,7 @@ class BackgroundAndLogo extends Component {
     verticalAlignment = (e) => {
         const logoVerticalPosition = e.target.getAttribute('datatype');
         this.context.setLogo(this.state.logo, this.state.logoHorizontalPosition, logoVerticalPosition);
-        this.setState({ logoVerticalPosition })
+        this.setState({logoVerticalPosition})
     };
 
     handleChange = (color) => {
@@ -304,7 +302,7 @@ class BackgroundAndLogo extends Component {
     updateLogo(nextContext) {
         if (this.props.type === 'logo') {
             const context = nextContext || this.context;
-            const {style: { background_and_logo }, previewDeviceType} = context;
+            const {style: {background_and_logo}, previewDeviceType} = context;
             const logo = background_and_logo[`${previewDeviceType}Logo`];
             const {horizontalPosition, verticalPosition} = logo;
             this.setState({
@@ -319,7 +317,7 @@ class BackgroundAndLogo extends Component {
     updateBackground(nextContext) {
         if (this.props.type === "background") {
             const context = nextContext || this.context;
-            const {style: { background_and_logo }, previewDeviceType} = context;
+            const {style: {background_and_logo}, previewDeviceType} = context;
             const background = background_and_logo[`${previewDeviceType}Background`];
             if (background) {
                 let currentState = this.state;
@@ -350,7 +348,7 @@ class BackgroundAndLogo extends Component {
             left: '0px',
         };
 
-        const {style: { background_and_logo }, previewDeviceType} = this.context;
+        const {style: {background_and_logo}, previewDeviceType} = this.context;
         const logo = background_and_logo[`${previewDeviceType}Logo`];
         const logoId = this.context[`${previewDeviceType}LogoId`];
         const background = background_and_logo[`${previewDeviceType}Background`];

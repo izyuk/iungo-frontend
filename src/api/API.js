@@ -1,9 +1,9 @@
 // import sha1 from 'sha1';
 import axios from 'axios';
 
-const AUTH_API = 'https://auth.bravofy.com';
-const BACKEND_API = 'https://backend.bravofy.com';
-const ANALYTICS_API = 'https://analytics.bravofy.com';
+const AUTH_API = process.env.AUTH_API;
+const BACKEND_API = process.env.BACKEND_API;
+const ANALYTICS_API = process.env.ANALYTICS_API;
 
 
 function authChecker(response) {
