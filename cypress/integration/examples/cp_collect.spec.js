@@ -1,6 +1,15 @@
-const APPLICATION_HOST = Cypress.env('APPLICATION_HOST') || 'http://localhost:9000';
-const LOGIN_EMAIL = Cypress.env('LOGIN_EMAIL') || 'dmitriy.izyuk@gmail.com';
-const LOGIN_PASSWORD = Cypress.env('LOGIN_PASSWORD') || 'Izyuk8968';
+
+import {
+    contextLoginToSystem,
+    clearFields,
+    fillingFields,
+    fillingFieldsWithFindOption,
+    fillColorHEX,
+    fillColorHEXWithOpacity,
+    fontStylingActions,
+    alignmentsActions,
+    setSomeSize
+} from '../../support/settings';
 
 const loadedDataForExpectedStore = {
     desktopBackgroundId: "331",
@@ -13,133 +22,15 @@ const loadedDataForExpectedStore = {
     mobileLogoUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/google_logo.svg",
 };
 
-function clearFields(selector) {
-    cy.get(selector)
-        .focus()
-        .clear({force: true})
-        .blur({force: true});
-}
-
-function fillingFields(selector, text) {
-    cy.get(selector)
-        .focus()
-        .clear({force: true})
-        .type(text, {force: true})
-        .blur({force: true});
-}
-
-function fillingFieldsWithFindOption(selector, whatToFind, text) {
-    cy.get(selector)
-        .find(whatToFind)
-        .focus()
-        .type(text);
-}
-
-function fillColorHEX(selector, hex) {
-    cy.get(selector)
-        .click({force: true});
-    cy.get('.flexbox-fix:nth-child(3) > div').first()
-        .find('input')
-        .focus()
-        .clear()
-        .type(hex)
-        .blur({force: true});
-    cy.get('.colorWrap > div > div').first()
-        .click({force: true});
-}
-
-function fillColorHEXWithOpacity(selector, hex, opacity) {
-    cy.get(selector)
-        .click({force: true});
-    cy.get('.flexbox-fix:nth-child(3) > div').first()
-        .find('input')
-        .focus()
-        .clear()
-        .type(hex)
-        .blur({force: true});
-    cy.get('.flexbox-fix:nth-child(3) > div').last()
-        .find('input')
-        .focus()
-        .clear()
-        .type(opacity)
-        .blur({force: true});
-    cy.get('.colorWrap > div > div').first()
-        .click({force: true});
-}
-
-function fontStylingActions(selector1, selector2, selector3) {
-    cy.get(selector1)
-        .click({force: true});
-    cy.get(selector2)
-        .click({force: true});
-    cy.get(selector3)
-        .click({force: true});
-}
-
-function alignmentsActions(selector1, selector2, selector3) {
-    cy.get(selector1)
-        .check({force: true});
-    cy.get(selector2)
-        .check({force: true});
-    cy.get(selector3)
-        .check({force: true});
-}
-
-function setSomeSize(selector, value) {
-    cy.get(selector)
-        .focus()
-        .clear({force: true})
-        .type(value, {force: true})
-        .blur({force: true});
-}
-
+contextLoginToSystem();
 
 context('Start and going to CP', function () {
-    beforeEach(function () {
-        cy.viewport('macbook-11')
-    });
-
-    describe('Inputs login form (wrong creds)', function () {
-        it('Checking reset route', () => {
-            cy.visit(APPLICATION_HOST);
-            cy.visit(`${APPLICATION_HOST}/reset`);
-            cy.visit(APPLICATION_HOST);
-        });
-    });
-
-    describe('Login form', () => {
-        it('Filling login inputs with not valid data', () => {
-            fillingFieldsWithFindOption('.email', 'input', 'dummy.email@gmail.com');
-            fillingFieldsWithFindOption('.password', 'input', '12345678');
-            cy.get('.login')
-                .click({force: true});
-        });
-
-        it('Filling login inputs with correct data', () => {
-            cy.visit(APPLICATION_HOST);
-            fillingFieldsWithFindOption('.email', 'input', LOGIN_EMAIL);
-            fillingFieldsWithFindOption('.password', 'input', LOGIN_PASSWORD);
-            cy.get('.login')
-                .click({force: true});
-        });
-    });
-
-    describe('Login local storage', function () {
-        it('Local storage user token & ID', () => {
-            const token = localStorage.getItem('token');
-            const email = localStorage.getItem('email');
-            expect(token).to.not.equal('');
-            expect(email).to.not.equal('');
-        });
-    });
-
 
     describe('CP templates', function () {
         it('Going to CP templates', () => {
-            cy.get('.addNewCPButton')
+            cy.get('[data-cy="addNewCP"]')
                 .click({force: true})
         });
-
     });
 
     describe('NEW CP', function () {

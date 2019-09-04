@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import Notification from '../additional/notification';
+import Notification from '~/components/additional/notification';
 
-import {getHotspots} from '../../api/API';
+import {getHotspots} from '~/api/API';
 import {withRouter} from "react-router-dom";
-import {dateISO} from "../../modules/dateISO";
+import {dateISO} from "~/modules/dateISO";
 
 import {AgGridReact} from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
-import '../../static/styles/ag-grid-custom.less'
+import '~/static/styles/ag-grid-custom.less'
 
 
 class HotspotDetails extends Component {
@@ -107,7 +107,7 @@ class HotspotDetails extends Component {
             cellStyle: {color: 'red', 'background-color': 'green'}
         };
         return (
-            <div className="contentWrapWithTopBorder">
+            <div className="contentWrapWithTopBorder" data-cy="hotspotsList">
                 <div
                     className="ag-theme-material"
                     style={{
