@@ -903,9 +903,9 @@ class GlobalCaptivePortalState extends Component {
                 font-weight: ${accept_button_font.textActions.bold ? 'bold' : '100'};
                 font-style: ${accept_button_font.textActions.italic ? 'italic' : 'unset'};
                 text-decoration: ${accept_button_font.textActions.underline ? 'underline' : 'unset'};
-                min-width: ${accept_button_size.width}px;
+                min-width: ${Math.min(accept_button_size.width, (container.size.width - container.size.padding*2))}px;
                 padding: ${accept_button_size.padding}px;
-                word-break: 'break-all';
+                word-break: break-all;
                 ${fontName && `font-family: ${fontName}, sans-serif`}
             }
            
