@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import Notification from "../additional/notification";
-import {createHotspot, getAllPortals, getHotspotByUUID, updateHotspotById} from "../../api/API";
-import CaptivePortalContext from "../../context/project-context";
+import Notification from "~/components/additional/notification";
+import {createHotspot, getAllPortals, getHotspotByUUID, updateHotspotById} from "~/api/API";
+import CaptivePortalContext from "~/context/project-context";
+import Loader from "~/loader";
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 
@@ -50,6 +51,7 @@ class HotspotEditor extends Component {
     handleCorrect = async (e) => {
         e.preventDefault();
         if (this.state.name !== '') {
+            this.context.loaderHandler(true);
             this.setState({
                 incorrect: false
             });
@@ -68,13 +70,23 @@ class HotspotEditor extends Component {
                 this.setState(currentState)
             }
             await query.then(res => {
-                currentState.id = res.data.id;
-                this.setState(currentState)
+                if (res && res.data) {
+                    currentState.id = res.data.id;
+                    if (res.data.uuid && window.location.pathname === '/hotspot/new') {
+                        window.history.pushState(null, null, `/hotspot/${res.data.uuid}`);
+                    }
+                    this.setState(currentState);
+                    this.context.setNotification('Hotspot settings was saved successfully', false, true);
+                    setTimeout(() => {
+                        this.context.setNotification('', false, false);
+                    }, 3000);
+                }
             });
+            this.context.loaderHandler(false);
             setTimeout(() => {
                 currentState.submited = false;
                 currentState.submittedType = '';
-                this.setState(currentState)
+                this.setState(currentState);
             }, 2000)
         } else {
             this.setState({
@@ -204,7 +216,7 @@ class HotspotEditor extends Component {
                                         const getErr = fieldName => this.getFieldErrorText(errors, touched, fieldName);
                                         const hasErr = fieldName => Boolean(getErr(fieldName));
                                         return (
-                                            <div className="hotspotForm">
+                                            <div className="hotspotForm" data-cy="newHotspotForm">
                                                 <label htmlFor={'hotspot-name'} className={hasErr('name') ? 'error' : ''}>
                                                     Name
                                                 </label>
@@ -214,6 +226,7 @@ class HotspotEditor extends Component {
                                                         id={'hotspot-name'}
                                                         type="text"
                                                         name="name"
+                                                        data-cy="newHotspotName"
                                                         placeholder={"Hostpot name"}
                                                         onChange={(e) => this.handleInputChange(e, handleChange)}
                                                         onBlur={(e) => this.handleInputChange(e, handleChange)}
@@ -231,6 +244,7 @@ class HotspotEditor extends Component {
                                                         id={'hotspot-address'}
                                                         type="text"
                                                         name="address"
+                                                        data-cy="newHotspotAddress"
                                                         placeholder={"Hotspot location or address"}
                                                         onChange={(e) => this.handleInputChange(e, handleChange)}
                                                         onBlur={(e) => this.handleInputChange(e, handleChange)}
@@ -248,6 +262,7 @@ class HotspotEditor extends Component {
                                             <textarea
                                                 id={'hotspot-description'}
                                                 name="description"
+                                                data-cy="newHotspotDescription"
                                                 placeholder={"Description"}
                                                 onChange={(e) => this.handleInputChange(e, handleChange)}
                                                 onBlur={(e) => this.handleInputChange(e, handleChange)}
@@ -263,6 +278,7 @@ class HotspotEditor extends Component {
                                                 <div className={'profileDetails'}>
                                                     <select name="portals"
                                                             id={'select-captive-portal'}
+                                                            data-cy="newHotspotSelectCP"
                                                             ref={this.portals}
                                                             onChange={this.selectHandler}>
                                                         <option value="">Choose portal</option>
@@ -271,6 +287,8 @@ class HotspotEditor extends Component {
                                                             portalsList.map((item, i) => {
                                                                 console.log(item);
                                                                 return <option key={i} dataid={item.id}
+                                                                            data-cy={`newHotspotSelectCP_Option_${i}`}
+                                                                            data-name={item.name}
                                                                             selected={captivePortalID === item.id}
                                                                             portalurl={item.externalUrl}>{item.name}</option>
                                                             })
@@ -285,7 +303,7 @@ class HotspotEditor extends Component {
                                                         </svg>
                                                     </p>
                                                 </div>
-                                                <button onClick={isValid ? this.handleCorrect : submitForm}>Save</button>
+                                                <button data-cy="newHotspotSave" onClick={isValid ? this.handleCorrect : submitForm}>Save</button>
 
 
                                                 {
@@ -337,7 +355,7 @@ class HotspotEditor extends Component {
                                 <div className="portalPreview">
                                     {
                                         !!portalUrl &&
-                                        <iframe src={portalUrl} frameBorder="0"></iframe>
+                                        <iframe src={portalUrl} frameBorder="0" data-cy="portalPreviewIframe"></iframe>
                                     }
                                 </div>
                             </div>
@@ -347,6 +365,8 @@ class HotspotEditor extends Component {
                         </div>
                     </div>
                 </div>
+                {this.context.dataToExclude.notification && <Notification/>}
+                {this.context.dataToExclude.loader && <Loader/>}
             </div>
         )
     }
