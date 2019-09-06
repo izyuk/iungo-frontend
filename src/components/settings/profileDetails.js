@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import SettingsForm from './settingsForm';
-import Notification from '../additional/notification';
-import {getCompanyProfileInfo, setCompanyProfileInfo} from '../../api/API';
-import CaptivePortalContext from "../../context/project-context";
+import Notification from '~/components/additional/notification';
+import {getCompanyProfileInfo, setCompanyProfileInfo} from '~/api/API';
+import CaptivePortalContext from "~/context/project-context";
+import Loader from "~/loader";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -42,20 +42,7 @@ class ProfileDetails extends Component {
     language = React.createRef();
 
     static propTypes = {};
-
     static defaultProps = {};
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return (this.state.id !== nextState.id)
-            || (this.state.name !== nextState.name)
-            || (this.state.list !== nextState.list)
-            || (this.state.address !== nextState.address)
-            || (this.state.description !== nextState.description)
-            || (this.state.portalsList !== nextState.portalsList)
-            || (this.state.submitted !== nextState.submitted)
-            || (this.state.submittedType !== nextState.submittedType)
-            || (this.state.APIErrors !== nextState.APIErrors);
-    }
 
     selectOnMountHandler = (element, value) => {
         // collection.map((item) => {
@@ -90,21 +77,19 @@ class ProfileDetails extends Component {
     };
 
     saveData = async () => {
+        this.context.loaderHandler(true);
         const profileInfo = this.context.dataToExclude.profileInfo;
         console.log(profileInfo);
         const query = setCompanyProfileInfo(this.token, profileInfo);
         await query.then(res => {
             console.log(res);
             this.getAPIErrors(res);
+            this.context.loaderHandler(false);
         })
     };
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(this.state);
-
-    }
-
     async componentDidMount() {
+        this.context.loaderHandler(true);
         const query = getCompanyProfileInfo(this.token);
         await query.then(res => {
             console.log(res);
@@ -114,6 +99,7 @@ class ProfileDetails extends Component {
             if (this._form && this._form.setValues) {
                 this._form.setValues(rest);
             }
+            this.context.loaderHandler(false);
         });
         this.context.profileHandler(this.state);
     };
@@ -161,7 +147,7 @@ class ProfileDetails extends Component {
                     <h3>Company Profile</h3>
                     <p>Enter company details for presenting the General Data Protections Regulation (GDPR) documents to your customer.</p>
                 </div>
-                <div className="settingsDetailsWrap">
+                <div className="settingsDetailsWrap" data-cy="companyProfileForm">
                     <Formik ref={el => this._form = el}
                         initialValues={{ name, companyCode, address, zipCode, country, city }}
                         validationSchema={ValidationSchema}
@@ -188,6 +174,7 @@ class ProfileDetails extends Component {
                                         datatype="name"
                                         id={'company-name'}
                                         name='name'
+                                        data-cy="companyProfileName"
                                         placeholder={"Company name"}
                                         defaultValue={values.name}
                                         onChange={(e) => this.fieldsHandler(e, handleChange)}
@@ -206,6 +193,7 @@ class ProfileDetails extends Component {
                                         id={'registration-number'}
                                         placeholder={"Registration number"}
                                         name='companyCode'
+                                        data-cy="companyProfileCompanyCode"
                                         defaultValue={values.companyCode}
                                         onChange={(e) => this.fieldsHandler(e, handleChange)}
                                         onBlur={(e) => this.fieldsHandler(e, handleChange)}
@@ -223,6 +211,7 @@ class ProfileDetails extends Component {
                                         id={'registered-office-address'}
                                         placeholder={"Registered office address"}
                                         name='address'
+                                        data-cy="companyProfileAddress"
                                         defaultValue={values.address}
                                         onChange={(e) => this.fieldsHandler(e, handleChange)}
                                         onBlur={(e) => this.fieldsHandler(e, handleChange)}
@@ -240,6 +229,7 @@ class ProfileDetails extends Component {
                                         id={'zip-code'}
                                         placeholder={"Zip code"}
                                         name='zipCode'
+                                        data-cy="companyProfileZipCode"
                                         defaultValue={values.zipCode}
                                         onChange={(e) => this.fieldsHandler(e, handleChange)}
                                         onBlur={(e) => this.fieldsHandler(e, handleChange)}
@@ -257,6 +247,7 @@ class ProfileDetails extends Component {
                                         id={'country'}
                                         placeholder={"Country"}
                                         name='country'
+                                        data-cy="companyProfileCountry"
                                         defaultValue={values.country}
                                         onChange={(e) => this.fieldsHandler(e, handleChange)}
                                         onBlur={(e) => this.fieldsHandler(e, handleChange)}
@@ -274,6 +265,7 @@ class ProfileDetails extends Component {
                                         id={'city'}
                                         placeholder={"City"}
                                         name='city'
+                                        data-cy="companyProfileCity"
                                         defaultValue={values.city}
                                         onChange={(e) => this.fieldsHandler(e, handleChange)}
                                         onBlur={(e) => this.fieldsHandler(e, handleChange)}
@@ -281,7 +273,7 @@ class ProfileDetails extends Component {
                                 </div>
 
                                 <div className="controlsRow">
-                                    <button type='submit' onClick={isValid ? this.saveData.bind(this) : submitForm}>
+                                    <button type='submit' data-cy="companyProfileSave" onClick={isValid ? this.saveData.bind(this) : submitForm}>
                                         Save
                                     </button>
                                 </div>
@@ -299,12 +291,16 @@ class ProfileDetails extends Component {
                     <p>Select the default language for presenting terms and conditions documents to your customer.</p>
                 </div>
                 <div className="settingsDetailsWrap">
-                    <SettingsForm onCorrect={this.saveData}>
+                    <div className="settingsForm">
                         <label htmlFor={'country'}>Language</label>
                         <div className={'profileDetails'}>
-                            <select name="locale" ref={this.language} onChange={this.selectHandler}>
-                                <option value="LT">Lithuanian</option>
-                                <option value="EN">English</option>
+                            <select name="locale"
+                                    data-cy="profileLocaleSelect"
+                                    ref={this.language}
+                                    onChange={this.selectHandler}
+                            >
+                                <option value="LT" data-cy="profileLocaleSelectOption">Lithuanian</option>
+                                <option value="EN" data-cy="profileLocaleSelectOption">English</option>
                             </select>
                             <p className="select">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
@@ -313,8 +309,12 @@ class ProfileDetails extends Component {
                                 </svg>
                             </p>
                         </div>
-                    </SettingsForm>
+                        <div className="controlsRow">
+                            <button onClick={this.saveData} data-cy="profileLocaleSave">Save</button>
+                        </div>
+                    </div>
                 </div>
+                {this.context.dataToExclude.loader && <Loader/>}
 
             </div>
 
