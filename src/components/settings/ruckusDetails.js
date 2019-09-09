@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {getRuckusSZ, updateRuckusSZ, checkRuckusStatus} from '../../api/API';
-import CaptivePortalContext from "../../context/project-context";
+import {getRuckusSZ, updateRuckusSZ, checkRuckusStatus} from '~/api/API';
+import CaptivePortalContext from "~/context/project-context";
+import Loader from "~/loader";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -53,16 +54,19 @@ class RuckusDetails extends Component {
 
     
     saveRuckusSZ = async () => {
+        this.context.loaderHandler(true);
         this.setState({ connectionTested: false, APIErrors: null });
         const {controllerAddress, username, password} = this.state;
         const query = updateRuckusSZ(this.token, {controllerAddress, username, password});
         await query.then(res => {
             console.log('Save Ruckus SZ', res);
             this.getAPIErrors(res);
+            this.context.loaderHandler(false);
         });
     };
 
     testConnection = async () => {
+        this.context.loaderHandler(true);
         this.setState({ connectionTested: false, APIErrors: null });
         const {controllerAddress, username, password} = this.state;
         const query = checkRuckusStatus(this.token, {controllerAddress, username, password});
@@ -74,11 +78,13 @@ class RuckusDetails extends Component {
                 connectionTested = true;
                 connectionTestValid = Boolean(res.data.valid);
             }
+            this.context.loaderHandler(false);
             this.setState({ connectionTested, connectionTestValid });
         });
     };
 
     getRuckusSZ = async () => {
+        this.context.loaderHandler(true);
         const query = getRuckusSZ(this.token);
         const currentState = this.state;
         await query.then(res => {
@@ -90,6 +96,7 @@ class RuckusDetails extends Component {
             if (this._form && this._form.setValues) {
                 this._form.setValues({controllerAddress, username, password});
             }
+            this.context.loaderHandler(false);
         });
         this.setState(currentState);
     };
@@ -144,7 +151,7 @@ class RuckusDetails extends Component {
                     <p>SZ (version 5.1.1) is a tool for management of Ruckus access points and switches. Northbound API makes the captive portal work. It is used to authenticate users during the UE (user equipment) association.</p>
                 </div>
 
-                <div className="settingsDetailsWrap">
+                <div className="settingsDetailsWrap" data-cy="ruckusIntegrationForm">
                     <Formik ref={el => this._form = el}
                         initialValues={{ controllerAddress, username, password }}
                         validationSchema={ValidationSchema}
@@ -170,6 +177,7 @@ class RuckusDetails extends Component {
                                         type="text"
                                         datatype="controllerAddress"
                                         id={'controllerAddress'}
+                                        data-cy="ruckusIntegrationControllerAddress"
                                         placeholder={"example http://192.168.102.1:9080/portalintf"}
                                         defaultValue={values.controllerAddress}
                                         onChange={(e) => this.fieldsHandler(e, handleChange)}
@@ -188,6 +196,7 @@ class RuckusDetails extends Component {
                                             datatype="username"
                                             id={'username'}
                                             placeholder={"usernname"}
+                                            data-cy="ruckusIntegrationUsername"
                                             defaultValue={values.username}
                                             onChange={(e) => this.fieldsHandler(e, handleChange)}
                                             onBlur={(e) => this.fieldsHandler(e, handleChange)}
@@ -205,6 +214,7 @@ class RuckusDetails extends Component {
                                             datatype="password"
                                             id={'password'}
                                             placeholder={"password"}
+                                            data-cy="ruckusIntegrationPassword"
                                             defaultValue={values.password}
                                             onChange={(e) => this.fieldsHandler(e, handleChange)}
                                             onBlur={(e) => this.fieldsHandler(e, handleChange)}
@@ -220,14 +230,24 @@ class RuckusDetails extends Component {
                                 </div>
 
                                 <div className="controlsRow">
-                                    <button type='submit' className="testBtn" onClick={isValid ? this.testConnection.bind(this) : submitForm}>Test</button>
-                                    <button type='submit' onClick={isValid ? this.saveRuckusSZ.bind(this) : submitForm}>Save</button>
+                                    <button type='submit'
+                                            className="testBtn"
+                                            data-cy="ruckusIntegrationTest"
+                                            onClick={isValid ? this.testConnection.bind(this) : submitForm}>
+                                        Test
+                                    </button>
+                                    <button type='submit'
+                                            data-cy="ruckusIntegrationSave"
+                                            onClick={isValid ? this.saveRuckusSZ.bind(this) : submitForm}>
+                                        Save
+                                    </button>
                                 </div>
                             </div>
 
                         )}}
                     />
                 </div>
+                {this.context.dataToExclude.loader && <Loader/>}
             </div>
 
         )

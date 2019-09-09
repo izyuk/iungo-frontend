@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {getMailerLite, updateMailerLite, checkMailerLite} from '../../api/API';
-import CaptivePortalContext from "../../context/project-context";
+import {getMailerLite, updateMailerLite, checkMailerLite} from '~/api/API';
+import CaptivePortalContext from "~/context/project-context";
+import Loader from "~/loader";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -74,16 +75,19 @@ class MailerliteDetails extends Component {
 
     
     saveMailerLite = async () => {
+        this.context.loaderHandler(true);
         this.setState({ credentialsTested: false, APIErrors: null });
         const {apiKey, enable, groupPrefix} = this.state;
         const query = updateMailerLite(this.token, {apiKey, enable: Boolean(enable === 'Yes'), groupPrefix});
         await query.then(res => {
             console.log(res);
             this.getAPIErrors(res);
+            this.context.loaderHandler(false);
         });
     };
 
     testMailerLite = async () => {
+        this.context.loaderHandler(true);
         this.setState({ credentialsTested: false, APIErrors: null });
         const {apiKey, enable, groupPrefix} = this.state;
         const query = checkMailerLite(this.token, {apiKey, enable: Boolean(enable === 'Yes'), groupPrefix});
@@ -95,10 +99,12 @@ class MailerliteDetails extends Component {
                 credentialsTestValid = Boolean(res.data.valid);
             }
             this.setState({ credentialsTested, credentialsTestValid });
+            this.context.loaderHandler(false);
         });
     };
 
     getMailerLite = async () => {
+        this.context.loaderHandler(true);
         const query = getMailerLite(this.token);
         const currentState = this.state;
         await query.then(res => {
@@ -111,6 +117,7 @@ class MailerliteDetails extends Component {
             if (this._form && this._form.setValues) {
                 this._form.setValues({apiKey, enable: enable ? 'Yes' : 'No', groupPrefix});
             }
+            this.context.loaderHandler(false);
         });
         this.setState(currentState);
     };
@@ -165,7 +172,7 @@ class MailerliteDetails extends Component {
                     <p>MailerLite.com is a email marketing solution for smart small business. Enable integration if you want to push your emails to MailerLite.</p>
                 </div>
 
-                <div className="settingsDetailsWrap">
+                <div className="settingsDetailsWrap" data-cy="mailerliteIntegrationForm">
                     <Formik ref={el => this._form = el}
                         initialValues={{ apiKey, groupPrefix, enable }}
                         validationSchema={ValidationSchema}
@@ -190,10 +197,11 @@ class MailerliteDetails extends Component {
                                     <select id={'enable'} name="enable"
                                         ref={this.enableSelect}
                                         value={values.enable}
+                                        data-cy="mailerliteIntegrationSelect"
                                         onChange={(e) => { handleChange(e); this.selectHandler(e); }}
                                     >
-                                        <option value='Yes'>Yes</option>
-                                        <option value='No'>No</option>
+                                        <option value='Yes' data-cy="mailerliteIntegrationSelectOption">Yes</option>
+                                        <option value='No' data-cy="mailerliteIntegrationSelectOption">No</option>
                                     </select>
                                     <p className="select">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
@@ -213,6 +221,7 @@ class MailerliteDetails extends Component {
                                         datatype="apiKey"
                                         id={'apiKey'}
                                         placeholder={"Key"}
+                                        data-cy="mailerliteIntegrationApiKey"
                                         defaultValue={values.apiKey}
                                         onChange={(e) => this.fieldsHandler(e, handleChange)}
                                         onBlur={(e) => this.fieldsHandler(e, handleChange)}
@@ -229,6 +238,7 @@ class MailerliteDetails extends Component {
                                         datatype="groupPrefix"
                                         id={'groupPrefix'}
                                         placeholder={"Prefix"}
+                                        data-cy="mailerliteIntegrationGroupPrefix"
                                         defaultValue={values.groupPrefix}
                                         onChange={(e) => this.fieldsHandler(e, handleChange)}
                                         onBlur={(e) => this.fieldsHandler(e, handleChange)}
@@ -242,10 +252,15 @@ class MailerliteDetails extends Component {
                                 </div>
 
                                 <div className="controlsRow">
-                                    <button type='submit' className="testBtn" onClick={isValid ? this.testMailerLite.bind(this) : submitForm}>
+                                    <button type='submit'
+                                            data-cy="mailerliteIntegrationTest"
+                                            className="testBtn"
+                                            onClick={isValid ? this.testMailerLite.bind(this) : submitForm}>
                                         Test
                                     </button>
-                                    <button type='submit' onClick={isValid ? this.saveMailerLite.bind(this) : submitForm}>
+                                    <button type='submit'
+                                            data-cy="mailerliteIntegrationSave"
+                                            onClick={isValid ? this.saveMailerLite.bind(this) : submitForm} >
                                         Save
                                     </button>
                                 </div>
@@ -255,6 +270,7 @@ class MailerliteDetails extends Component {
                     />  
 
                 </div>
+                {this.context.dataToExclude.loader && <Loader/>}
             </div>
 
         )
