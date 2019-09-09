@@ -32,7 +32,6 @@ class People extends Component {
             }, {
                 headerName: "Visits",
                 field: "totalVisit",
-                valueFormatter: (data) => dateISO(data.value)
             }]
         }
     };
