@@ -11,7 +11,7 @@ import {
     setSomeSize
 } from '../../support/settings';
 
-const loadedDataForExpectedStore = {
+const testPayload = {
     desktopBackgroundId: "331",
     desktopBackgroundUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/nasa-53884-unsplash.jpg",
     mobileBackgroundId: "331",
@@ -63,8 +63,8 @@ context('Style tab', function () {
             cy.get('[data-cy="backgroundImageItem0"')
                 .dblclick({force: true}).then(elem => {
                 const element = Cypress.$(elem);
-                loadedDataForExpectedStore.desktopBackgroundId = element.attr('dataid');
-                loadedDataForExpectedStore.desktopBackgroundUrl = element.attr('dataurl');
+                testPayload.desktopBackgroundId = element.attr('dataid');
+                testPayload.desktopBackgroundUrl = element.attr('dataurl');
             });
         });
         it('Setting background repeating', () => {
@@ -94,8 +94,8 @@ context('Style tab', function () {
             cy.get('[data-cy="backgroundImageItem1"')
                 .dblclick({force: true}).then(elem => {
                 const element = Cypress.$(elem);
-                loadedDataForExpectedStore.mobileBackgroundId = element.attr('dataid');
-                loadedDataForExpectedStore.mobileBackgroundUrl = element.attr('dataurl');
+                testPayload.mobileBackgroundId = element.attr('dataid');
+                testPayload.mobileBackgroundUrl = element.attr('dataurl');
             });
         });
         it('Setting background repeating', () => {
@@ -131,8 +131,8 @@ context('Style tab', function () {
             cy.get('[data-cy="backgroundImageItem1"')
                 .dblclick({force: true}).then(elem => {
                 const element = Cypress.$(elem);
-                loadedDataForExpectedStore.desktopLogoId = element.attr('dataid');
-                loadedDataForExpectedStore.desktopLogoUrl = element.attr('dataurl');
+                testPayload.desktopLogoId = element.attr('dataid');
+                testPayload.desktopLogoUrl = element.attr('dataurl');
             });
         });
 
@@ -182,8 +182,8 @@ context('Style tab', function () {
             cy.get('[data-cy="backgroundImageItem0"')
                 .dblclick({force: true}).then(elem => {
                 const element = Cypress.$(elem);
-                loadedDataForExpectedStore.mobileLogoId = element.attr('dataid');
-                loadedDataForExpectedStore.mobileLogoUrl = element.attr('dataurl');
+                testPayload.mobileLogoId = element.attr('dataid');
+                testPayload.mobileLogoUrl = element.attr('dataurl');
             });
         });
 
@@ -697,13 +697,13 @@ context('Starting comparing collected data', function () {
                 cy.window().then(win => {
                     // const store = GetBuilderParams(Object.assign({}, win.__store__));
                     const expectedStore = {
-                        background: loadedDataForExpectedStore.mobileBackgroundUrl,
+                        background: testPayload.mobileBackgroundUrl,
                         name: "CP TEST NAME",
                         externalCss: "",
-                        desktopLogoId: loadedDataForExpectedStore.desktopLogoId,
-                        mobileLogoId: loadedDataForExpectedStore.mobileLogoId,
-                        desktopBackgroundId: loadedDataForExpectedStore.desktopBackgroundId,
-                        mobileBackgroundId: loadedDataForExpectedStore.mobileBackgroundId,
+                        desktopLogoId: testPayload.desktopLogoId,
+                        mobileLogoId: testPayload.mobileLogoId,
+                        desktopBackgroundId: testPayload.desktopBackgroundId,
+                        mobileBackgroundId: testPayload.mobileBackgroundId,
                         header: "CP TEST HEADER TEXT",
                         description: "CP TEST DESCRIPTION TEXT",
                         footer: "TEST FOOTER TEXT",
@@ -761,7 +761,7 @@ context('Starting comparing collected data', function () {
                             },
                             background_and_logo: {
                                 desktopBackground: {
-                                    url: loadedDataForExpectedStore.desktopBackgroundUrl,
+                                    url: testPayload.desktopBackgroundUrl,
                                     color: {rgba: {r: 229, g: 233, b: 242, a: 1,}, hex: '#e5e9f2'},
                                     backgroundType: 'IMAGE',
                                     repeat: 'no-repeat',
@@ -780,7 +780,7 @@ context('Starting comparing collected data', function () {
                                     },
                                 },
                                 mobileBackground: {
-                                    url: loadedDataForExpectedStore.mobileBackgroundUrl,
+                                    url: testPayload.mobileBackgroundUrl,
                                     color: {rgba: {r: 229, g: 233, b: 242, a: 1,}, hex: '#e5e9f2'},
                                     backgroundType: 'IMAGE',
                                     repeat: 'repeat-y',
@@ -799,12 +799,12 @@ context('Starting comparing collected data', function () {
                                     },
                                 },
                                 desktopLogo: {
-                                    url: loadedDataForExpectedStore.desktopLogoUrl,
+                                    url: testPayload.desktopLogoUrl,
                                     horizontalPosition: 'center',
                                     verticalPosition: 'middle'
                                 },
                                 mobileLogo: {
-                                    url: loadedDataForExpectedStore.mobileLogoUrl,
+                                    url: testPayload.mobileLogoUrl,
                                     horizontalPosition: 'flex-end',
                                     verticalPosition: 'top'
                                 }

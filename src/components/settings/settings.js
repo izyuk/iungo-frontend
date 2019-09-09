@@ -5,18 +5,12 @@ import RuckusDetails from './ruckusDetails';
 import HorizontalTabs from '../additional/horizontalTabs';
 
 class Settings extends Component {
-    state = {
-    };
 
-
-    
     render () {
         const param = this.props.match.params;
-        console.log('props.match.params:', this.props.match.params);
         return (
             <div>
-
-                <div className="container containerFix">
+                <div className="container containerFix" data-cy="settingsPage">
                     <div className="wrap wrapFix2">
                         <div className="info">
                             <h3>Settings</h3>
