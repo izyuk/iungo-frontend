@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import CaptivePortalContext from "~/context/project-context";
+import Icons from '~/static/images/icons';
 
 class LocalozationSettings extends Component {
 
@@ -8,22 +9,9 @@ class LocalozationSettings extends Component {
     languageSelect = React.createRef();
 
     languageHandler = (e) => {
-        if (e) {
-            const span = e.currentTarget.nextSibling.children[0];
-            const value = e.currentTarget.options[e.currentTarget.selectedIndex].value
-            span.innerText = value;
-            this.context.setActiveLocale(value);
-        } else {
-            const svg = this.languageSelect.current.nextSibling.children[0];
-            const span = document.createElement('span');
-            span.innerText = this.languageSelect.current.options[this.languageSelect.current.selectedIndex].value;
-            this.languageSelect.current.nextSibling.insertBefore(span, svg);
-        }
+        const value = (e &&e.currentTarget.options[e.currentTarget.selectedIndex].value) || '';
+        this.context.setActiveLocale(value);
     };
-
-    async componentDidMount() {
-        this.languageHandler();
-    }
 
     onTextChange = (e) => {
         const val = e.currentTarget.value;
@@ -36,6 +24,8 @@ class LocalozationSettings extends Component {
         const language = this.context.dataToExclude.activeLocale || null;
         const languages = this.context.dataToExclude.locales || [];
         const translation = this.context.translations[language] || {};
+        const langShort = this.context.convertLocaleName(language);
+        const LangIcon = Icons[`Flag${langShort}`];
         return (
             <div className="container active">
                 <div className="row">
@@ -60,11 +50,8 @@ class LocalozationSettings extends Component {
                                         }
                                     </select>
                                     <p className="select">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24">
-                                            <path fill="#BFC5D2" fillRule="nonzero"
-                                                  d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                                        </svg>
+                                        <span>{language} {LangIcon && <LangIcon/>}</span>
+                                        <Icons.DropdownSvg/>
                                     </p>
                                 </div>
                             </div>

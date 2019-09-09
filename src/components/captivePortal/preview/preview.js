@@ -1,13 +1,17 @@
 import React, {Component} from 'react';
 
 import Methods from './methods';
-import CaptivePortalContext from "../../../context/project-context";
+import LanguagesModal from './languagesModal';
+import CaptivePortalContext from "~/context/project-context";
+import Icons from '~/static/images/icons';
 
 
 class Preview extends Component {
     static contextType = CaptivePortalContext;
 
-    state = {};
+    state = {
+        showLanguagesModal: false
+    };
 
     PreviewMain = React.createRef();
     ContainerMain = React.createRef();
@@ -66,11 +70,8 @@ class Preview extends Component {
         BODY.appendChild(styleTag);
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return (this.context !== nextContext);
-    }
-
     render() {
+        const { showLanguagesModal } = this.state;
         const {
             style: {
                 header: {top, description},
@@ -83,6 +84,8 @@ class Preview extends Component {
 
         const language = this.context.dataToExclude.activeLocale || null;
         const translation = this.context.translations[language] || {};
+        const langShort = this.context.convertLocaleName(language);
+        const LangIcon = Icons[`Flag${langShort}`];
         return (
             <div className="previewWrap">
                 <div className={(this.context.previewDeviceType === 'mobile') ? "previewMain mobile" : "previewMain"}
@@ -138,6 +141,9 @@ class Preview extends Component {
                                     <Methods/>
                                 </div>
                             }
+                            <div className="langaugeSwitcher" onClick={() => this.setState({ showLanguagesModal: true })}>
+                                {LangIcon && <LangIcon/>}
+                            </div>
                         </div>
                     </div>
                     <div className="footer">
@@ -147,6 +153,7 @@ class Preview extends Component {
                             </p>
                         </div>
                     </div>
+                    {Boolean(showLanguagesModal) && <LanguagesModal onClose={() => this.setState({ showLanguagesModal: false })} />}
                 </div>
             </div>
         )

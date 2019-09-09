@@ -119,7 +119,7 @@ class Methods extends Component {
                             </svg>
                         </span>
                         <input type="tel" placeholder={portalData ? portalData.phonePlaceholder : 'Continue with Phone'} autoComplete='off'/>
-                        <button type={'button'}>Send</button>
+                        <button type={'button'}>{portalData ? portalData.sendButton : 'Send'}</button>
                 </div>
                 <div className="accept" ref={this.button}>
                     <button data-cy="loginMethodConnectButtonPreview">

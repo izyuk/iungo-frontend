@@ -247,6 +247,7 @@ export default React.createContext({
     setFontBase64: () => {},
     setLocaleData: () => {},
     setActiveLocale: () => {},
+    convertLocaleName: () => {},
     setTranslations: () => {},
 
     previewDeviceType: 'desktop',

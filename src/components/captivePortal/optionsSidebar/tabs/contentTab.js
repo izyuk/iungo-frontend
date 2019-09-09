@@ -6,15 +6,12 @@ import FontSettings from './contentComponents/fontSettings/fontSettings';
 import SuccessActions from './contentComponents/successMessage/successMessage';
 import LocalozationSettings from './contentComponents/localization/localizationSettings';
 import FooterEditor from './contentComponents/footerEditor/footerEditor';
-
-const DropdownSvg = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-        <path fill="#BFC5D2" fillRule="nonzero"
-        d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-    </svg>
-);
+import CaptivePortalContext from '~/context/project-context';
+import Icons from '~/static/images/icons';
 
 class ContentTab extends Component {
+    static contextType = CaptivePortalContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -32,7 +29,7 @@ class ContentTab extends Component {
                         onClick={() => this.setState({ activeTab: 'localization' })}
                     >
                         <span>Localization</span>
-                        <DropdownSvg/>
+                        <Icons.DropdownSvg/>
                     </div>
                     {(activeTab === 'localization') ? <LocalozationSettings /> : false}
                 </div>
@@ -42,7 +39,7 @@ class ContentTab extends Component {
                         onClick={() => this.setState({ activeTab: 'font_settings' })}
                     >
                         <span>Font Settings</span>
-                        <DropdownSvg/>
+                        <Icons.DropdownSvg/>
                     </div>
                     {(activeTab === 'font_settings') ? <FontSettings /> : false}
                 </div>
@@ -52,7 +49,7 @@ class ContentTab extends Component {
                         onClick={() => this.setState({ activeTab: 'header' })}
                     >
                         <span>Header</span>
-                        <DropdownSvg/>
+                        <Icons.DropdownSvg/>
                     </div>
                     {(activeTab === 'header') ? <HeaderText /> : false}
                 </div>
@@ -62,7 +59,7 @@ class ContentTab extends Component {
                          onClick={() => this.setState({ activeTab: 'gdpr' })}
                     >
                         <span>GDPR</span>
-                        <DropdownSvg/>
+                        <Icons.DropdownSvg/>
                     </div>
                     {(activeTab === 'gdpr') ? <GDPR/> : false}
                 </div>
@@ -72,7 +69,7 @@ class ContentTab extends Component {
                          onClick={() => this.setState({ activeTab: 'login_methods' })}
                     >
                         <span>Login Methods</span>
-                        <DropdownSvg/>
+                        <Icons.DropdownSvg/>
                     </div>
                     {(activeTab === 'login_methods') ? <LoginMethods handler={this.props.handler}
                         methods={this.props.methods}
@@ -85,7 +82,7 @@ class ContentTab extends Component {
                         onClick={() => this.setState({ activeTab: 'footer' })}
                     >
                         <span>Footer</span>
-                        <DropdownSvg/>
+                        <Icons.DropdownSvg/>
                     </div>
                     {(activeTab === 'footer') ? <FooterEditor /> : false}
                 </div>
@@ -95,7 +92,7 @@ class ContentTab extends Component {
                         onClick={() => this.setState({ activeTab: 'success_actions' })}
                     >
                         <span>Success Actions</span>
-                        <DropdownSvg/>
+                        <Icons.DropdownSvg/>
                     </div>
                     {(activeTab === 'success_actions') ? <SuccessActions /> : false}
                 </div>

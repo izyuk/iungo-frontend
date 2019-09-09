@@ -113,6 +113,7 @@ class CaptivePortal extends Component {
                     acceptButtonFont: data.style.accept_button_font,
                     acceptButtonBorder: data.style.accept_button_border
                 });
+                this.context.setLocaleData(localeData, Boolean(from === 'templates'));
                 this.context.setTermsFromBE(data.termAndCondition);
                 if (!!data.termAndCondition) {
                     this.context.setGDPRSettings({
@@ -133,8 +134,14 @@ class CaptivePortal extends Component {
                         fontIds: []
                     });
                 }
-
                 if (from !== 'templates') {
+                    this.context.setTranslations(defaultLocale, {
+                        name: data.header,
+                        description: data.description,
+                        footer: data.footer,
+                        successMessageText: data.successMessage,
+                        connectButtonText: data.acceptButtonText,
+                    });
                     if (data.externalCss.length > 0) {
                         const styledElements = document.querySelectorAll('.previewWrap [style]');
                         let stylesArray = [];
@@ -155,7 +162,6 @@ class CaptivePortal extends Component {
                         HEAD.appendChild(style);
                     }
                 }
-                this.context.setLocaleData(localeData, Boolean(from === 'templates'));
                 this.context.addPortalName(data.name);
             })
             .catch(err => console.error(err));

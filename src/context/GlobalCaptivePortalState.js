@@ -842,8 +842,9 @@ class GlobalCaptivePortalState extends Component {
             }
            
             .previewContainer > div.section {
+                position: relative;
                 border: ${container.border.thickness}px ${container.border.type} rgba(${container.border.color.rgba.r},${container.border.color.rgba.g},${container.border.color.rgba.b},${container.border.color.rgba.a});
-                border-radius: ${container.border.radius}px;
+                border-radius: ${container.border.radius}px 0 ${container.border.radius}px ${container.border.radius}px;
                 background: rgba(${container.background.color.rgba.r},${container.background.color.rgba.g},${container.background.color.rgba.b},${container.background.color.rgba.a});
                 opacity: ${container.background.opacity / 100};
                 max-width: ${container.size.width}px;
@@ -851,6 +852,14 @@ class GlobalCaptivePortalState extends Component {
                 ${container.border.type === 'none' ? 'box-shadow: none;' : 'box-shadow: 0 1px 9px 0 rgba(191, 197, 210, 0.25);'}
                 
                 ${containerVerticalPosition};
+            }
+           
+            .previewContainer .langaugeSwitcher {
+                border: ${container.border.thickness}px ${container.border.type} rgba(${container.border.color.rgba.r},${container.border.color.rgba.g},${container.border.color.rgba.b},${container.border.color.rgba.a});
+                border-radius: ${container.border.radius}px ${container.border.radius}px 0 0;
+                background: rgba(${container.background.color.rgba.r},${container.background.color.rgba.g},${container.background.color.rgba.b},${container.background.color.rgba.a});
+                opacity: ${container.background.opacity / 100};
+                right: -${container.border.type !=='none' ? container.border.thickness : 0}px;
             }
             
             .previewContainer > div.section .head {
@@ -1006,6 +1015,23 @@ class GlobalCaptivePortalState extends Component {
         }
     }
 
+    convertLocaleName = (locale) => {
+        let localeName;
+        const locales = [
+            ['English', 'EN'],
+            ['Lithuanian', 'LT']
+        ];
+        locales.map(item => {
+            const index = item.indexOf(locale);
+            if (index === 0) {
+                localeName = item[1];
+            } else if (index === 1) {
+                localeName = item[0];
+            }
+        });
+        return localeName || locale;
+    }
+
     setPreviewDeviceType = (deviceType) => {
         this.setState({previewDeviceType: deviceType});
     };
@@ -1099,6 +1125,7 @@ class GlobalCaptivePortalState extends Component {
             translations: this.state.translations,
             setLocaleData: this.setLocaleData,
             setActiveLocale: this.setActiveLocale,
+            convertLocaleName: this.convertLocaleName,
             setTranslations: this.setTranslations,
             previewDeviceType: this.state.previewDeviceType,
             mobileSettingsTouched: this.state.mobileSettingsTouched,
