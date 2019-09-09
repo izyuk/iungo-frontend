@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, Redirect} from 'react-router-dom';
 
 import Dashboard from '../dashboard/dashboard';
 import Hotspot from '../hotspot/hotspot';
@@ -78,6 +78,7 @@ class MainSide extends Component {
                     <Route exact path="/hotspot/:uuid" component={HotspotEditor}/>
                     <Route exact path="/reports/:page" component={Reports}/>
                     <Route exact path="/reports/:page/:uuid" component={Reports}/>
+                    <Redirect exact path="/settings" to="/settings/profile"/>
                     <Route exact path="/settings/:page" component={Settings}/>
                     {/* <Route exact path="/profile" component={Profile}/> */}
                 </Switch>
