@@ -17,8 +17,10 @@ class Modal extends Component {
 
     inputHandler = (e) => {
         console.log(e.target.files[0]);
-        this.props.getExif(e.target.files);
+        // this.props.getExif(e.target.files);
         this.props.uploadHandler(e.target.files[0]);
+
+        e.target.value = null;
     };
 
     render() {
