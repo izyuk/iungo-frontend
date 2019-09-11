@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
 import Palette from '~/static/styles/palette';
-import {connect} from 'react-redux';
 import Tooltip from 'rc-tooltip';
 import Slider from "rc-slider";
 import CaptivePortalContext from "~/context/project-context";
@@ -39,7 +38,6 @@ class HeaderDescription extends Component {
         color: {rgba:this.context.style.header.description.color.rgba, hex: this.context.style.header.description.color.hex},
         fontSize: this.context.style.header.description.fontSize,
         textActions: this.context.style.header.description.textActions,
-        text: this.context.description,
         alignment: this.context.style.header.description.alignment,
         family: this.context.style.header.description.family
     };
@@ -56,32 +54,21 @@ class HeaderDescription extends Component {
             fontSize: parseInt(value),
             fontInputData: parseInt(value)
         });
-        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
-        this.context.setHeaderDescriptionData(text, {color: color, ...rest});
+        const {displayColorPicker, fontInputData, color, ...rest} = this.state;
+        this.context.setHeaderDescriptionData({color: color, ...rest});
     };
 
     fontInputHandler = (value) => {
         const currentState = this.state;
         currentState.fontInputData = value;
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
-        this.context.setHeaderDescriptionData(text, {color: color, ...rest});
+        const {displayColorPicker, fontInputData, color, ...rest} = this.state;
+        this.context.setHeaderDescriptionData({color: color, ...rest});
     };
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.fontSize !== nextState.fontSize) return true;
-        else if (this.state.fontInputData !== nextState.fontInputData) return true;
-        else if (this.state.color !== nextState.color) return true;
-        else if (this.state.displayColorPicker !== nextState.displayColorPicker) return true;
-        else if (this.state.textActions !== nextState.textActions) return true;
-        else if (this.state.text !== nextState.text) return true;
-        else if (this.state.alignment !== nextState.alignment) return true;
-        else return false;
-    }
-
     componentDidMount() {
-        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
-        this.context.setHeaderDescriptionData(text, {color: color, ...rest});
+        const {displayColorPicker, fontInputData, color, ...rest} = this.state;
+        this.context.setHeaderDescriptionData({color: color, ...rest});
         document.getElementById(this.context.style.header.description.alignment).checked = true;
     }
 
@@ -99,8 +86,8 @@ class HeaderDescription extends Component {
         currentState.color.hex = color.hex;
         Palette.addUserColor(color.hex);
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, ...rest} = this.state;
-        this.context.setHeaderDescriptionData(text, {color: this.state.color, ...rest});
+        const {displayColorPicker, fontInputData, ...rest} = this.state;
+        this.context.setHeaderDescriptionData({color: this.state.color, ...rest});
     };
 
     textActionsHandler = (e) => {
@@ -109,24 +96,21 @@ class HeaderDescription extends Component {
         currentState.textActions[name] = !this.state.textActions[name];
 
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
-        this.context.setHeaderDescriptionData(text, {color: color, ...rest});
+        const {displayColorPicker, fontInputData, color, ...rest} = this.state;
+        this.context.setHeaderDescriptionData({color: color, ...rest});
     };
 
     textChanges = (e) => {
-        const currentState = this.state;
-        currentState.text = e.currentTarget.value;
-        this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
-        this.context.setHeaderDescriptionData(text, {color: color, ...rest});
+        const activeLocale = this.context.dataToExclude.activeLocale || null;
+        this.context.setTranslations(activeLocale, { description: e.currentTarget.value });
     };
 
     alignment = (e) => {
         const currentState = this.state;
         currentState.alignment = e.target.getAttribute('data-id');
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
-        this.context.setHeaderDescriptionData(text, {color: color, ...rest});
+        const {displayColorPicker, fontInputData, color, ...rest} = this.state;
+        this.context.setHeaderDescriptionData({color: color, ...rest});
     };
 
     render() {
@@ -143,6 +127,8 @@ class HeaderDescription extends Component {
             bottom: '0px',
             left: '0px',
         };
+        const language = this.context.dataToExclude.activeLocale || null;
+        const translation = this.context.translations[language] || {};
         return (
             <div>
                 <div className="row">
@@ -199,7 +185,7 @@ class HeaderDescription extends Component {
                         </div>
                         <div className="innerRow">
                             <textarea onChange={this.textChanges} data-cy="headerDescriptionText"
-                                      defaultValue={this.state.text}></textarea>
+                                      value={translation.description}></textarea>
                         </div>
                     </div>
                 </div>
@@ -282,14 +268,4 @@ class HeaderDescription extends Component {
     }
 }
 
-// export default HeaderDescription;
-export default connect(
-    state => ({
-        header: state.header
-    }),
-    dispatch => ({
-        textData: (text, styles) => {
-            dispatch({type: "HEADER_DESCRIPTION", payload: {text, styles}});
-        }
-    })
-)(HeaderDescription);
+export default HeaderDescription;

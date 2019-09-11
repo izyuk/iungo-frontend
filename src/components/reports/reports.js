@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import HorizontalTabs from './horizontalTabs';
 import People from './people';
 import HotspotUsage from './hotspot-usage';
-import {getHotspots} from "../../api/API";
+import {getHotspots} from "~/api/API";
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import Icons from '~/static/images/icons';
 
 export default class Reports extends Component {
     state = {
@@ -93,11 +94,7 @@ export default class Reports extends Component {
                                         <span>
                                             Select Hotspot
                                         </span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                            <path fill="#FFF" fillRule="nonzero"
-                                                d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                                        </svg>
-
+                                        <Icons.DropdownIcon fill="#FFF"/>
                                     </p>
                                     <div className="list">
                                         {hotspotList && hotspotList.length && hotspotList.map((item, i) =>
@@ -110,10 +107,7 @@ export default class Reports extends Component {
                             </div>
                             {param.page === 'people' && <div className="exportCSV">
                                 <button type='button' onClick={this.exportCSV}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                        <path fill="#BFC5D2" fillRule="nonzero"
-                                            d="M17 11.1V11c0-2.8-2.2-5-5-5-2.5 0-4.6 1.8-4.9 4.3-1.8.6-3.1 2.2-3.1 4.2C4 17 6 19 8.5 19H16c2.2 0 4-1.8 4-4 0-1.9-1.3-3.4-3-3.9zM11 13v-3h2v3h3l-4 4-4-4h3z"/>
-                                    </svg>
+                                        <Icons.ExportDownloadIcon/>
                                     <span>Export to CSV</span>
                                 </button>
                             </div>}

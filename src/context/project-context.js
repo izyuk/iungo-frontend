@@ -9,10 +9,6 @@ export default React.createContext({
     mobileLogoId: '',
     desktopBackgroundId: '',
     mobileBackgroundId: '',
-    header: 'Company name',
-    description: 'Venue description',
-    footer: 'Footer content',
-    successMessage: 'Default success message',
     style: {
         header: {
             top: {
@@ -182,7 +178,7 @@ export default React.createContext({
     successRedirectUrl: '',
     termAndConditionId: '',
     fontIds: [],
-    acceptButtonText: 'Connect',
+    translationsLanguages: [],
     translations: {},
     addPortalName: () => {},
     setBackground: () => {},

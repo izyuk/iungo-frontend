@@ -9,10 +9,6 @@ const INITIAL = {
     mobileLogoId: '',
     desktopBackgroundId: '',
     mobileBackgroundId: '',
-    header: 'Company name',
-    description: 'Venue description',
-    footer: 'Footer content',
-    successMessage: 'Default success message',
     style: {
         header: {
             top: {

@@ -12,10 +12,6 @@ class GlobalCaptivePortalState extends Component {
         mobileLogoId: '',
         desktopBackgroundId: '',
         mobileBackgroundId: '',
-        header: 'Company name',
-        description: 'Venue description',
-        footer: 'Footer content',
-        successMessage: 'Default success message',
         style: {
             header: {
                 top: {
@@ -187,7 +183,7 @@ class GlobalCaptivePortalState extends Component {
         phoneLogin: false,
         acceptTermsLogin: false,
         successRedirectUrl: '',
-        acceptButtonText: 'Connect',
+        translationsLanguages: [],
         translations: {},
         dataToExclude: {
             successMessageStatus: false,
@@ -373,15 +369,13 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState)
     };
 
-    setHeaderTopData = (text, styles) => {
+    setHeaderTopData = (styles) => {
         const currentState = this.state;
-        if (text || text === '') currentState.header = text;
         currentState.style.header.top = styles;
         this.setState(currentState)
     };
-    setHeaderDescriptionData = (text, styles) => {
+    setHeaderDescriptionData = (styles) => {
         const currentState = this.state;
-        if (text || text === '') currentState.description = text;
         currentState.style.header.description = styles;
         this.setState(currentState)
     };
@@ -395,9 +389,8 @@ class GlobalCaptivePortalState extends Component {
             acceptTermsLogin: button
         })
     };
-    setFooterData = (text, styles) => {
+    setFooterData = (styles) => {
         const currentState = this.state;
-        if (text || text === '') currentState.footer = text;
         currentState.style.footer = styles;
         this.setState(currentState)
     };
@@ -413,17 +406,15 @@ class GlobalCaptivePortalState extends Component {
     };
     setButtonStyles = data => {
         const currentState = this.state;
-        const {acceptButtonText, acceptButtonBorder, acceptButtonColor, acceptButtonFont, acceptButtonSize} = data;
-        currentState.acceptButtonText = acceptButtonText;
+        const {acceptButtonBorder, acceptButtonColor, acceptButtonFont, acceptButtonSize} = data;
         currentState.style.accept_button_border = acceptButtonBorder;
         currentState.style.accept_button_color = acceptButtonColor;
         currentState.style.accept_button_font = acceptButtonFont;
         currentState.style.accept_button_size = acceptButtonSize;
         this.setState(currentState)
     };
-    setSuccessMessageData = (text, styles) => {
+    setSuccessMessageData = (styles) => {
         const currentState = this.state;
-        currentState.successMessage = text;
         currentState.style.success_message = styles;
         this.setState(currentState)
     };
@@ -497,10 +488,6 @@ class GlobalCaptivePortalState extends Component {
             mobileLogoId: '',
             desktopBackgroundId: '',
             mobileBackgroundId: '',
-            header: portalData ? portalData.name : 'Company name',
-            description: portalData ? portalData.description : 'Venue description',
-            footer: portalData ? portalData.footer : 'Footer content',
-            successMessage: portalData ? portalData.successMessageText : 'Default success message',
             style: {
                 header: {
                     top: {
@@ -672,7 +659,7 @@ class GlobalCaptivePortalState extends Component {
             phoneLogin: false,
             acceptTermsLogin: false,
             successRedirectUrl: '',
-            acceptButtonText: portalData ? portalData.connectButtonText : 'Connect',
+            translationsLanguages: [],
             translations: {},
             dataToExclude: {
                 successMessageStatus: false,
@@ -708,23 +695,22 @@ class GlobalCaptivePortalState extends Component {
         await this.setBackgroundStyle(data.style.desktop_container.background);
         await this.setSizeStyle(data.style.desktop_container.size);
         await this.setContainerVerticalPosition(data.style.desktop_container.position.vertical);
-        await this.setHeaderTopData(data.header, data.style.header.top);
-        await this.setHeaderDescriptionData(data.description, data.style.header.description);
+        await this.setHeaderTopData(data.style.header.top);
+        await this.setHeaderDescriptionData(data.style.header.description);
         await this.setLoginMethods({
             facebook: data.facebookLogin,
             google: data.googleLogin,
             twitter: data.twitterLogin,
             button: data.acceptTermsLogin
         });
-        await this.setFooterData(data.footer, data.style.footer);
+        await this.setFooterData(data.style.footer);
         await this.setLogoID('');
         await this.setBackgroundID('');
         await this.addPortalName(data.name);
         await this.setCSS(this.state.stylesApplied ? data.externalCss : '');
         await this.redirectURLChanger(data.successRedirectUrl);
-        await this.setSuccessMessageData(data.successMessage, data.style.success_message);
+        await this.setSuccessMessageData(data.style.success_message);
         await this.setButtonStyles({
-            acceptButtonText: data.acceptButtonText,
             acceptButtonSize: data.style.accept_button_size,
             acceptButtonColor: data.style.accept_button_color,
             acceptButtonFont: data.style.accept_button_font,
@@ -922,7 +908,7 @@ class GlobalCaptivePortalState extends Component {
                 font-weight: ${accept_button_font.textActions.bold ? 'bold' : '100'};
                 font-style: ${accept_button_font.textActions.italic ? 'italic' : 'unset'};
                 text-decoration: ${accept_button_font.textActions.underline ? 'underline' : 'unset'};
-                min-width: ${Math.min(accept_button_size.width, (container.size.width - container.size.padding*2))}px;
+                flex-basis: ${accept_button_size.width}px;
                 padding: ${accept_button_size.padding}px;
                 word-break: break-all;
                 ${fontName && `font-family: ${fontName}, sans-serif`}
@@ -990,17 +976,49 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState);
     }
 
-    setTranslations = (locale, translations = {}) => {
+    setTranslations = (locale, translations = {}, remove) => {
         const currentState = this.state;
-        const currentTranslation = currentState.translations[locale] || {};
-        const defaultTranslation = currentState.dataToExclude.localeData[locale] || {};
-        currentState.translations[locale] = {
-            name: translations.name || currentTranslation.name || defaultTranslation.name || 'Company name',
-            description: translations.description || currentTranslation.description || defaultTranslation.description || 'Venue description',
-            footer: translations.footer || currentTranslation.footer || defaultTranslation.footer || 'Footer content',
-            successMessageText: translations.successMessageText || currentTranslation.successMessageText || defaultTranslation.successMessageText || 'Default success message',
-            connectButtonText: translations.connectButtonText || currentTranslation.connectButtonText || defaultTranslation.connectButtonText || 'Connect',
-        };
+        if (remove) {
+            const index = currentState.translationsLanguages.indexOf(locale);
+            if (index !== -1) { currentState.translationsLanguages.splice(index, 1); }
+            // delete currentState.translations[locale];
+            if (currentState.dataToExclude.activeLocale === locale) {
+                currentState.dataToExclude.activeLocale = currentState.translationsLanguages[0];
+            }
+        } else {
+            const currentTranslation = currentState.translations[locale] || {};
+            const defaultTranslation = (currentState.dataToExclude.localeData[locale] && currentState.dataToExclude.localeData[locale].portalData) || {};
+            if (!currentState.translationsLanguages.includes(locale)) {
+                currentState.translationsLanguages.push(locale);
+            }
+            const mockedTranslation = {
+                name: 'Company name',
+                description: 'Venue description',
+                footer: 'Footer content',
+                successMessageText: 'Default success message',
+                connectButtonText: 'Connect',
+            };
+            const getTranslation = (name) => {
+                let translation = '';
+                if (translations.hasOwnProperty(name)) {
+                    translation = translations[name];
+                } else if (currentTranslation.hasOwnProperty(name)) {
+                    translation = currentTranslation[name];
+                } else if (defaultTranslation.hasOwnProperty(name)) {
+                    translation = defaultTranslation[name];
+                } else  {
+                    translation = mockedTranslation[name] || '';
+                }
+                return translation;
+            }
+            currentState.translations[locale] = {
+                name: getTranslation('name'),
+                description: getTranslation('description'),
+                footer: getTranslation('footer'),
+                successMessageText: getTranslation('successMessageText'),
+                connectButtonText: getTranslation('connectButtonText'),
+            };
+        }
         this.setState(currentState);
     }
 
@@ -1019,7 +1037,8 @@ class GlobalCaptivePortalState extends Component {
         let localeName;
         const locales = [
             ['English', 'EN'],
-            ['Lithuanian', 'LT']
+            ['Lithuanian', 'LT'],
+            ['Russian', 'RU']
         ];
         locales.map(item => {
             const index = item.indexOf(locale);
@@ -1067,10 +1086,6 @@ class GlobalCaptivePortalState extends Component {
             mobileLogoId: this.state.mobileLogoId,
             desktopBackgroundId: this.state.desktopBackgroundId,
             mobileBackgroundId: this.state.mobileBackgroundId,
-            header: this.state.header,
-            description: this.state.description,
-            footer: this.state.footer,
-            successMessage: this.state.successMessage,
             style: this.state.style,
             googleLogin: this.state.googleLogin,
             facebookLogin: this.state.facebookLogin,
@@ -1078,7 +1093,6 @@ class GlobalCaptivePortalState extends Component {
             phoneLogin: this.state.phoneLogin,
             acceptTermsLogin: this.state.acceptTermsLogin,
             successRedirectUrl: this.state.successRedirectUrl,
-            acceptButtonText: this.state.acceptButtonText,
             externalCss: this.state.externalCss,
             termAndConditionId: this.state.termAndConditionId,
             fontIds: this.state.fontIds,
@@ -1122,6 +1136,7 @@ class GlobalCaptivePortalState extends Component {
             setFontsCollection: this.setFontsCollection,
             setFontData: this.setFontData,
             setFontBase64: this.setFontBase64,
+            translationsLanguages: this.state.translationsLanguages,
             translations: this.state.translations,
             setLocaleData: this.setLocaleData,
             setActiveLocale: this.setActiveLocale,

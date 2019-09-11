@@ -17,7 +17,7 @@ class LanguagesModal extends Component {
     }
 
     render() {
-        const languages = this.context.dataToExclude.locales || [];
+        const languages = this.context.translationsLanguages || [];
         const currentLanguage = this.context.dataToExclude.activeLocale || '';
         return (
             <div className="languagesModalOverlay" onClick={() => this.onModalClose()}>

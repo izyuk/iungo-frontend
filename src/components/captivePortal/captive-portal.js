@@ -7,7 +7,8 @@ import Loader from "~/loader";
 
 import {GetBuilderParams} from "./optionsSidebar/getBuilderParams";
 import {PublishPortalMethodHandler} from "./optionsSidebar/publishPortalMethodHandler";
-import Notification from "../additional/notification";
+import Notification from "~/components/additional/notification";
+import Icons from '~/static/images/icons';
 
 import CaptivePortalContext from '~/context/project-context';
 
@@ -93,8 +94,8 @@ class CaptivePortal extends Component {
                     // general
                     this.context.checkDeviceTypeDataChanged(deviceType, data);
                 });
-                this.context.setHeaderTopData(data.header, data.style.header.top);
-                this.context.setHeaderDescriptionData(data.description, data.style.header.description);
+                this.context.setHeaderTopData(data.style.header.top);
+                this.context.setHeaderDescriptionData(data.style.header.description);
                 this.context.setLoginMethods({
                     facebook: data.facebookLogin,
                     google: data.googleLogin,
@@ -102,12 +103,11 @@ class CaptivePortal extends Component {
                     phone: data.phoneLogin,
                     button: data.acceptTermsLogin
                 });
-                this.context.setFooterData(data.footer, data.style.footer);
+                this.context.setFooterData(data.style.footer);
                 this.context.addPortalName(data.name);
                 this.context.redirectURLChanger(data.successRedirectUrl);
-                this.context.setSuccessMessageData(data.successMessage, data.style.success_message);
+                this.context.setSuccessMessageData(data.style.success_message);
                 this.context.setButtonStyles({
-                    acceptButtonText: data.acceptButtonText,
                     acceptButtonSize: data.style.accept_button_size,
                     acceptButtonColor: data.style.accept_button_color,
                     acceptButtonFont: data.style.accept_button_font,
@@ -278,21 +278,12 @@ class CaptivePortal extends Component {
                                     <div className="toggles">
                                         <a href="javascript:void(0)" data-id="desktop"
                                            className={(deviceType === 'desktop') ? 'active' : ''} onClick={() => this.setPreviewType('desktop')}>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                 viewBox="0 0 24 24">
-                                                <path fill="#BFC6D3" fillRule="nonzero"
-                                                      d="M17.25 6H6.75C6.3 6 6 6.3 6 6.75V14c0 .45.3 1 .75 1H11v2H9v1h6v-1h-2v-2h4.25c.45 0 .75-.55.75-1V6.75c0-.45-.3-.75-.75-.75zM16 8v5H8V8h8z"/>
-                                            </svg>
+                                            <Icons.DesktopDeviceIcon />
                                             <span>Desktop</span>
                                         </a>
                                         <a href="javascript:void(0)" data-id="mobile" className={(deviceType === 'mobile') ? 'active' : ''}
                                            onClick={() => this.setPreviewType('mobile')}>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                 viewBox="0 0 24 24">
-                                                <path fill="#AFB7C8" fillRule="nonzero"
-                                                      d="M15.5 6h-6C8.673 6 8 6.673 8 7.5v9c0 .827.673 1.5 1.5 1.5h6c.827 0 1.5-.673 1.5-1.5v-9c0-.827-.673-1.5-1.5-1.5zm-3 10.375a.625.625 0 1 1 0-1.25.625.625 0 0 1 0 1.25zM15 14h-5V8h5v6z"
-                                                      opacity=".8"/>
-                                            </svg>
+                                            <Icons.MobileDeviceIcon />
                                             <span>Mobile</span>
                                         </a>
                                     </div>

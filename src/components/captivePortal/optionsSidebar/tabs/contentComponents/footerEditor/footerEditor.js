@@ -38,7 +38,6 @@ class FooterEditor extends Component {
         color: {rgba: this.context.style.footer.color.rgba, hex: this.context.style.footer.color.hex},
         fontSize: this.context.style.footer.fontSize,
         textActions: this.context.style.footer.textActions,
-        text: this.context.footer,
         alignment: this.context.style.footer.alignment,
         family: this.context.style.footer.family
     };
@@ -56,32 +55,17 @@ class FooterEditor extends Component {
             fontSize: parseInt(value),
             fontInputData: parseInt(value)
         });
-        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
-        this.context.setFooterData(text, rest);
+        const {displayColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setFooterData(rest);
     };
 
     fontInputHandler = (value) => {
         const currentState = this.state;
         currentState.fontInputData = parseInt(value);
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
-        this.context.setFooterData(text, rest);
+        const {displayColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setFooterData(rest);
     };
-
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.fontSize !== nextState.fontSize) {
-            return true;
-        } else if (this.state.color !== nextState.color) {
-            return true;
-        } else if (this.state.displayColorPicker !== nextState.displayColorPicker) {
-            return true;
-        } else if (this.state.textActions !== nextState.textActions) {
-            return true;
-        } else if (this.state.text !== nextState.text) {
-            return true;
-        } else
-            return false;
-    }
 
     componentDidMount() {
         document.getElementById(this.context.style.footer.alignment).checked = true;
@@ -101,8 +85,8 @@ class FooterEditor extends Component {
         currentState.color.hex = color.hex;
         Palette.addUserColor(color.hex);
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
-        this.context.setFooterData(text, rest);
+        const {displayColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setFooterData(rest);
     };
 
     textActionsHandler = (e) => {
@@ -110,24 +94,21 @@ class FooterEditor extends Component {
         const currentState = this.state;
         currentState.textActions[name] = !this.state.textActions[name];
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
-        this.context.setFooterData(text, rest);
+        const {displayColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setFooterData(rest);
     };
 
     textChanges = (e) => {
-        const currentState = this.state;
-        currentState.text = e.currentTarget.value;
-        this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
-        this.context.setFooterData(text, rest);
+        const activeLocale = this.context.dataToExclude.activeLocale || null;
+        this.context.setTranslations(activeLocale, { footer: e.currentTarget.value });
     };
 
     alignment = (e) => {
         const currentState = this.state;
         currentState.alignment = e.target.getAttribute('data-id');
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, ...rest} = currentState;
-        this.context.setFooterData(text, rest);
+        const {displayColorPicker, fontInputData, ...rest} = currentState;
+        this.context.setFooterData(rest);
     };
 
     render() {
@@ -144,6 +125,8 @@ class FooterEditor extends Component {
             bottom: '0px',
             left: '0px',
         };
+        const language = this.context.dataToExclude.activeLocale || null;
+        const translation = this.context.translations[language] || {};
         return (
             <div className="container active">
                 <div className="row">
@@ -195,7 +178,7 @@ class FooterEditor extends Component {
                         </div>
                         <div className="innerRow">
                             <textarea onChange={this.textChanges} data-cy="footerText" onMouseUp={this.getText}
-                                      defaultValue={this.state.text}></textarea>
+                                      value={translation.footer}></textarea>
                         </div>
                     </div>
                 </div>

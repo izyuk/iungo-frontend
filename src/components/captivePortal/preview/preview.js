@@ -102,17 +102,17 @@ class Preview extends Component {
                             {this.context.dataToExclude.successMessageStatus ?
                                 <div className="contentPlace" data-cy="successTextPreview">
                                     <p className="text">
-                                        {translation.successMessageText || this.context.successMessage}
+                                        {translation.successMessageText}
                                     </p>
                                 </div>
                                 : <div className="contentPlace">
                                     <div className="textPlace">
                                         <p className="head" data-cy="headerTopTextPreview">
-                                            {translation.name || this.context.header}
+                                            {translation.name}
                                         </p>
 
                                         <p className="description" data-cy="headerDescriptionTextPreview">
-                                            {translation.description || this.context.description}
+                                            {translation.description}
                                         </p>
                                     </div>
                                     {gdprSettingsStatus ?
@@ -149,7 +149,7 @@ class Preview extends Component {
                     <div className="footer">
                         <div className="contentPlace">
                             <p className="text" ref={this.FooterText} data-cy="footerTextPreview">
-                                {translation.footer || this.context.footer}
+                                {translation.footer}
                             </p>
                         </div>
                     </div>

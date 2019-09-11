@@ -38,7 +38,6 @@ class HeaderTop extends Component {
         color: {rgba:this.context.style.header.top.color.rgba, hex: this.context.style.header.top.color.hex},
         fontSize: this.context.style.header.top.fontSize,
         textActions: this.context.style.header.top.textActions,
-        text: this.context.header,
         alignment: this.context.style.header.top.alignment,
         family: this.context.style.header.top.family
     };
@@ -55,32 +54,21 @@ class HeaderTop extends Component {
             fontSize: parseInt(value),
             fontInputData: parseInt(value)
         });
-        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
-        this.context.setHeaderTopData(text, {color: color, ...rest});
+        const {displayColorPicker, fontInputData, color, ...rest} = this.state;
+        this.context.setHeaderTopData({color: color, ...rest});
     };
 
     fontInputHandler = (value) => {
         const currentState = this.state;
         currentState.fontInputData = value;
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
-        this.context.setHeaderTopData(text, {color: color, ...rest});
+        const {displayColorPicker, fontInputData, color, ...rest} = this.state;
+        this.context.setHeaderTopData({color: color, ...rest});
     };
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.fontSize !== nextState.fontSize) return true;
-        else if (this.state.colorHEX !== nextState.colorHEX) return true;
-        else if (this.state.color !== nextState.color) return true;
-        else if (this.state.displayColorPicker !== nextState.displayColorPicker) return true;
-        else if (this.state.textActions !== nextState.textActions) return true;
-        else if (this.state.text !== nextState.text) return true;
-        else if (this.state.alignment !== nextState.alignment) return true;
-        else return false;
-    }
-
     componentDidMount() {
-        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
-        this.context.setHeaderTopData(text, {color: color, ...rest});
+        const {displayColorPicker, fontInputData, color, ...rest} = this.state;
+        this.context.setHeaderTopData({color: color, ...rest});
         document.getElementById(this.context.style.header.top.alignment + '2').checked = true;
     }
 
@@ -98,8 +86,8 @@ class HeaderTop extends Component {
         currentState.color.hex = color.hex;
         Palette.addUserColor(color.hex);
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, ...rest} = this.state;
-        this.context.setHeaderTopData(text, {color: this.state.color, ...rest});
+        const {displayColorPicker, fontInputData, ...rest} = this.state;
+        this.context.setHeaderTopData({color: this.state.color, ...rest});
     };
 
     textActionsHandler = (e) => {
@@ -108,24 +96,21 @@ class HeaderTop extends Component {
         currentState.textActions[name] = !this.state.textActions[name];
 
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
-        this.context.setHeaderTopData(text, {color: color, ...rest});
+        const {displayColorPicker, fontInputData, color, ...rest} = this.state;
+        this.context.setHeaderTopData({color: color, ...rest});
     };
 
     textChanges = (e) => {
-        const currentState = this.state;
-        currentState.text = e.currentTarget.value;
-        this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
-        this.context.setHeaderTopData(text, {color: color, ...rest});
+        const activeLocale = this.context.dataToExclude.activeLocale || null;
+        this.context.setTranslations(activeLocale, { name: e.currentTarget.value });
     };
 
     alignment = (e) => {
         const currentState = this.state;
         currentState.alignment = e.target.getAttribute('data-id');
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, color, ...rest} = this.state;
-        this.context.setHeaderTopData(text, {color: color, ...rest});
+        const {displayColorPicker, fontInputData, color, ...rest} = this.state;
+        this.context.setHeaderTopData({color: color, ...rest});
     };
 
     render() {
@@ -142,6 +127,8 @@ class HeaderTop extends Component {
             bottom: '0px',
             left: '0px',
         };
+        const language = this.context.dataToExclude.activeLocale || null;
+        const translation = this.context.translations[language] || {};
         return (
             <div>
                 <div className="row">
@@ -198,7 +185,7 @@ class HeaderTop extends Component {
                         </div>
                         <div className="innerRow">
                             <textarea onChange={this.textChanges} data-cy="headerTopText"
-                                      defaultValue={this.state.text}></textarea>
+                                      value={translation.name}></textarea>
                         </div>
                     </div>
                 </div>

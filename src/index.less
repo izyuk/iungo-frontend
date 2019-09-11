@@ -1909,6 +1909,38 @@ header {
               }
             }
           }
+          .multi-select {
+            width: 100%;
+            .dropdown-heading {
+              border-color: @pale-grey-six!important;
+            }
+            .dropdown-heading-dropdown-arrow span {
+              border-color: @steel-four transparent transparent!important;
+            }
+            .dropdown-heading-value span {
+              .font(@avenir-medium, 12);
+            }
+          }
+
+          &.langTabs {
+            margin: 10px -24px 20px;
+            width: auto;
+            align-self: stretch;
+            border-bottom: 1px solid @pale-grey-six;
+            padding: 0 10px;
+            .langTab {
+              padding: 8px 14px;
+              .font(@avenir-medium, 12);
+              border: 1px solid @pale-grey-six;
+              border-radius: 4px 4px 0 0;
+              margin: 0 -1px -1px 0;
+              cursor: pointer;
+            }
+            .langTabActive {
+              font-weight: bold;
+              border-bottom-color: @pale-grey-two;
+            }
+          }
         }
       }
 

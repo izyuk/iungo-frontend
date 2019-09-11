@@ -40,7 +40,6 @@ class SuccessActions extends Component {
         color: {rgba: this.context.style.success_message.color.rgba, hex: this.context.style.success_message.color.hex},
         fontSize: this.context.style.success_message.fontSize,
         textActions: this.context.style.success_message.textActions,
-        text: this.context.successMessage,
         alignment: this.context.style.success_message.alignment,
         redirectURL: this.context.successRedirectUrl,
         family: this.context.style.success_message.family
@@ -58,28 +57,17 @@ class SuccessActions extends Component {
             fontSize: parseInt(value),
             fontInputData: parseInt(value)
         });
-        const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = this.state;
-        this.context.setSuccessMessageData(text, {color: color, ...rest});
+        const {displayColorPicker, fontInputData, color, redirectURL, ...rest} = this.state;
+        this.context.setSuccessMessageData({color: color, ...rest});
     };
 
     fontInputHandler = (value) => {
         const currentState = this.state;
         currentState.fontInputData = parseInt(value);
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = currentState;
-        this.context.setSuccessMessageData(text, {color: color, ...rest});
+        const {displayColorPicker, fontInputData, color, redirectURL, ...rest} = currentState;
+        this.context.setSuccessMessageData({color: color, ...rest});
     };
-
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.fontSize !== nextState.opacity) return true;
-        else if (this.state.color !== nextState.color) return true;
-        else if (this.state.displayColorPicker !== nextState.displayColorPicker) return true;
-        else if (this.state.textActions !== nextState.textActions) return true;
-        else if (this.state.text !== nextState.text) return true;
-        else if (this.state.redirectURL !== nextState.redirectURL) return true;
-        else if (this.state.alignment !== nextState.alignment) return true;
-        else return false;
-    }
 
     componentDidMount() {
         this.context.setSuccessMessageStatus(true);
@@ -88,8 +76,8 @@ class SuccessActions extends Component {
 
     componentWillUnmount() {
         this.context.setSuccessMessageStatus(false);
-        const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = this.state;
-        this.context.setSuccessMessageData(text, {color: color, ...rest});
+        const {displayColorPicker, fontInputData, color, redirectURL, ...rest} = this.state;
+        this.context.setSuccessMessageData({color: color, ...rest});
         this.context.redirectURLChanger(redirectURL);
     }
 
@@ -107,8 +95,8 @@ class SuccessActions extends Component {
         currentState.color.hex = color.hex;
         Palette.addUserColor(color.hex);
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, redirectURL, ...rest} = currentState;
-        this.context.setSuccessMessageData(text, {color: this.state.color, ...rest});
+        const {displayColorPicker, fontInputData, redirectURL, ...rest} = currentState;
+        this.context.setSuccessMessageData({color: this.state.color, ...rest});
     };
 
     textActionsHandler = (e) => {
@@ -116,16 +104,13 @@ class SuccessActions extends Component {
         const currentState = this.state;
         currentState.textActions[name] = !this.state.textActions[name];
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = currentState;
-        this.context.setSuccessMessageData(text, {color: color, ...rest});
+        const {displayColorPicker, fontInputData, color, redirectURL, ...rest} = currentState;
+        this.context.setSuccessMessageData({color: color, ...rest});
     };
 
     textChanges = (e) => {
-        const currentState = this.state;
-        currentState.text = e.currentTarget.value;
-        this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = currentState;
-        this.context.setSuccessMessageData(text, {color: color, ...rest});
+        const activeLocale = this.context.dataToExclude.activeLocale || null;
+        this.context.setTranslations(activeLocale, { successMessageText: e.currentTarget.value });
     };
 
     redirectURLChanges = (e) => {
@@ -145,16 +130,16 @@ class SuccessActions extends Component {
             currentState.redirectURL = e.currentTarget.value;
             this.setState(currentState);
         }
-        const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = currentState;
-        this.context.setSuccessMessageData(text, {color: color, ...rest});
+        const {displayColorPicker, fontInputData, color, redirectURL, ...rest} = currentState;
+        this.context.setSuccessMessageData({color: color, ...rest});
     };
 
     alignment = (e) => {
         const currentState = this.state;
         currentState.alignment = e.target.getAttribute('data-id');
         this.setState(currentState);
-        const {displayColorPicker, fontInputData, text, color, redirectURL, ...rest} = currentState;
-        this.context.setSuccessMessageData(text, {color: color, ...rest});
+        const {displayColorPicker, fontInputData, color, redirectURL, ...rest} = currentState;
+        this.context.setSuccessMessageData({color: color, ...rest});
     };
 
     render() {
@@ -171,6 +156,8 @@ class SuccessActions extends Component {
             bottom: '0px',
             left: '0px',
         };
+        const language = this.context.dataToExclude.activeLocale || null;
+        const translation = this.context.translations[language] || {};
         return (
             <div className="container active">
                 <div className="row">
@@ -222,7 +209,7 @@ class SuccessActions extends Component {
                         </div>
                         <div className="innerRow">
                             <textarea onChange={this.textChanges} data-cy="successText" onMouseUp={this.getText}
-                                      defaultValue={this.state.text}></textarea>
+                                      defaultValue={translation.successMessageText}></textarea>
                         </div>
                     </div>
                 </div>

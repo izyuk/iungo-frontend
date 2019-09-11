@@ -25,11 +25,11 @@ class ContentTab extends Component {
             <div className="dropdown">
                 <div className="wrap">
                     <div className={'head ' + ((activeTab === 'localization') ? 'active' : '')}
-                        data-cy="dropDownSuccessActions"
+                        data-cy="dropDownLocalizationSettings"
                         onClick={() => this.setState({ activeTab: 'localization' })}
                     >
-                        <span>Localization</span>
-                        <Icons.DropdownSvg/>
+                        <span>Language Settings</span>
+                        <Icons.DropdownIcon/>
                     </div>
                     {(activeTab === 'localization') ? <LocalozationSettings /> : false}
                 </div>
@@ -39,7 +39,7 @@ class ContentTab extends Component {
                         onClick={() => this.setState({ activeTab: 'font_settings' })}
                     >
                         <span>Font Settings</span>
-                        <Icons.DropdownSvg/>
+                        <Icons.DropdownIcon/>
                     </div>
                     {(activeTab === 'font_settings') ? <FontSettings /> : false}
                 </div>
@@ -49,7 +49,7 @@ class ContentTab extends Component {
                         onClick={() => this.setState({ activeTab: 'header' })}
                     >
                         <span>Header</span>
-                        <Icons.DropdownSvg/>
+                        <Icons.DropdownIcon/>
                     </div>
                     {(activeTab === 'header') ? <HeaderText /> : false}
                 </div>
@@ -59,7 +59,7 @@ class ContentTab extends Component {
                          onClick={() => this.setState({ activeTab: 'gdpr' })}
                     >
                         <span>GDPR</span>
-                        <Icons.DropdownSvg/>
+                        <Icons.DropdownIcon/>
                     </div>
                     {(activeTab === 'gdpr') ? <GDPR/> : false}
                 </div>
@@ -69,7 +69,7 @@ class ContentTab extends Component {
                          onClick={() => this.setState({ activeTab: 'login_methods' })}
                     >
                         <span>Login Methods</span>
-                        <Icons.DropdownSvg/>
+                        <Icons.DropdownIcon/>
                     </div>
                     {(activeTab === 'login_methods') ? <LoginMethods handler={this.props.handler}
                         methods={this.props.methods}
@@ -82,7 +82,7 @@ class ContentTab extends Component {
                         onClick={() => this.setState({ activeTab: 'footer' })}
                     >
                         <span>Footer</span>
-                        <Icons.DropdownSvg/>
+                        <Icons.DropdownIcon/>
                     </div>
                     {(activeTab === 'footer') ? <FooterEditor /> : false}
                 </div>
@@ -92,7 +92,7 @@ class ContentTab extends Component {
                         onClick={() => this.setState({ activeTab: 'success_actions' })}
                     >
                         <span>Success Actions</span>
-                        <Icons.DropdownSvg/>
+                        <Icons.DropdownIcon/>
                     </div>
                     {(activeTab === 'success_actions') ? <SuccessActions /> : false}
                 </div>

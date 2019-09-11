@@ -1,6 +1,7 @@
 import React, {Component} from "react";
-import CaptivePortalContext from "../../../../../../context/project-context";
-import {getFontById} from "../../../../../../api/API";
+import CaptivePortalContext from "~/context/project-context";
+import {getFontById} from "~/api/API";
+import Icons from '~/static/images/icons';
 
 class FontSettings extends Component {
 
@@ -102,11 +103,7 @@ class FontSettings extends Component {
                                         }
                                     </select>
                                     <p className="select">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24">
-                                            <path fill="#BFC5D2" fillRule="nonzero"
-                                                  d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                                        </svg>
+                                        <Icons.DropdownIcon/>
                                     </p>
                                 </div>
                             </div>

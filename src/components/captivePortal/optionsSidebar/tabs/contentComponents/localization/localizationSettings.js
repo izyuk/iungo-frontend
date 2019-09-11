@@ -1,17 +1,11 @@
 import React, {Component} from 'react';
 import CaptivePortalContext from "~/context/project-context";
 import Icons from '~/static/images/icons';
+import MultiSelect from "@khanacademy/react-multi-select";
 
 class LocalozationSettings extends Component {
 
     static contextType = CaptivePortalContext;
-
-    languageSelect = React.createRef();
-
-    languageHandler = (e) => {
-        const value = (e &&e.currentTarget.options[e.currentTarget.selectedIndex].value) || '';
-        this.context.setActiveLocale(value);
-    };
 
     onTextChange = (e) => {
         const val = e.currentTarget.value;
@@ -20,43 +14,72 @@ class LocalozationSettings extends Component {
         this.context.setTranslations(activeLocale, { [name]: val });
     };
 
+    handleSelectedChanged(selected){
+        if (selected.length) {
+            this.context.translationsLanguages.map(lang => {
+                if (selected.indexOf(lang) === -1) {
+                    this.context.setTranslations(lang, {}, true);
+                }
+            });
+            selected.map(lang => {
+                if (this.context.translationsLanguages.indexOf(lang) === -1) {
+                    this.context.setTranslations(lang, {});
+                }
+            });
+        } else {
+            this.context.setNotification('At least one language should be chosen', true, 'info');
+            setTimeout(() => {
+                this.context.setNotification('', false, false);
+            }, 3000);
+        }
+    }
+
     render() {
         const language = this.context.dataToExclude.activeLocale || null;
         const languages = this.context.dataToExclude.locales || [];
+        const translationsLanguages = this.context.translationsLanguages;
         const translation = this.context.translations[language] || {};
         const langShort = this.context.convertLocaleName(language);
         const LangIcon = Icons[`Flag${langShort}`];
+        const multiSelectOptions = [];
+        languages.map(item => multiSelectOptions.push({ label: item, value: item }));
         return (
             <div className="container active">
                 <div className="row">
                     <div className="logoLeft">
-                        <span className="header">
-                            Language
+                        <span className="fieldLabel">
+                            Languages
                         </span>
                     </div>
                     <div className="right">
                         <div className="innerRow">
                             <div className="innerCol">
                                 <div className="innerRow">
-                                    <select ref={this.languageSelect}
-                                            data-cy='languageSettings'
-                                            onChange={this.languageHandler}
-                                            value={language}
-                                    >
-                                        {
-                                            languages.map((languageItem, i) => {
-                                                return (<option key={i} value={languageItem}>{languageItem}</option>)
-                                            })
-                                        }
-                                    </select>
-                                    <p className="select">
-                                        <span>{language} {LangIcon && <LangIcon/>}</span>
-                                        <Icons.DropdownSvg/>
-                                    </p>
+                                    <MultiSelect
+                                        options={multiSelectOptions}
+                                        selected={translationsLanguages}
+                                        valueRenderer={(selected) => selected.join(', ')}
+                                        disableSearch={true}
+                                        onSelectedChanged={this.handleSelectedChanged.bind(this)}
+                                        hasSelectAll={false}
+                                        overrideStrings={{
+                                            selectSomeItems: 'Select Languages',
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className="row langTabs">
+                    {translationsLanguages.map((languageItem, i) => (
+                        <div key={i}
+                            className={'langTab ' + (language === languageItem ? 'langTabActive' : '')}
+                            onClick={() => this.context.setActiveLocale(languageItem)}
+                        >
+                            {languageItem || 'Language'}
+                        </div>
+                    ))}
                 </div>
                 <div className="row">
                     <div className="logoLeft">
