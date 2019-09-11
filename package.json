@@ -32,7 +32,8 @@
   "scripts": {
     "start": "webpack-dev-server --mode development --open ---hot --env.ENVIRONMENT=development",
     "start-for-tests": "webpack-dev-server --mode development --env.ENVIRONMENT=development",
-    "build": "webpack --mode production --env.ENVIRONMENT=production",
+    "build-production": "webpack --mode production --env.ENVIRONMENT=production",
+    "build-playground": "webpack --mode production --env.ENVIRONMENT=development",
     "cypress": "cypress open"
   },
   "devDependencies": {
