@@ -1,4 +1,19 @@
 export const GetBuilderParams = (storage) => {
-    const portalDataToSend = storage;
+    const portalDataToSend = Object.assign({}, storage);
+    delete portalDataToSend.translationsLanguages;
+    portalDataToSend.translations = [];
+    storage.translationsLanguages.map(lang => {
+        const translation = storage.translations[lang];
+        if (translation) {
+            portalDataToSend.translations.push({
+                language: lang,
+                header: translation.name,
+                description: translation.description,
+                footer: translation.footer,
+                acceptButtonText: translation.connectButtonText,
+                successMessage: translation.successMessageText,
+            })
+        }
+    })
     return portalDataToSend;
 };

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import Preview from './preview/preview';
 import Options from './optionsSidebar/options';
-import {getPortal, getPortalByUUID, getPublicFonts, getTemplate, getTermsAndConditionsParams, getAllLocale, getDefaultLocale} from "~/api/API";
+import {getPortal, getPortalByUUID, getPublicFonts, getTemplate, getTermsAndConditionsParams, getAllLocales, getDefaultLocale} from "~/api/API";
 import Loader from "~/loader";
 
 import {GetBuilderParams} from "./optionsSidebar/getBuilderParams";
@@ -34,21 +34,28 @@ class CaptivePortal extends Component {
 
     findPortal = async (str) => {
         if (!!!str) { str = localStorage.getItem('token'); }
+        const uuid = this.props.match.params.uuid;
+        const from = localStorage.getItem('from');
+        if (!(!!id || (!!uuid && uuid !== 'new'))) {
+            this.context.loaderHandler(true);
+            this.context.resetGlobalState();
+            this.context.loaderHandler(false);
+        }
         let defaultLocale = null, localeData = {};
         await getDefaultLocale(str).then(res => {
             defaultLocale = res.data.language;
-            this.context.setActiveLocale(defaultLocale);
         });
-        await getAllLocale(str).then(res => {
-            localeData = {};
+        await getAllLocales(str).then(res => {
             res.data.map(locale => {
                 localeData[locale.language] = locale;
             });
+            this.context.setLocaleData(localeData, uuid === 'new');
         });
-        const uuid = this.props.match.params.uuid;
-        const from = localStorage.getItem('from');
-        if(uuid === 'new' && from === 'templates'){
-            localStorage.removeItem('cpID');
+        if(uuid === 'new'){
+            if (from === 'templates') {
+                localStorage.removeItem('cpID');
+            }
+            this.context.setActiveLocale(defaultLocale);
         }
         let id = localStorage.getItem('cpID') || localStorage.getItem('templateID');
         if (!!id || (!!uuid && uuid !== 'new')) {
@@ -56,6 +63,24 @@ class CaptivePortal extends Component {
             this.context.loaderHandler(true);
             await query.then(res => {
                 const {data} = res;
+                // translations and locale settings
+                let activeLocale = defaultLocale;
+                const translations = data.translations || [];
+                translations.map((translation, i) => {
+                    const lang = translation.language;
+                    if (i === 0 || lang === defaultLocale) {
+                        activeLocale = lang;
+                    }
+                    this.context.setTranslations(lang, {
+                        name: translation.header,
+                        description: translation.description,
+                        footer: translation.footer,
+                        successMessageText: translation.successMessage,
+                        connectButtonText: translation.acceptButtonText,
+                    });
+                });
+                this.context.setActiveLocale(activeLocale);
+                // styles
                 const deviceTypes = ['desktop', 'mobile'];
                 deviceTypes.map(deviceType => {
                     // background
@@ -113,7 +138,6 @@ class CaptivePortal extends Component {
                     acceptButtonFont: data.style.accept_button_font,
                     acceptButtonBorder: data.style.accept_button_border
                 });
-                this.context.setLocaleData(localeData, Boolean(from === 'templates'));
                 this.context.setTermsFromBE(data.termAndCondition);
                 if (!!data.termAndCondition) {
                     this.context.setGDPRSettings({
@@ -135,13 +159,6 @@ class CaptivePortal extends Component {
                     });
                 }
                 if (from !== 'templates') {
-                    this.context.setTranslations(defaultLocale, {
-                        name: data.header,
-                        description: data.description,
-                        footer: data.footer,
-                        successMessageText: data.successMessage,
-                        connectButtonText: data.acceptButtonText,
-                    });
                     if (data.externalCss.length > 0) {
                         const styledElements = document.querySelectorAll('.previewWrap [style]');
                         let stylesArray = [];
@@ -165,10 +182,6 @@ class CaptivePortal extends Component {
                 this.context.addPortalName(data.name);
             })
             .catch(err => console.error(err));
-            this.context.loaderHandler(false);
-        } else {
-            this.context.loaderHandler(true);
-            this.context.resetGlobalState(localeData);
             this.context.loaderHandler(false);
         }
     };

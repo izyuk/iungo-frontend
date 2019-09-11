@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getSummaryAnalytics, getDailyVisitsAnalytics, getNewVisitsAnalytics, getPopularHoursAnalytics} from "../../api/API";
+import {getSummaryAnalytics, getDailyVisitsAnalytics, getNewVisitsAnalytics, getPopularHoursAnalytics} from "~/api/API";
 import {withRouter} from "react-router-dom";
 import moment from 'moment';
 import {Line, Bar, Chart} from 'react-chartjs-2';

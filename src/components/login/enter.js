@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
 import Login from './login';
-import Loader from '../../loader';
-import Notification from "../additional/notification";
+import Loader from '~/loader';
+import Notification from "~/components//additional/notification";
 
-import CaptivePortalContext from "../../context/project-context";
+import CaptivePortalContext from "~/context/project-context";
 
 class Enter extends Component {
 

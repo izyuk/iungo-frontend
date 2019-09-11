@@ -1,4 +1,4 @@
-import {createNewTemplate, createPortal, updatePortal} from "../../../api/API";
+import {createNewTemplate, createPortal, updatePortal} from "~/api/API";
 
 export const PublishPortalMethodHandler = async (event, portalDataToSend, cpID) => {
     const token = localStorage.getItem('token');

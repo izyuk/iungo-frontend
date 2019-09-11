@@ -117,7 +117,7 @@ export const getDefaultLocale = (token) => {
         .then(res => res)
         .catch(err => authChecker(err.response));
 };
-export const getAllLocale = (token) => {
+export const getAllLocales = (token) => {
     return axios({
         method: 'get',
         headers: {
