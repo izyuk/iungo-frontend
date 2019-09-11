@@ -94,13 +94,20 @@ class ProfileDetails extends Component {
         const query = getCompanyProfileInfo(this.token);
         await query.then(res => {
             console.log(res);
-            const {data: {id, createdAt, updatedAt, uuid, ...rest}} = res;
-            this.selectOnMountHandler(this.language, rest.locale);
-            this.setState(rest);
-            if (this._form && this._form.setValues) {
-                this._form.setValues(rest);
+            if (res.status === 200) {
+                const {data: {id, createdAt, updatedAt, uuid, ...rest}} = res;
+                this.selectOnMountHandler(this.language, rest.locale);
+                this.setState(rest);
+                if (this._form && this._form.setValues) {
+                    this._form.setValues(rest);
+                }
+            } else if (res.status !== 404) {
+                console.error(res);
             }
             this.context.loaderHandler(false);
+        }).catch(err => {
+            this.context.loaderHandler(false);
+            console.error(err);
         });
         this.context.profileHandler(this.state);
     };
