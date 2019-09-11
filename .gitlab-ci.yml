@@ -7,18 +7,6 @@ stages:
   - build
   - deploy
 
-npm-build:
-  only:
-    - master
-  image: node:10-alpine
-  stage: build
-  script:
-    - npm i
-    - npm run build-production
-  artifacts:
-    paths:
-      - build/*
-
 cypress-testing:
  image: cypress/base:10
  stage: testing
@@ -31,6 +19,18 @@ cypress-testing:
    - $(npm bin)/cypress verify
    - $(npm bin)/cypress run
 
+playground-npm-build:
+  only:
+    - master
+  image: node:10-alpine
+  stage: build
+  script:
+    - npm i
+    - npm run build-playground
+  artifacts:
+    paths:
+      - build/*
+
 playground-deploy-to-s3:
   only:
     - master
@@ -39,23 +39,35 @@ playground-deploy-to-s3:
   script:
     - apt-get update && apt-get -y install python3 python3-pip
     - pip3 --no-cache-dir install --upgrade awscli
-    - export AWS_ACCESS_KEY_ID=AKIAJR5HUU2B75ROLR6Q
-    - export AWS_SECRET_ACCESS_KEY=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
+    - export AWS_ACCESS_KEY_ID=$CI_AWS_ACCESS_KEY_ID
+    - export AWS_SECRET_ACCESS_KEY=$CI_AWS_SECRET_ACCESS_KEY
     - export AWS_DEFAULT_REGION=eu-west-1
     - aws s3 cp build/ s3://playground-app.bravofy.com/ --recursive
     - aws s3 cp build/index.js s3://playground-app.bravofy.com/index.js --cache-control 'no-cache'
     - aws s3 cp build/index.html s3://playground-app.bravofy.com/index.html --cache-control 'no-cache'
 
+prod-npm-build:
+  only:
+    - production
+  image: node:10-alpine
+  stage: build
+  script:
+    - npm i
+    - npm run build-production
+  artifacts:
+    paths:
+      - build/*
+
 prod-deploy-to-s3:
   only:
-    - master
+    - production
   image: ubuntu:18.04
   stage: deploy
   script:
     - apt-get update && apt-get -y install python3 python3-pip
     - pip3 --no-cache-dir install --upgrade awscli
-    - export AWS_ACCESS_KEY_ID=AKIAJR5HUU2B75ROLR6Q
-    - export AWS_SECRET_ACCESS_KEY=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
+    - export AWS_ACCESS_KEY_ID=$CI_AWS_ACCESS_KEY_ID
+    - export AWS_SECRET_ACCESS_KEY=$CI_AWS_SECRET_ACCESS_KEY
     - export AWS_DEFAULT_REGION=eu-west-1
     - aws s3 cp build/ s3://app.bravofy.com/ --recursive
     - aws s3 cp build/index.js s3://app.bravofy.com/index.js --cache-control 'no-cache'
