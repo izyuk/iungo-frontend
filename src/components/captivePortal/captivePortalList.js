@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {getAllPortals} from "../../api/API";
-import {dateISO} from '../../modules/dateISO';
-import Loader from "../../loader";
+import {getAllPortals} from "~/api/API";
+import {dateISO} from '~/modules/dateISO';
+import Loader from "~/loader";
 import {Link, Redirect} from "react-router-dom";
-import CaptivePortalContext from "../../context/project-context";
+import CaptivePortalContext from "~/context/project-context";
 import {AgGridReact} from "ag-grid-react";
 
 class CaptivePortalList extends Component {

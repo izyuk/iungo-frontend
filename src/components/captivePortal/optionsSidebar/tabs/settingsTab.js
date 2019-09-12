@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import CSS from './settingsComponents/css';
+import Icons from '~/static/images/icons';
 
 class SettingsTab extends Component {
     constructor(props) {
@@ -43,10 +44,7 @@ class SettingsTab extends Component {
                         onClick={this.dropDownHandler}
                         ref={this.CSS}>
                         <span>CSS</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="#BFC5D2" fillRule="nonzero"
-                                  d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                        </svg>
+                        <Icons.DropdownIcon/>
                     </div>
                     {this.state.visible === 'CSS' ?
                         <CSS findPortal={this.props.findPortal} clearExternalCss={this.props.clearExternalCss}/> :

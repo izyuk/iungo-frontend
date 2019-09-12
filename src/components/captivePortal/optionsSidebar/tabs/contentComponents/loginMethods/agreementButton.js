@@ -4,6 +4,7 @@ import Palette from '~/static/styles/palette';
 import Tooltip from 'rc-tooltip';
 import Slider from 'rc-slider';
 import CaptivePortalContext from "~/context/project-context";
+import Icons from '~/static/images/icons';
 
 const style = {
     marginRight: 16,
@@ -36,7 +37,6 @@ class AgreementButton extends Component {
 
     state = {
         fontInputData: this.context.style.accept_button_font.fontSize,
-        acceptButtonText: this.context.acceptButtonText,
         acceptButtonColor: this.context.style.accept_button_color,
         acceptButtonFont: this.context.style.accept_button_font,
         acceptButtonSize: this.context.style.accept_button_size,
@@ -70,15 +70,6 @@ class AgreementButton extends Component {
         const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, fontInputData, ...rest} = currentState;
         this.context.setButtonStyles(rest);
     };
-
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state !== nextState) {
-            return true;
-        } else if (this.state.fontInputData !== nextState.fontInputData) {
-            return true;
-        } else
-            return false;
-    }
 
     componentDidMount() {
         const select = document.querySelectorAll('[data-component="ContentBorder"]');
@@ -169,19 +160,9 @@ class AgreementButton extends Component {
         this.context.setButtonStyles(rest);
     };
 
-    emptyFieldCheck = (e) => {
-        if (e.currentTarget.value === '') {
-            this.setState({acceptButtonText: 'Connect'});
-            e.currentTarget.value = 'Connect'
-        }
-    };
-
     textChanges = (e) => {
-        const currentState = this.state;
-        currentState.acceptButtonText = e.currentTarget.value;
-        this.setState(currentState);
-        const {displayTextColorPicker, displayBackgroundColorPicker, displayBorderColorPicker, fontInputData, ...rest} = currentState;
-        this.context.setButtonStyles(rest);
+        const activeLocale = this.context.dataToExclude.activeLocale || null;
+        this.context.setTranslations(activeLocale, { connectButtonText: e.currentTarget.value });
     };
 
     alignment = (e) => {
@@ -239,12 +220,13 @@ class AgreementButton extends Component {
             left: '0px',
         };
         const {
-            acceptButtonText,
             acceptButtonColor,
             acceptButtonFont,
             acceptButtonSize,
             acceptButtonBorder
         } = this.state;
+        const language = this.context.dataToExclude.activeLocale || null;
+        const translation = this.context.translations[language] || {};
         return (
             <div className={'agreement'}>
                 <div className="row">
@@ -306,8 +288,7 @@ class AgreementButton extends Component {
                             <input type={'text'}
                                    style={{maxWidth: '100%'}}
                                    onChange={this.textChanges}
-                                   onBlur={this.emptyFieldCheck}
-                                   defaultValue={acceptButtonText}
+                                   value={translation.connectButtonText}
                                    data-cy="connectButtonText"/>
                         </div>
                     </div>
@@ -446,10 +427,7 @@ class AgreementButton extends Component {
                                 <option value="dashed">Dashed</option>
                             </select>
                             <p className="select">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#BFC5D2" fillRule="nonzero"
-                                          d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                                </svg>
+                                <Icons.DropdownIcon/>
                             </p>
                         </div>
                     </div>
@@ -499,10 +477,7 @@ class AgreementButton extends Component {
                                 <option value="5">5</option>
                             </select>
                             <p className="select tin">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#BFC5D2" fillRule="nonzero"
-                                          d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                                </svg>
+                                <Icons.DropdownIcon/>
                             </p>
                         </div>
                     </div>
@@ -526,10 +501,7 @@ class AgreementButton extends Component {
                                 <option value="5">5</option>
                             </select>
                             <p className="select tin">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#BFC5D2" fillRule="nonzero"
-                                          d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                                </svg>
+                                <Icons.DropdownIcon/>
                             </p>
                         </div>
                     </div>

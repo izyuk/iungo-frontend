@@ -308,6 +308,8 @@ context('Content tab', function () {
         it('Top text test', () => {
             cy.get('[data-cy="contentTab"]')
                 .click({force: true});
+            cy.get('[data-cy="dropDownHeader"]')
+                .click({force: true});
         });
 
         it('Add all top text font styles', () => {
@@ -873,6 +875,7 @@ context('Starting comparing collected data', function () {
                         successRedirectUrl: "",
                         termAndConditionId: "",
                         acceptButtonText: "Connect FOR FREE",
+                        translationsLanguages: ['English'],
                     };
                     const store = {...win.__store__.collectDataToTest};
                     console.log('Store', store);

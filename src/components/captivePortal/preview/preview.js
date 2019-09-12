@@ -1,13 +1,17 @@
 import React, {Component} from 'react';
 
 import Methods from './methods';
-import CaptivePortalContext from "../../../context/project-context";
+import LanguagesModal from './languagesModal';
+import CaptivePortalContext from "~/context/project-context";
+import Icons from '~/static/images/icons';
 
 
 class Preview extends Component {
     static contextType = CaptivePortalContext;
 
-    state = {};
+    state = {
+        showLanguagesModal: false
+    };
 
     PreviewMain = React.createRef();
     ContainerMain = React.createRef();
@@ -66,11 +70,8 @@ class Preview extends Component {
         BODY.appendChild(styleTag);
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return (this.context !== nextContext);
-    }
-
     render() {
+        const { showLanguagesModal } = this.state;
         const {
             style: {
                 header: {top, description},
@@ -80,6 +81,11 @@ class Preview extends Component {
             previewDeviceType,
         } = this.context;
         const logo = background_and_logo[`${previewDeviceType}Logo`] || background_and_logo.desktopLogo;
+
+        const language = this.context.dataToExclude.activeLocale || null;
+        const translation = this.context.translations[language] || {};
+        const langShort = this.context.convertLocaleName(language);
+        const LangIcon = Icons[`Flag${langShort}`];
         return (
             <div className="previewWrap">
                 <div className={(this.context.previewDeviceType === 'mobile') ? "previewMain mobile" : "previewMain"}
@@ -96,17 +102,17 @@ class Preview extends Component {
                             {this.context.dataToExclude.successMessageStatus ?
                                 <div className="contentPlace" data-cy="successTextPreview">
                                     <p className="text">
-                                        {this.context.successMessage && this.context.successMessage}
+                                        {translation.successMessageText}
                                     </p>
                                 </div>
                                 : <div className="contentPlace">
                                     <div className="textPlace">
                                         <p className="head" data-cy="headerTopTextPreview">
-                                            {this.context.header && this.context.header}
+                                            {translation.name}
                                         </p>
 
                                         <p className="description" data-cy="headerDescriptionTextPreview">
-                                            {this.context.description && this.context.description}
+                                            {translation.description}
                                         </p>
                                     </div>
                                     {gdprSettingsStatus ?
@@ -135,15 +141,19 @@ class Preview extends Component {
                                     <Methods/>
                                 </div>
                             }
+                            <div className="langaugeSwitcher" onClick={() => this.setState({ showLanguagesModal: true })}>
+                                {LangIcon && <LangIcon/>}
+                            </div>
                         </div>
                     </div>
                     <div className="footer">
                         <div className="contentPlace">
                             <p className="text" ref={this.FooterText} data-cy="footerTextPreview">
-                                {this.context.footer && this.context.footer}
+                                {translation.footer}
                             </p>
                         </div>
                     </div>
+                    {Boolean(showLanguagesModal) && <LanguagesModal onClose={() => this.setState({ showLanguagesModal: false })} />}
                 </div>
             </div>
         )

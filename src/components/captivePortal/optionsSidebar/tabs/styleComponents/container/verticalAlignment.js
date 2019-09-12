@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import CaptivePortalContext from "../../../../../../context/project-context";
+import CaptivePortalContext from "~/context/project-context";
 
 class VerticalAlignment extends Component {
     static contextType = CaptivePortalContext;

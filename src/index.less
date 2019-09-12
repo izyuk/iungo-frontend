@@ -537,6 +537,130 @@
       }
     }
   }
+  .langaugeSwitcher {
+    position: absolute;
+    top: -26px;
+    right: 0;
+    width: 35px;
+    height: 26px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom-color: transparent;
+    svg {
+      flex: 1;
+      max-width: 26px;
+      max-height: 26px;
+    }
+    &:active {
+      svg {
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+.languagesModalOverlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .languagesModal {
+    position: relative;
+    background: @w;
+    flex: 1;
+    border-radius: 5px;
+    min-height: 300px;
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0 30px;
+  }
+  .languagesModalClose {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    svg {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+  }
+  .languagesModalLogo {
+    width: 70px;
+  }
+  .languagesModalTitle {
+    color: @dark-sky-blue;
+    padding: 20px 30px;
+    .font(@avenir-medium, 14);
+    font-weight: bold;
+  }
+  .languagesModalList {
+    width: 100%;
+    flex-grow: 1;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .languagesModalItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 30px;
+    margin: 5px 0;
+    cursor: pointer;
+    &.active, &:hover {
+      background: @pale-grey;
+    }
+    .languagesModalFlag {
+      width: 20px;
+      height: 20px;
+      overflow: hidden;
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    p {
+      margin-right: 20px;
+      width: 120px;
+      padding: 0 10px;
+      text-align: center;
+      .font(@avenir-medium, 14);
+    }
+    &.active {
+      p {
+        font-weight: bold;
+      }
+    }
+  }
+  .languagesModalCloseButton {
+    flex-shrink: 0;
+    align-self: stretch;
+    margin: 20px 30px 0;
+    background: @dark-sky-blue;
+    text-align: center;
+    height: 36px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 20px;
+    color: @w;
+    .font(@avenir-medium, 14);
+    font-weight: bold;
+    cursor: pointer;
+  }
 }
 
 .logoPlace {
@@ -1309,6 +1433,12 @@ header {
               &.position {
                 line-height: 34px;
               }
+
+              &.fieldLabel {
+                line-height: 1.4;
+                padding-top: 4px;
+                display: inline-block;
+              }
             }
           }
 
@@ -1445,6 +1575,16 @@ header {
                   svg {
                     position: absolute;
                     right: 0;
+                  }
+
+                  span {
+                    svg {
+                      display: inline-block;
+                      position: relative;
+                      width: 16px;
+                      height: 16px;
+                      margin: -3px 2px;
+                    }
                   }
                 }
               }
@@ -1767,6 +1907,38 @@ header {
                   }
                 }
               }
+            }
+          }
+          .multi-select {
+            width: 100%;
+            .dropdown-heading {
+              border-color: @pale-grey-six!important;
+            }
+            .dropdown-heading-dropdown-arrow span {
+              border-color: @steel-four transparent transparent!important;
+            }
+            .dropdown-heading-value span {
+              .font(@avenir-medium, 12);
+            }
+          }
+
+          &.langTabs {
+            margin: 10px -24px 20px;
+            width: auto;
+            align-self: stretch;
+            border-bottom: 1px solid @pale-grey-six;
+            padding: 0 10px;
+            .langTab {
+              padding: 8px 14px;
+              .font(@avenir-medium, 12);
+              border: 1px solid @pale-grey-six;
+              border-radius: 4px 4px 0 0;
+              margin: 0 -1px -1px 0;
+              cursor: pointer;
+            }
+            .langTabActive {
+              font-weight: bold;
+              border-bottom-color: @pale-grey-two;
             }
           }
         }
