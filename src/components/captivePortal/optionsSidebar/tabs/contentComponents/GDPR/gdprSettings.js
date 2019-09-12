@@ -292,7 +292,7 @@ class GDPR extends Component {
             )
         } else {
             return (
-                <div className="container">
+                <div className="container active">
                     <p style={{
                         width: '100%',
                         textAlign: 'center',
