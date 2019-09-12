@@ -183,4 +183,7 @@ const captivePortalDefault = {
     translationsLanguages: [],
     translations: {},
 };
-export default captivePortalDefault;
+
+export const getCaptivePortalDefault = () => {
+    return JSON.parse( JSON.stringify(captivePortalDefault) );
+}
