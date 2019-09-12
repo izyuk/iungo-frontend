@@ -614,7 +614,7 @@ context('Tests finished', function () {
     describe('Open Preview', () => {
         it('Going to preview', () => {
             cy.get('[data-cy="previewBtn"]')
-                .click({force: true});
+                .click({force: true}).wait(1000);
         })
     })
 });
