@@ -5,6 +5,7 @@ import CaptivePortalContext from "~/context/project-context";
 import Loader from "~/loader";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import Icons from '~/static/images/icons';
 
 const ValidationSchema = Yup.object().shape({
     name: Yup.string()
@@ -93,13 +94,20 @@ class ProfileDetails extends Component {
         const query = getCompanyProfileInfo(this.token);
         await query.then(res => {
             console.log(res);
-            const {data: {id, createdAt, updatedAt, uuid, ...rest}} = res;
-            this.selectOnMountHandler(this.language, rest.locale);
-            this.setState(rest);
-            if (this._form && this._form.setValues) {
-                this._form.setValues(rest);
+            if (res.status === 200) {
+                const {data: {id, createdAt, updatedAt, uuid, ...rest}} = res;
+                this.selectOnMountHandler(this.language, rest.locale);
+                this.setState(rest);
+                if (this._form && this._form.setValues) {
+                    this._form.setValues(rest);
+                }
+            } else if (res.status !== 404) {
+                console.error(res);
             }
             this.context.loaderHandler(false);
+        }).catch(err => {
+            this.context.loaderHandler(false);
+            console.error(err);
         });
         this.context.profileHandler(this.state);
     };
@@ -303,10 +311,7 @@ class ProfileDetails extends Component {
                                 <option value="EN" data-cy="profileLocaleSelectOption">English</option>
                             </select>
                             <p className="select">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
-                                    <path fill="#ffffff" fillRule="nonzero"
-                                          d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                                </svg>
+                                <Icons.DropdownIcon fill="#FFF"/>
                             </p>
                         </div>
                         <div className="controlsRow">

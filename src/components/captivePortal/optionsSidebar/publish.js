@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {previewPortal} from "../../../api/API";
+import {previewPortal} from "~/api/API";
 import {PublishPortalMethodHandler} from './publishPortalMethodHandler';
 import {GetBuilderParams} from './getBuilderParams';
-import Notification from "../../additional/notification";
-import CaptivePortalContext from "../../../context/project-context";
+import Notification from "~/components/additional/notification";
+import CaptivePortalContext from "~/context/project-context";
 
 class Publish extends Component {
 
@@ -59,6 +59,11 @@ class Publish extends Component {
                 setFontsCollection,
                 setFontData,
                 setFontBase64,
+                setLocaleData,
+                setActiveLocale,
+                convertLocaleName,
+                setTranslations,
+                clearTranslations,
                 setContainerVerticalPosition,
                 previewDeviceType,
                 mobileSettingsTouched,
@@ -128,6 +133,11 @@ class Publish extends Component {
             setFontsCollection,
             setFontData,
             setFontBase64,
+            setLocaleData,
+            setActiveLocale,
+            convertLocaleName,
+            setTranslations,
+            clearTranslations,
             setContainerVerticalPosition,
             previewDeviceType,
             mobileSettingsTouched,

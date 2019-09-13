@@ -4,13 +4,18 @@ import LoginMethods from './contentComponents/loginMethods/loginMethods';
 import GDPR from './contentComponents/GDPR/gdprSettings';
 import FontSettings from './contentComponents/fontSettings/fontSettings';
 import SuccessActions from './contentComponents/successMessage/successMessage';
-import FooterEditor from './contentComponents/footerEditor/footerEditor'
+import LocalozationSettings from './contentComponents/localization/localizationSettings';
+import FooterEditor from './contentComponents/footerEditor/footerEditor';
+import CaptivePortalContext from '~/context/project-context';
+import Icons from '~/static/images/icons';
 
 class ContentTab extends Component {
+    static contextType = CaptivePortalContext;
+
     constructor(props) {
         super(props);
         this.state = {
-            activeTab: 'header'
+            activeTab: 'localization'
         };
     }
 
@@ -19,15 +24,22 @@ class ContentTab extends Component {
         return (
             <div className="dropdown">
                 <div className="wrap">
+                    <div className={'head ' + ((activeTab === 'localization') ? 'active' : '')}
+                        data-cy="dropDownLocalizationSettings"
+                        onClick={() => this.setState({ activeTab: 'localization' })}
+                    >
+                        <span>Language Settings</span>
+                        <Icons.DropdownIcon/>
+                    </div>
+                    {(activeTab === 'localization') ? <LocalozationSettings /> : false}
+                </div>
+                <div className="wrap">
                     <div className={'head ' + ((activeTab === 'font_settings') ? 'active' : '')}
                         data-cy="dropDownFontSettings"
                         onClick={() => this.setState({ activeTab: 'font_settings' })}
                     >
                         <span>Font Settings</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="#BFC5D2" fillRule="nonzero"
-                                  d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                        </svg>
+                        <Icons.DropdownIcon/>
                     </div>
                     {(activeTab === 'font_settings') ? <FontSettings /> : false}
                 </div>
@@ -37,10 +49,7 @@ class ContentTab extends Component {
                         onClick={() => this.setState({ activeTab: 'header' })}
                     >
                         <span>Header</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="#BFC5D2" fillRule="nonzero"
-                                  d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                        </svg>
+                        <Icons.DropdownIcon/>
                     </div>
                     {(activeTab === 'header') ? <HeaderText /> : false}
                 </div>
@@ -50,10 +59,7 @@ class ContentTab extends Component {
                          onClick={() => this.setState({ activeTab: 'gdpr' })}
                     >
                         <span>GDPR</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="#BFC5D2" fillRule="nonzero"
-                                  d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                        </svg>
+                        <Icons.DropdownIcon/>
                     </div>
                     {(activeTab === 'gdpr') ? <GDPR/> : false}
                 </div>
@@ -63,10 +69,7 @@ class ContentTab extends Component {
                          onClick={() => this.setState({ activeTab: 'login_methods' })}
                     >
                         <span>Login Methods</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="#BFC5D2" fillRule="nonzero"
-                                  d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                        </svg>
+                        <Icons.DropdownIcon/>
                     </div>
                     {(activeTab === 'login_methods') ? <LoginMethods handler={this.props.handler}
                         methods={this.props.methods}
@@ -79,10 +82,7 @@ class ContentTab extends Component {
                         onClick={() => this.setState({ activeTab: 'footer' })}
                     >
                         <span>Footer</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="#BFC5D2" fillRule="nonzero"
-                                  d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                        </svg>
+                        <Icons.DropdownIcon/>
                     </div>
                     {(activeTab === 'footer') ? <FooterEditor /> : false}
                 </div>
@@ -92,10 +92,7 @@ class ContentTab extends Component {
                         onClick={() => this.setState({ activeTab: 'success_actions' })}
                     >
                         <span>Success Actions</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="#BFC5D2" fillRule="nonzero"
-                                  d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                        </svg>
+                        <Icons.DropdownIcon/>
                     </div>
                     {(activeTab === 'success_actions') ? <SuccessActions /> : false}
                 </div>

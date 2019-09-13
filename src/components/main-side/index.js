@@ -8,7 +8,7 @@ import CaptivePortal from "../captivePortal/captive-portal";
 import CaptivePortalTemplates from "../captivePortal/captive-portal-templates";
 import CaptivePortalList from "../captivePortal/captivePortalList";
 import Profile from '../profile/profile';
-import CaptivePortalContext from "../../context/project-context";
+import CaptivePortalContext from "~/context/project-context";
 import HotspotEditor from "../hotspot/hotspotEditor";
 import Settings from '../settings/settings';
 

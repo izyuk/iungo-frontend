@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import FileBase64 from 'react-file-base64';
 
 class Modal extends Component {
 
@@ -36,10 +37,7 @@ class Modal extends Component {
                     </div>
                     <div className="modalFooter">
                         <div className="upload">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path fill="#FFF" fillRule="nonzero"
-                                      d="M17 11.1V11c0-2.8-2.2-5-5-5-2.5 0-4.6 1.8-4.9 4.3-1.8.6-3.1 2.2-3.1 4.2C4 17 6 19 8.5 19H16c2.2 0 4-1.8 4-4 0-1.9-1.3-3.4-3-3.9zM13 14v3h-2v-3H8l4-4 4 4h-3z"/>
-                            </svg>
+                            <Icons.UploadIcon fill="#FFF"/>
                             <span>Upload</span>
                             {/*<FileBase64*/}
                             {/*    multiple={false}*/}
@@ -66,8 +64,6 @@ class Modal extends Component {
                             </div>
                         </div>
                         }
-
-
 
                         {
                             (this.props.progress === 100 || this.props.imageEventType === 'click') &&

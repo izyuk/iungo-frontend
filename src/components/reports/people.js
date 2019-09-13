@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import Notification from "../additional/notification";
-import {exportHotspotUsersCSV, getHotspotUsers} from "../../api/API";
-import {dateISO} from '../../modules/dateISO';
+import Notification from "~/components/additional/notification";
+import {exportHotspotUsersCSV, getHotspotUsers} from "~/api/API";
+import {dateISO} from '~/modules/dateISO';
 import {withRouter} from "react-router-dom";
 import {AgGridReact} from "ag-grid-react";
 

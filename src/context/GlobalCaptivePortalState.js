@@ -1,193 +1,12 @@
 import React, {Component} from 'react';
 import CaptivePortalContext from './project-context';
-import Palette from '../static/styles/palette';
+import Palette from '~/static/styles/palette';
+import CaptivePortalDefault from '~/context/CaptivePortalDefault';
 
 class GlobalCaptivePortalState extends Component {
 
     state = {
-        background: '',
-        name: '',
-        externalCss: '',
-        desktopLogoId: '',
-        mobileLogoId: '',
-        desktopBackgroundId: '',
-        mobileBackgroundId: '',
-        header: 'Company name',
-        description: 'Venue description',
-        footer: 'Footer content',
-        successMessage: 'Default success message',
-        style: {
-            header: {
-                top: {
-                    color: Palette.getColor('BLUE'),
-                    fontSize: 18,
-                    family: '',
-                    textActions: {
-                        bold: false,
-                        italic: false,
-                        underline: false
-                    },
-                    alignment: 'center'
-                },
-                description: {
-                    color: Palette.getColor('BLUE'),
-                    fontSize: 18,
-                    family: '',
-                    textActions: {
-                        bold: false,
-                        italic: false,
-                        underline: false
-                    },
-                    alignment: 'center'
-                },
-            },
-            footer: {
-                color: Palette.getColor('BLUE'),
-                fontSize: 18,
-                family: '',
-                textActions: {
-                    bold: false,
-                    italic: false,
-                    underline: false
-                },
-                alignment: 'center'
-            },
-            gdpr_settings: {
-                color: Palette.getColor('BLUE'),
-                fontSize: 14,
-                family: '',
-            },
-            success_message: {
-                color: Palette.getColor('BLUE'),
-                fontSize: 18,
-                family: '',
-                textActions: {
-                    bold: false,
-                    italic: false,
-                    underline: false
-                },
-                alignment: 'center'
-            },
-            background_and_logo: {
-                desktopBackground: {
-                    url: '',
-                    color: Palette.getColor('PALE_GREY_THREE'),
-                    backgroundType: 'COLOR',
-                    repeat: 'repeat',
-                    position: {
-                        inPercentDimension: true,
-                        posX: 0,
-                        posY: 0,
-                        option: ''
-                    },
-                    attachment: 'scroll',
-                    size: {
-                        inPercentDimension: false,
-                        width: 0,
-                        height: 0,
-                        option: 'auto'
-                    },
-                },
-                mobileBackground: {
-                    url: '',
-                    color: Palette.getColor('PALE_GREY_THREE'),
-                    backgroundType: 'COLOR',
-                    repeat: 'repeat',
-                    position: {
-                        inPercentDimension: true,
-                        posX: 0,
-                        posY: 0,
-                        option: ''
-                    },
-                    attachment: 'scroll',
-                    size: {
-                        inPercentDimension: false,
-                        width: 0,
-                        height: 0,
-                        option: 'auto'
-                    },
-                },
-                desktopLogo: {
-                    url: '',
-                    horizontalPosition: 'center',
-                    verticalPosition: 'middle',
-                },
-                mobileLogo: {
-                    url: '',
-                    horizontalPosition: 'center',
-                    verticalPosition: 'middle',
-                },
-            },
-            desktop_container: {
-                background: {
-                    color: Palette.getColor('WHITE'),
-                    opacity: 100,
-                },
-                border: {
-                    color: Palette.getColor('PALE_GREY_THREE'),
-                    type: 'solid',
-                    thickness: 1,
-                    radius: 4,
-                },
-                size: {
-                    width: 720,
-                    padding: 20
-                },
-                position: {
-                    vertical: 'middle'
-                },
-            },
-            mobile_container: {
-                background: {
-                    color: Palette.getColor('WHITE'),
-                    opacity: 100,
-                },
-                border: {
-                    color: Palette.getColor('PALE_GREY_THREE'),
-                    type: 'solid',
-                    thickness: 1,
-                    radius: 4,
-                },
-                size: {
-                    width: 720,
-                    padding: 20
-                },
-                position: {
-                    vertical: 'middle'
-                },
-            },
-            accept_button_font: {
-                alignment: 'center',
-                color: Palette.getColor('BLUE'),
-                fontSize: 18,
-                family: '',
-                textActions: {
-                    bold: false,
-                    italic: false,
-                    underline: false
-                }
-            },
-            accept_button_color: Palette.getColor('WHITE'),
-            accept_button_size: {
-                width: 145,
-                padding: 10
-            },
-            accept_button_border: {
-                color: Palette.getColor('BLUE'),
-                radius: 5,
-                type: "solid",
-                thickness: 1
-            }
-        },
-        termAndConditionId: '',
-        fontIds: [],
-        googleLogin: false,
-        facebookLogin: false,
-        twitterLogin: false,
-        phoneLogin: false,
-        acceptTermsLogin: false,
-        successRedirectUrl: '',
-        acceptButtonText: 'Connect',
+        ...CaptivePortalDefault,
         dataToExclude: {
             successMessageStatus: false,
             gdprSettingsStatus: false,
@@ -207,7 +26,10 @@ class GlobalCaptivePortalState extends Component {
             stylesArray: '',
             token: '',
             urlPath: '',
-            gdprFromBE: ''
+            gdprFromBE: '',
+            localeData: {},
+            locales: [],
+            activeLocale: null,
         },
 
         previewDeviceType: 'desktop',
@@ -369,15 +191,13 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState)
     };
 
-    setHeaderTopData = (text, styles) => {
+    setHeaderTopData = (styles) => {
         const currentState = this.state;
-        if (text || text === '') currentState.header = text;
         currentState.style.header.top = styles;
         this.setState(currentState)
     };
-    setHeaderDescriptionData = (text, styles) => {
+    setHeaderDescriptionData = (styles) => {
         const currentState = this.state;
-        if (text || text === '') currentState.description = text;
         currentState.style.header.description = styles;
         this.setState(currentState)
     };
@@ -391,9 +211,8 @@ class GlobalCaptivePortalState extends Component {
             acceptTermsLogin: button
         })
     };
-    setFooterData = (text, styles) => {
+    setFooterData = (styles) => {
         const currentState = this.state;
-        if (text || text === '') currentState.footer = text;
         currentState.style.footer = styles;
         this.setState(currentState)
     };
@@ -409,17 +228,15 @@ class GlobalCaptivePortalState extends Component {
     };
     setButtonStyles = data => {
         const currentState = this.state;
-        const {acceptButtonText, acceptButtonBorder, acceptButtonColor, acceptButtonFont, acceptButtonSize} = data;
-        currentState.acceptButtonText = acceptButtonText;
+        const {acceptButtonBorder, acceptButtonColor, acceptButtonFont, acceptButtonSize} = data;
         currentState.style.accept_button_border = acceptButtonBorder;
         currentState.style.accept_button_color = acceptButtonColor;
         currentState.style.accept_button_font = acceptButtonFont;
         currentState.style.accept_button_size = acceptButtonSize;
         this.setState(currentState)
     };
-    setSuccessMessageData = (text, styles) => {
+    setSuccessMessageData = (styles) => {
         const currentState = this.state;
-        currentState.successMessage = text;
         currentState.style.success_message = styles;
         this.setState(currentState)
     };
@@ -484,189 +301,7 @@ class GlobalCaptivePortalState extends Component {
 
     resetGlobalState = async () => {
         const data = {
-            background: '',
-            name: '',
-            externalCss: '',
-            desktopLogoId: '',
-            mobileLogoId: '',
-            desktopBackgroundId: '',
-            mobileBackgroundId: '',
-            header: 'Company name',
-            description: 'Venue description',
-            footer: 'Footer content',
-            successMessage: 'Default success message',
-            style: {
-                header: {
-                    top: {
-                        color: Palette.getColor('BLUE'),
-                        fontSize: 18,
-                        family: '',
-                        textActions: {
-                            bold: false,
-                            italic: false,
-                            underline: false
-                        },
-                        alignment: 'center'
-                    },
-                    description: {
-                        color: Palette.getColor('BLUE'),
-                        fontSize: 18,
-                        family: '',
-                        textActions: {
-                            bold: false,
-                            italic: false,
-                            underline: false
-                        },
-                        alignment: 'center'
-                    },
-                },
-                footer: {
-                    color: Palette.getColor('BLUE'),
-                    fontSize: 18,
-                    family: '',
-                    textActions: {
-                        bold: false,
-                        italic: false,
-                        underline: false
-                    },
-                    alignment: 'center'
-                },
-                gdpr_settings: {
-                    color: Palette.getColor('BLUE'),
-                    fontSize: 14,
-                    family: '',
-                },
-                success_message: {
-                    color: Palette.getColor('BLUE'),
-                    fontSize: 18,
-                    family: '',
-                    textActions: {
-                        bold: false,
-                        italic: false,
-                        underline: false
-                    },
-                    alignment: 'center'
-                },
-                background_and_logo: {
-                    desktopBackground: {
-                        url: '',
-                        color: Palette.getColor('PALE_GREY_THREE'),
-                        backgroundType: 'COLOR',
-                        repeat: 'repeat',
-                        position: {
-                            inPercentDimension: true,
-                            posX: 0,
-                            posY: 0,
-                            option: ''
-                        },
-                        attachment: 'scroll',
-                        size: {
-                            inPercentDimension: false,
-                            width: 0,
-                            height: 0,
-                            option: 'auto'
-                        },
-                    },
-                    mobileBackground: {
-                        url: '',
-                        color: Palette.getColor('PALE_GREY_THREE'),
-                        backgroundType: 'COLOR',
-                        repeat: 'repeat',
-                        position: {
-                            inPercentDimension: true,
-                            posX: 0,
-                            posY: 0,
-                            option: ''
-                        },
-                        attachment: 'scroll',
-                        size: {
-                            inPercentDimension: false,
-                            width: 0,
-                            height: 0,
-                            option: 'auto'
-                        },
-                    },
-                    desktopLogo: {
-                        url: '',
-                        horizontalPosition: 'center',
-                        verticalPosition: 'middle',
-                    },
-                    mobileLogo: {
-                        url: '',
-                        horizontalPosition: 'center',
-                        verticalPosition: 'middle',
-                    },
-                },
-                desktop_container: {
-                    background: {
-                        color: Palette.getColor('WHITE'),
-                        opacity: 100,
-                    },
-                    border: {
-                        color: Palette.getColor('PALE_GREY_THREE'),
-                        type: 'solid',
-                        thickness: 1,
-                        radius: 4,
-                    },
-                    size: {
-                        width: 720,
-                        padding: 20
-                    },
-                    position: {
-                        vertical: 'middle'
-                    },
-                },
-                mobile_container: {
-                    background: {
-                        color: Palette.getColor('WHITE'),
-                        opacity: 100,
-                    },
-                    border: {
-                        color: Palette.getColor('PALE_GREY_THREE'),
-                        type: 'solid',
-                        thickness: 1,
-                        radius: 4,
-                    },
-                    size: {
-                        width: 720,
-                        padding: 20
-                    },
-                    position: {
-                        vertical: 'middle'
-                    },
-                },
-                accept_button_font: {
-                    alignment: 'center',
-                    color: Palette.getColor('BLUE'),
-                    fontSize: 18,
-                    family: '',
-                    textActions: {
-                        bold: false,
-                        italic: false,
-                        underline: false
-                    }
-                },
-                accept_button_color: Palette.getColor('WHITE'),
-                accept_button_size: {
-                    width: 145,
-                    padding: 10
-                },
-                accept_button_border: {
-                    color: Palette.getColor('BLUE'),
-                    radius: 5,
-                    type: "solid",
-                    thickness: 1
-                }
-            },
-            termAndConditionId: '',
-            fontIds: [],
-            googleLogin: false,
-            facebookLogin: false,
-            twitterLogin: false,
-            phoneLogin: false,
-            acceptTermsLogin: false,
-            successRedirectUrl: '',
-            acceptButtonText: 'Connect',
+            ...CaptivePortalDefault,
             dataToExclude: {
                 successMessageStatus: false,
                 gdprSettingsStatus: false,
@@ -686,10 +321,13 @@ class GlobalCaptivePortalState extends Component {
                 stylesArray: '',
                 token: '',
                 urlPath: '',
-                gdprFromBE: ''
+                gdprFromBE: '',
+                localeData: {},
+                activeLocale: '',
             }
         };
         await this.loaderHandler(true);
+        await this.clearTranslations();
         await this.setPreviewDeviceType('desktop');
         await this.setDeviceTypeSettingsTouched('mobile', []);
 
@@ -699,23 +337,22 @@ class GlobalCaptivePortalState extends Component {
         await this.setBackgroundStyle(data.style.desktop_container.background);
         await this.setSizeStyle(data.style.desktop_container.size);
         await this.setContainerVerticalPosition(data.style.desktop_container.position.vertical);
-        await this.setHeaderTopData(data.header, data.style.header.top);
-        await this.setHeaderDescriptionData(data.description, data.style.header.description);
+        await this.setHeaderTopData(data.style.header.top);
+        await this.setHeaderDescriptionData(data.style.header.description);
         await this.setLoginMethods({
             facebook: data.facebookLogin,
             google: data.googleLogin,
             twitter: data.twitterLogin,
             button: data.acceptTermsLogin
         });
-        await this.setFooterData(data.footer, data.style.footer);
+        await this.setFooterData(data.style.footer);
         await this.setLogoID('');
         await this.setBackgroundID('');
         await this.addPortalName(data.name);
         await this.setCSS(this.state.stylesApplied ? data.externalCss : '');
         await this.redirectURLChanger(data.successRedirectUrl);
-        await this.setSuccessMessageData(data.successMessage, data.style.success_message);
+        await this.setSuccessMessageData(data.style.success_message);
         await this.setButtonStyles({
-            acceptButtonText: data.acceptButtonText,
             acceptButtonSize: data.style.accept_button_size,
             acceptButtonColor: data.style.accept_button_color,
             acceptButtonFont: data.style.accept_button_font,
@@ -832,8 +469,9 @@ class GlobalCaptivePortalState extends Component {
             }
            
             .previewContainer > div.section {
+                position: relative;
                 border: ${container.border.thickness}px ${container.border.type} rgba(${container.border.color.rgba.r},${container.border.color.rgba.g},${container.border.color.rgba.b},${container.border.color.rgba.a});
-                border-radius: ${container.border.radius}px;
+                border-radius: ${container.border.radius}px 0 ${container.border.radius}px ${container.border.radius}px;
                 background: rgba(${container.background.color.rgba.r},${container.background.color.rgba.g},${container.background.color.rgba.b},${container.background.color.rgba.a});
                 opacity: ${container.background.opacity / 100};
                 max-width: ${container.size.width}px;
@@ -841,6 +479,14 @@ class GlobalCaptivePortalState extends Component {
                 ${container.border.type === 'none' ? 'box-shadow: none;' : 'box-shadow: 0 1px 9px 0 rgba(191, 197, 210, 0.25);'}
                 
                 ${containerVerticalPosition};
+            }
+           
+            .previewContainer .langaugeSwitcher {
+                border: ${container.border.thickness}px ${container.border.type} rgba(${container.border.color.rgba.r},${container.border.color.rgba.g},${container.border.color.rgba.b},${container.border.color.rgba.a});
+                border-radius: ${container.border.radius}px ${container.border.radius}px 0 0;
+                background: rgba(${container.background.color.rgba.r},${container.background.color.rgba.g},${container.background.color.rgba.b},${container.background.color.rgba.a});
+                opacity: ${container.background.opacity / 100};
+                right: -${container.border.type !=='none' ? container.border.thickness : 0}px;
             }
             
             .previewContainer > div.section .head {
@@ -903,7 +549,7 @@ class GlobalCaptivePortalState extends Component {
                 font-weight: ${accept_button_font.textActions.bold ? 'bold' : '100'};
                 font-style: ${accept_button_font.textActions.italic ? 'italic' : 'unset'};
                 text-decoration: ${accept_button_font.textActions.underline ? 'underline' : 'unset'};
-                min-width: ${Math.min(accept_button_size.width, (container.size.width - container.size.padding*2))}px;
+                flex-basis: ${accept_button_size.width}px;
                 padding: ${accept_button_size.padding}px;
                 word-break: break-all;
                 ${fontName && `font-family: ${fontName}, sans-serif`}
@@ -956,6 +602,103 @@ class GlobalCaptivePortalState extends Component {
         currentState.dataToExclude.base64EncodedValue = base64EncodedValue;
         this.setState(currentState);
     };
+    setLocaleData = (localeData, setDefaultContentData) => {
+        const currentState = this.state;
+        currentState.dataToExclude.localeData = localeData;
+        const activeLocale = currentState.dataToExclude.activeLocale;
+        const portalData = (localeData && localeData[activeLocale] && localeData[activeLocale].portalData) || null;
+        if (setDefaultContentData && portalData){
+            this.setTranslations(activeLocale, portalData);
+        }
+        currentState.dataToExclude.locales = [];
+        for (let locale in localeData) {
+            currentState.dataToExclude.locales.push(locale);
+        }
+        this.setState(currentState);
+    }
+
+    setTranslations = (locale, translations = {}, remove) => {
+        const currentState = this.state;
+        if (remove) {
+            const index = currentState.translationsLanguages.indexOf(locale);
+            if (index !== -1) { currentState.translationsLanguages.splice(index, 1); }
+            // delete currentState.translations[locale];
+            if (currentState.dataToExclude.activeLocale === locale) {
+                currentState.dataToExclude.activeLocale = currentState.translationsLanguages[0];
+            }
+        } else {
+            const currentTranslation = currentState.translations[locale] || {};
+            const defaultTranslation = (currentState.dataToExclude.localeData[locale] && currentState.dataToExclude.localeData[locale].portalData) || {};
+            if (!currentState.translationsLanguages.includes(locale)) {
+                currentState.translationsLanguages.push(locale);
+            }
+            const mockedTranslation = {
+                name: 'Company name',
+                description: 'Venue description',
+                footer: 'Footer content',
+                successMessageText: 'Default success message',
+                connectButtonText: 'Connect',
+            };
+            const getTranslation = (name) => {
+                let translation = '';
+                if (translations.hasOwnProperty(name)) {
+                    translation = translations[name];
+                } else if (currentTranslation.hasOwnProperty(name)) {
+                    translation = currentTranslation[name];
+                } else if (defaultTranslation.hasOwnProperty(name)) {
+                    translation = defaultTranslation[name];
+                } else  {
+                    translation = mockedTranslation[name] || '';
+                }
+                return translation;
+            }
+            currentState.translations[locale] = {
+                name: getTranslation('name'),
+                description: getTranslation('description'),
+                footer: getTranslation('footer'),
+                successMessageText: getTranslation('successMessageText'),
+                connectButtonText: getTranslation('connectButtonText'),
+            };
+        }
+        this.setState(currentState);
+    }
+
+    clearTranslations() {
+        const currentState = this.state;
+        currentState.translations = {};
+        currentState.translationsLanguages = [];
+        currentState.dataToExclude.activeLocale = '';
+        this.setState(currentState);
+    }
+
+    setActiveLocale = (activeLocale) => {
+        const currentState = this.state;
+        currentState.dataToExclude.activeLocale = activeLocale;
+        this.setState(currentState);
+        if (!currentState.translations[activeLocale]) {
+            const localeData = currentState.dataToExclude.localeData;
+            const portalData = (localeData && localeData[activeLocale] && localeData[activeLocale].portalData) || {};
+            this.setTranslations(activeLocale, portalData);
+        }
+    }
+
+    convertLocaleName = (locale) => {
+        let localeName;
+        const locales = [
+            ['English', 'EN'],
+            ['Lithuanian', 'LT'],
+            ['Russian', 'RU']
+        ];
+        locales.map(item => {
+            const index = item.indexOf(locale);
+            if (index === 0) {
+                localeName = item[1];
+            } else if (index === 1) {
+                localeName = item[0];
+            }
+        });
+        return localeName || locale;
+    }
 
     setPreviewDeviceType = (deviceType) => {
         this.setState({previewDeviceType: deviceType});
@@ -992,10 +735,6 @@ class GlobalCaptivePortalState extends Component {
             mobileLogoId: this.state.mobileLogoId,
             desktopBackgroundId: this.state.desktopBackgroundId,
             mobileBackgroundId: this.state.mobileBackgroundId,
-            header: this.state.header,
-            description: this.state.description,
-            footer: this.state.footer,
-            successMessage: this.state.successMessage,
             style: this.state.style,
             googleLogin: this.state.googleLogin,
             facebookLogin: this.state.facebookLogin,
@@ -1003,7 +742,6 @@ class GlobalCaptivePortalState extends Component {
             phoneLogin: this.state.phoneLogin,
             acceptTermsLogin: this.state.acceptTermsLogin,
             successRedirectUrl: this.state.successRedirectUrl,
-            acceptButtonText: this.state.acceptButtonText,
             externalCss: this.state.externalCss,
             termAndConditionId: this.state.termAndConditionId,
             fontIds: this.state.fontIds,
@@ -1047,6 +785,13 @@ class GlobalCaptivePortalState extends Component {
             setFontsCollection: this.setFontsCollection,
             setFontData: this.setFontData,
             setFontBase64: this.setFontBase64,
+            translationsLanguages: this.state.translationsLanguages,
+            translations: this.state.translations,
+            setLocaleData: this.setLocaleData,
+            setActiveLocale: this.setActiveLocale,
+            convertLocaleName: this.convertLocaleName,
+            setTranslations: this.setTranslations,
+            clearTranslations: this.clearTranslations,
             previewDeviceType: this.state.previewDeviceType,
             mobileSettingsTouched: this.state.mobileSettingsTouched,
             setPreviewDeviceType: this.setPreviewDeviceType,

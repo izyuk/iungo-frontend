@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {SketchPicker} from "react-color";
 import Palette from '~/static/styles/palette';
 import CaptivePortalContext from "~/context/project-context";
+import Icons from '~/static/images/icons';
 
 class ContentBorder extends Component {
     static contextType = CaptivePortalContext;
@@ -122,10 +123,7 @@ class ContentBorder extends Component {
                                 <option value="dashed">Dashed</option>
                             </select>
                             <p className="select">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#BFC5D2" fillRule="nonzero"
-                                          d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                                </svg>
+                                <Icons.DropdownIcon/>
                             </p>
                         </div>
                     </div>
@@ -170,10 +168,7 @@ class ContentBorder extends Component {
                                 <option value="5">5</option>
                             </select>
                             <p className="select tin">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#BFC5D2" fillRule="nonzero"
-                                          d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                                </svg>
+                                <Icons.DropdownIcon/>
                             </p>
                         </div>
                     </div>
@@ -197,10 +192,7 @@ class ContentBorder extends Component {
                                 <option value="5">5</option>
                             </select>
                             <p className="select tin">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#BFC5D2" fillRule="nonzero"
-                                          d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                                </svg>
+                                <Icons.DropdownIcon/>
                             </p>
                         </div>
                     </div>

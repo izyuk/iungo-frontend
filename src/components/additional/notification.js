@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import CaptivePortalContext from "../../context/project-context";
+import CaptivePortalContext from "~/context/project-context";
 
 let place = document.getElementById('notification');
 

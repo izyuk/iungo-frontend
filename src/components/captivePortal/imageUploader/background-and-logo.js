@@ -9,6 +9,7 @@ import CaptivePortalContext from "~/context/project-context";
 import Repeating from "./backgroundStylingComponents/repeating";
 import Position from "./backgroundStylingComponents/position";
 import Size from "./backgroundStylingComponents/size";
+import Icons from '~/static/images/icons';
 
 import {EXIF} from 'exif-js';
 // var exifStripper = require('exif-stripper');
@@ -292,29 +293,7 @@ class BackgroundAndLogo extends Component {
                              onDoubleClick={this.chooseImage} onClick={this.chooseImage}>
                             <img src={item.externalUrl} alt=""/>
                             <span>{item.name}</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Capa_1" x="0px" y="0px" width="512px"
-                                 height="512px" viewBox="0 0 442.533 442.533" enableBackground='new 0 0 442.533 442.533'>
-                                <g>
-                                    <path
-                                        d="M434.539,98.499l-38.828-38.828c-5.324-5.328-11.799-7.993-19.41-7.993c-7.618,0-14.093,2.665-19.417,7.993L169.59,247.248   l-83.939-84.225c-5.33-5.33-11.801-7.992-19.412-7.992c-7.616,0-14.087,2.662-19.417,7.992L7.994,201.852   C2.664,207.181,0,213.654,0,221.269c0,7.609,2.664,14.088,7.994,19.416l103.351,103.349l38.831,38.828   c5.327,5.332,11.8,7.994,19.414,7.994c7.611,0,14.084-2.669,19.414-7.994l38.83-38.828L434.539,137.33   c5.325-5.33,7.994-11.802,7.994-19.417C442.537,110.302,439.864,103.829,434.539,98.499z"
-                                        fill="#FFFFFF"/>
-                                </g>
-                                <g></g>
-                                <g></g>
-                                <g></g>
-                                <g></g>
-                                <g></g>
-                                <g></g>
-                                <g></g>
-                                <g></g>
-                                <g></g>
-                                <g></g>
-                                <g></g>
-                                <g></g>
-                                <g></g>
-                                <g></g>
-                                <g></g>
-                            </svg>
+                            <Icons.CheckIcon fill="#FFF"/>
                         </div>
                     )
                 });
@@ -462,10 +441,7 @@ class BackgroundAndLogo extends Component {
                     <div className="right">
                         <div className="innerRow logo">
                             <div className="upload" onClick={this.toggleModal}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#FFF" fillRule="nonzero"
-                                          d="M17 11.1V11c0-2.8-2.2-5-5-5-2.5 0-4.6 1.8-4.9 4.3-1.8.6-3.1 2.2-3.1 4.2C4 17 6 19 8.5 19H16c2.2 0 4-1.8 4-4 0-1.9-1.3-3.4-3-3.9zM13 14v3h-2v-3H8l4-4 4 4h-3z"/>
-                                </svg>
+                                <Icons.UploadIcon fill="#FFF"/>
                                 <span>Choose</span>
                             </div>
                             {

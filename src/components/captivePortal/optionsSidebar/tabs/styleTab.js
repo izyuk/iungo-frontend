@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import Background from "./styleComponents/background";
 import Logo from "./styleComponents/logo";
 import Container from "./styleComponents/container/container";
+import Icons from '~/static/images/icons';
 
-import CaptivePortalContext from "../../../../context/project-context";
+import CaptivePortalContext from "~/context/project-context";
 
 class StyleTab extends Component {
     static contextType = CaptivePortalContext;
@@ -24,9 +25,7 @@ class StyleTab extends Component {
                         onClick={() => this.setState({ activeTab: 'background' })}
                     >
                         <span>Background</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="#BFC5D2" fillRule="nonzero" d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                        </svg>
+                        <Icons.DropdownIcon/>
                     </div>
                     {(activeTab === 'background') ? <Background type="background"/> : false}
                 </div>
@@ -36,9 +35,7 @@ class StyleTab extends Component {
                         onClick={() => this.setState({ activeTab: 'logo' })}
                     >
                         <span>Logo</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="#BFC5D2" fillRule="nonzero" d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                        </svg>
+                        <Icons.DropdownIcon/>
                     </div>
                     {(activeTab === 'logo') ? <Logo type="logo"/> : false}
                 </div>
@@ -48,9 +45,7 @@ class StyleTab extends Component {
                         onClick={() => this.setState({ activeTab: 'container' })}
                     >
                         <span>Container</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="#BFC5D2" fillRule="nonzero" d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                        </svg>
+                        <Icons.DropdownIcon/>
                     </div>
                     {(activeTab === 'container') ? <Container /> : false}
                 </div>

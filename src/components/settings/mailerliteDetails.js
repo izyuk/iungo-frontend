@@ -4,6 +4,7 @@ import CaptivePortalContext from "~/context/project-context";
 import Loader from "~/loader";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import Icons from '~/static/images/icons';
 
 const ValidationSchema = Yup.object().shape({
     apiKey: Yup.string()
@@ -204,10 +205,7 @@ class MailerliteDetails extends Component {
                                         <option value='No' data-cy="mailerliteIntegrationSelectOption">No</option>
                                     </select>
                                     <p className="select">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
-                                            <path fill="#ffffff" fillRule="nonzero"
-                                                d="M12 15.6l-4.7-4.7 1.4-1.5 3.3 3.3 3.3-3.3 1.4 1.5z"/>
-                                        </svg>
+                                        <Icons.DropdownIcon fill="#FFF"/>
                                     </p>
                                 </div>
 

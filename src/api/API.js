@@ -103,6 +103,35 @@ export const getAllImages = (string) => {
         .catch(err => authChecker(err.response));
 };
 
+export const getDefaultLocale = (token) => {
+    return axios({
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${token}`
+        },
+        url: `${BACKEND_API}/locale/default`,
+        mode: 'no-cors'
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
+export const getAllLocales = (token) => {
+    return axios({
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${token}`
+        },
+        url: `${BACKEND_API}/locale`,
+        mode: 'no-cors'
+    })
+        .then(res => res)
+        .catch(err => authChecker(err.response));
+};
+
 export const getHotspots = (string) => {
     return axios({
         method: 'get',
