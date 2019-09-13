@@ -1,9 +1,9 @@
 
 import Palette from '~/static/styles/palette';
-import CaptivePortalDefault from '~/context/CaptivePortalDefault';
+import { getCaptivePortalDefault } from '~/context/CaptivePortalDefault';
 
 const INITIAL = {
-    ...CaptivePortalDefault,
+    ...getCaptivePortalDefault(),
 };
 
 export default function (state = INITIAL, action) {

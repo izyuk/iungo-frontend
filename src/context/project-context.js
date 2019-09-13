@@ -1,8 +1,8 @@
 import React from 'react';
-import CaptivePortalDefault from '~/context/CaptivePortalDefault';
+import { getCaptivePortalDefault } from '~/context/CaptivePortalDefault';
 
 export default React.createContext({
-    ...CaptivePortalDefault,
+    ...getCaptivePortalDefault(),
     addPortalName: () => {},
     setBackground: () => {},
     setBackgroundRepeating: () => {},

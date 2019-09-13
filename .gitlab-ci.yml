@@ -3,21 +3,24 @@ services:
   - docker:dind
 
 stages:
-#  - testing
+  - testing
   - build
   - deploy
 
-#cypress-testing:
-# image: cypress/base:10
-# stage: testing
-# retry: 2
-# before_script:
-#   - npm i
-#   - npm start &
-# script:
-#   - npm install --save-dev cypress
-#   - $(npm bin)/cypress verify
-#   - $(npm bin)/cypress run
+# playground-cypress-testing:
+#   except:
+#     - production
+#     - /^hot-fix-prod.*$/
+#   image: cypress/base:10
+#   stage: testing
+#   retry: 2
+#   before_script:
+#     - npm i
+#     - npm start &
+#   script:
+#     - npm install --save-dev cypress
+#     - $(npm bin)/cypress verify
+#     - $(npm bin)/cypress run
 
 playground-npm-build:
   only:
@@ -45,6 +48,21 @@ playground-deploy-to-s3:
     - aws s3 cp build/ s3://playground-app.bravofy.com/ --recursive
     - aws s3 cp build/index.js s3://playground-app.bravofy.com/index.js --cache-control 'no-cache'
     - aws s3 cp build/index.html s3://playground-app.bravofy.com/index.html --cache-control 'no-cache'
+
+prod-cypress-testing:
+  only:
+    - production
+    - /^hot-fix-prod.*$/
+  image: cypress/base:10
+  stage: testing
+  retry: 2
+  before_script:
+    - npm i
+    - npm run start-for-production &
+  script:
+    - npm install --save-dev cypress
+    - $(npm bin)/cypress verify
+    - $(npm bin)/cypress run
 
 prod-npm-build:
   only:

@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import CaptivePortalContext from './project-context';
 import Palette from '~/static/styles/palette';
-import CaptivePortalDefault from '~/context/CaptivePortalDefault';
+import { getCaptivePortalDefault } from '~/context/CaptivePortalDefault';
 
 class GlobalCaptivePortalState extends Component {
 
     state = {
-        ...CaptivePortalDefault,
+        ...getCaptivePortalDefault(),
         dataToExclude: {
             successMessageStatus: false,
             gdprSettingsStatus: false,
@@ -301,7 +301,7 @@ class GlobalCaptivePortalState extends Component {
 
     resetGlobalState = async () => {
         const data = {
-            ...CaptivePortalDefault,
+            ...getCaptivePortalDefault(),
             dataToExclude: {
                 successMessageStatus: false,
                 gdprSettingsStatus: false,

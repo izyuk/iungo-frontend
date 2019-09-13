@@ -1,4 +1,5 @@
 
+import { GetBuilderParams } from "../../../src/components/captivePortal/optionsSidebar/getBuilderParams";
 import {
     contextLoginToSystem,
     clearFields,
@@ -20,6 +21,15 @@ const testPayload = {
     desktopLogoUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/google_logo.svg",
     mobileLogoId: "330",
     mobileLogoUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/google_logo.svg",
+    languages: [],
+    texts: {
+        name: `CP TEST NAME`,
+        header: `CP TEST HEADER TEXT`,
+        description: `CP TEST DESCRIPTION TEXT`,
+        footer: `CP TEST FOOTER TEXT`,
+        successMessage: `CP TEST SOME SUCCESS MESSAGE TEXT`,
+        acceptButtonText: `Connect FOR FREE`,
+    }
 };
 
 contextLoginToSystem();
@@ -40,7 +50,7 @@ context('Start and going to CP', function () {
         });
 
         it('Setting name', () => {
-            fillingFields('[data-cy="captivePortalName"]', 'CP TEST NAME');
+            fillingFields('[data-cy="captivePortalName"]', testPayload.texts.name);
         });
 
         it('Device toggle', () => {
@@ -337,10 +347,10 @@ context('Content tab', function () {
         });
 
         it('Enter top text', () => {
-            fillingFields('[data-cy="headerTopText"]', 'CP TEST HEADER TEXT');
+            fillingFields('[data-cy="headerTopText"]', testPayload.texts.header);
         });
         it('Check entered top text on Preview', () => {
-            cy.get('[data-cy="headerTopTextPreview"]').should('have.text', 'CP TEST HEADER TEXT');
+            cy.get('[data-cy="headerTopTextPreview"]').should('have.text', testPayload.texts.header);
         });
 
         it('Set top text color', () => {
@@ -372,10 +382,10 @@ context('Content tab', function () {
         });
 
         it('Enter description text', () => {
-            fillingFields('[data-cy="headerDescriptionText"]', 'CP TEST DESCRIPTION TEXT');
+            fillingFields('[data-cy="headerDescriptionText"]', testPayload.texts.description);
         });
         it('Check entered description text on Preview', () => {
-            cy.get('[data-cy="headerDescriptionTextPreview"]').should('have.text', 'CP TEST DESCRIPTION TEXT');
+            cy.get('[data-cy="headerDescriptionTextPreview"]').should('have.text', testPayload.texts.description);
         });
 
         it('Set description text color', () => {
@@ -476,11 +486,11 @@ context('Content tab', function () {
         });
 
         it('Enter connect button text', () => {
-            fillingFields('[data-cy="connectButtonText"]', 'Connect FOR FREE');
+            fillingFields('[data-cy="connectButtonText"]', testPayload.texts.acceptButtonText);
         });
 
         it('Check connect button text on Preview', () => {
-            cy.get('[data-cy="loginMethodConnectButtonPreview"]').should('have.text', 'Connect FOR FREE');
+            cy.get('[data-cy="loginMethodConnectButtonPreview"]').should('have.text', testPayload.texts.acceptButtonText);
         });
 
         it('Set connect button text color', () => {
@@ -542,10 +552,10 @@ context('Content tab', function () {
         });
 
         it('Enter footer text', () => {
-            fillingFields('[data-cy="footerText"]', 'TEST FOOTER TEXT');
+            fillingFields('[data-cy="footerText"]', testPayload.texts.footer);
         });
         it('Check entered footer text on Preview', () => {
-            cy.get('[data-cy="footerTextPreview"]').should('have.text', 'TEST FOOTER TEXT');
+            cy.get('[data-cy="footerTextPreview"]').should('have.text', testPayload.texts.footer);
         });
 
         it('Set footer text color', () => {
@@ -577,10 +587,10 @@ context('Content tab', function () {
         });
 
         it('Enter success text', () => {
-            fillingFields('[data-cy="successText"]', 'CP TEST SOME SUCCESS MESSAGE TEXT');
+            fillingFields('[data-cy="successText"]', testPayload.texts.successMessage);
         });
         it('Check entered success text on Preview', () => {
-            cy.get('[data-cy="successTextPreview"]').should('have.text', 'CP TEST SOME SUCCESS MESSAGE TEXT');
+            cy.get('[data-cy="successTextPreview"]').should('have.text', testPayload.texts.successMessage);
         });
 
         it('Set success text color', () => {
@@ -590,6 +600,44 @@ context('Content tab', function () {
         it('Enter success page redurect URL', () => {
             fillingFields('[data-cy="successPageRedirect"]', 'http://google.com');
         });
+    });
+
+    describe('Language settings drop-down', () => {
+        it('Open drop-down', () => {
+            cy.get('[data-cy="dropDownLocalizationSettings"]')
+                .click({force: true})
+        });
+
+        it('Add all languages', () => {
+            cy.get('[data-cy="languageSettingsSelect"]')
+                .find('.dropdown-heading-value')
+                .click({force: true});
+            cy.get('[data-cy="languageSettingsSelectOption"]').each(($el) => {
+                if ($el.attr('data-checked') !== 'true') {
+                    cy.wrap($el).find('input[type="checkbox"]').click();
+                }
+            });
+        });
+
+        const fields = [
+            { name: 'languageSettingsName' , val: testPayload.texts.header },
+            { name: 'languageSettingsDescription' , val: testPayload.texts.description },
+            { name: 'languageSettingsFooter' , val: testPayload.texts.footer },
+            { name: 'languageSettingsConnectButton' , val: testPayload.texts.acceptButtonText },
+            { name: 'languageSettingsSuccessMessage' , val: testPayload.texts.successMessage },
+        ];
+
+        it('Fill translations', () => {
+            cy.get('[data-cy="languageSettingsTab"]').each(($el) => {
+                const language = $el.attr('data-lang')
+                testPayload.languages.push(language);
+                cy.wrap($el).click();
+                fields.map(field => {
+                    fillingFields(`[data-cy="${field.name}"]`, `${field.val} ${language}`);
+                });
+            });
+        });
+
     });
 
 });
@@ -614,7 +662,7 @@ context('Tests finished', function () {
     describe('Open Preview', () => {
         it('Going to preview', () => {
             cy.get('[data-cy="previewBtn"]')
-                .click({force: true});
+                .click({force: true}).wait(1000);
         })
     })
 });
@@ -700,16 +748,12 @@ context('Starting comparing collected data', function () {
                     // const store = GetBuilderParams(Object.assign({}, win.__store__));
                     const expectedStore = {
                         background: testPayload.mobileBackgroundUrl,
-                        name: "CP TEST NAME",
+                        name: testPayload.texts.name,
                         externalCss: "",
                         desktopLogoId: testPayload.desktopLogoId,
                         mobileLogoId: testPayload.mobileLogoId,
                         desktopBackgroundId: testPayload.desktopBackgroundId,
                         mobileBackgroundId: testPayload.mobileBackgroundId,
-                        header: "CP TEST HEADER TEXT",
-                        description: "CP TEST DESCRIPTION TEXT",
-                        footer: "TEST FOOTER TEXT",
-                        successMessage: "CP TEST SOME SUCCESS MESSAGE TEXT",
                         style: {
                             header: {
                                 top: {
@@ -872,12 +916,21 @@ context('Starting comparing collected data', function () {
                         twitterLogin: false,
                         phoneLogin: true,
                         acceptTermsLogin: true,
-                        successRedirectUrl: "",
+                        successRedirectUrl: 'http://google.com',
                         termAndConditionId: "",
-                        acceptButtonText: "Connect FOR FREE",
-                        translationsLanguages: ['English'],
+                        translations: [],
                     };
-                    const store = {...win.__store__.collectDataToTest};
+                    testPayload.languages.map(lang => {
+                        expectedStore.translations.push({
+                            language: lang,
+                            header: `${testPayload.texts.header} ${lang}`,
+                            description: `${testPayload.texts.description} ${lang}`,
+                            footer: `${testPayload.texts.footer} ${lang}`,
+                            successMessage: `${testPayload.texts.successMessage} ${lang}`,
+                            acceptButtonText: `${testPayload.texts.acceptButtonText} ${lang}`,
+                        })
+                    });
+                    const store = GetBuilderParams({...win.__store__.collectDataToTest});
                     console.log('Store', store);
                     console.log('Expected store', expectedStore);
                     console.log(JSON.stringify(store));
