@@ -21,6 +21,7 @@ class HotspotEditor extends Component {
         list: '',
         id: '',
         captivePortalID: '',
+        captivePortalName: null,
         portalsList: '',
         portalUrl: '',
         submitted: false,
@@ -28,8 +29,6 @@ class HotspotEditor extends Component {
     };
 
     static contextType = CaptivePortalContext;
-
-    portals = React.createRef();
 
     handleInputChange = (e, handleChange) => {
         handleChange && handleChange(e);
@@ -123,16 +122,10 @@ class HotspotEditor extends Component {
 
     selectHandler = (e) => {
         const currentState = this.state;
-        console.log(currentState);
-        const data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
-        const span = e.currentTarget.nextSibling.children[0];
-        span.innerText = data;
-        console.log(e.currentTarget.options[e.currentTarget.selectedIndex].getAttribute('portalurl'));
-        currentState.portalUrl = e.currentTarget.options[e.currentTarget.selectedIndex].getAttribute('portalUrl');
-        currentState.captivePortalID = e.currentTarget.options[e.currentTarget.selectedIndex].getAttribute('dataid');
-
-        console.log(e.target);
-        console.log(e.currentTarget.options[e.currentTarget.selectedIndex].getAttribute('dataid'));
+        const selected = e.currentTarget.options[e.currentTarget.selectedIndex];
+        currentState.captivePortalName = selected.value;
+        currentState.portalUrl = selected.getAttribute('portalUrl');
+        currentState.captivePortalID = selected.getAttribute('dataid');
         this.setState(currentState);
     };
 
@@ -165,9 +158,6 @@ class HotspotEditor extends Component {
         console.log(this.props.match.params.uuid);
         await this.getAllPortalsMethodHandler(localStorage.getItem('token'));
         await this.getHotspotMethodHandler(localStorage.getItem('token'));
-        const data = this.portals.current.options[this.portals.current.selectedIndex].value;
-        const span = this.portals.current.nextSibling.children[0];
-        span.innerText = data;
     }
 
     getFieldErrorText(errors, touched, fieldName) {
@@ -187,7 +177,8 @@ class HotspotEditor extends Component {
             description,
             portalsList,
             portalUrl,
-            captivePortalID
+            captivePortalID,
+            captivePortalName
         } = this.state;
         return (
             <div className="container containerFix">
@@ -280,7 +271,6 @@ class HotspotEditor extends Component {
                                                     <select name="portals"
                                                             id={'select-captive-portal'}
                                                             data-cy="newHotspotSelectCP"
-                                                            ref={this.portals}
                                                             onChange={this.selectHandler}>
                                                         <option value="">Choose portal</option>
                                                         {
@@ -296,8 +286,8 @@ class HotspotEditor extends Component {
                                                         }
                                                     </select>
                                                     <p className="select">
-                                                        <span>Choose portal</span>
-                                                        <Icons.DropdownIcon fill="#FFF"/>
+                                                        <span>{captivePortalName || 'Choose portal'}</span>
+                                                        <Icons.DropdownIcon fill="#FFF" width="36" height="36"/>
                                                     </p>
                                                 </div>
                                                 <button data-cy="newHotspotSave" onClick={isValid ? this.handleCorrect : submitForm}>Save</button>
