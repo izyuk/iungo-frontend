@@ -1,5 +1,5 @@
 export const GetBuilderParams = (storage) => {
-    const portalDataToSend = Object.assign({}, storage);
+    const portalDataToSend = JSON.parse( JSON.stringify(storage) );
     delete portalDataToSend.translationsLanguages;
     portalDataToSend.translations = [];
     storage.translationsLanguages.map(lang => {
@@ -14,6 +14,6 @@ export const GetBuilderParams = (storage) => {
                 successMessage: translation.successMessageText,
             })
         }
-    })
+    });
     return portalDataToSend;
 };
