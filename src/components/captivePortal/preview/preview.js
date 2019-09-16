@@ -77,8 +77,7 @@ class Preview extends Component {
                 header: {top, description},
                 background_and_logo,
             },
-            dataToExclude: {gdprSettingsStatus, gdprSettingsSetting, agreeWithTermsAndConditionsLabel, allowToUsePersonalInfoLabel},
-            previewDeviceType,
+            dataToExclude: {gdprSettingsStatus, gdprSettingsSetting, agreeWithTermsAndConditionsLabel, allowToUsePersonalInfoLabel, previewDeviceType},
         } = this.context;
         const logo = background_and_logo[`${previewDeviceType}Logo`] || background_and_logo.desktopLogo;
 
@@ -88,7 +87,7 @@ class Preview extends Component {
         const LangIcon = Icons[`Flag${langShort}`];
         return (
             <div className="previewWrap">
-                <div className={(this.context.previewDeviceType === 'mobile') ? "previewMain mobile" : "previewMain"}
+                <div className={(previewDeviceType === 'mobile') ? "previewMain mobile" : "previewMain"}
                      ref={this.PreviewMain}>
                     <div className="previewContainer">
                         <div className="header">

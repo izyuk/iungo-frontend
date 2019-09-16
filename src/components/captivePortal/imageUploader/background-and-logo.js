@@ -207,8 +207,9 @@ class BackgroundAndLogo extends Component {
         })
     };
 
-    toggleModal = () => {
-        this.setState(state => ({isModalOpen: !state.isModalOpen}));
+    toggleModal = (options) => {
+        const open = (options && options.open) || !this.state.isModalOpen;
+        this.setState({isModalOpen: open});
         this.getImages();
     };
 
@@ -272,7 +273,7 @@ class BackgroundAndLogo extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        if (nextContext.previewDeviceType !== this.context.previewDeviceType) {
+        if (nextContext !== this.context) {
             this.updateLogo(nextContext);
             this.updateBackground(nextContext);
         }
@@ -281,7 +282,7 @@ class BackgroundAndLogo extends Component {
     updateLogo(nextContext) {
         if (this.props.type === 'logo') {
             const context = nextContext || this.context;
-            const {style: {background_and_logo}, previewDeviceType} = context;
+            const {style: {background_and_logo}, dataToExclude:{previewDeviceType}} = context;
             const logo = background_and_logo[`${previewDeviceType}Logo`];
             const {horizontalPosition, verticalPosition} = logo;
             this.setState({
@@ -296,7 +297,7 @@ class BackgroundAndLogo extends Component {
     updateBackground(nextContext) {
         if (this.props.type === "background") {
             const context = nextContext || this.context;
-            const {style: {background_and_logo}, previewDeviceType} = context;
+            const {style: {background_and_logo}, dataToExclude:{previewDeviceType}} = context;
             const background = background_and_logo[`${previewDeviceType}Background`];
             if (background) {
                 let currentState = this.state;
@@ -327,7 +328,7 @@ class BackgroundAndLogo extends Component {
             left: '0px',
         };
 
-        const {style: {background_and_logo}, previewDeviceType} = this.context;
+        const {style: {background_and_logo}, dataToExclude:{previewDeviceType}} = this.context;
         const logo = background_and_logo[`${previewDeviceType}Logo`];
         const logoId = this.context[`${previewDeviceType}LogoId`];
         const background = background_and_logo[`${previewDeviceType}Background`];
@@ -343,7 +344,7 @@ class BackgroundAndLogo extends Component {
                     </div>
                     <div className="right">
                         <div className="innerRow logo">
-                            <div className="upload" onClick={this.toggleModal}>
+                            <div className="upload" data-cy="uploadImage" onClick={() => this.toggleModal({ open: true })}>
                                 <Icons.UploadIcon fill="#FFF"/>
                                 <span>Choose</span>
                             </div>

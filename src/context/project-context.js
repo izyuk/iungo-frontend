@@ -1,8 +1,9 @@
 import React from 'react';
-import { getCaptivePortalDefault } from '~/context/CaptivePortalDefault';
+import { getCaptivePortalDefault, getDataToExcludeDefault } from '~/context/CaptivePortalDefault';
 
 export default React.createContext({
     ...getCaptivePortalDefault(),
+    dataToExclude: getDataToExcludeDefault(),
     addPortalName: () => {},
     setBackground: () => {},
     setBackgroundRepeating: () => {},
@@ -28,28 +29,6 @@ export default React.createContext({
     setGDPRSettings: () => {},
     setGDPRSettingsStatus: () => {},
     setGDPRCollection: () => {},
-    dataToExclude: {
-        successMessageStatus: false,
-        gdprSettingsStatus: false,
-        gdprSettingsSetting: 'No',
-        gdprList: '',
-        fontsList: '',
-        fontName: 'Avenir',
-        agreeWithTermsAndConditionsLabel: '',
-        allowToUsePersonalInfoLabel: '',
-        loader: false,
-        publishedType: '',
-        failed: false,
-        notification: false,
-        stylesApplied: false,
-        styledElements: '',
-        stylesArray: '',
-        token: '',
-        urlPath: '',
-        localeData: {},
-        locales: [],
-        activeLocale: null,
-    },
     loaderHandler: () => {},
     setSuccessMessageStatus: () => {},
     setNotification: () => {},
@@ -69,9 +48,6 @@ export default React.createContext({
     convertLocaleName: () => {},
     setTranslations: () => {},
     clearTranslations: () => {},
-
-    previewDeviceType: 'desktop',
-    mobileSettingsTouched: [],
     setPreviewDeviceType: () => {},
     setDeviceTypeSettingsTouched: () => {},
     checkDeviceTypeDataChanged: () => {},

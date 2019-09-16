@@ -32,7 +32,7 @@ class Options extends Component {
 
     render() {
         const { activeTab } = this.state;
-        const type = this.context.previewDeviceType;
+        const type = this.context.dataToExclude.previewDeviceType;
         return (
             <div className="options">
                 <div className="wrap">
