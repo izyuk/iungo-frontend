@@ -68,9 +68,9 @@ context('Style tab', function () {
     });
     describe('Changing background desktop', function () {
         it('Choosing and applying image', () => {
-            cy.get('.upload')
+            cy.get('[data-cy="uploadImage"]')
                 .click({force: true});
-            cy.get('[data-cy="backgroundImageItem0"')
+            cy.get('[data-cy="backgroundImageItem0"]')
                 .dblclick({force: true}).then(elem => {
                 const element = Cypress.$(elem);
                 testPayload.desktopBackgroundId = element.attr('dataid');
@@ -88,8 +88,8 @@ context('Style tab', function () {
         it('Setting background size', () => {
             cy.get('[data-cy="backgroundSize"]')
                 .select('custom-size', {force: true});
-            fillingFields('[data-cy="backgroundWidth"', '50');
-            fillingFields('[data-cy="backgroundHeight"', '50');
+            fillingFields('[data-cy="backgroundWidth"]', '50');
+            fillingFields('[data-cy="backgroundHeight"]', '50');
         });
     });
 
@@ -99,9 +99,9 @@ context('Style tab', function () {
                 .click({force: true});
         });
         it('Choosing and applying image', () => {
-            cy.get('.upload')
+            cy.get('[data-cy="uploadImage"]')
                 .click({force: true});
-            cy.get('[data-cy="backgroundImageItem1"')
+            cy.get('[data-cy="backgroundImageItem1"]')
                 .dblclick({force: true}).then(elem => {
                 const element = Cypress.$(elem);
                 testPayload.mobileBackgroundId = element.attr('dataid');
@@ -119,8 +119,8 @@ context('Style tab', function () {
         it('Setting background size', () => {
             cy.get('[data-cy="backgroundSize"]')
                 .select('custom-size', {force: true});
-            fillingFields('[data-cy="backgroundWidth"', '80');
-            fillingFields('[data-cy="backgroundHeight"', '80');
+            fillingFields('[data-cy="backgroundWidth"]', '80');
+            fillingFields('[data-cy="backgroundHeight"]', '80');
         });
         it('Switch device type to desktop', () => {
             cy.get('[data-id="desktop"] span')
@@ -136,9 +136,9 @@ context('Style tab', function () {
         });
 
         it('Choosing and applying image', () => {
-            cy.get('.upload')
+            cy.get('[data-cy="uploadImage"]')
                 .click({force: true});
-            cy.get('[data-cy="backgroundImageItem1"')
+            cy.get('[data-cy="backgroundImageItem1"]')
                 .dblclick({force: true}).then(elem => {
                 const element = Cypress.$(elem);
                 testPayload.desktopLogoId = element.attr('dataid');
@@ -187,9 +187,9 @@ context('Style tab', function () {
         });
 
         it('Choosing and applying image', () => {
-            cy.get('.upload')
+            cy.get('[data-cy="uploadImage"]')
                 .click({force: true});
-            cy.get('[data-cy="backgroundImageItem0"')
+            cy.get('[data-cy="backgroundImageItem0"]')
                 .dblclick({force: true}).then(elem => {
                 const element = Cypress.$(elem);
                 testPayload.mobileLogoId = element.attr('dataid');
@@ -244,7 +244,7 @@ context('Style tab', function () {
                 .select('2', {force: true});
         });
         it('Background', () => {
-            fillColorHEXWithOpacity('[data-cy="containerBackground"', '5c4040', '0');
+            fillColorHEXWithOpacity('[data-cy="containerBackground"]', '5c4040', '0');
         });
 
         it('Checking workability of all vertical alignment options', () => {

@@ -18,16 +18,14 @@ class VerticalAlignment extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        if (nextContext.previewDeviceType !== this.context.previewDeviceType ||
-            nextContext.name !== this.context.name ||
-            nextContext.style !== this.context.style) {
+        if (nextContext !== this.context) {
             this.getContainerPositionSettings(nextContext);
         }
     }
 
     getContainerPositionSettings(nextContext) {
         const context = nextContext || this.context;
-        const {style, previewDeviceType} = context;
+        const {style, dataToExclude:{previewDeviceType}} = context;
         const vertical = (style[`${previewDeviceType}_container`] || style.desktop_container).position.vertical;
         this.setState({ verticalPosition: vertical });
         document.querySelector(`[datatype='${vertical}']`).checked = true;

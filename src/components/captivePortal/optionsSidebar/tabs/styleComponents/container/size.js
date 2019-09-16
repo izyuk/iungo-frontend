@@ -44,16 +44,14 @@ class ContainerSize extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        if (nextContext.previewDeviceType !== this.context.previewDeviceType ||
-            nextContext.name !== this.context.name ||
-            nextContext.style !== this.context.style) {
+        if (nextContext !== this.context) {
             this.getContainerSizeSettings(nextContext);
         }
     }
 
     getContainerSizeSettings(nextContext){
         const context = nextContext || this.context;
-        const {style, previewDeviceType} = context;
+        const {style, dataToExclude:{previewDeviceType}} = context;
         const size = (style[`${previewDeviceType}_container`] || style.desktop_container).size;
         this.setState({ width: size.width , padding: size.padding });
     }

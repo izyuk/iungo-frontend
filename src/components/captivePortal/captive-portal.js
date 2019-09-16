@@ -268,7 +268,7 @@ class CaptivePortal extends Component {
     }
 
     render() {
-        const deviceType = this.context.previewDeviceType || 'desktop';
+        const deviceType = this.context.dataToExclude.previewDeviceType || 'desktop';
 
         // if (!this.context.dataToExclude.loader) {
             return (
