@@ -429,8 +429,6 @@ context('Content tab', function () {
         it('Select all', () => {
             cy.get('[data-cy="loginMethodFacebook"]')
                 .click({force: true});
-            cy.get('[data-cy="loginMethodGoogle"]')
-                .click({force: true});
             cy.get('[data-cy="loginMethodPhone"]')
                 .click({force: true});
             cy.get('[data-cy="loginMethodConnectButton"]')
@@ -447,8 +445,6 @@ context('Content tab', function () {
         it('Remove all', () => {
             cy.get('[data-cy="loginMethodFacebook"]')
                 .click({force: true});
-            cy.get('[data-cy="loginMethodGoogle"]')
-                .click({force: true});
             cy.get('[data-cy="loginMethodPhone"]')
                 .click({force: true});
             cy.get('[data-cy="loginMethodConnectButton"]')
@@ -457,8 +453,6 @@ context('Content tab', function () {
 
         it('Selecting needed methods', () => {
             cy.get('[data-cy="loginMethodFacebook"]')
-                .click({force: true});
-            cy.get('[data-cy="loginMethodGoogle"]')
                 .click({force: true});
             cy.get('[data-cy="loginMethodPhone"]')
                 .click({force: true});
@@ -911,7 +905,7 @@ context('Starting comparing collected data', function () {
                             }
                         },
                         fontIds: [],
-                        googleLogin: true,
+                        googleLogin: false,
                         facebookLogin: true,
                         twitterLogin: false,
                         phoneLogin: true,
