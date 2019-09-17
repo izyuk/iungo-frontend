@@ -130,7 +130,7 @@ class HotspotEditor extends Component {
     };
 
     copyToClipboard = (e) => {
-        const NODE = e.currentTarget.previousSibling;
+        const NODE = document.querySelector('.HSurlCopyData');
         const selection = window.getSelection();
         const range = document.createRange();
         range.selectNodeContents(NODE);
@@ -138,18 +138,16 @@ class HotspotEditor extends Component {
         selection.addRange(range);
         try {
             let successful = document.execCommand('copy');
-            this.setState({
-                copied: successful
-            });
             selection.removeAllRanges();
-            let msg = successful ? 'successful' : 'unsuccessful';
-            console.info('Copying text command was ' + msg);
+            let msg = 'Copying text command was ' + (successful ? 'successful' : 'unsuccessful');
+            console.info(msg);
+            successful && this.context.setNotification('Hotspot settings was saved successfully', false, true);
         } catch (err) {
             console.warn('Oops, unable to copy');
         }
         e.preventDefault();
         setTimeout(() => {
-            this.setState({copied: false});
+            this.context.setNotification('', false, false);
         }, 2000)
     };
 
@@ -276,7 +274,6 @@ class HotspotEditor extends Component {
                                                         {
                                                             portalsList !== '' &&
                                                             portalsList.map((item, i) => {
-                                                                console.log(item);
                                                                 return <option key={i} dataid={item.id}
                                                                             data-cy={`newHotspotSelectCP_Option_${i}`}
                                                                             data-name={item.name}
@@ -299,7 +296,9 @@ class HotspotEditor extends Component {
                                                         <span>
                                                             Copy and paste this URL to your device settings<br/>
                                                             <br/>
-                                                            {localStorage.getItem('HSurl')}
+                                                            <span className="HSurlCopyData">
+                                                                {localStorage.getItem('HSurl')}
+                                                            </span>
                                                         </span>
                                                         <span onClick={this.copyToClipboard}>
                                                             <Icons.ClipboardCopyIcon/>
