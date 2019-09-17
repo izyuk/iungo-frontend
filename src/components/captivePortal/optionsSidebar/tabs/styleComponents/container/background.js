@@ -76,16 +76,14 @@ class ContentBackground extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        if (nextContext.previewDeviceType !== this.context.previewDeviceType ||
-            nextContext.name !== this.context.name ||
-            nextContext.style !== this.context.style) {
+        if (nextContext !== this.context) {
             this.getBackgroundSettings(nextContext);
         }
     }
 
     getBackgroundSettings(nextContext){
         const context = nextContext || this.context;
-        const {style, previewDeviceType} = context;
+        const {style, dataToExclude:{previewDeviceType}} = context;
         const background = (style[`${previewDeviceType}_container`] || style.desktop_container).background;
         this.setState({ color: background.color , opacity: background.opacity });
     }

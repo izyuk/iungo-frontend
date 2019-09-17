@@ -57,16 +57,14 @@ class ContentBorder extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        if (nextContext.previewDeviceType !== this.context.previewDeviceType ||
-            nextContext.name !== this.context.name ||
-            nextContext.style !== this.context.style) {
+        if (nextContext !== this.context) {
             this.getBorderSettings(nextContext);
         }
     }
 
     getBorderSettings(nextContext) {
         const context = nextContext || this.context;
-        const {style, previewDeviceType} = context;
+        const {style, dataToExclude:{previewDeviceType}} = context;
         const { color, type, thickness, radius } = (style[`${previewDeviceType}_container`] || style.desktop_container).border;
         this.setState({ color, type, thickness, radius });
         let select = document.querySelectorAll('[data-component="ContentBorder"]');

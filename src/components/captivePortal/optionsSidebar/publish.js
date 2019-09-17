@@ -19,59 +19,7 @@ class Publish extends Component {
 
     callPublishMethod = async (e) => {
         if (this.context.name.length > 0) {
-            const {
-                addPortalName,
-                setBackground,
-                setLogo,
-                setBorderStyle,
-                setBackgroundStyle,
-                setSizeStyle,
-                setHeaderTopData,
-                setHeaderDescriptionData,
-                setLoginMethods,
-                setFooterData,
-                setLogoID,
-                setBackgroundID,
-                setCSS,
-                redirectURLChanger,
-                setButtonStyles,
-                setSuccessMessageData,
-                setExternalCssInfo,
-                loaderHandler,
-                setSuccessMessageStatus,
-                setNotification,
-                resetGlobalState,
-                setToken,
-                removeLogo,
-                removeBackground,
-                setBackgroundAttachment,
-                setBackgroundPosition,
-                setBackgroundRepeating,
-                setGDPRSettingsStatus,
-                setGDPRSettings,
-                setGDPRCollection,
-                setBackgroundSize,
-                previewCssGenerator,
-                dataToExclude,
-                urlPathHandler,
-                profileHandler,
-                setTermsFromBE,
-                setFontsCollection,
-                setFontData,
-                setFontBase64,
-                setLocaleData,
-                setActiveLocale,
-                convertLocaleName,
-                setTranslations,
-                clearTranslations,
-                setContainerVerticalPosition,
-                previewDeviceType,
-                mobileSettingsTouched,
-                setPreviewDeviceType,
-                setDeviceTypeSettingsTouched,
-                checkDeviceTypeDataChanged,
-                ...rest
-            } = this.context;
+            const {dataToExclude, ...rest} = this.context;
             this.context.loaderHandler(true);
             const portalDataToSend = GetBuilderParams(rest);
             const data = await PublishPortalMethodHandler(e, portalDataToSend, this.state.id === null ? localStorage.getItem('cpID') : this.state.id);
@@ -93,63 +41,10 @@ class Publish extends Component {
     };
 
     previewPortalMethodHandler = async () => {
-        const {
-            addPortalName,
-            setBackground,
-            setLogo,
-            setBorderStyle,
-            setBackgroundStyle,
-            setSizeStyle,
-            setHeaderTopData,
-            setHeaderDescriptionData,
-            setLoginMethods,
-            setFooterData,
-            setLogoID,
-            setBackgroundID,
-            setCSS,
-            redirectURLChanger,
-            setButtonStyles,
-            setSuccessMessageData,
-            setExternalCssInfo,
-            loaderHandler,
-            setSuccessMessageStatus,
-            setNotification,
-            resetGlobalState,
-            setToken,
-            removeLogo,
-            removeBackground,
-            setBackgroundAttachment,
-            setBackgroundPosition,
-            setBackgroundRepeating,
-            setGDPRSettingsStatus,
-            setGDPRSettings,
-            setGDPRCollection,
-            setBackgroundSize,
-            previewCssGenerator,
-            dataToExclude,
-            urlPathHandler,
-            profileHandler,
-            setTermsFromBE,
-            setFontsCollection,
-            setFontData,
-            setFontBase64,
-            setLocaleData,
-            setActiveLocale,
-            convertLocaleName,
-            setTranslations,
-            clearTranslations,
-            setContainerVerticalPosition,
-            previewDeviceType,
-            mobileSettingsTouched,
-            setPreviewDeviceType,
-            setDeviceTypeSettingsTouched,
-            checkDeviceTypeDataChanged,
-            ...rest
-        } = this.context;
+        const {dataToExclude, ...rest} = this.context;
         await this.props.collectData(rest);
 
         this.context.loaderHandler(true);
-        // const {dataToExclude, ...rest} = this.context;
         const portalDataToSend = GetBuilderParams(rest);
         const token = this.context.dataToExclude.token || localStorage.getItem('token');
         const query = previewPortal(token, portalDataToSend);

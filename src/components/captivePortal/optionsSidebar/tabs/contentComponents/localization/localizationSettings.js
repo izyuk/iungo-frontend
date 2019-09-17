@@ -54,7 +54,7 @@ class LocalozationSettings extends Component {
                     <div className="right">
                         <div className="innerRow">
                             <div className="innerCol">
-                                <div className="innerRow">
+                                <div className="innerRow" data-cy="languageSettingsSelect">
                                     <MultiSelect
                                         options={multiSelectOptions}
                                         selected={translationsLanguages}
@@ -65,6 +65,7 @@ class LocalozationSettings extends Component {
                                         overrideStrings={{
                                             selectSomeItems: 'Select Languages',
                                         }}
+                                        ItemRenderer={this.selectOptionRenderer}
                                     />
                                 </div>
                             </div>
@@ -74,6 +75,8 @@ class LocalozationSettings extends Component {
                 <div className="row langTabs">
                     {translationsLanguages.map((languageItem, i) => (
                         <div key={i}
+                            data-cy={`languageSettingsTab`}
+                            data-lang={languageItem}
                             className={'langTab ' + (language === languageItem ? 'langTabActive' : '')}
                             onClick={() => this.context.setActiveLocale(languageItem)}
                         >
@@ -88,6 +91,7 @@ class LocalozationSettings extends Component {
                     <div className="right">
                         <div className="innerRow">
                             <textarea name='name'
+                                      data-cy="languageSettingsName"
                                       value={translation.name}
                                       onChange={this.onTextChange}
                             />
@@ -101,6 +105,7 @@ class LocalozationSettings extends Component {
                     <div className="right">
                         <div className="innerRow">
                             <textarea name='description'
+                                      data-cy="languageSettingsDescription"
                                       value={translation.description}
                                       onChange={this.onTextChange}
                             />
@@ -114,6 +119,7 @@ class LocalozationSettings extends Component {
                     <div className="right">
                         <div className="innerRow">
                             <textarea name='footer'
+                                      data-cy="languageSettingsFooter"
                                       value={translation.footer}
                                       onChange={this.onTextChange}
                             />
@@ -127,6 +133,7 @@ class LocalozationSettings extends Component {
                     <div className="right">
                         <div className="innerRow">
                             <textarea name='connectButtonText'
+                                      data-cy="languageSettingsConnectButton"
                                       value={translation.connectButtonText}
                                       onChange={this.onTextChange}
                             />
@@ -140,6 +147,7 @@ class LocalozationSettings extends Component {
                     <div className="right">
                         <div className="innerRow">
                             <textarea name='successMessageText'
+                                      data-cy="languageSettingsSuccessMessage"
                                       value={translation.successMessageText}
                                       onChange={this.onTextChange}
                             />
@@ -148,6 +156,22 @@ class LocalozationSettings extends Component {
                 </div>
             </div>
         )
+    }
+
+    selectOptionRenderer(props){
+        const {checked, option, onClick} = props;
+        return <span data-cy="languageSettingsSelectOption" data-value={option.value} data-checked={checked}>
+            <input
+                type="checkbox"
+                onChange={onClick}
+                checked={checked}
+                tabIndex="-1"
+                style={{float: 'right'}}
+            />
+            <span>
+                {option.label}
+            </span>
+        </span>;
     }
 }
 

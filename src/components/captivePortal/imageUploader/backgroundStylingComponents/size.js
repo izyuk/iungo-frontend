@@ -44,16 +44,14 @@ export default class Size extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        if (nextContext.previewDeviceType !== this.context.previewDeviceType ||
-            nextContext.name !== this.context.name ||
-            nextContext.style !== this.context.style) {
+        if (nextContext !== this.context) {
             this.getSizeSettings(nextContext);
         }
     }
 
     getSizeSettings(nextContext) {
         const context = nextContext || this.context;
-        const {style: { background_and_logo }, previewDeviceType} = context;
+        const {style: { background_and_logo }, dataToExclude:{previewDeviceType}} = context;
         const background = background_and_logo[`${previewDeviceType}Background`] || background_and_logo.desktopBackground;
         const size = background.size;
         if (size.inPercentDimension) {

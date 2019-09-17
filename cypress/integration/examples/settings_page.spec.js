@@ -173,7 +173,7 @@ context('Settings Page', function () {
 
         it('Check for validation errors', () => {
             cy.get('[data-cy="mailerliteIntegrationForm"]')
-                .find('.errorText').its('length').should('be.gt', 2)
+                .find('.errorText').its('length').should('be.gt', 1)
         });
 
         it('Try to test empty form', () => {
@@ -183,7 +183,7 @@ context('Settings Page', function () {
 
         it('Check for validation errors', () => {
             cy.get('[data-cy="mailerliteIntegrationForm"]')
-                .find('.errorText').its('length').should('be.gt', 2)
+                .find('.errorText').its('length').should('be.gt', 1)
         });
 
         it('Fill all fields with fake data and save', () => {

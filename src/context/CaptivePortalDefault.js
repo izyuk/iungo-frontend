@@ -183,4 +183,37 @@ const captivePortalDefault = {
     translationsLanguages: [],
     translations: {},
 };
-export default captivePortalDefault;
+
+const dataToExclude = {
+    successMessageStatus: false,
+    gdprSettingsStatus: false,
+    gdprSettingsSetting: 'No',
+    gdprList: '',
+    fontName: 'Arial',
+    base64EncodedValue: '',
+    fontsList: '',
+    agreeWithTermsAndConditionsLabel: '',
+    allowToUsePersonalInfoLabel: '',
+    loader: false,
+    publishedType: '',
+    failed: false,
+    notification: false,
+    stylesApplied: false,
+    styledElements: '',
+    stylesArray: '',
+    token: '',
+    urlPath: '',
+    gdprFromBE: '',
+    localeData: {},
+    activeLocale: '',
+    previewDeviceType: 'desktop',
+    mobileSettingsTouched: [],
+};
+
+export const getCaptivePortalDefault = () => {
+    return JSON.parse( JSON.stringify(captivePortalDefault) );
+}
+
+export const getDataToExcludeDefault = () => {
+    return JSON.parse( JSON.stringify(dataToExclude) );
+}

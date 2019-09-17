@@ -35,7 +35,7 @@ class ProfileDetails extends Component {
         city: '',
         address: '',
         zipCode: '',
-        locale: '',
+        locale: 'EN',
         APIErrors: null,
     };
     token = this.context.dataToExclude.token ? this.context.dataToExclude.token : localStorage.getItem('token');
@@ -45,23 +45,10 @@ class ProfileDetails extends Component {
     static propTypes = {};
     static defaultProps = {};
 
-    selectOnMountHandler = (element, value) => {
-        // collection.map((item) => {
-        let svg = element.current.nextSibling.children[0];
-        let span = document.createElement('span');
-        element.current.value = value ? value : 'Language';
-        span.innerText = element.current.options[element.current.selectedIndex].value;
-        element.current.nextSibling.insertBefore(span, svg);
-        this.context.profileHandler(this.state);
-        // });
-    };
-
     selectHandler = (e) => {
         const currentState = this.state;
         const fieldName = e.currentTarget.getAttribute('name');
         const data = e.currentTarget.options[e.currentTarget.selectedIndex].value;
-        const span = e.currentTarget.nextSibling.children[0];
-        span.innerText = data;
         currentState[fieldName] = data;
         this.setState(currentState);
         this.context.profileHandler(currentState);
@@ -96,8 +83,8 @@ class ProfileDetails extends Component {
             console.log(res);
             if (res.status === 200) {
                 const {data: {id, createdAt, updatedAt, uuid, ...rest}} = res;
-                this.selectOnMountHandler(this.language, rest.locale);
                 this.setState(rest);
+                this.context.profileHandler(rest);
                 if (this._form && this._form.setValues) {
                     this._form.setValues(rest);
                 }
@@ -147,7 +134,8 @@ class ProfileDetails extends Component {
             address,
             zipCode,
             country,
-            city
+            city,
+            locale
         } = this.state;
         return (
             <div className={'width-100'}>
@@ -306,11 +294,13 @@ class ProfileDetails extends Component {
                                     data-cy="profileLocaleSelect"
                                     ref={this.language}
                                     onChange={this.selectHandler}
+                                    value={locale}
                             >
                                 <option value="LT" data-cy="profileLocaleSelectOption">Lithuanian</option>
                                 <option value="EN" data-cy="profileLocaleSelectOption">English</option>
                             </select>
                             <p className="select">
+                                <span>{locale}</span>
                                 <Icons.DropdownIcon fill="#FFF"/>
                             </p>
                         </div>

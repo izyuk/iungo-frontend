@@ -1,6 +1,6 @@
 export const APPLICATION_HOST = Cypress.env('APPLICATION_HOST') || 'http://localhost:9000';
-export const LOGIN_EMAIL = Cypress.env('LOGIN_EMAIL') || 'dmitriy.izyuk@gmail.com';
-export const LOGIN_PASSWORD = Cypress.env('LOGIN_PASSWORD') || 'Izyuk8968';
+export const LOGIN_EMAIL = Cypress.env('LOGIN_EMAIL') || 'integration-test@gmail.com';
+export const LOGIN_PASSWORD = Cypress.env('LOGIN_PASSWORD') || 'c3PnD91Qbe4#!Nk';
 
 let LOCAL_STORAGE_MEMORY = {};
 

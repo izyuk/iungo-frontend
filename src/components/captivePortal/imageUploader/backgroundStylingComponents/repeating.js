@@ -29,14 +29,14 @@ export default class Repeating extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        if (nextContext.previewDeviceType !== this.context.previewDeviceType) {
+        if (nextContext !== this.context) {
             this.getRepeatingSettings(nextContext);
         }
     }
 
     getRepeatingSettings(nextContext) {
         const context = nextContext || this.context;
-        const {style: { background_and_logo }, previewDeviceType} = context;
+        const {style: { background_and_logo }, dataToExclude:{previewDeviceType}} = context;
         const background = background_and_logo[`${previewDeviceType}Background`] || background_and_logo.desktopBackground;
         const repeat = background.repeat;
         this.repeating.current.value = repeat;

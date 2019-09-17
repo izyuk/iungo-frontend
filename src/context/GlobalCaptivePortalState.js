@@ -1,39 +1,13 @@
 import React, {Component} from 'react';
 import CaptivePortalContext from './project-context';
 import Palette from '~/static/styles/palette';
-import CaptivePortalDefault from '~/context/CaptivePortalDefault';
+import { getCaptivePortalDefault, getDataToExcludeDefault } from '~/context/CaptivePortalDefault';
 
 class GlobalCaptivePortalState extends Component {
 
     state = {
-        ...CaptivePortalDefault,
-        dataToExclude: {
-            successMessageStatus: false,
-            gdprSettingsStatus: false,
-            gdprSettingsSetting: 'No',
-            gdprList: '',
-            fontName: '',
-            base64EncodedValue: '',
-            fontsList: '',
-            agreeWithTermsAndConditionsLabel: '',
-            allowToUsePersonalInfoLabel: '',
-            loader: false,
-            publishedType: '',
-            failed: false,
-            notification: false,
-            stylesApplied: false,
-            styledElements: '',
-            stylesArray: '',
-            token: '',
-            urlPath: '',
-            gdprFromBE: '',
-            localeData: {},
-            locales: [],
-            activeLocale: null,
-        },
-
-        previewDeviceType: 'desktop',
-        mobileSettingsTouched: [],
+        ...getCaptivePortalDefault(),
+        dataToExclude: getDataToExcludeDefault(),
     };
 
     addPortalName = name => {
@@ -45,12 +19,12 @@ class GlobalCaptivePortalState extends Component {
         if (deviceType) {
             deviceTypes = [deviceType];
         } else {
-            const type = state.previewDeviceType;
-            if (type === 'desktop' && !state.mobileSettingsTouched.includes(settingsType)) {
+            const type = state.dataToExclude.previewDeviceType;
+            if (type === 'desktop' && !state.dataToExclude.mobileSettingsTouched.includes(settingsType)) {
                 deviceTypes = ['desktop', 'mobile'];
             } else {
                 deviceTypes = [type];
-                const settings = state[`${type}SettingsTouched`];
+                const settings = state.dataToExclude[`${type}SettingsTouched`];
                 if (settings && !settings.includes(settingsType)) { settings.push(settingsType); }
             }
         }
@@ -301,30 +275,8 @@ class GlobalCaptivePortalState extends Component {
 
     resetGlobalState = async () => {
         const data = {
-            ...CaptivePortalDefault,
-            dataToExclude: {
-                successMessageStatus: false,
-                gdprSettingsStatus: false,
-                gdprSettingsSetting: 'No',
-                gdprList: '',
-                fontName: 'Arial',
-                base64EncodedValue: '',
-                fontsList: '',
-                agreeWithTermsAndConditionsLabel: '',
-                allowToUsePersonalInfoLabel: '',
-                loader: false,
-                publishedType: '',
-                failed: false,
-                notification: false,
-                stylesApplied: false,
-                styledElements: '',
-                stylesArray: '',
-                token: '',
-                urlPath: '',
-                gdprFromBE: '',
-                localeData: {},
-                activeLocale: '',
-            }
+            ...getCaptivePortalDefault(),
+            dataToExclude: getDataToExcludeDefault()
         };
         await this.loaderHandler(true);
         await this.clearTranslations();
@@ -395,9 +347,9 @@ class GlobalCaptivePortalState extends Component {
             },
             dataToExclude: {
                 fontName,
-                base64EncodedValue
+                base64EncodedValue,
+                previewDeviceType,
             },
-            previewDeviceType,
         } = this.state;
         const logo = background_and_logo[`${previewDeviceType}Logo`] || background_and_logo.desktopLogo;
         const background = background_and_logo[`${previewDeviceType}Background`] || background_and_logo.desktopBackground;
@@ -701,11 +653,13 @@ class GlobalCaptivePortalState extends Component {
     }
 
     setPreviewDeviceType = (deviceType) => {
-        this.setState({previewDeviceType: deviceType});
+        const currentState = this.state;
+        currentState.dataToExclude.previewDeviceType = deviceType;
+        this.setState(currentState);
     };
     setDeviceTypeSettingsTouched = (deviceType, touched) => {
         const currentState = this.state;
-        currentState[`${deviceType}SettingsTouched`] = touched;
+        currentState.dataToExclude[`${deviceType}SettingsTouched`] = touched;
         this.setState(currentState);
     }
     checkDeviceTypeDataChanged = (deviceType, data) => {
@@ -723,28 +677,13 @@ class GlobalCaptivePortalState extends Component {
             const containerStylesEqual = (JSON.stringify(data.style.desktop_container) === JSON.stringify(data.style[`${deviceType}_container`]));
             if (!containerStylesEqual) { changed.push('container'); };
         }
-        currentState[`${deviceType}SettingsTouched`] = changed;
+        currentState.dataToExclude[`${deviceType}SettingsTouched`] = changed;
         this.setState(currentState);
     };
 
     render() {
         return <CaptivePortalContext.Provider value={{
-            background: this.state.background,
-            name: this.state.name,
-            desktopLogoId: this.state.desktopLogoId,
-            mobileLogoId: this.state.mobileLogoId,
-            desktopBackgroundId: this.state.desktopBackgroundId,
-            mobileBackgroundId: this.state.mobileBackgroundId,
-            style: this.state.style,
-            googleLogin: this.state.googleLogin,
-            facebookLogin: this.state.facebookLogin,
-            twitterLogin: this.state.twitterLogin,
-            phoneLogin: this.state.phoneLogin,
-            acceptTermsLogin: this.state.acceptTermsLogin,
-            successRedirectUrl: this.state.successRedirectUrl,
-            externalCss: this.state.externalCss,
-            termAndConditionId: this.state.termAndConditionId,
-            fontIds: this.state.fontIds,
+            ...this.state,
             addPortalName: this.addPortalName,
             setBackground: this.setBackground,
             setBackgroundRepeating: this.setBackgroundRepeating,
@@ -767,7 +706,6 @@ class GlobalCaptivePortalState extends Component {
             setButtonStyles: this.setButtonStyles,
             setSuccessMessageData: this.setSuccessMessageData,
             setExternalCssInfo: this.setExternalCssInfo,
-            dataToExclude: this.state.dataToExclude,
             loaderHandler: this.loaderHandler,
             setSuccessMessageStatus: this.setSuccessMessageStatus,
             setNotification: this.setNotification,
@@ -785,15 +723,11 @@ class GlobalCaptivePortalState extends Component {
             setFontsCollection: this.setFontsCollection,
             setFontData: this.setFontData,
             setFontBase64: this.setFontBase64,
-            translationsLanguages: this.state.translationsLanguages,
-            translations: this.state.translations,
             setLocaleData: this.setLocaleData,
             setActiveLocale: this.setActiveLocale,
             convertLocaleName: this.convertLocaleName,
             setTranslations: this.setTranslations,
             clearTranslations: this.clearTranslations,
-            previewDeviceType: this.state.previewDeviceType,
-            mobileSettingsTouched: this.state.mobileSettingsTouched,
             setPreviewDeviceType: this.setPreviewDeviceType,
             setDeviceTypeSettingsTouched: this.setDeviceTypeSettingsTouched,
             checkDeviceTypeDataChanged: this.checkDeviceTypeDataChanged,
