@@ -7,20 +7,20 @@ stages:
   - build
   - deploy
 
-# playground-cypress-testing:
-#   except:
-#     - production
-#     - /^hot-fix-prod.*$/
-#   image: cypress/base:10
-#   stage: testing
-#   retry: 2
-#   before_script:
-#     - npm i
-#     - npm start &
-#   script:
-#     - npm install --save-dev cypress
-#     - $(npm bin)/cypress verify
-#     - $(npm bin)/cypress run
+playground-cypress-testing:
+  except:
+    - production
+    - /^hot-fix-prod.*$/
+  image: cypress/base:10
+  stage: testing
+  retry: 2
+  before_script:
+    - npm i
+    - npm start &
+  script:
+    - npm install --save-dev cypress
+    - $(npm bin)/cypress verify
+    - $(npm bin)/cypress run --spec "cypress/integration/examples/cp_collect.spec.js,cypress/integration/examples/settings_page.spec.js"
 
 playground-npm-build:
   only:
