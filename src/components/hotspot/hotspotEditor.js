@@ -21,7 +21,7 @@ class HotspotEditor extends Component {
         list: '',
         id: '',
         captivePortalID: '',
-        captivePortalName: null,
+        captivePortalName: '',
         portalsList: '',
         portalUrl: '',
         submitted: false,
@@ -57,25 +57,19 @@ class HotspotEditor extends Component {
             });
             const token = localStorage.getItem('token');
             var query;
-            const currentState = this.state;
             if (this.state.id !== '') {
                 query = updateHotspotById(token, this.state.name, this.state.address, this.state.description, this.state.captivePortalID, this.state.id);
-                currentState.submited = true;
-                currentState.submittedType = 'updated';
-                this.setState(currentState)
+                this.setState({ submitted: true, submittedType: 'updated' });
             } else {
                 query = createHotspot(token, this.state.name, this.state.address, this.state.description, this.state.captivePortalID);
-                currentState.submited = true;
-                currentState.submittedType = 'created';
-                this.setState(currentState)
+                this.setState({ submitted: true, submittedType: 'created' });
             }
             await query.then(res => {
                 if (res && res.data) {
-                    currentState.id = res.data.id;
                     if (res.data.uuid && window.location.pathname === '/hotspot/new') {
                         window.history.pushState(null, null, `/hotspot/${res.data.uuid}`);
                     }
-                    this.setState(currentState);
+                    this.setState({ id: res.data.id });
                     this.context.setNotification('Hotspot settings was saved successfully', false, true);
                     setTimeout(() => {
                         this.context.setNotification('', false, false);
@@ -84,9 +78,7 @@ class HotspotEditor extends Component {
             });
             this.context.loaderHandler(false);
             setTimeout(() => {
-                currentState.submited = false;
-                currentState.submittedType = '';
-                this.setState(currentState);
+                this.setState({ submitted: false, submittedType: '' });
             }, 2000)
         } else {
             this.setState({
@@ -110,6 +102,7 @@ class HotspotEditor extends Component {
                 currentState.name = name;
                 if (!!portal) {
                     currentState.captivePortalID = portal.id;
+                    currentState.captivePortalName = portal.name;
                     currentState.portalUrl = portal.externalUrl;
                 }
                 if (this._form && this._form.setValues) {
