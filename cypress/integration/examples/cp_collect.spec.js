@@ -46,7 +46,7 @@ context('Start and going to CP', function () {
     describe('NEW CP', function () {
         it('Creating new CP', () => {
             cy.get('.newTemplate')
-                .click({force: true})
+                .click({force: true}).wait(1000)
         });
 
         it('Setting name', () => {
