@@ -106,6 +106,7 @@ class GDPR extends Component {
             const span = e.currentTarget.nextSibling.children[0];
             span.innerText = e.currentTarget.options[e.currentTarget.selectedIndex].value;
             const {displayColorPicker, fontInputData, settingsCollection, ...rest} = currentState;
+            this.context.setTermsFromBE('');
             this.context.setGDPRSettings(rest);
             this.context.setGDPRSettingsStatus(true);
         } else {
@@ -116,6 +117,9 @@ class GDPR extends Component {
                 currentState.agreeWithTermsAndConditionsLabel = gdprFromBE.agreeWithTermsAndConditionsLabel;
                 currentState.allowToUsePersonalInfoLabel = gdprFromBE.allowToUsePersonalInfoLabel;
                 currentState.settingId = gdprFromBE.id;
+                currentState.setting = 'Yes';
+            } else if (this.context.termAndConditionId) {
+                this.setting.current.value = 'Yes';
                 currentState.setting = 'Yes';
             } else {
                 currentState.setting = 'No';
