@@ -62,7 +62,7 @@ class BackgroundAndLogo extends Component {
                     height: image.height
                 }
             });
-
+            console.log(url);
         }
     };
 
@@ -94,6 +94,10 @@ class BackgroundAndLogo extends Component {
     fileSelectedHandler = async (files) => {
         this.state.backgroundColor = false;
         this.state.alignment = true;
+
+        console.log(files);
+        console.log(files.base64);
+
         if ((files.type === "image/jpeg") ||
             (files.type === "image/png") ||
             (files.type === "image/gif") ||
