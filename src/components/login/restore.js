@@ -2,15 +2,24 @@ import React, {Component} from 'react';
 import {restorePasswordSendConfirmedPassword, restorePasswordSendUsername} from "~/api/API";
 import Notification from "~/components/additional/notification";
 import CaptivePortalContext from "~/context/project-context";
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Icons from '~/static/images/icons';
 
-const RestoreValidationSchema = Yup.object().shape({
+const resetEmailValidationSchema = Yup.object().shape({
     username: Yup.string()
         .required('Required')
         .email('Bad format'),
+});
+const restorePwdsValidationSchema = Yup.object().shape({
+    password: Yup.string()
+        .required('Required')
+        .min(8, 'Password length must be between 8 and 30 characters')
+        .max(30, 'Password length must be between 8 and 30 characters'),
+    confirmedPassword: Yup.string()
+        .required('Required')
+        .oneOf([Yup.ref('password'), null], 'Passwords must match')
 });
 
 const NOTIFICATION_TIMEOUT = 3000;
@@ -43,7 +52,7 @@ class Restore extends Component {
             });
             const field = e.target.getAttribute('datatype');
             this.setState({
-                [field]: e.target.value
+                [field]: e.target.value, APIErrors: null
             });
         } else {
             this.setState({ username: e.target.value, APIErrors: null })
@@ -71,11 +80,11 @@ class Restore extends Component {
                         console.log(res.status);
                         if (res.status === 404) {
                             this.context.setNotification('Your token is probably expired. Please try again or contact system administrator', true, true);
-                        } else {
-                            // this.context.setNotification('Your password was changed successfully', false, true);
+                        } else if (res.status === 200) {
+                            this.context.setNotification('Your password was changed successfully', false, true);
                             setTimeout(() => {
                                 this.context.setNotification('', false, false);
-                                location.href = '/';
+                                this.props.history && this.props.history.push('/login');
                             }, NOTIFICATION_TIMEOUT)
                         }
                     }).catch(e => {
@@ -149,11 +158,11 @@ class Restore extends Component {
     }
 
     render() {
-        const { username, toPasswordFields, emailSent} = this.state;
+        const { username, password, confirmedPassword, toPasswordFields, emailSent} = this.state;
         return (
             <Formik ref={el => this._form = el}
-                initialValues={{ username }}
-                validationSchema={RestoreValidationSchema}
+                initialValues={{ username, password, confirmedPassword }}
+                validationSchema={!toPasswordFields ? resetEmailValidationSchema : restorePwdsValidationSchema}
                 validateOnChange={true}
                 onSubmit={() => {}}
                 render={({
@@ -204,25 +213,31 @@ class Restore extends Component {
                                         </div>
                                 ) :
                                 <div className="inputsWrap">
-                                    <div className={this.state.failed ? 'password validationFail' : 'password'}>
+                                    <div className={hasErr('password') ? 'password validationFail' : 'password'}>
                                         <span>
                                             <Icons.KeyIcon />
                                         </span>
                                         <input type="password"
-                                            datatype={'password'}
-                                            onBlur={this.fieldsHandler}
+                                            datatype="password"
+                                            name='password'
+                                            onChange={(e) => this.fieldsHandler(e, handleChange)}
+                                            onBlur={(e) => this.fieldsHandler(e, handleChange)}
                                             placeholder="New password"/>
                                     </div>
+                                    {getErr('password')}
                                     <div
-                                        className={this.state.failed ? 'password confirmField validationFail' : 'password confirmField'}>
+                                        className={hasErr('confirmedPassword') ? 'password confirmField validationFail' : 'password confirmField'}>
                                         <span>
                                             <Icons.KeyIcon />
                                         </span>
                                         <input type="password"
-                                            datatype={'confirmedPassword'}
-                                            onBlur={this.fieldsHandler}
+                                            datatype="confirmedPassword"
+                                            name="confirmedPassword"
+                                            onChange={(e) => this.fieldsHandler(e, handleChange)}
+                                            onBlur={(e) => this.fieldsHandler(e, handleChange)}
                                             placeholder="Repeat new password"/>
                                     </div>
+                                    {getErr('confirmedPassword')}
                                 </div>
                         }
                         {
@@ -246,4 +261,9 @@ class Restore extends Component {
     }
 }
 
-export default Restore;
+const withRouterWorkaround = (Inner) => {
+    const Wrapped = (props) => <Inner {...props}/>;
+    Wrapped.displayName = `WithRouterWorkaround(${Inner.displayName || Inner.name || '?'})`;
+    return withRouter(Wrapped);
+}
+export default withRouterWorkaround(Restore);

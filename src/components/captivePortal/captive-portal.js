@@ -123,7 +123,6 @@ class CaptivePortal extends Component {
                 this.context.setHeaderDescriptionData(data.style.header.description);
                 this.context.setLoginMethods({
                     facebook: data.facebookLogin,
-                    google: data.googleLogin,
                     twitter: data.twitterLogin,
                     phone: data.phoneLogin,
                     button: data.acceptTermsLogin

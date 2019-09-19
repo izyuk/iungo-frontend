@@ -68,19 +68,6 @@ class LoginMethods extends Component {
                             </div>
                             <span>Facebook button</span>
                         </label>
-                        <label htmlFor="google">
-                            <span className="checkBoxPlace">
-                                <input ref={this.google} type="checkbox" id="google"
-                                       onChange={this.checkBoxHandler} data-cy="loginMethodGoogle"/>
-                                <span></span>
-                            </span>
-                            <div className="google">
-                                <span>
-                                    <Icons.GoogleIcon />
-                                </span>
-                            </div>
-                            <span>Google button</span>
-                        </label>
                         <label htmlFor="phone">
                             <span className="checkBoxPlace">
                                 <input ref={this.phone} type="checkbox" id="phone"
