@@ -11,11 +11,6 @@ import Position from "./backgroundStylingComponents/position";
 import Size from "./backgroundStylingComponents/size";
 import Icons from '~/static/images/icons';
 
-import {EXIF} from 'exif-js';
-// var exifStripper = require('exif-stripper');
-// import {exifStripper} from 'exif-stripper';
-
-
 const BACKEND_API = process.env.BACKEND_API;
 
 class BackgroundAndLogo extends Component {
@@ -67,7 +62,7 @@ class BackgroundAndLogo extends Component {
                     height: image.height
                 }
             });
-
+            console.log(url);
         }
     };
 
@@ -96,123 +91,35 @@ class BackgroundAndLogo extends Component {
 
     };
 
-    // imgToBase64 = (img) => {
-    //     let reader = new FileReader();
-    //     reader.readAsDataURL(img);
-    //     reader.onloadend = function () {
-    //         console.log(reader.result);
-    //         getExif(reader.result);
-    //         // return reader.result;
-    //     };
-    // };
-
-
-
-
-    getExif = async (file) => {
-
-        const toBase64 = file => new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
-        });
-
-        console.log('toBase64 function',await toBase64(file));
-
-        let imageFromFileBase64 = document.createElement('img');
-        imageFromFileBase64.setAttribute('src', await toBase64(file));
-
-        const getDataUrl = (img) => {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
-
-            console.log(img);
-            console.log(canvas.toDataURL());
-            const image = new Image();
-            image.src = canvas.toDataURL(file.type, 0.7);
-            // const w = window.open("");
-            // w.document.write(image.outerHTML);
-            // const link = document.createElement('a');
-            // link.download = 'filename.png';
-            // link.href = canvas.toDataURL();
-            // link.style.display = 'block';
-            // link.style.width = '100px';
-            // link.style.height = '100px';
-            // link.style.backgroundColor = 'red';
-            // document.getElementsByTagName('BODY')[0].append(link);
-            // link.click();
-            document.body.appendChild(image);
-            return canvas.toDataURL();
-        };
-
-        imageFromFileBase64.addEventListener('load', function (event) {
-
-            getDataUrl(event.target);
-
-            // window.open(url,'Image','width=largeImage.stylewidth,height=largeImage.style.height,resizable=1');
-        });
-
-
-
-        // let yourImgSrc = window.URL.createObjectURL(data);
-
-        // this.toDataURL(yourImgSrc, function (dataUrl) {console.log('RESULT:', dataUrl)});
-
-
-        function checkData() {
-
-            EXIF.getData(file, function () {
-                const allMetaData = EXIF.getAllTags(this);
-                console.log(allMetaData);
-                Object.keys(allMetaData).forEach(function (key) {
-                    delete allMetaData[key];
-                });
-            });
-        }
-        // console.log(yourImgSrc);
-    };
-
     fileSelectedHandler = async (files) => {
-
-
-
-
-
         this.state.backgroundColor = false;
         this.state.alignment = true;
 
-        // this.getExif(files);
+        console.log(files);
+        console.log(files.base64);
 
         if ((files.type === "image/jpeg") ||
-            (files.type === "image/jpg") ||
             (files.type === "image/png") ||
             (files.type === "image/gif") ||
             (files.type === "image/svg+xml")) {
-            if (files.size < 5120000) {
-
-
-                // this.setState({
-                //     fileInfo: files
-                // });
-                // this.imageLoad(this.state.fileInfo.base64);
-                // const img = document.createElement('img');
-                // img.setAttribute('src', this.state.fileInfo.base64);
-                // document.getElementsByTagName('BODY')[0].appendChild(img);
-                // img.style.opacity = 0;
-                // img.style.position = 'absolute';
-                // img.style.top = 0;
-                // img.style.left = 0;
-                // img.style.zIndex = -100;
-                // img.style.zoom = 0.1;
-                // let query = this.uploadImage(localStorage.getItem('token'), this.state.fileInfo.name, this.state.fileInfo.base64, img);
-                // await query.then(res => {
-                //     this.getImages();
-                // });
+            if (files.file.size < 5120000) {
+                this.setState({
+                    fileInfo: files
+                });
+                this.imageLoad(this.state.fileInfo.base64);
+                let img = document.createElement('img');
+                img.setAttribute('src', this.state.fileInfo.base64);
+                document.getElementsByTagName('BODY')[0].appendChild(img);
+                img.style.opacity = 0;
+                img.style.position = 'absolute';
+                img.style.top = 0;
+                img.style.left = 0;
+                img.style.zIndex = -100;
+                img.style.zoom = 0.1;
+                let query = this.uploadImage(localStorage.getItem('token'), this.state.fileInfo.name, this.state.fileInfo.base64, img);
+                await query.then(res => {
+                    this.getImages();
+                });
             } else {
                 await this.context.setNotification('File shouldn`t be larger than 5.12 MB', true, true);
                 setTimeout(() => {
@@ -583,10 +490,7 @@ class BackgroundAndLogo extends Component {
                     this.state.isModalOpen &&
                     <Modal className="imagesModal"
                            onClose={this.toggleModal}
-                        // uploadHandler={this.fileSelectedHandler}
-                        //    uploadHandler={this.imgToBase64}
-                           uploadHandler={this.getExif}
-                        // getExif={this.getExif}
+                           uploadHandler={this.fileSelectedHandler}
                            progress={this.state.progress}
                            fileInfo={this.state.fileInfo.file}
                            applyOnUpload={this.applyOnUpload}
