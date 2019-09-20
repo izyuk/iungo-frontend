@@ -4,20 +4,25 @@ import Methods from './methods';
 import LanguagesModal from './languagesModal';
 import CaptivePortalContext from "~/context/project-context";
 import Icons from '~/static/images/icons';
+import ContentEditable from 'react-contenteditable';
 
 
 class Preview extends Component {
     static contextType = CaptivePortalContext;
 
-    state = {
-        showLanguagesModal: false
-    };
-
-    PreviewMain = React.createRef();
-    ContainerMain = React.createRef();
-    FooterText = React.createRef();
-    agree = React.createRef();
-    allow = React.createRef();
+    constructor(props){
+        super(props);
+        this.state = {
+            showLanguagesModal: false
+        };
+        this.PreviewMain = React.createRef();
+        this.ContainerMain = React.createRef();
+        this.FooterText = React.createRef();
+        this.agree = React.createRef();
+        this.allow = React.createRef();
+        this.beforeEditContent = this.beforeEditContent.bind(this);
+        this.handleContentChange = this.handleContentChange.bind(this);
+    }
 
     componentDidMount() {
         const {style} = this.context;
@@ -70,6 +75,27 @@ class Preview extends Component {
         BODY.appendChild(styleTag);
     }
 
+    beforeEditContent(e){
+        const name = e.currentTarget.getAttribute('name');
+        const tabName = e.currentTarget.getAttribute('data-edit-tab');
+        this.context.setActiveSettingsPath(`content.${tabName}.${name}`);
+    }
+    handleContentChange(e){
+        const val = e.target.value || e.target.innerText || '';
+        const tmp = document.createElement('div');
+        tmp.innerHTML = val;
+        const textVal = tmp.textContent || '';
+        const name = e.currentTarget.getAttribute('name');
+        const language = this.context.dataToExclude.activeLocale || null;
+        if (textVal.length || e.type === 'blur') {
+            this.context.setTranslations(language, { [name]: textVal });
+        }
+        if (e.type === 'blur') {
+            const tabName = e.currentTarget.getAttribute('data-edit-tab');
+            this.context.setActiveSettingsPath(`content.${tabName}`);
+        }
+    }
+
     render() {
         const { showLanguagesModal } = this.state;
         const {
@@ -99,20 +125,44 @@ class Preview extends Component {
                         <div className="section"
                              ref={this.ContainerMain}>
                             {this.context.dataToExclude.successMessageStatus ?
-                                <div className="contentPlace" data-cy="successTextPreview">
-                                    <p className="text">
-                                        {translation.successMessageText}
-                                    </p>
+                                <div className="contentPlace">
+                                    {Boolean(translation.successMessageText) && <ContentEditable
+                                        name="successMessageText"
+                                        html={translation.successMessageText || ''}
+                                        onChange={this.handleContentChange}
+                                        onBlur={this.handleContentChange}
+                                        onFocus={this.beforeEditContent}
+                                        data-edit-tab="success_actions"
+                                        className="text"
+                                        tagName="p"
+                                        data-cy="successTextPreview"
+                                    />}
                                 </div>
                                 : <div className="contentPlace">
                                     <div className="textPlace">
-                                        <p className="head" data-cy="headerTopTextPreview">
-                                            {translation.name}
-                                        </p>
+                                        {Boolean(translation.name) && <ContentEditable
+                                            name="name"
+                                            html={translation.name || ''}
+                                            onChange={this.handleContentChange}
+                                            onBlur={this.handleContentChange}
+                                            onFocus={this.beforeEditContent}
+                                            data-edit-tab="header"
+                                            className="head"
+                                            tagName="p"
+                                            data-cy="headerTopTextPreview"
+                                        />}
 
-                                        <p className="description" data-cy="headerDescriptionTextPreview">
-                                            {translation.description}
-                                        </p>
+                                        {Boolean(translation.description) && <ContentEditable
+                                            name="description"
+                                            html={translation.description || ''}
+                                            onChange={this.handleContentChange}
+                                            onBlur={this.handleContentChange}
+                                            onFocus={this.beforeEditContent}
+                                            data-edit-tab="header"
+                                            className="description"
+                                            tagName="p"
+                                            data-cy="headerDescriptionTextPreview"
+                                        />}
                                     </div>
                                     {gdprSettingsStatus ?
                                         <div className="contentPlace">
@@ -140,16 +190,28 @@ class Preview extends Component {
                                     <Methods/>
                                 </div>
                             }
-                            <div className="langaugeSwitcher" onClick={() => this.setState({ showLanguagesModal: true })}>
+                            <div className="langaugeSwitcher"
+                                 onClick={() => this.setState({ showLanguagesModal: true })}
+                                 data-cy="langaugeSwitcherPreview"
+                                 data-lang={language}
+                            >
                                 {LangIcon && <LangIcon/>}
                             </div>
                         </div>
                     </div>
                     <div className="footer">
                         <div className="contentPlace">
-                            <p className="text" ref={this.FooterText} data-cy="footerTextPreview">
-                                {translation.footer}
-                            </p>
+                            {Boolean(translation.footer) && <ContentEditable
+                                name="footer"
+                                html={translation.footer || ''}
+                                onChange={this.handleContentChange}
+                                onBlur={this.handleContentChange}
+                                onFocus={this.beforeEditContent}
+                                data-edit-tab="footer"
+                                className="text"
+                                tagName="p"
+                                data-cy="footerTextPreview"
+                            />}
                         </div>
                     </div>
                     {Boolean(showLanguagesModal) && <LanguagesModal onClose={() => this.setState({ showLanguagesModal: false })} />}

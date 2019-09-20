@@ -20,9 +20,9 @@ class LanguagesModal extends Component {
         const languages = this.context.translationsLanguages || [];
         const currentLanguage = this.context.dataToExclude.activeLocale || '';
         return (
-            <div className="languagesModalOverlay" onClick={() => this.onModalClose()}>
+            <div className="languagesModalOverlay" onClick={() => this.onModalClose()} data-cy="languagesModalPreviewOverlay">
                 <div className="languagesModal" onClick={e => e.stopPropagation()}>
-                    <div className="languagesModalClose" onClick={() => this.onModalClose()}>
+                    <div className="languagesModalClose" onClick={() => this.onModalClose()} data-cy="languagesModalPreviewClose">
                         <Icons.ModalClose/>
                     </div>
                     <img className="languagesModalLogo" src={require('~/static/images/logo-icon.png')} alt=""/>
@@ -35,6 +35,8 @@ class LanguagesModal extends Component {
                             const Icon = Icons[`Flag${langShort}`];
                             return (
                                 <div key={i} className={`languagesModalItem ${active ? 'active' : ''}`}
+                                    data-cy="languagesModalPreviewItem"
+                                    data-lang={languageItem}
                                     onClick={() => this.onLanguageChange(languageItem)}>
                                     <div className="languagesModalFlag">
                                         {Icon && <Icon/>}

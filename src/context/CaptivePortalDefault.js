@@ -208,6 +208,7 @@ const dataToExclude = {
     activeLocale: '',
     previewDeviceType: 'desktop',
     mobileSettingsTouched: [],
+    activeSettingsPath: 'style.background',
 };
 
 export const getCaptivePortalDefault = () => {

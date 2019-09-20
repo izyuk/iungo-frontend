@@ -127,6 +127,7 @@ class FooterEditor extends Component {
         };
         const language = this.context.dataToExclude.activeLocale || null;
         const translation = this.context.translations[language] || {};
+        const isEditingOnPreview = (this.context.dataToExclude.activeSettingsPath === 'content.footer.footer');
         return (
             <div className="container active">
                 <div className="row">
@@ -178,7 +179,9 @@ class FooterEditor extends Component {
                         </div>
                         <div className="innerRow">
                             <textarea onChange={this.textChanges} data-cy="footerText" onMouseUp={this.getText}
-                                      value={translation.footer}></textarea>
+                                      value={translation.footer}
+                                      className={isEditingOnPreview ? 'currentlyEditingField' : ''}>
+                            </textarea>
                         </div>
                     </div>
                 </div>
@@ -194,7 +197,7 @@ class FooterEditor extends Component {
                                         defaultValue={parseInt(this.state.fontSize)}
                                         handle={handle}
                                         trackStyle={{
-                                            backgroundColor: '#5585ED',
+                                            backgroundColor: Palette.getColor('BLUE').hex,
                                             height: 4,
                                             borderRadius: 4,
                                             position: 'absolute'
@@ -211,7 +214,7 @@ class FooterEditor extends Component {
                                             height: 12,
                                             width: 12,
                                             borderRadius: 12,
-                                            backgroundColor: '#5585ED',
+                                            backgroundColor: Palette.getColor('BLUE').hex,
                                             marginLeft: -6,
                                             position: 'absolute',
                                             top: -4

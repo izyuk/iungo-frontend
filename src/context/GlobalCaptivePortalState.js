@@ -681,6 +681,12 @@ class GlobalCaptivePortalState extends Component {
         this.setState(currentState);
     };
 
+    setActiveSettingsPath = (path) => {
+        const currentState = this.state;
+        currentState.dataToExclude.activeSettingsPath = path;
+        this.setState(currentState);
+    };
+
     render() {
         return <CaptivePortalContext.Provider value={{
             ...this.state,
@@ -731,6 +737,7 @@ class GlobalCaptivePortalState extends Component {
             setPreviewDeviceType: this.setPreviewDeviceType,
             setDeviceTypeSettingsTouched: this.setDeviceTypeSettingsTouched,
             checkDeviceTypeDataChanged: this.checkDeviceTypeDataChanged,
+            setActiveSettingsPath: this.setActiveSettingsPath,
         }}
         >{this.props.children}</CaptivePortalContext.Provider>
     }

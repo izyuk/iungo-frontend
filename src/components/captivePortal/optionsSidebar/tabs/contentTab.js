@@ -14,87 +14,92 @@ class ContentTab extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            activeTab: 'localization'
-        };
+        this.state = {};
+    }
+
+    onTabChange(tabName){
+        this.context.setActiveSettingsPath(`content.${tabName}`);
+    }
+    isTabActive(tabName){
+        const { dataToExclude: {activeSettingsPath} } = this.context;
+        return activeSettingsPath.includes(tabName);
     }
 
     render() {
-        const { activeTab } = this.state;
         return (
             <div className="dropdown">
                 <div className="wrap">
-                    <div className={'head ' + ((activeTab === 'localization') ? 'active' : '')}
+                    <div className={'head ' + (this.isTabActive('localization') ? 'active' : '')}
                         data-cy="dropDownLocalizationSettings"
-                        onClick={() => this.setState({ activeTab: 'localization' })}
+                        onClick={() => this.onTabChange('localization')}
                     >
                         <span>Language Settings</span>
                         <Icons.DropdownIcon/>
                     </div>
-                    {(activeTab === 'localization') ? <LocalozationSettings /> : false}
+                    {this.isTabActive('localization') ? <LocalozationSettings /> : false}
                 </div>
                 <div className="wrap">
-                    <div className={'head ' + ((activeTab === 'font_settings') ? 'active' : '')}
+                    <div className={'head ' + (this.isTabActive('font_settings') ? 'active' : '')}
                         data-cy="dropDownFontSettings"
-                        onClick={() => this.setState({ activeTab: 'font_settings' })}
+                        onClick={() => this.onTabChange('font_settings')}
                     >
                         <span>Font Settings</span>
                         <Icons.DropdownIcon/>
                     </div>
-                    {(activeTab === 'font_settings') ? <FontSettings /> : false}
+                    {this.isTabActive('font_settings') ? <FontSettings /> : false}
                 </div>
                 <div className="wrap">
-                    <div className={'head ' + ((activeTab === 'header') ? 'active' : '')}
+                    <div className={'head ' + (this.isTabActive('header') ? 'active' : '')}
                         data-cy="dropDownHeader"
-                        onClick={() => this.setState({ activeTab: 'header' })}
+                        onClick={() => this.onTabChange('header')}
                     >
                         <span>Header</span>
                         <Icons.DropdownIcon/>
                     </div>
-                    {(activeTab === 'header') ? <HeaderText /> : false}
+                    {this.isTabActive('header') ? <HeaderText /> : false}
                 </div>
                 <div className="wrap">
-                    <div className={'head ' + ((activeTab === 'gdpr') ? 'active' : '')}
+                    <div className={'head ' + (this.isTabActive('gdpr') ? 'active' : '')}
                          data-cy="dropDownGDPR"
-                         onClick={() => this.setState({ activeTab: 'gdpr' })}
+                         onClick={() => this.onTabChange('gdpr')}
                     >
                         <span>GDPR</span>
                         <Icons.DropdownIcon/>
                     </div>
-                    {(activeTab === 'gdpr') ? <GDPR/> : false}
+                    {this.isTabActive('gdpr') ? <GDPR/> : false}
                 </div>
                 <div className="wrap">
-                    <div className={'head ' + ((activeTab === 'login_methods') ? 'active' : '')}
+                    <div className={'head ' + (this.isTabActive('login_methods') ? 'active' : '')}
                          data-cy="dropDownLoginMethods"
-                         onClick={() => this.setState({ activeTab: 'login_methods' })}
+                         onClick={() => this.onTabChange('login_methods')}
                     >
                         <span>Login Methods</span>
                         <Icons.DropdownIcon/>
                     </div>
-                    {(activeTab === 'login_methods') ? <LoginMethods handler={this.props.handler}
+                    {this.isTabActive('login_methods') ? <LoginMethods handler={this.props.handler}
                         methods={this.props.methods}
                         acceptButton={this.props.acceptButton}
                     /> : false}
                 </div>
                 <div className="wrap">
-                    <div className={'head ' + ((activeTab === 'footer') ? 'active' : '')}
+                    <div className={'head ' + (this.isTabActive('footer') ? 'active' : '')}
                         data-cy="dropDownFooter"
-                        onClick={() => this.setState({ activeTab: 'footer' })}
+                        onClick={() => this.onTabChange('footer')}
                     >
                         <span>Footer</span>
                         <Icons.DropdownIcon/>
                     </div>
-                    {(activeTab === 'footer') ? <FooterEditor /> : false}
+                    {this.isTabActive('footer') ? <FooterEditor /> : false}
                 </div>
                 <div className="wrap">
-                    <div className={'head ' + ((activeTab === 'success_actions') ? 'active' : '')}
+                    <div className={'head ' + (this.isTabActive('success_actions') ? 'active' : '')}
                         data-cy="dropDownSuccessActions"
-                        onClick={() => this.setState({ activeTab: 'success_actions' })}
+                        onClick={() => this.onTabChange('success_actions')}
                     >
                         <span>Success Actions</span>
                         <Icons.DropdownIcon/>
                     </div>
-                    {(activeTab === 'success_actions') ? <SuccessActions /> : false}
+                    {this.isTabActive('success_actions') ? <SuccessActions /> : false}
                 </div>
             </div>
         )
