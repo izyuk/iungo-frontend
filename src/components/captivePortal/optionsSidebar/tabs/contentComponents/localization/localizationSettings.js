@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import CaptivePortalContext from "~/context/project-context";
 import Icons from '~/static/images/icons';
 import MultiSelect from "@khanacademy/react-multi-select";
+import Palette from '~/static/styles/palette';
 
 class LocalozationSettings extends Component {
 
@@ -32,6 +33,11 @@ class LocalozationSettings extends Component {
                 this.context.setNotification('', false, false);
             }, 3000);
         }
+    }
+
+    setLangToDefault = (setDefault) => {
+        const language = this.context.dataToExclude.activeLocale || null;
+        this.context.setTranslations(language, { default: setDefault });
     }
 
     render() {
@@ -83,6 +89,18 @@ class LocalozationSettings extends Component {
                             {languageItem || 'Language'}
                         </div>
                     ))}
+                </div>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="fieldLabel">Default</span>
+                    </div>
+                    <div className="right">
+                        <div className="innerRow" onClick={() => this.setLangToDefault(!translation.default)}>
+                            <div className="langDefaultCheckbox" style={translation.default ? {background: Palette.getColor('BLUE').hex} : {}}>
+                                {translation.default && <Icons.DropdownIcon fill="#fff" width="16" height="16" />}
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="row">
                     <div className="logoLeft">
