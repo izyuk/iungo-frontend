@@ -7,15 +7,19 @@ import {Line, Bar, Chart} from 'react-chartjs-2';
 const dateFormat = 'YYYY-MM-DD';
 
 class HotspotUsage extends Component {
-    state = {
-        summaryInfo: null,
-        dailyVisitsData: this.getVisitsChartData([]),
-        newVisitsData: this.getVisitsChartData([]),
-        popularHoursData: this.getHoursChartData([]),
-        startDate: this.props.startDate ? moment(this.props.startDate).format(dateFormat) : moment().startOf('month').format(dateFormat),
-        endDate: this.props.endDate ? moment(this.props.endDate).format(dateFormat) : moment().endOf('month').format(dateFormat),
-    };
-    token = localStorage.getItem('token');
+    constructor(props){
+        super(props);
+        this.state = {
+            summaryInfo: null,
+            dailyVisitsData: this.getVisitsChartData([]),
+            newVisitsData: this.getVisitsChartData([]),
+            popularHoursData: this.getHoursChartData([]),
+            startDate: this.props.startDate ? moment(this.props.startDate).format(dateFormat) : moment().startOf('month').format(dateFormat),
+            endDate: this.props.endDate ? moment(this.props.endDate).format(dateFormat) : moment().endOf('month').format(dateFormat),
+            timezone: moment().utcOffset()/60,
+        };
+        this.token = localStorage.getItem('token');
+    }
 
     componentDidMount(){
         if (this.props.match.params.uuid) {
@@ -124,8 +128,13 @@ class HotspotUsage extends Component {
             labels.push(`${h<10 ? ('0'+h) : h}:00`);
             data.push(0);
         }
+        const timezone = this.state ? this.state.timezone : 0;
         pureData.map(item => {
-            const i = Math.floor(item.argument/2);
+            const h = timezone + item.argument;
+            let ch = h;
+            if (h < 0) { h = 24 + h; }
+            else if (h > 23) { ch = h - 24; }
+            const i = Math.floor(ch/2);
             data[i] += item.value;
         });
         const maxValue = Math.max(...data);
@@ -176,7 +185,6 @@ class HotspotUsage extends Component {
     render() {
         const {summaryInfo, dailyVisitsData, popularHoursData, newVisitsData} = this.state;
         const {renderChart} = this.props;
-
         return (
             <div>
                 <div className={'mainGraph'}>
