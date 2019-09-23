@@ -45,8 +45,6 @@ class LocalozationSettings extends Component {
         const languages = this.context.dataToExclude.locales || [];
         const translationsLanguages = this.context.translationsLanguages;
         const translation = this.context.translations[language] || {};
-        const langShort = this.context.convertLocaleName(language);
-        const LangIcon = Icons[`Flag${langShort}`];
         const multiSelectOptions = [];
         languages.map(item => multiSelectOptions.push({ label: item, value: item }));
         return (
@@ -96,7 +94,11 @@ class LocalozationSettings extends Component {
                     </div>
                     <div className="right">
                         <div className="innerRow" onClick={() => this.setLangToDefault(!translation.default)}>
-                            <div className="langDefaultCheckbox" style={translation.default ? {background: Palette.getColor('BLUE').hex} : {}}>
+                            <div className="langDefaultCheckbox"
+                                 data-cy="languageSettingsDefaultCheckbox"
+                                 data-checked={translation.default ? 'checked' : ''}
+                                 style={translation.default ? {background: Palette.getColor('BLUE').hex} : {}}
+                            >
                                 {translation.default && <Icons.DropdownIcon fill="#fff" width="16" height="16" />}
                             </div>
                         </div>

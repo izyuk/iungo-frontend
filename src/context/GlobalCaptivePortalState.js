@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import CaptivePortalContext from './project-context';
 import Palette from '~/static/styles/palette';
 import { getCaptivePortalDefault, getDataToExcludeDefault } from '~/context/CaptivePortalDefault';
+import {convertLocaleName} from '~/components/captivePortal/optionsSidebar/getBuilderParams';
 
 class GlobalCaptivePortalState extends Component {
 
@@ -622,6 +623,7 @@ class GlobalCaptivePortalState extends Component {
         let defaultLang = '';
         langs.map(lang => {
             if (currentState.translations[lang].default) { defaultCount++; }
+            else { currentState.translations[lang].default = false; }
             if (currentState.dataToExclude.localeData[lang].default) { defaultLang = lang; }
         });
         if (defaultCount === 0) {
@@ -654,23 +656,7 @@ class GlobalCaptivePortalState extends Component {
         }
     }
 
-    convertLocaleName = (locale) => {
-        let localeName;
-        const locales = [
-            ['English', 'EN'],
-            ['Lithuanian', 'LT'],
-            ['Russian', 'RU']
-        ];
-        locales.map(item => {
-            const index = item.indexOf(locale);
-            if (index === 0) {
-                localeName = item[1];
-            } else if (index === 1) {
-                localeName = item[0];
-            }
-        });
-        return localeName || locale;
-    }
+    convertLocaleName = convertLocaleName;
 
     setPreviewDeviceType = (deviceType) => {
         const currentState = this.state;

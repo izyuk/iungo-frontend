@@ -1,5 +1,5 @@
 
-import { GetBuilderParams } from "../../../src/components/captivePortal/optionsSidebar/getBuilderParams";
+import { convertLocaleName, GetBuilderParams } from "../../../src/components/captivePortal/optionsSidebar/getBuilderParams";
 import {
     contextLoginToSystem,
     clearFields,
@@ -22,6 +22,7 @@ const testPayload = {
     mobileLogoId: "330",
     mobileLogoUrl: "https://test-b4f06f8a-5f6d-4c7d-81d5-e7f8549c0fe5.s3.eu-west-1.amazonaws.com/google_logo.svg",
     languages: [],
+    defaultLang: '',
     texts: {
         name: `CP TEST NAME`,
         header: `CP TEST HEADER TEXT`,
@@ -626,6 +627,13 @@ context('Content tab', function () {
                 const language = $el.attr('data-lang');
                 testPayload.languages.push(language);
                 cy.wrap($el).click();
+                const language = $el.attr('data-lang');
+                testPayload.languages.push(language);
+                cy.get('[data-cy="languageSettingsDefaultCheckbox"]').then($el => {
+                    const defaultChecked = $el.attr('data-checked');
+                    console.log('!#!defaultChecked', defaultChecked);
+                    if (defaultChecked === 'checked') { testPayload.defaultLang = language; }
+                })
                 fields.map(field => {
                     fillingFields(`[data-cy="${field.name}"]`, `${field.val} ${language}`);
                 });
@@ -633,7 +641,7 @@ context('Content tab', function () {
         });
 
     });
-    
+
     describe('Update languages on Preview by inline editing', () => {
 
         const langs = [];
@@ -962,8 +970,10 @@ context('Starting comparing collected data', function () {
                         translations: [],
                     };
                     testPayload.languages.map(lang => {
+                        const isDefault = (testPayload.defaultLang === lang);
                         expectedStore.translations.push({
-                            language: lang,
+                            locale: convertLocaleName(lang, true),
+                            default: isDefault,
                             header: `${testPayload.texts.header} ${lang} (inline edited)`,
                             description: `${testPayload.texts.description} ${lang} (inline edited)`,
                             footer: `${testPayload.texts.footer} ${lang} (inline edited)`,
