@@ -129,6 +129,7 @@ class HeaderDescription extends Component {
         };
         const language = this.context.dataToExclude.activeLocale || null;
         const translation = this.context.translations[language] || {};
+        const isEditingOnPreview = (this.context.dataToExclude.activeSettingsPath === 'content.header.description');
         return (
             <div>
                 <div className="row">
@@ -185,7 +186,9 @@ class HeaderDescription extends Component {
                         </div>
                         <div className="innerRow">
                             <textarea onChange={this.textChanges} data-cy="headerDescriptionText"
-                                      value={translation.description}></textarea>
+                                      value={translation.description}
+                                      className={isEditingOnPreview ? 'currentlyEditingField' : ''}>
+                            </textarea>
                         </div>
                     </div>
                 </div>
@@ -202,7 +205,7 @@ class HeaderDescription extends Component {
                                         value={this.state.fontSize}
                                         handle={handle}
                                         trackStyle={{
-                                            backgroundColor: '#5585ED',
+                                            backgroundColor: Palette.getColor('BLUE').hex,
                                             height: 4,
                                             borderRadius: 4,
                                             position: 'absolute'
@@ -219,7 +222,7 @@ class HeaderDescription extends Component {
                                             height: 12,
                                             width: 12,
                                             borderRadius: 12,
-                                            backgroundColor: '#5585ED',
+                                            backgroundColor: Palette.getColor('BLUE').hex,
                                             marginLeft: -6,
                                             position: 'absolute',
                                             top: -4

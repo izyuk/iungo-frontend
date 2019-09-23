@@ -226,7 +226,7 @@ class GDPR extends Component {
                                             defaultValue={parseInt(this.state.fontSize)}
                                             handle={handle}
                                             trackStyle={{
-                                                backgroundColor: '#5585ED',
+                                                backgroundColor: Palette.getColor('BLUE').hex,
                                                 height: 4,
                                                 borderRadius: 4,
                                                 position: 'absolute'
@@ -243,7 +243,7 @@ class GDPR extends Component {
                                                 height: 12,
                                                 width: 12,
                                                 borderRadius: 12,
-                                                backgroundColor: '#5585ED',
+                                                backgroundColor: Palette.getColor('BLUE').hex,
                                                 marginLeft: -6,
                                                 position: 'absolute',
                                                 top: -4

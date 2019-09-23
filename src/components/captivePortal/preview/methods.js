@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import CaptivePortalContext from "~/context/project-context";
 import Icons from '~/static/images/icons';
+import ContentEditable from 'react-contenteditable';
 
 class Methods extends Component {
     static contextType = CaptivePortalContext;
@@ -17,6 +18,8 @@ class Methods extends Component {
         this.twitter = React.createRef();
         this.phone = React.createRef();
         this.button = React.createRef();
+        this.beforeEditContent = this.beforeEditContent.bind(this);
+        this.handleContentChange = this.handleContentChange.bind(this);
     }
 
     methodsHandler = (data) => {
@@ -77,6 +80,27 @@ class Methods extends Component {
         else return false
     }
 
+    beforeEditContent(e){
+        const name = e.currentTarget.getAttribute('name');
+        const tabName = e.currentTarget.getAttribute('data-edit-tab');
+        this.context.setActiveSettingsPath(`content.${tabName}.${name}`);
+    }
+    handleContentChange(e){
+        const val = e.target.value || e.target.innerText || '';
+        const tmp = document.createElement('div');
+        tmp.innerHTML = val;
+        const textVal = tmp.textContent || '';
+        const name = e.currentTarget.getAttribute('name');
+        const language = this.context.dataToExclude.activeLocale || null;
+        if (textVal.length || e.type === 'blur') {
+            this.context.setTranslations(language, { [name]: textVal });
+        }
+        if (e.type === 'blur') {
+            const tabName = e.currentTarget.getAttribute('data-edit-tab');
+            this.context.setActiveSettingsPath(`content.${tabName}`);
+        }
+    }
+
     render() {
         let { dataToExclude } = this.context;  
         const localeData = (dataToExclude && dataToExclude.localeData) || {};
@@ -108,9 +132,16 @@ class Methods extends Component {
                         <button type={'button'}>{portalData ? portalData.sendButton : 'Send'}</button>
                 </div>
                 <div className="accept" ref={this.button}>
-                    <button data-cy="loginMethodConnectButtonPreview">
-                        {translation.connectButtonText}
-                    </button>
+                    {Boolean(translation.connectButtonText) && <ContentEditable
+                        name="connectButtonText"
+                        html={translation.connectButtonText || ''}
+                        onChange={this.handleContentChange}
+                        onBlur={this.handleContentChange}
+                        onFocus={this.beforeEditContent}
+                        data-edit-tab="login_methods"
+                        tagName="button"
+                        data-cy="loginMethodConnectButtonPreview"
+                    />}
                 </div>
             </div>
         )

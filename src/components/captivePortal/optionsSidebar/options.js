@@ -13,7 +13,6 @@ class Options extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeTab: 'style',
             selectedFile: null,
             colorHEX: '#f9f9fc',
             color: {
@@ -23,6 +22,14 @@ class Options extends Component {
                 a: '1',
             }
         };
+    }
+
+    onTabChange(path){
+        this.context.setActiveSettingsPath(path);
+    }
+    isTabActive(tabName){
+        const { dataToExclude: {activeSettingsPath} } = this.context;
+        return (activeSettingsPath.indexOf(tabName) === 0);
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -37,25 +44,22 @@ class Options extends Component {
             <div className="options">
                 <div className="wrap">
                     <ul className="buttonsWrap">
-                        <li className={(activeTab === 'style') ? 'active' : ''}
-                            onClick={() => this.setState({ activeTab: 'style' })}
+                        <li className={this.isTabActive('style') ? 'active' : ''}
+                            onClick={() => this.onTabChange('style.background')}
                             data-cy={'styleTab'}
                         >
                             {(type === 'desktop') ? 'Desktop' : 'Mobile'} style
                         </li>
-                        <li className={(activeTab === 'content') ? 'active' : ''}
-                            onClick={() => this.setState({ activeTab: 'content' })}
+                        <li className={this.isTabActive('content') ? 'active' : ''}
+                            onClick={() => this.onTabChange('content.localization')}
                             data-cy={'contentTab'}
                         >
                             Content
                         </li>
                     </ul>
 
-                    {activeTab === 'style' ?
-                        <StyleTab />
-                        : (activeTab === 'content') ?
-                            <ContentTab />
-                            : false}
+                    {this.isTabActive('style') && <StyleTab />}
+                    {this.isTabActive('content') && <ContentTab />}
                     <Publish loaderHandler={this.props.loaderHandler}/>
                 </div>
             </div>
