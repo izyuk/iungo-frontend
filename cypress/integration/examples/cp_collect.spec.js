@@ -626,9 +626,6 @@ context('Content tab', function () {
             cy.get('[data-cy="languageSettingsTab"]').each(($el) => {
                 const language = $el.attr('data-lang');
                 testPayload.languages.push(language);
-                cy.wrap($el).click();
-                const language = $el.attr('data-lang');
-                testPayload.languages.push(language);
                 cy.get('[data-cy="languageSettingsDefaultCheckbox"]').then($el => {
                     const defaultChecked = $el.attr('data-checked');
                     console.log('!#!defaultChecked', defaultChecked);
