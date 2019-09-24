@@ -158,6 +158,7 @@ class SuccessActions extends Component {
         };
         const language = this.context.dataToExclude.activeLocale || null;
         const translation = this.context.translations[language] || {};
+        const isEditingOnPreview = (this.context.dataToExclude.activeSettingsPath === 'content.success_actions.successMessageText');
         return (
             <div className="container active">
                 <div className="row">
@@ -209,7 +210,9 @@ class SuccessActions extends Component {
                         </div>
                         <div className="innerRow">
                             <textarea onChange={this.textChanges} data-cy="successText" onMouseUp={this.getText}
-                                      defaultValue={translation.successMessageText}></textarea>
+                                      value={translation.successMessageText}
+                                      className={isEditingOnPreview ? 'currentlyEditingField' : ''}>
+                            </textarea>
                         </div>
                     </div>
                 </div>
@@ -225,7 +228,7 @@ class SuccessActions extends Component {
                                         defaultValue={parseInt(this.state.fontSize)}
                                         handle={handle}
                                         trackStyle={{
-                                            backgroundColor: '#5585ED',
+                                            backgroundColor: Palette.getColor('BLUE').hex,
                                             height: 4,
                                             borderRadius: 4,
                                             position: 'absolute'
@@ -242,7 +245,7 @@ class SuccessActions extends Component {
                                             height: 12,
                                             width: 12,
                                             borderRadius: 12,
-                                            backgroundColor: '#5585ED',
+                                            backgroundColor: Palette.getColor('BLUE').hex,
                                             marginLeft: -6,
                                             position: 'absolute',
                                             top: -4

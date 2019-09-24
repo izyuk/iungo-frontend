@@ -51,4 +51,5 @@ export default React.createContext({
     setPreviewDeviceType: () => {},
     setDeviceTypeSettingsTouched: () => {},
     checkDeviceTypeDataChanged: () => {},
+    setActiveSettingsPath: () => {},
 });

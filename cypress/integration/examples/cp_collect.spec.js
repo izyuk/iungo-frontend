@@ -343,7 +343,7 @@ context('Content tab', function () {
             clearFields('[data-cy="headerTopText"]');
         });
         it('Check cleared top text on Preview', () => {
-            cy.get('[data-cy="headerTopTextPreview"]').should('have.text', '');
+            cy.get('[data-cy="headerTopTextPreview"]').should('not.exist');
         });
 
         it('Enter top text', () => {
@@ -378,7 +378,7 @@ context('Content tab', function () {
             clearFields('[data-cy="headerDescriptionText"]');
         });
         it('Check cleared description text on Preview', () => {
-            cy.get('[data-cy="headerDescriptionTextPreview"]').should('have.text', '');
+            cy.get('[data-cy="headerDescriptionTextPreview"]').should('not.exist');
         });
 
         it('Enter description text', () => {
@@ -542,7 +542,7 @@ context('Content tab', function () {
             clearFields('[data-cy="footerText"]');
         });
         it('Check cleared footer text on Preview', () => {
-            cy.get('[data-cy="footerTextPreview"]').should('have.text', '');
+            cy.get('[data-cy="footerTextPreview"]').should('not.exist');
         });
 
         it('Enter footer text', () => {
@@ -553,7 +553,7 @@ context('Content tab', function () {
         });
 
         it('Set footer text color', () => {
-            fillColorHEX('[ data-cy="footerTextColor"]', 'edaa55');
+            fillColorHEX('[data-cy="footerTextColor"]', 'edaa55');
         });
     });
 
@@ -588,7 +588,7 @@ context('Content tab', function () {
         });
 
         it('Set success text color', () => {
-            fillColorHEX('[ data-cy="successTextColor"]', 'edaa55');
+            fillColorHEX('[data-cy="successTextColor"]', 'edaa55');
         });
 
         it('Enter success page redurect URL', () => {
@@ -623,7 +623,7 @@ context('Content tab', function () {
 
         it('Fill translations', () => {
             cy.get('[data-cy="languageSettingsTab"]').each(($el) => {
-                const language = $el.attr('data-lang')
+                const language = $el.attr('data-lang');
                 testPayload.languages.push(language);
                 cy.wrap($el).click();
                 fields.map(field => {
@@ -633,6 +633,53 @@ context('Content tab', function () {
         });
 
     });
+    
+    describe('Update languages on Preview by inline editing', () => {
+
+        const langs = [];
+
+        it('Get all languages in language switcher', () => {
+            cy.get('[data-cy="langaugeSwitcherPreview"]')
+                .click().wait(500);
+            cy.get('[data-cy="languagesModalPreviewItem"]').each(($el) => {
+                const language = $el.attr('data-lang');
+                langs.push(language);
+            });
+            cy.get('[data-cy="languagesModalPreviewClose"]')
+                .click().wait(500);
+        });
+
+        it('Languages in preview language switcher should be the same as in Language settings', () => {
+            expect(langs.length).to.be.equal(testPayload.languages.length);
+        });
+
+        const fields = [
+            { name: 'headerTopTextPreview' , val: testPayload.texts.header },
+            { name: 'headerDescriptionTextPreview' , val: testPayload.texts.description },
+            { name: 'footerTextPreview' , val: testPayload.texts.footer },
+            { name: 'loginMethodConnectButtonPreview' , val: testPayload.texts.acceptButtonText },
+        ];
+
+        it('Update languages on Preview by inline editing', () => {
+            langs.map(lang => {
+
+                cy.get('[data-cy="langaugeSwitcherPreview"]')
+                    .click().wait(500);
+                cy.get(`[data-cy="languagesModalPreviewItem"][data-lang="${lang}"]`)
+                    .click();
+
+                fields.map(field => {
+                    cy.get(`[data-cy="${field.name}"]`)
+                        .click()
+                        .clear({force: true})
+                        .type(`${field.val} ${lang} (inline edited)`, {force: true});
+                });
+
+            });
+        });
+
+    });
+
 
 });
 
@@ -917,11 +964,11 @@ context('Starting comparing collected data', function () {
                     testPayload.languages.map(lang => {
                         expectedStore.translations.push({
                             language: lang,
-                            header: `${testPayload.texts.header} ${lang}`,
-                            description: `${testPayload.texts.description} ${lang}`,
-                            footer: `${testPayload.texts.footer} ${lang}`,
+                            header: `${testPayload.texts.header} ${lang} (inline edited)`,
+                            description: `${testPayload.texts.description} ${lang} (inline edited)`,
+                            footer: `${testPayload.texts.footer} ${lang} (inline edited)`,
                             successMessage: `${testPayload.texts.successMessage} ${lang}`,
-                            acceptButtonText: `${testPayload.texts.acceptButtonText} ${lang}`,
+                            acceptButtonText: `${testPayload.texts.acceptButtonText} ${lang} (inline edited)`,
                         })
                     });
                     const store = GetBuilderParams({...win.__store__.collectDataToTest});

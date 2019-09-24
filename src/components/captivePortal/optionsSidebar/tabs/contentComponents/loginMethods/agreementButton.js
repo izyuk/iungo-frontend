@@ -227,6 +227,7 @@ class AgreementButton extends Component {
         } = this.state;
         const language = this.context.dataToExclude.activeLocale || null;
         const translation = this.context.translations[language] || {};
+        const isEditingOnPreview = (this.context.dataToExclude.activeSettingsPath === 'content.login_methods.connectButtonText');
         return (
             <div className={'agreement'}>
                 <div className="row">
@@ -289,7 +290,9 @@ class AgreementButton extends Component {
                                    style={{maxWidth: '100%'}}
                                    onChange={this.textChanges}
                                    value={translation.connectButtonText}
-                                   data-cy="connectButtonText"/>
+                                   data-cy="connectButtonText"
+                                   className={isEditingOnPreview ? 'currentlyEditingField' : ''}
+                            />
                         </div>
                     </div>
                 </div>
@@ -306,7 +309,7 @@ class AgreementButton extends Component {
                                         value={parseInt(acceptButtonFont.fontSize)}
                                         handle={handle}
                                         trackStyle={{
-                                            backgroundColor: '#5585ED',
+                                            backgroundColor: Palette.getColor('BLUE').hex,
                                             height: 4,
                                             borderRadius: 4,
                                             position: 'absolute'
@@ -323,7 +326,7 @@ class AgreementButton extends Component {
                                             height: 12,
                                             width: 12,
                                             borderRadius: 12,
-                                            backgroundColor: '#5585ED',
+                                            backgroundColor: Palette.getColor('BLUE').hex,
                                             marginLeft: -6,
                                             position: 'absolute',
                                             top: -4

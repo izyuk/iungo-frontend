@@ -147,7 +147,7 @@ class ContentBackground extends Component {
                                         value={parseInt(this.state.opacity)}
                                         handle={handle}
                                         trackStyle={{
-                                            backgroundColor: '#5585ED',
+                                            backgroundColor: Palette.getColor('BLUE').hex,
                                             height: 4,
                                             borderRadius: 4,
                                             position: 'absolute'
@@ -164,7 +164,7 @@ class ContentBackground extends Component {
                                             height: 12,
                                             width: 12,
                                             borderRadius: 12,
-                                            backgroundColor: '#5585ED',
+                                            backgroundColor: Palette.getColor('BLUE').hex,
                                             marginLeft: -6,
                                             position: 'absolute',
                                             top: -4

@@ -50,8 +50,10 @@ class Publish extends Component {
         const query = previewPortal(token, portalDataToSend);
         await query.then(res => {
             const {data} = res;
-            this.context.loaderHandler(false);
-            window.open(data, '_blank');
+            setTimeout(() => {
+                this.context.loaderHandler(false);
+                window.open(data, '_blank');
+            }, 1000);
         });
     };
 

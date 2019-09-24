@@ -10,44 +10,49 @@ class StyleTab extends Component {
     static contextType = CaptivePortalContext;
     constructor(props){
         super(props);
-        this.state = {
-            activeTab: 'background'
-        };
+        this.state = {};
+    }
+
+    onTabChange(tabName){
+        this.context.setActiveSettingsPath(`style.${tabName}`);
+    }
+    isTabActive(tabName){
+        const { dataToExclude: {activeSettingsPath} } = this.context;
+        return activeSettingsPath.includes(tabName);
     }
 
     render(){
-        const { activeTab } = this.state;
         return(
             <div className="dropdown">
                 <div className="wrap">
-                    <div className={'head ' + ((activeTab === 'background') ? 'active' : '')}
+                    <div className={'head ' + (this.isTabActive('background') ? 'active' : '')}
                         data-cy="backgroundDropDown"
-                        onClick={() => this.setState({ activeTab: 'background' })}
+                        onClick={() => this.onTabChange('background')}
                     >
                         <span>Background</span>
                         <Icons.DropdownIcon/>
                     </div>
-                    {(activeTab === 'background') ? <Background type="background"/> : false}
+                    {this.isTabActive('background') ? <Background type="background"/> : false}
                 </div>
                 <div className="wrap">
-                    <div className={'head ' + ((activeTab === 'logo') ? 'active' : '')}
+                    <div className={'head ' + (this.isTabActive('logo') ? 'active' : '')}
                         data-cy="logoDropDown"
-                        onClick={() => this.setState({ activeTab: 'logo' })}
+                        onClick={() => this.onTabChange('logo')}
                     >
                         <span>Logo</span>
                         <Icons.DropdownIcon/>
                     </div>
-                    {(activeTab === 'logo') ? <Logo type="logo"/> : false}
+                    {this.isTabActive('logo') ? <Logo type="logo"/> : false}
                 </div>
                 <div className="wrap">
-                    <div className={'head ' + ((activeTab === 'background') ? 'active' : '')}
+                    <div className={'head ' + (this.isTabActive('background') ? 'active' : '')}
                         data-cy="containerDropDown"
-                        onClick={() => this.setState({ activeTab: 'container' })}
+                        onClick={() => this.onTabChange('container')}
                     >
                         <span>Container</span>
                         <Icons.DropdownIcon/>
                     </div>
-                    {(activeTab === 'container') ? <Container /> : false}
+                    {this.isTabActive('container') ? <Container /> : false}
                 </div>
             </div>
         )
