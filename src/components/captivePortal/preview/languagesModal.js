@@ -30,7 +30,7 @@ class LanguagesModal extends Component {
 
                     <div className="languagesModalList">
                         {languages.map((languageItem, i) => {
-                            const langShort = this.context.convertLocaleName(languageItem);
+                            const langShort = this.context.convertLocaleName(languageItem, true);
                             const active = Boolean(currentLanguage === languageItem);
                             const Icon = Icons[`Flag${langShort}`];
                             return (

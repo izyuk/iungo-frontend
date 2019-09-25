@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import CaptivePortalContext from './project-context';
 import Palette from '~/static/styles/palette';
 import { getCaptivePortalDefault, getDataToExcludeDefault } from '~/context/CaptivePortalDefault';
+import {convertLocaleName} from '~/components/captivePortal/optionsSidebar/getBuilderParams';
 
 class GlobalCaptivePortalState extends Component {
 
@@ -571,18 +572,19 @@ class GlobalCaptivePortalState extends Component {
 
     setTranslations = (locale, translations = {}, remove) => {
         const currentState = this.state;
+        const langs = currentState.translationsLanguages;
         if (remove) {
-            const index = currentState.translationsLanguages.indexOf(locale);
-            if (index !== -1) { currentState.translationsLanguages.splice(index, 1); }
+            const index = langs.indexOf(locale);
+            if (index !== -1) { langs.splice(index, 1); }
             // delete currentState.translations[locale];
             if (currentState.dataToExclude.activeLocale === locale) {
-                currentState.dataToExclude.activeLocale = currentState.translationsLanguages[0];
+                currentState.dataToExclude.activeLocale = langs[0];
             }
         } else {
             const currentTranslation = currentState.translations[locale] || {};
             const defaultTranslation = (currentState.dataToExclude.localeData[locale] && currentState.dataToExclude.localeData[locale].portalData) || {};
-            if (!currentState.translationsLanguages.includes(locale)) {
-                currentState.translationsLanguages.push(locale);
+            if (!langs.includes(locale)) {
+                langs.push(locale);
             }
             const mockedTranslation = {
                 name: 'Company name',
@@ -612,6 +614,26 @@ class GlobalCaptivePortalState extends Component {
                 connectButtonText: getTranslation('connectButtonText'),
             };
         }
+        if (translations.hasOwnProperty('default')) {
+            const isDefault = Boolean(translations.default);
+            currentState.translations[locale].default = isDefault;
+        }
+        // check for one default lang:
+        let defaultCount = 0;
+        let defaultLang = '';
+        langs.map(lang => {
+            if (currentState.translations[lang].default) { defaultCount++; }
+            else { currentState.translations[lang].default = false; }
+            if (currentState.dataToExclude.localeData[lang].default) { defaultLang = lang; }
+        });
+        if (defaultCount === 0) {
+            langs.map(lang => {
+                if (lang === defaultLang) { currentState.translations[lang].default = true; }
+            });
+        } else if (defaultCount > 1 && translations.default) {
+            langs.map(lang => { currentState.translations[lang].default = false; });
+            currentState.translations[locale].default = true;
+        }
         this.setState(currentState);
     }
 
@@ -634,23 +656,7 @@ class GlobalCaptivePortalState extends Component {
         }
     }
 
-    convertLocaleName = (locale) => {
-        let localeName;
-        const locales = [
-            ['English', 'EN'],
-            ['Lithuanian', 'LT'],
-            ['Russian', 'RU']
-        ];
-        locales.map(item => {
-            const index = item.indexOf(locale);
-            if (index === 0) {
-                localeName = item[1];
-            } else if (index === 1) {
-                localeName = item[0];
-            }
-        });
-        return localeName || locale;
-    }
+    convertLocaleName = convertLocaleName;
 
     setPreviewDeviceType = (deviceType) => {
         const currentState = this.state;

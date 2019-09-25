@@ -48,6 +48,7 @@ class CaptivePortal extends Component {
         await getAllLocales(str).then(res => {
             res.data.map(locale => {
                 localeData[locale.language] = locale;
+                localeData[locale.language].default = Boolean(locale.language === defaultLocale);
             });
             this.context.setLocaleData(localeData, uuid === 'new');
         });
@@ -67,11 +68,13 @@ class CaptivePortal extends Component {
                 let activeLocale = defaultLocale;
                 const translations = data.translations || [];
                 translations.map((translation, i) => {
-                    const lang = translation.language;
+                    const lang = translation.locale || translation.language;
                     if (i === 0 || lang === defaultLocale) {
                         activeLocale = lang;
                     }
-                    this.context.setTranslations(lang, {
+                    const fullLang = this.context.convertLocaleName(lang, false);
+                    this.context.setTranslations(fullLang, {
+                        default: Boolean(translation.default),
                         name: translation.header,
                         description: translation.description,
                         footer: translation.footer,
