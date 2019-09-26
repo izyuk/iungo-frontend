@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import CaptivePortalContext from "~/context/project-context";
 import Icons from '~/static/images/icons';
 import MultiSelect from "@khanacademy/react-multi-select";
+import Palette from '~/static/styles/palette';
 
 class LocalozationSettings extends Component {
 
@@ -34,13 +35,16 @@ class LocalozationSettings extends Component {
         }
     }
 
+    setLangToDefault = (setDefault) => {
+        const language = this.context.dataToExclude.activeLocale || null;
+        this.context.setTranslations(language, { default: setDefault });
+    }
+
     render() {
         const language = this.context.dataToExclude.activeLocale || null;
         const languages = this.context.dataToExclude.locales || [];
         const translationsLanguages = this.context.translationsLanguages;
         const translation = this.context.translations[language] || {};
-        const langShort = this.context.convertLocaleName(language);
-        const LangIcon = Icons[`Flag${langShort}`];
         const multiSelectOptions = [];
         languages.map(item => multiSelectOptions.push({ label: item, value: item }));
         return (
@@ -83,6 +87,22 @@ class LocalozationSettings extends Component {
                             {languageItem || 'Language'}
                         </div>
                     ))}
+                </div>
+                <div className="row">
+                    <div className="logoLeft">
+                        <span className="fieldLabel">Default</span>
+                    </div>
+                    <div className="right">
+                        <div className="innerRow" onClick={() => this.setLangToDefault(!translation.default)}>
+                            <div className="langDefaultCheckbox"
+                                 data-cy="languageSettingsDefaultCheckbox"
+                                 data-checked={translation.default ? 'checked' : ''}
+                                 style={translation.default ? {background: Palette.getColor('BLUE').hex} : {}}
+                            >
+                                {translation.default && <Icons.DropdownIcon fill="#fff" width="16" height="16" />}
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="row">
                     <div className="logoLeft">
