@@ -1,5 +1,5 @@
 
-import { convertLocaleName, GetBuilderParams } from "../../../src/components/captivePortal/optionsSidebar/getBuilderParams";
+import { GetBuilderParams } from "../../../src/components/captivePortal/optionsSidebar/getBuilderParams";
 import {
     contextLoginToSystem,
     clearFields,
@@ -626,6 +626,7 @@ context('Content tab', function () {
             cy.get('[data-cy="languageSettingsTab"]').each(($el) => {
                 const language = $el.attr('data-lang');
                 testPayload.languages.push(language);
+                cy.wrap($el).click();
                 cy.get('[data-cy="languageSettingsDefaultCheckbox"]').then($el => {
                     const defaultChecked = $el.attr('data-checked');
                     console.log('!#!defaultChecked', defaultChecked);
@@ -969,7 +970,7 @@ context('Starting comparing collected data', function () {
                     testPayload.languages.map(lang => {
                         const isDefault = (testPayload.defaultLang === lang);
                         expectedStore.translations.push({
-                            locale: convertLocaleName(lang, true),
+                            locale: lang,
                             default: isDefault,
                             header: `${testPayload.texts.header} ${lang} (inline edited)`,
                             description: `${testPayload.texts.description} ${lang} (inline edited)`,

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import CaptivePortalContext from './project-context';
 import Palette from '~/static/styles/palette';
 import { getCaptivePortalDefault, getDataToExcludeDefault } from '~/context/CaptivePortalDefault';
-import {convertLocaleName} from '~/components/captivePortal/optionsSidebar/getBuilderParams';
 
 class GlobalCaptivePortalState extends Component {
 
@@ -576,7 +575,6 @@ class GlobalCaptivePortalState extends Component {
         if (remove) {
             const index = langs.indexOf(locale);
             if (index !== -1) { langs.splice(index, 1); }
-            // delete currentState.translations[locale];
             if (currentState.dataToExclude.activeLocale === locale) {
                 currentState.dataToExclude.activeLocale = langs[0];
             }
@@ -624,12 +622,14 @@ class GlobalCaptivePortalState extends Component {
         langs.map(lang => {
             if (currentState.translations[lang].default) { defaultCount++; }
             else { currentState.translations[lang].default = false; }
-            if (currentState.dataToExclude.localeData[lang].default) { defaultLang = lang; }
+            const l = currentState.dataToExclude.localeData[lang];
+            if (l && l.default) { defaultLang = lang; }
         });
         if (defaultCount === 0) {
             langs.map(lang => {
-                if (lang === defaultLang) { currentState.translations[lang].default = true; }
+                if (lang === defaultLang) { currentState.translations[lang].default = true; defaultCount++; }
             });
+            if (defaultCount === 0) { currentState.translations[langs[0]].default = true; }
         } else if (defaultCount > 1 && translations.default) {
             langs.map(lang => { currentState.translations[lang].default = false; });
             currentState.translations[locale].default = true;
@@ -655,8 +655,6 @@ class GlobalCaptivePortalState extends Component {
             this.setTranslations(activeLocale, portalData);
         }
     }
-
-    convertLocaleName = convertLocaleName;
 
     setPreviewDeviceType = (deviceType) => {
         const currentState = this.state;
@@ -737,7 +735,6 @@ class GlobalCaptivePortalState extends Component {
             setFontBase64: this.setFontBase64,
             setLocaleData: this.setLocaleData,
             setActiveLocale: this.setActiveLocale,
-            convertLocaleName: this.convertLocaleName,
             setTranslations: this.setTranslations,
             clearTranslations: this.clearTranslations,
             setPreviewDeviceType: this.setPreviewDeviceType,
