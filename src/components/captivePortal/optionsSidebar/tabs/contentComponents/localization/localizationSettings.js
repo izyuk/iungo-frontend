@@ -69,7 +69,7 @@ class LocalozationSettings extends Component {
                                         overrideStrings={{
                                             selectSomeItems: 'Select Languages',
                                         }}
-                                        ItemRenderer={this.selectOptionRenderer}
+                                        ItemRenderer={this.selectOptionRenderer.bind(this)}
                                     />
                                 </div>
                             </div>
@@ -77,16 +77,18 @@ class LocalozationSettings extends Component {
                     </div>
                 </div>
                 <div className="row langTabs">
-                    {translationsLanguages.map((languageItem, i) => (
-                        <div key={i}
-                            data-cy={`languageSettingsTab`}
-                            data-lang={languageItem}
-                            className={'langTab ' + (language === languageItem ? 'langTabActive' : '')}
-                            onClick={() => this.context.setActiveLocale(languageItem)}
-                        >
-                            {languageItem || 'Language'}
-                        </div>
-                    ))}
+                    {translationsLanguages.map((languageItem, i) => {
+                        return (
+                            <div key={i}
+                                data-cy={`languageSettingsTab`}
+                                data-lang={languageItem}
+                                className={'langTab ' + (language === languageItem ? 'langTabActive' : '')}
+                                onClick={() => this.context.setActiveLocale(languageItem)}
+                            >
+                                {this.context.dataToExclude.localeData[languageItem].language || 'Language'}
+                            </div>
+                        )
+                    })}
                 </div>
                 <div className="row">
                     <div className="logoLeft">
@@ -189,7 +191,7 @@ class LocalozationSettings extends Component {
                 style={{float: 'right'}}
             />
             <span>
-                {option.label}
+                {this.context.dataToExclude.localeData[option.label].language} ({option.label})
             </span>
         </span>;
     }

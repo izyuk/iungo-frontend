@@ -30,9 +30,8 @@ class LanguagesModal extends Component {
 
                     <div className="languagesModalList">
                         {languages.map((languageItem, i) => {
-                            const langShort = this.context.convertLocaleName(languageItem, true);
                             const active = Boolean(currentLanguage === languageItem);
-                            const Icon = Icons[`Flag${langShort}`];
+                            const Icon = Icons[`Flag${languageItem}`];
                             return (
                                 <div key={i} className={`languagesModalItem ${active ? 'active' : ''}`}
                                     data-cy="languagesModalPreviewItem"
@@ -41,7 +40,7 @@ class LanguagesModal extends Component {
                                     <div className="languagesModalFlag">
                                         {Icon && <Icon/>}
                                     </div>
-                                    <p>{languageItem}</p>
+                                    <p>{this.context.dataToExclude.localeData[languageItem].language}</p>
                                 </div>
                             )
                         })}

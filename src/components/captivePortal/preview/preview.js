@@ -109,8 +109,7 @@ class Preview extends Component {
 
         const language = this.context.dataToExclude.activeLocale || null;
         const translation = this.context.translations[language] || {};
-        const langShort = this.context.convertLocaleName(language, true);
-        const LangIcon = Icons[`Flag${langShort}`];
+        const LangIcon = Icons[`Flag${language}`];
         return (
             <div className="previewWrap">
                 <div className={(previewDeviceType === 'mobile') ? "previewMain mobile" : "previewMain"}
