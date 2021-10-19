@@ -108,7 +108,6 @@ class Modal extends Component {
                         <span>Max size limit: 5.12 MB</span>
                         }
                         {this.props.fileInfo &&
-
                         <div className="uploadInfo">
                             <div className="top">
                                 <span>Name: {this.props.fileInfo.name}</span>
@@ -122,14 +121,12 @@ class Modal extends Component {
                             </div>
                         </div>
                         }
-
                         {
                             (this.props.progress === 100 || this.props.imageEventType === 'click') &&
                             <div className="upload apply" onClick={this.props.applyOnUpload}>
                                 <span>Apply and Close</span>
                             </div>
                         }
-
                     </div>
                 </div>
             </div>,

@@ -631,7 +631,7 @@ context('Content tab', function () {
                     const defaultChecked = $el.attr('data-checked');
                     console.log('!#!defaultChecked', defaultChecked);
                     if (defaultChecked === 'checked') { testPayload.defaultLang = language; }
-                })
+                });
                 fields.map(field => {
                     fillingFields(`[data-cy="${field.name}"]`, `${field.val} ${language}`);
                 });

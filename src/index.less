@@ -3305,6 +3305,29 @@ table {
       align-items: stretch;
       height: calc(100% - 60px);
       overflow-y: auto;
+      position: relative;
+
+      border: 2px solid @trans;
+
+      &.highlight{
+        border-color: @soft-blue;
+        &:after{
+          content: '+';
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 32px;
+          color: @gray_menu_hover;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          right: 0;
+          left: 0;
+          bottom: 0;
+          background: @optionsCoverageText;
+        }
+      }
 
       .sideBar {
         width: 60px;
